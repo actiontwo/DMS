@@ -1,0 +1,21 @@
+<figure class="iconsp-cancer-15px close_popup"></figure>
+<div class="header">
+    <span>Create Dish</span>
+</div>
+<div class="content">
+    <form id="create-dish" class="create_form_popup ">
+        <label>List Dish</label>
+        <select id="list_dish">
+            {{#list_dish}}
+            <option>{{dish}}</option>
+            {{/list_dish}}
+        </select>
+        <label>Dish Name</label>
+        <input type="text" name="dishname" class="dishname">
+        <label>Note</label>
+        <textarea name="note"></textarea>
+        <div class="confirm" onclick="submit_dish()">
+            <a class="submit">Save</a>
+        </div>
+    </form>
+</div>

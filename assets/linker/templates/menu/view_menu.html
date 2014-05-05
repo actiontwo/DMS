@@ -1,0 +1,62 @@
+<div class="header">
+    <span>Menu</span>
+</div>
+<div class="content">
+    <div class="find">
+        <div class="find-from">
+            <div>From:
+                <input class="datepicker" type="text">
+            </div>
+        </div>
+        <div class="find-to">
+            <div>To:
+                <input class="datepicker" type="text">
+            </div>
+        </div>
+    </div>
+    <div class="clear-fix"></div>
+    <div class="confirm">
+        <a href="#">OK</a>
+    </div>
+    <div class="clear-fix"></div>
+    <div class="table">
+        <table class="reference">
+            <tbody>
+                <tr>
+                    <th>Date(dd/mm/yy)</th>
+                    <th>Brunch</th>
+                    <th>Dish1</th>
+                    <th>Dish2</th>
+                    <th>Dish3</th>
+                    <th>Dish4</th>
+                    <th>Dish5</th>
+                    <th>Note</th>
+                    <th></th>
+                </tr>
+                {{#menu}}
+                <tr>
+                    <th>{{date}}</th>
+                    <th>{{brunch}}</th>
+                    <th>{{dish1}}</th>
+                    <th>{{dish2}}</th>
+                    <th>{{dish3}}</th>
+                    <th>{{dish4}}</th>
+                    <th>{{dish5}}</th>
+                    <th>{{note}}</th>
+                    <th>
+                        <figure class="iconsp-edit-25px"></figure>
+                    </th>
+                </tr>
+                {{/menu}}
+            </tbody>
+        </table>
+    </div>
+    <div class="btn-end">
+        <a href="#">Back</a>
+        <a href="#" onclick="show_popup('.mn-print-menu')">Print</a>
+        <a href="#" onclick="show_popup('.mn-create-dish')">Create Dish</a>
+        <a href="#" onclick="show_popup('.mn-create-menu')">Create Menu</a>
+    </div>
+    <div class="clear-fix"></div>
+
+</div>

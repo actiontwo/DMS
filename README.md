@@ -1,0 +1,2 @@
+# Dining
+### a Sails application

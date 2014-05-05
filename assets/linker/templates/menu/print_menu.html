@@ -1,0 +1,58 @@
+<div class="header">
+    <span>Print Menu</span>
+</div>
+<figure class="iconsp-cancer-15px close_popup"></figure>
+<div class="content">
+    <div class="find">
+        <div class="find-from">
+            <div>From:
+                <input class="datepicker" type="text">
+            </div>
+        </div>
+        <div class="find-to">
+            <div>To:
+                <input class="datepicker" type="text">
+            </div>
+        </div>
+    </div>
+    <div class="clear-fix"></div>
+    <div class="confirm">
+        <a href="#">OK</a>
+    </div>
+    <div class="clear-fix"></div>
+    <div class="table">
+        <table class="reference">
+            <tbody>
+                <tr>
+                    <th>No</th>
+                    <th>Date(dd/mm/yy)</th>
+                    <th>Brunch</th>
+                    <th>Dish1</th>
+                    <th>Dish2</th>
+                    <th>Dish3</th>
+                    <th>Dish4</th>
+                    <th>Dish5</th>
+                    <th>Note</th>
+                </tr>
+                {{#menu}}
+                <tr>
+	                <th>{{no}}</th>
+	                <th>{{date}}</th>
+	                <th>{{brunch}}</th>
+	                <th>{{dish1}}</th>
+	                <th>{{dish2}}</th>
+	                <th>{{dish3}}</th>
+	                <th>{{dish4}}</th>
+	                <th>{{dish5}}</th>
+	                <th>{{note}}</th>
+                </tr>
+                {{/menu}}
+            </tbody>
+        </table>
+    </div>
+    <div class="btn-end">
+        <a href="#">Delete</a>
+        <a href="#" onclick="show_popup('.mn-create-menu')">Create</a>
+    </div>
+    <div class="clear-fix"></div>
+</div>
