@@ -1,5 +1,5 @@
 /**
- * SiteController
+ * SuggestionController
  *
  * @module      :: Controller
  * @description	:: A set of functions called `actions`.
@@ -16,19 +16,17 @@
  */
 
 module.exports = {
-  // *
-  //  * Overrides for the settings in `config/controllers.js`
-  //  * (specific to SiteController)
-   
-  // _config: {}
-  index:function(req,res){
-  	res.view({
-  		 partials: {
-        head: 'site/partials/header',
-        foot: 'site/partials/footer',
-        tail: 'site/partials/tail',
-      },
-  	});
+    
+  
+
+
+  /**
+   * Overrides for the settings in `config/controllers.js`
+   * (specific to SuggestionController)
+   */
+  _config: {},
+  getall:function(){
+  	Sugesstion.find()
   }
 
   

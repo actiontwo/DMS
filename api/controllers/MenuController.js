@@ -1,5 +1,5 @@
 /**
- * SiteController
+ * MenuController
  *
  * @module      :: Controller
  * @description	:: A set of functions called `actions`.
@@ -16,20 +16,43 @@
  */
 
 module.exports = {
-  // *
-  //  * Overrides for the settings in `config/controllers.js`
-  //  * (specific to SiteController)
-   
-  // _config: {}
-  index:function(req,res){
-  	res.view({
-  		 partials: {
-        head: 'site/partials/header',
-        foot: 'site/partials/footer',
-        tail: 'site/partials/tail',
-      },
-  	});
-  }
+    
+  
 
+
+  /**
+   * Overrides for the settings in `config/controllers.js`
+   * (specific to MenuController)
+   */
+  _config: {},
+
+   index:function(req,res){
+   		Menu.find().done(function(err,menu){
+   			if(menu){
+   				res.view({
+   					 partials: {
+			        head: '../site/partials/header',
+			        foot: '../site/partials/footer',
+			        tail: '../partials/tail',
+			      },
+
+   				});
+   				
+   			}
+   		});
+   		
+   },
+   getall:function(req,res){
+   	Menu.find().done(function(err,data){
+   		if(err){
+   			console.log('Eror');
+   		}
+   		else{
+   			res.send(data);
+   		}
+   	});
+   },
+
+   
   
 };

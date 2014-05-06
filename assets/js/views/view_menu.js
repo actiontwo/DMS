@@ -9,7 +9,8 @@ var MenuView = Backbone.View.extend({
 		this.template = Handlebars.compile(templateString);
 	},
 	render:function(){
-		this.$el.html(this.template(this.model.attributes));
+		console.log(this.template(this.model.attributes));
+		this.$el.html(this.template(this.model.attributes[0]));
 		return this;
 	}
 	
