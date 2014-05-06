@@ -13,6 +13,10 @@ module.exports = {
   	/* e.g.
   	nickname: 'string'
   	*/
+  	_id:{
+  		type:"integer",
+ 		unique: true
+  	},
     dish:{
     	type:"string",
     	required:true

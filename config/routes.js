@@ -48,6 +48,10 @@ module.exports.routes = {
   '/listdish':{
     controller:'listdish',
     action:'getall'
+  },
+  '/listdish/create':{
+    controller:'listdish',
+    action:'create'
   }
 
   // '/menu/site/partials':{

@@ -26,6 +26,7 @@ var PopupDishView = Backbone.View.extend({
 	},
 	render:function(){
 		this.$el.html(this.template(this.model.attributes[0]));
+		init();
 		return this;
 	}
 });
@@ -72,7 +73,7 @@ var PopupPrintView = Backbone.View.extend({
 		console.log('Render',this.model.attributes[0]);
 		console.log(this.template());
 		this.$el.html(this.template(this.model.attributes[0]));
-		init();
+		
 		return this;
 	}
 });

@@ -32,6 +32,14 @@ module.exports = {
   		else
   			res.send(data);
   	});
+  },
+  create:function(req,res){
+  	ListDish.create(req.params.all(),function(err,data){
+  		if(err)
+  			console.log('ERROR',err);
+  		else
+  			res.send(data);
+  	});
   }
 
   
