@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <title>
+	        IS DSV - Deposit
+	    </title>
+	    <link rel="icon" href="static/images/favicon.png" type="image/x-icon">
+	    <link type="text/css" href="css/ui-lightness/jquery-ui-1.10.4.custom.css">
+	    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+	    <script type="text/javascript" src="js/jquery-2.1.0.min.js"></script>
+  		<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  		<script type="text/javascript" src="js/jquery-bak.js"></script>
+  		<link href="css/style.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="container">
+			<header>
+				<div class="logo">
+					<figure>
+						<img src="images/logo.png">
+					</figure>
+					<span>Meal Resitration System</span>
+				</div>
+				<div class="menu">
+					<ul>
+						<li><a href="register-meal.html">Register Meal</a></li>
+						<li><a href="menus.html">Menu</a></li>
+						<li><a href="expense.html">Expense</a></li>
+						<li><a href="deposit.html">Deposit</a></li>
+						<li><a href="report.html">Report</a></li>
+						<li><a href="#">Welcome DSV Logout</a></li>
+					</ul>
+				</div>
+			</header>
+			<section class="main">
+				<div class="report" id="tabs">
+					<div class="header">
+						<ul>
+							<li><a href="#btn-rp-cost-meal">Report Cost Meal</a></li>
+							<li><a href="#btn-rp-expense">Report Expense</a></li>
+						</ul>
+					</div>
+					<div class="rp-cost-meal" id="btn-rp-cost-meal">
+						<div class="content">
+							<div class="find">
+								<div class="find-name">
+									<div>Name:
+										<select>
+											<option></option>
+											<option>Mr.Hung</option>
+											<option>Mr. Cuong</option>
+											<option>Mr. Khiem</option>
+										</select>
+									</div>
+								</div>
+								<div class="find-from">
+									<div>From: <input class="datepicker" type="text"></div>
+								</div>
+								<div class="find-to">
+									<div>To: <input class="datepicker" type="text"></div>
+								</div>
+							</div>
+							<div class="clear-fix"></div>
+							<div class="confirm">
+								<a href="#">Show</a>
+							</div>
+							<div class="clear-fix"></div>
+							<div class="table">
+								<table class="reference">
+									<tbody>
+										<tr>
+											<th>No</th>
+											<th>Date From</th>
+											<th>Date To</th>
+											<th>Name</th>
+											<th>Begin Balance</th>
+											<th>Deposit</th>
+											<th>Adjusted Balance</th>
+											<th>Meals</th>
+											<th>Per Meals</th>
+											<th>Meal Cost</th>
+											<th>Facilities Cost</th>
+											<th>End Balance</th>
+										</tr>
+										<tr>
+											<th>1</th>
+											<th>11/11/2013</th>
+											<th>19/11/2013</th>
+											<th>Mr. Hung</th>
+											<th>0</th>
+											<th>500.000</th>
+											<th>25.700</th>
+											<th>10</th>
+											<th>0</th>
+											<th>361.500</th>
+											<th>500.000</th>
+											<th>135.000</th>
+										</tr>
+										<tr>
+											<th>2</th>
+											<th>11/11/2013</th>
+											<th>19/11/2013</th>
+											<th>Mr. Hung</th>
+											<th>0</th>
+											<th>500.000</th>
+											<th>25.700</th>
+											<th>10</th>
+											<th>0</th>
+											<th>361.500</th>
+											<th>500.000</th>
+											<th>135.000</th>
+										</tr>
+										<tr>
+											<th>3</th>
+											<th>11/11/2013</th>
+											<th>19/11/2013</th>
+											<th>Mr. Hung</th>
+											<th>0</th>
+											<th>500.000</th>
+											<th>25.700</th>
+											<th>10</th>
+											<th>0</th>
+											<th>361.500</th>
+											<th>500.000</th>
+											<th>135.000</th>
+										</tr>
+										<tr>
+											<th>4</th>
+											<th>11/11/2013</th>
+											<th>19/11/2013</th>
+											<th>Mr. Hung</th>
+											<th>0</th>
+											<th>500.000</th>
+											<th>25.700</th>
+											<th>10</th>
+											<th>0</th>
+											<th>361.500</th>
+											<th>500.000</th>
+											<th>135.000</th>
+										</tr>
+										<tr>
+											<th>5</th>
+											<th>11/11/2013</th>
+											<th>19/11/2013</th>
+											<th>Mr. Hung</th>
+											<th>0</th>
+											<th>500.000</th>
+											<th>25.700</th>
+											<th>10</th>
+											<th>0</th>
+											<th>361.500</th>
+											<th>500.000</th>
+											<th>135.000</th>
+										</tr>
+										<tr>
+											<th>6</th>
+											<th>11/11/2013</th>
+											<th>19/11/2013</th>
+											<th>Mr. Hung</th>
+											<th>0</th>
+											<th>500.000</th>
+											<th>25.700</th>
+											<th>10</th>
+											<th>0</th>
+											<th>361.500</th>
+											<th>500.000</th>
+											<th>135.000</th>
+										</tr>
+										<tr>
+											<th>7</th>
+											<th>11/11/2013</th>
+											<th>19/11/2013</th>
+											<th>Mr. Hung</th>
+											<th>0</th>
+											<th>500.000</th>
+											<th>25.700</th>
+											<th>10</th>
+											<th>0</th>
+											<th>361.500</th>
+											<th>500.000</th>
+											<th>135.000</th>
+										</tr>
+										<tr>
+											<th>8</th>
+											<th>11/11/2013</th>
+											<th>19/11/2013</th>
+											<th>Mr. Hung</th>
+											<th>0</th>
+											<th>500.000</th>
+											<th>25.700</th>
+											<th>10</th>
+											<th>0</th>
+											<th>361.500</th>
+											<th>500.000</th>
+											<th>135.000</th>
+										</tr>
+										<tr>
+											<th class="total" colspan='4'><span>Total:</span></th>
+											<th>3.000.000</th>
+											<th>100</th>
+											<th>25.700</th>
+											<th>2.000.000</th>
+											<th>2.000.000</th>
+											<th>2.500.000</th>
+											<th>5.870.000</th>
+											<th>5.000.000</th>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="btn-end">
+								<a href="#">Send Report</a>
+							</div>
+							<div class="clear-fix"></div>
+						</div>
+					</div>
+					<div class="rp-expense" id="btn-rp-expense">
+						<div class="content">
+							<div class="find">
+								<div class="find-from">
+									<div>From: <input class="datepicker" type="text" ></div>
+								</div>
+								<div class="find-to">
+									<div>To: <input class="datepicker" type="text" ></div>
+								</div>
+							</div>
+							<div class="clear-fix"></div>
+							<div class="confirm">
+								<a href="#">Show</a>
+							</div>
+							<div class="clear-fix"></div>
+							<div class="table">
+								<table class="reference">
+									<tbody>
+										<tr>
+											<th>No</th>
+											<th>Date(dd/mm/yy)</th>
+											<th>Money(VND)</th>
+											<th>Invoice ID</th>
+											<th>Image</th>
+											<th>Note</th>
+										</tr>
+										<tr>
+											<th>1</th>
+											<th>11/11/2013</th>
+											<th>3.000.000</th>
+											<th>123456</th>
+											<th>
+												<figure class="iconsp-invoice-25px"></figure>
+											</th>
+											<th></th>
+										</tr>
+										<tr>
+											<th>2</th>
+											<th>11/11/2013</th>
+											<th>3.000.000</th>
+											<th>123456</th>
+											<th>
+												<figure class="iconsp-invoice-25px"></figure>
+											</th>
+											<th></th>
+										</tr>
+										<tr>
+											<th>1</th>
+											<th>11/11/2013</th>
+											<th>3.000.000</th>
+											<th>123456</th>
+											<th>
+												<figure class="iconsp-invoice-25px"></figure>
+											</th>
+											<th></th>
+										</tr>
+										<tr>
+											<th>2</th>
+											<th>11/11/2013</th>
+											<th>3.000.000</th>
+											<th>123456</th>
+											<th>
+												<figure class="iconsp-invoice-25px"></figure>
+											</th>
+											<th></th>
+										</tr>
+										<tr>
+											<th>1</th>
+											<th>11/11/2013</th>
+											<th>3.000.000</th>
+											<th>123456</th>
+											<th>
+												<figure class="iconsp-invoice-25px"></figure>
+											</th>
+											<th></th>
+										</tr>
+										<tr>
+											<th>2</th>
+											<th>11/11/2013</th>
+											<th>3.000.000</th>
+											<th>123456</th>
+											<th>
+												<figure class="iconsp-invoice-25px"></figure>
+											</th>
+											<th></th>
+										</tr>
+										<tr>
+											<th>1</th>
+											<th>11/11/2013</th>
+											<th>3.000.000</th>
+											<th>123456</th>
+											<th>
+												<figure class="iconsp-invoice-25px"></figure>
+											</th>
+											<th></th>
+										</tr>
+											<th>2</th>
+											<th>11/11/2013</th>
+											<th>3.000.000</th>
+											<th>123456</th>
+											<th>
+												<figure class="iconsp-invoice-25px"></figure>
+											</th>
+											<th></th>
+										</tr>
+										</tr>
+											<th class="total" colspan="6"><span>Total:</span></th>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="btn-end">
+								<a href="#">Send Report</a>
+							</div>
+							<div class="clear-fix"></div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</body>

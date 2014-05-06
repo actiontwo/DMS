@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <title>
+	        IS DSV - Deposit
+	    </title>
+	    <link rel="icon" href="static/images/favicon.png" type="image/x-icon">
+	    <link type="text/css" href="css/ui-lightness/jquery-ui-1.10.4.custom.css">
+	    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+	    <script type="text/javascript" src="js/jquery-2.1.0.min.js"></script>
+  		<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  		<script type="text/javascript" src="js/jquery-bak.js"></script>
+  		<link href="css/style.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="container">
+			<header>
+				<div class="logo">
+					<figure>
+						<img src="images/logo.png">
+					</figure>
+					<span>Meal Resitration System</span>
+				</div>
+				<div class="menu">
+					<ul>
+						<li><a href="register-meal.html">Register Meal</a></li>
+						<li><a href="menus.html">Menu</a></li>
+						<li><a href="expense.html">Expense</a></li>
+						<li><a href="deposit.html">Deposit</a></li>
+						<li><a href="report.html">Report</a></li>
+						<li><a href="#">Welcome DSV Logout</a></li>
+					</ul>
+				</div>
+			</header>
+			<section class="main">
+				<div class="deposit">
+					<div class="header">
+						<span>Deposit</span>
+					</div>
+					<div class="content">
+						<div class="find">
+							<div class="find-name">
+								<div>Name:
+									<select>
+										<option></option>
+										<option>Mr.Hung</option>
+										<option>Mr. Cuong</option>
+										<option>Mr. Khiem</option>
+									</select>
+								</div>
+							</div>
+							<div class="find-from">
+								<div>From: <input class="datepicker" type="text" placeholder="11/11/2013"></div>	
+							</div>
+							<div class="find-to">
+								<div>To: <input class="datepicker" type="text" placeholder="19/11/2013"></div>
+							</div>
+						</div>
+						<div class="clear-fix"></div>
+						<div class="confirm">
+							<a href="#">OK</a>
+						</div>
+						<div class="clear-fix"></div>
+						<div class="table">
+							<table class="reference">
+								<tbody>
+									<tr>
+										<th>No</th>
+										<th></th>
+										<th>Date(dd/mm/yy)</th>
+										<th>Name</th>
+										<th>Deposit</th>
+										<th></th>
+									</tr>
+									<tr>
+										<th>1</th>
+										<th><input type="checkbox"></th>
+										<th>11/11/2013</th>
+										<th>Thuy Nguyen</th>
+										<th>500.000</th>
+										<th>
+											<figure class="iconsp-remove-red-25px"></figure>
+											<figure class="iconsp-edit-25px" onclick="show_popup('.ds-popup')"></figure>
+										</th>
+									</tr>
+									<tr>
+										<th>2</th>
+										<th><input type="checkbox"></th>
+										<th>11/11/2013</th>
+										<th>Tu Anh</th>
+										<th>500.000</th>
+										<th>
+											<figure class="iconsp-remove-25px"></figure>
+											<figure class="iconsp-edit-red-25px"></figure>
+										</th>
+									</tr>
+									<tr>
+										<th>3</th>
+										<th><input type="checkbox"></th>
+										<th>11/11/2013</th>
+										<th>Thuy Nguyen</th>
+										<th>500.000</th>
+										<th>
+											<figure class="iconsp-remove-25px"></figure>
+											<figure class="iconsp-edit-25px" onclick="show_popup('.ds-popup')"></figure>
+										</th>
+									</tr>
+									<tr>
+										<th>4</th>
+										<th><input type="checkbox"></th>
+										<th>11/11/2013</th>
+										<th>Tu Anh</th>
+										<th>500.000</th>
+										<th>
+											<figure class="iconsp-remove-25px"></figure>
+											<figure class="iconsp-edit-25px" onclick="show_popup('.ds-popup')"></figure>
+										</th>
+									</tr>
+									<tr>
+										<th>5</th>
+										<th><input type="checkbox"></th>
+										<th>11/11/2013</th>
+										<th>Thuy Nguyen</th>
+										<th>500.000</th>
+										<th>
+											<figure class="iconsp-remove-25px"></figure>
+											<figure class="iconsp-edit-25px" onclick="show_popup('.ds-popup')"></figure>
+										</th>
+									</tr>
+									<tr>
+										<th>6</th>
+										<th><input type="checkbox"></th>
+										<th>11/11/2013</th>
+										<th>Tu Anh</th>
+										<th>500.000</th>
+										<th>
+											<figure class="iconsp-remove-25px"></figure>
+											<figure class="iconsp-edit-25px" onclick="show_popup('.ds-popup')"></figure>
+										</th>
+									</tr>
+									<tr>
+										<th>7</th>
+										<th><input type="checkbox"></th>
+										<th>11/11/2013</th>
+										<th>Thuy Nguyen</th>
+										<th>500.000</th>
+										<th>
+											<figure class="iconsp-remove-25px"></figure>
+											<figure class="iconsp-edit-25px" onclick="show_popup('.ds-popup')"></figure>
+										</th>
+									</tr>
+										<th>8</th>
+										<th><input type="checkbox"></th>
+										<th>11/11/2013</th>
+										<th>Tu Anh</th>
+										<th>500.000</th>
+										<th>
+											<figure class="iconsp-remove-25px"></figure>
+											<figure class="iconsp-edit-25px" onclick="show_popup('.ds-popup')"></figure>
+										</th>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="btn-end">
+							<a href="#" onclick="show_popup('.ds-new-deposit')">New Deposit</a>
+							<a  href="#">Delete Selected</a>
+						</div>
+						<div class="clear-fix"></div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<div class="popup_area">
+		    <div class="mask_popup"></div>
+		    <div class="content_popup">
+		        <div class="wrapper_content_popup">
+		            <div class="content_detail_popup">
+						<div class="ds-popup style_popup-940px">
+							<figure class="iconsp-cancer-15px close_popup"></figure>
+							<div class="name"><input type="text"></div>
+							<div class="money">Deposit:<input type="text"> (VND)</div>
+							<div class="btn-end">
+								<a href="#">OK</a>
+								<a  href="#" class="btn-cancel">Cancel</a>
+							</div>
+						</div>
+						<div class="ds-new-deposit style_popup-940px">
+							<div class="header">
+								<span>New Deposit</span>
+							</div>
+							<figure class="iconsp-cancer-15px close_popup"></figure>
+							<div class="content">
+								<div class="new-info">
+									<div class="new-date">
+										<div>Date: <input class="datepicker" type="text" placeholder="11/11/2013"></div>
+									</div>
+									<div class="new-name">
+										<div>Name: <input type="text" placeholder="Name of member"></div>
+									</div>
+									<div class="new-deposit">
+										<div>Deposit: <input type="text" placeholder="500.000"> (VND)</div>
+									</div>	
+								</div>
+								<div class="btn-end">
+									<a  href="#">OK</a>
+									<a href="#" class="btn-cancel">Cancel</a>
+								</div>
+								<div class="clear-fix"></div>
+							</div>
+						</div>
+				   </div>
+		        </div>
+		    </div>
+		</div>
+	</body>
