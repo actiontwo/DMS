@@ -1,3 +1,4 @@
+
 /**
  * Gruntfile
  *
@@ -123,6 +124,7 @@ module.exports = function (grunt) {
 
   // Get path to core grunt dependencies from Sails
   var depsPath = grunt.option('gdsrc') || 'node_modules/sails/node_modules';
+   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadTasks(depsPath + '/grunt-contrib-clean/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-copy/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-concat/tasks');
@@ -133,6 +135,7 @@ module.exports = function (grunt) {
   grunt.loadTasks(depsPath + '/grunt-contrib-cssmin/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-less/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-coffee/tasks');
+ 
 
   // Project configuration.
   grunt.initConfig({
@@ -181,7 +184,13 @@ module.exports = function (grunt) {
         }
       }
     },
-
+     compass: {
+            dev: {
+                options: {
+                    config: 'config.rb'
+                }
+            }
+        },
     less: {
       dev: {
         files: [
@@ -404,7 +413,7 @@ module.exports = function (grunt) {
       assets: {
 
         // Assets to watch:
-        files: ['assets/**/*'],
+        files: ['assets/**/*','sass/*.scss'],
 
         // When assets are changed:
         tasks: ['compileAssets', 'linkAssets']
@@ -422,6 +431,7 @@ module.exports = function (grunt) {
   grunt.registerTask('compileAssets', [
     'clean:dev',
     'jst:dev',
+    'compass:dev',
     'less:dev',
     'copy:dev',    
     'coffee:dev'
@@ -452,6 +462,7 @@ module.exports = function (grunt) {
   grunt.registerTask('prod', [
     'clean:dev',
     'jst:dev',
+    'compass:dev',
     'less:dev',
     'copy:dev',
     'coffee:dev',
