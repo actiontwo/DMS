@@ -9,7 +9,6 @@ var MenuView = Backbone.View.extend({
 		this.template = Handlebars.compile(templateString);
 	},
 	render:function(){
-		console.log(this.template(this.model.attributes));
 		this.$el.html(this.template(this.model.attributes[0]));
 		return this;
 	}
@@ -26,7 +25,7 @@ var PopupDishView = Backbone.View.extend({
 		this.template = Handlebars.compile(templateString);
 	},
 	render:function(){
-		this.$el.html(this.template(this.model.attributes));
+		this.$el.html(this.template(this.model.attributes[0]));
 		return this;
 	}
 });
@@ -40,38 +39,8 @@ var PopupMenuView = Backbone.View.extend({
 	},
 	setTemplate:function(templateString){
 		this.$el.html(templateString);
-	},
-	// events:{
-	// 	'click #btn-save': 'save'
-	// },
-	// save:function(){
-	// 	console.debug(this.model);
-	// 	//var model 	= this.model.toJSON();
-	// 	var date  	= $('.date').val();
-	// 	var brunch 	= $('.brunch').val(); 
-	// 	var dish1 	= $('.dish1').val(); 
-	// 	var dish2 	= $('.dish2').val(); 
-	// 	var dish3 	= $('.dish3').val(); 
-	// 	var dish4 	= $('.dish4').val(); 
-	// 	var dish5 	= $('.dish5').val(); 
-	// 	var note 	= $('.note').val();
-
-	// 	var menu = new MenuModel();
-	// 	menu.save({
-	// 		no:'9',
-	// 		date:date,
-	// 		brunch:brunch,
-	// 		dish1:dish1,
-	// 		dish2:dish2,
-	// 		dish3:dish3,
-	// 		dish4:dish4,
-	// 		dish5:dish5,
-	// 		note:note
-	// 	});
-	// 	this.model = menu;
-	// 	menu.isNew();
-	// 	return false;
-	// }
+		return this;
+	}
 });
 
 //suggestion
@@ -84,7 +53,7 @@ var SuggestionView = Backbone.View.extend({
 		this.template = Handlebars.compile(templateString);
 	},
 	render:function(){
-		this.$el.html(this.template(this.model.attributes));
+		this.$el.html(this.template(this.model.attributes[0]));
 		return this;
 	}
 });
@@ -92,13 +61,17 @@ var SuggestionView = Backbone.View.extend({
 var PopupPrintView = Backbone.View.extend({
 	template:null,
 	initialize:function(){
-		$.get('linker/templates/menu/print_menu.html',this.setTemplate.bind(this))
+		$.get('linker/templates/menu/print_menu.html',this.setTemplate.bind(this));
+		console.log('Begin get template');
 	},
 	setTemplate:function(templateString){
 		this.template = Handlebars.compile(templateString);
+			console.log('handlebars compile template');
 	},
 	render:function(){
-		this.$el.html(this.template(this.model.attributes));
+		console.log('Render',this.model.attributes[0]);
+		console.log(this.template());
+		this.$el.html(this.template(this.model.attributes[0]));
 		init();
 		return this;
 	}

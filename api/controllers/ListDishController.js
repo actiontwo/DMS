@@ -1,5 +1,5 @@
 /**
- * SuggestionController
+ * ListDishController
  *
  * @module      :: Controller
  * @description	:: A set of functions called `actions`.
@@ -22,16 +22,15 @@ module.exports = {
 
   /**
    * Overrides for the settings in `config/controllers.js`
-   * (specific to SuggestionController)
+   * (specific to ListDishController)
    */
   _config: {},
-  getall:function(req,res){
-  	Suggestion.find().done(function(err,data){
+  getall:function(req,res){ 	
+  	ListDish.find().done(function(err,data){
   		if(err)
-  			console.log('Error');
+  			console.log('ERROR',err);
   		else
   			res.send(data);
-
   	});
   }
 

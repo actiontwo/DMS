@@ -44,6 +44,10 @@ module.exports.routes = {
   '/suggestion':{
     controller:'suggestion',
     action:'getall'
+  },
+  '/listdish':{
+    controller:'listdish',
+    action:'getall'
   }
 
   // '/menu/site/partials':{
