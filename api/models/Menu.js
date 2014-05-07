@@ -38,9 +38,6 @@ module.exports = {
   	note: {
   		type: "string"
   	}
-  	/* e.g.
-  	nickname: 'string'
-  	*/
   }
 
 };

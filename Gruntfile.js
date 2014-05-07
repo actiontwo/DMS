@@ -191,6 +191,22 @@ module.exports = function (grunt) {
                 }
             }
         },
+     handlebars: {
+      options: {
+        namespace: 'Templates',
+        processName: function(filePath) {
+            return filePath.replace(/^\.tmp\/public\/linker\/templates\//, '').replace(/\.html$/, '');
+        }
+      },
+      dev: {
+        files: {
+            ".tmp/public/templates.js": templateFilesToInject
+        }
+      }
+    },
+
+
+    
     less: {
       dev: {
         files: [
@@ -461,6 +477,7 @@ module.exports = function (grunt) {
   // When sails is lifted in production
   grunt.registerTask('prod', [
     'clean:dev',
+    'handlebars:dev',
     'jst:dev',
     'compass:dev',
     'less:dev',

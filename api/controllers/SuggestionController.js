@@ -30,7 +30,7 @@ module.exports = {
   		if(err)
   			console.log('Error');
   		else
-  			res.send(data);
+  			res.send({'suggestion':data});
 
   	});
   }

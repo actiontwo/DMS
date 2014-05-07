@@ -30,16 +30,18 @@ module.exports = {
   		if(err)
   			console.log('ERROR',err);
   		else
-  			res.send(data);
+  			res.send({'listdish':data});
   	});
   },
   create:function(req,res){
-  	ListDish.create(req.params.all(),function(err,data){
-  		if(err)
-  			console.log('ERROR',err);
-  		else
-  			res.send(data);
-  	});
+    //var dish = req.param('dish');
+    console.log(req.params.all());  
+    ListDish.create(req.params.all(),function(err,data){
+       if(err)
+         console.log('ERROR',err);
+       else
+         res.send(data);
+    });
   }
 
   

@@ -6,15 +6,15 @@
     <form action="" method="POST" id="create-dish" class="create_form_popup ">
         <label>List Dish</label>
         <select id="list_dish">
-            {{#list_dish}}
+            {{#listdish}}
             <option>{{dish}}</option>
-            {{/list_dish}}
+            {{/listdish}}
         </select>
         <label>Dish Name</label>
-        <input type="text" name="dishname" class="dishname">
+        <input type="text" name="dishname" class="dishname" id="dishname">
         <label>Note</label>
         <textarea name="note"></textarea>
-        <div class="confirm" onclick="submit_dish()">
+        <div id="btn-save" class="confirm" >
             <a class="submit">Save</a>
         </div>
     </form>

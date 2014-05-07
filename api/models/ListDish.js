@@ -9,10 +9,6 @@
 module.exports = {
 
   attributes: {
-  	
-  	/* e.g.
-  	nickname: 'string'
-  	*/
   	_id:{
   		type:"integer",
  		unique: true

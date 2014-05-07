@@ -48,10 +48,18 @@ module.exports = {
    			console.log('Eror');
    		}
    		else{
-   			res.send(data);
+   			res.send({'menu':data});
    		}
    	});
    },
+   create:function(req,res){
+      Menu.create(req.params.all(),function(err,data){
+         if(err)
+            res.send(err);
+         else
+            res.send(data);
+      });
+   }
 
    
   
