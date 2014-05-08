@@ -814,6 +814,9 @@ header {
   position: relative;
   top: 5px;
 }
+.menus .iconsp-edit-25px {
+  cursor:pointer;
+}
 
 /* line 668, ../../sass/style.scss */
 .suggestion {
