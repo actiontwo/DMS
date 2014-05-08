@@ -80,13 +80,11 @@ module.exports = function (grunt) {
    * edit the relevant sections below.
    */
 
-  var templateFilesToInject = [
+  var templateFilesToCompile = [
     'linker/**/*.html',
     'linker/**/*.hbs',
     'linker/**/*.handlebars'
   ];
-
-
 
   /////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////
@@ -129,7 +127,7 @@ module.exports = function (grunt) {
   
   console.log(jsFilesToInject);
   
-  templateFilesToInject = templateFilesToInject.map(function (path) {
+  templateFilesToCompile = templateFilesToCompile.map(function (path) {
     return '.tmp/public/' + path;
   });
 
@@ -188,7 +186,7 @@ module.exports = function (grunt) {
       },
       dev: {
         files: {
-            ".tmp/public/templates.js": templateFilesToInject
+            ".tmp/public/templates.js": templateFilesToCompile
         }
       }
     },
@@ -334,10 +332,10 @@ module.exports = function (grunt) {
           appRoot: '.tmp/public'
         },
         files: {
-          '.tmp/public/index.html': ['.tmp/public/templates.js'],
-          'views/**/*.html': ['.tmp/public/templates.js'],
-          'views/**/*.handlebars': ['.tmp/public/templates.js'],
-          'views/**/*.hbs': ['.tmp/public/templates.js']
+          '.tmp/public/index.html': ['.tmp/public/linker/**/handlebars*.js','.tmp/public/templates.js'],
+          'views/**/*.html': ['.tmp/public/linker/**/handlebars*.js','.tmp/public/templates.js'],
+          'views/**/*.handlebars': ['.tmp/public/linker/**/handlebars*.js','.tmp/public/templates.js'],
+          'views/**/*.hbs': ['.tmp/public/linker/**/handlebars*.js','.tmp/public/templates.js']
         }
       }
     },
