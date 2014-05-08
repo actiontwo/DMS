@@ -56,10 +56,17 @@ module.exports = function (grunt) {
     // automatic listener for incoming messages from Socket.io.
     'linker/js/app.js',
 
+    // Add external libraries before any other files    
+    'linker/lib/**/*.js',
+
+
     // *->    put other dependencies here   <-*
 
     // All of the rest of your app scripts imported here
-    'linker/**/*.js'
+    'linker/**/*.js',
+
+    // except handlebars, this will be included in template section
+    '!linker/**/handlebars*.js',
   ];
 
 
@@ -114,9 +121,13 @@ module.exports = function (grunt) {
 
   // Modify js file injection paths to use 
   jsFilesToInject = jsFilesToInject.map(function (path) {
-    return '.tmp/public/' + path;
+    if (path.match(/^!/))
+      return '!.tmp/public/' + path.substring(1);
+    else
+      return '.tmp/public/' + path;
   });
   
+  console.log(jsFilesToInject);
   
   templateFilesToInject = templateFilesToInject.map(function (path) {
     return '.tmp/public/' + path;
@@ -172,7 +183,7 @@ module.exports = function (grunt) {
       options: {
         namespace: 'Templates',
         processName: function(filePath) {
-            return filePath.replace(/^\.tmp\/public\/linker\/templates\//, '').replace(/\.html$/, '');
+            return filePath.replace(/^\.tmp\/public\/linker\/templates\//, '').replace(/(\.html$|\.hbs$|\.handlebars$)/, '');
         }
       },
       dev: {
@@ -278,7 +289,7 @@ module.exports = function (grunt) {
           '.tmp/public/**/*.html': ['.tmp/public/min/production.js'],
           'views/**/*.html': ['.tmp/public/min/production.js'],
           'views/**/*.handlebars': ['.tmp/public/min/production.js'],
-          'views/**/*.hbs': jsFilesToInject
+          'views/**/*.hbs': ['.tmp/public/min/production.js']
         }
       },
 
@@ -295,7 +306,7 @@ module.exports = function (grunt) {
           '.tmp/public/**/*.html': cssFilesToInject,
           'views/**/*.html': cssFilesToInject,
           'views/**/*.handlebars': cssFilesToInject,
-          'views/**/*.hbs': jsFilesToInject
+          'views/**/*.hbs': cssFilesToInject
         }
       },
 
@@ -310,7 +321,7 @@ module.exports = function (grunt) {
           '.tmp/public/index.html': ['.tmp/public/min/production.css'],
           'views/**/*.html': ['.tmp/public/min/production.css'],
           'views/**/*.handlebars': ['.tmp/public/min/production.css'],
-          'views/**/*.hbs': jsFilesToInject
+          'views/**/*.hbs': ['.tmp/public/min/production.css']
         }
       },
 
