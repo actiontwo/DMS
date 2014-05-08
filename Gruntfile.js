@@ -133,8 +133,12 @@ module.exports = function (grunt) {
       return '.tmp/public/' + path;
   });
   
-  console.log(jsFilesToInject);
-  
+  productionJsFilesToInject = jsFilesToInject;
+  productionJsFilesToInject.unshift('.tmp/public/linker/**/handlebars*.js','.tmp/public/templates.js');
+  //remove handlebars ignorance
+  productionJsFilesToInject.pop();
+  console.log(productionJsFilesToInject);
+
   templateFilesToCompile = templateFilesToCompile.map(function (path) {
     return '.tmp/public/' + path;
   });
@@ -166,6 +170,22 @@ module.exports = function (grunt) {
           src: ['**/*.!(coffee)'],
           dest: '.tmp/public'
         }
+        ]
+      },
+      prod: {
+        files: [
+          {
+            expand: true,
+            cwd: './assets',
+            src: ['**/*.!(coffee)', '!**/fonts/**', '!**/img/**', '!**/lib/images/**'],
+            dest: '.tmp/public'
+          },
+          {
+            expand: true,
+            cwd: './assets/linker/styles',
+            src: ['fonts/**', 'img/**'],
+            dest: '.tmp/public/min'
+          }
         ]
       },
       build: {
@@ -244,7 +264,7 @@ module.exports = function (grunt) {
 
     concat: {
       js: {
-        src: jsFilesToInject,
+        src: productionJsFilesToInject,
         dest: '.tmp/public/concat/production.js'
       },
       css: {
@@ -400,17 +420,16 @@ module.exports = function (grunt) {
 
   // When sails is lifted in production
   grunt.registerTask('prod', [
-    'clean:dev',
-    'handlebars:dev',
+    'clean:dev',    
     'less:dev',
-    'copy:dev',
+    'copy:prod',
+    'handlebars:dev',
     'coffee:dev',
     'concat',
     'uglify',
     'cssmin',
     'sails-linker:prodJs',
     'sails-linker:prodStyles',
-    'sails-linker:devTpl'
   ]);
 
   // When API files are changed:

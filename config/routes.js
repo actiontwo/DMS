@@ -37,30 +37,30 @@ module.exports.routes = {
      controller:'main'     
   },
   //get all menu from database
-  '/menu':{
-    controller:'menu',
-    action:'getall'
-  },
-  //create new menu and save into database 
-  '/menu/create':{
-    controller:'menu',
-    action:'create'
-  },
-  //get all suggestion from database
-  '/suggestion':{
-    controller:'suggestion',
-    action:'getall'
-  },
-  //get all list dish from database 
-  '/listdish':{
-    controller:'listdish',
-    action:'getall'
-  },
-  //create new dish and save into database
-  '/listdish/create':{
-    controller:'listdish',
-    action:'create'
-  }
+  // '/menu':{
+  //   controller:'menu',
+  //   action:'getall'
+  // },
+  // //create new menu and save into database 
+  // '/menu/create':{
+  //   controller:'menu',
+  //   action:'create'
+  // },
+  // //get all suggestion from database
+  // '/suggestion':{
+  //   controller:'suggestion',
+  //   action:'getall'
+  // },
+  // //get all list dish from database 
+  // '/listdish':{
+  //   controller:'listdish',
+  //   action:'getall'
+  // },
+  // //create new dish and save into database
+  // '/listdish/create':{
+  //   controller:'listdish',
+  //   action:'create'
+  // }
 
   // '/menu/site/partials':{
   //   controller:'menu',
