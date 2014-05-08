@@ -12,7 +12,8 @@
     "waterline": "*",
     "sails-mongo": "*",
     "handlebars": "*",
-    "helpers": "*"
+    "helpers": "*",
+    "grunt-contrib-handlebars": "^0.8.0"
   },
   "scripts": {
     "start": "node app.js",

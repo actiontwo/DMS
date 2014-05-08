@@ -1,4 +1,3 @@
-
 /**
  * Gruntfile
  *
@@ -75,7 +74,9 @@ module.exports = function (grunt) {
    */
 
   var templateFilesToInject = [
-    'linker/**/*.html'
+    'linker/**/*.html',
+    'linker/**/*.hbs',
+    'linker/**/*.handlebars'
   ];
 
 
@@ -118,24 +119,22 @@ module.exports = function (grunt) {
   
   
   templateFilesToInject = templateFilesToInject.map(function (path) {
-    return 'assets/' + path;
+    return '.tmp/public/' + path;
   });
 
 
   // Get path to core grunt dependencies from Sails
   var depsPath = grunt.option('gdsrc') || 'node_modules/sails/node_modules';
-   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadTasks(depsPath + '/grunt-contrib-clean/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-copy/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-concat/tasks');
   grunt.loadTasks(depsPath + '/grunt-sails-linker/tasks');
-  grunt.loadTasks(depsPath + '/grunt-contrib-jst/tasks');
+  grunt.loadTasks( './node_modules/grunt-contrib-handlebars/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-watch/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-uglify/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-cssmin/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-less/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-coffee/tasks');
- 
 
   // Project configuration.
   grunt.initConfig({
@@ -169,29 +168,7 @@ module.exports = function (grunt) {
       build: ['www']
     },
 
-    jst: {
-      dev: {
-
-        // To use other sorts of templates, specify the regexp below:
-        // options: {
-        //   templateSettings: {
-        //     interpolate: /\{\{(.+?)\}\}/g
-        //   }
-        // },
-
-        files: {
-          '.tmp/public/jst.js': templateFilesToInject
-        }
-      }
-    },
-     compass: {
-            dev: {
-                options: {
-                    config: 'config.rb'
-                }
-            }
-        },
-     handlebars: {
+    handlebars: {
       options: {
         namespace: 'Templates',
         processName: function(filePath) {
@@ -205,8 +182,6 @@ module.exports = function (grunt) {
       }
     },
 
-
-    
     less: {
       dev: {
         files: [
@@ -287,7 +262,8 @@ module.exports = function (grunt) {
         files: {
           '.tmp/public/**/*.html': jsFilesToInject,
           'views/**/*.html': jsFilesToInject,
-          'views/**/*.ejs': jsFilesToInject
+          'views/**/*.handlebars': jsFilesToInject,
+          'views/**/*.hbs': jsFilesToInject
         }
       },
 
@@ -301,7 +277,8 @@ module.exports = function (grunt) {
         files: {
           '.tmp/public/**/*.html': ['.tmp/public/min/production.js'],
           'views/**/*.html': ['.tmp/public/min/production.js'],
-          'views/**/*.ejs': ['.tmp/public/min/production.js']
+          'views/**/*.handlebars': ['.tmp/public/min/production.js'],
+          'views/**/*.hbs': jsFilesToInject
         }
       },
 
@@ -317,7 +294,8 @@ module.exports = function (grunt) {
         files: {
           '.tmp/public/**/*.html': cssFilesToInject,
           'views/**/*.html': cssFilesToInject,
-          'views/**/*.ejs': cssFilesToInject
+          'views/**/*.handlebars': cssFilesToInject,
+          'views/**/*.hbs': jsFilesToInject
         }
       },
 
@@ -331,11 +309,12 @@ module.exports = function (grunt) {
         files: {
           '.tmp/public/index.html': ['.tmp/public/min/production.css'],
           'views/**/*.html': ['.tmp/public/min/production.css'],
-          'views/**/*.ejs': ['.tmp/public/min/production.css']
+          'views/**/*.handlebars': ['.tmp/public/min/production.css'],
+          'views/**/*.hbs': jsFilesToInject
         }
       },
 
-      // Bring in JST template object
+      // Bring in Templates object
       devTpl: {
         options: {
           startTag: '<!--TEMPLATES-->',
@@ -344,80 +323,12 @@ module.exports = function (grunt) {
           appRoot: '.tmp/public'
         },
         files: {
-          '.tmp/public/index.html': ['.tmp/public/jst.js'],
-          'views/**/*.html': ['.tmp/public/jst.js'],
-          'views/**/*.ejs': ['.tmp/public/jst.js']
-        }
-      },
-
-
-      /*******************************************
-       * Jade linkers (TODO: clean this up)
-       *******************************************/
-
-      devJsJADE: {
-        options: {
-          startTag: '// SCRIPTS',
-          endTag: '// SCRIPTS END',
-          fileTmpl: 'script(type="text/javascript", src="%s")',
-          appRoot: '.tmp/public'
-        },
-        files: {
-          'views/**/*.jade': jsFilesToInject
-        }
-      },
-
-      prodJsJADE: {
-        options: {
-          startTag: '// SCRIPTS',
-          endTag: '// SCRIPTS END',
-          fileTmpl: 'script(type="text/javascript", src="%s")',
-          appRoot: '.tmp/public'
-        },
-        files: {
-          'views/**/*.jade': ['.tmp/public/min/production.js']
-        }
-      },
-
-      devStylesJADE: {
-        options: {
-          startTag: '// STYLES',
-          endTag: '// STYLES END',
-          fileTmpl: 'link(rel="stylesheet", href="%s")',
-          appRoot: '.tmp/public'
-        },
-        files: {
-          'views/**/*.jade': cssFilesToInject
-        }
-      },
-
-      prodStylesJADE: {
-        options: {
-          startTag: '// STYLES',
-          endTag: '// STYLES END',
-          fileTmpl: 'link(rel="stylesheet", href="%s")',
-          appRoot: '.tmp/public'
-        },
-        files: {
-          'views/**/*.jade': ['.tmp/public/min/production.css']
-        }
-      },
-
-      // Bring in JST template object
-      devTplJADE: {
-        options: {
-          startTag: '// TEMPLATES',
-          endTag: '// TEMPLATES END',
-          fileTmpl: 'script(type="text/javascript", src="%s")',
-          appRoot: '.tmp/public'
-        },
-        files: {
-          'views/**/*.jade': ['.tmp/public/jst.js']
+          '.tmp/public/index.html': ['.tmp/public/templates.js'],
+          'views/**/*.html': ['.tmp/public/templates.js'],
+          'views/**/*.handlebars': ['.tmp/public/templates.js'],
+          'views/**/*.hbs': ['.tmp/public/templates.js']
         }
       }
-      /************************************
-       * Jade linker end
-       ************************************/
     },
 
     watch: {
@@ -429,7 +340,7 @@ module.exports = function (grunt) {
       assets: {
 
         // Assets to watch:
-        files: ['assets/**/*','sass/*.scss'],
+        files: ['assets/**/*'],
 
         // When assets are changed:
         tasks: ['compileAssets', 'linkAssets']
@@ -441,16 +352,15 @@ module.exports = function (grunt) {
   grunt.registerTask('default', [
     'compileAssets',
     'linkAssets',
-    'watch'
+    'watch',
   ]);
 
   grunt.registerTask('compileAssets', [
     'clean:dev',
-    'jst:dev',
-    'compass:dev',
     'less:dev',
     'copy:dev',    
-    'coffee:dev'
+    'coffee:dev',
+    'handlebars:dev'
   ]);
 
   grunt.registerTask('linkAssets', [
@@ -458,10 +368,7 @@ module.exports = function (grunt) {
     // Update link/script/template references in `assets` index.html
     'sails-linker:devJs',
     'sails-linker:devStyles',
-    'sails-linker:devTpl',
-    'sails-linker:devJsJADE',
-    'sails-linker:devStylesJADE',
-    'sails-linker:devTplJADE'
+    'sails-linker:devTpl'
   ]);
 
 
@@ -478,8 +385,6 @@ module.exports = function (grunt) {
   grunt.registerTask('prod', [
     'clean:dev',
     'handlebars:dev',
-    'jst:dev',
-    'compass:dev',
     'less:dev',
     'copy:dev',
     'coffee:dev',
@@ -488,10 +393,7 @@ module.exports = function (grunt) {
     'cssmin',
     'sails-linker:prodJs',
     'sails-linker:prodStyles',
-    'sails-linker:devTpl',
-    'sails-linker:prodJsJADE',
-    'sails-linker:prodStylesJADE',
-    'sails-linker:devTplJADE'
+    'sails-linker:devTpl'
   ]);
 
   // When API files are changed:
