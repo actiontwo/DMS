@@ -34,8 +34,7 @@ module.exports.routes = {
   // (This would also work if you had a file at: `/views/home.ejs`)
   '/': {
     //view: 'site/index'
-     controller:'menu',
-     action:'index'
+     controller:'main'     
   },
   //get all menu from database
   '/menu':{
