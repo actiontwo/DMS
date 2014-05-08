@@ -24,41 +24,5 @@ module.exports = {
    * Overrides for the settings in `config/controllers.js`
    * (specific to MenuController)
    */
-  _config: {},
-
-   index:function(req,res){
-   		Menu.find().done(function(err,menu){
-   			if(menu){
-   				res.view({
-   					 partials: {
-      			        header: '../partials/site/header',
-      			        footer: '../partials/site/footer',
-      			        menu: '../partials/site/menu',
-			         },
-   				});   				
-   			}
-   		});
-   		
-   },
-   getall:function(req,res){
-   	Menu.find().done(function(err,data){
-   		if(err){
-   			console.log('Eror');
-   		}
-   		else{
-   			res.send({'menu':data});
-   		}
-   	});
-   },
-   create:function(req,res){
-      Menu.create(req.params.all(),function(err,data){
-         if(err)
-            res.send(err);
-         else
-            res.send(data);
-      });
-   }
-
-   
-  
+  _config: {} 
 };
