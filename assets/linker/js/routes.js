@@ -5,7 +5,7 @@ var AppRouter = Backbone.Router.extend({
 	loadDishMenu: function() {
 		dishMenuCollection = new DishMenuCollection;
 		dishMenuView = new DishMenuView({collection: dishMenuCollection});
-		dishMenuCollection.fetch();
+		dishMenuCollection.fetch({data:$.param({page:0,number:5})});
 		$("#main").html(dishMenuView.el);
 	}
 })

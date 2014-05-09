@@ -15,15 +15,20 @@ var DishMenuView = Backbone.View.extend({
             note: 1
         };
     },
+    page:0,
     render: function() {
         this.$el.html(Templates['menu/view_menu']({
             menu: this.collection.toJSON()
         }));
+        init();
+        
     },
     events: {
         'click [id^="edit-menu"]': 'editMenu',
         'click [id^="save-menu"]': 'saveMenu',
-        'click th': 'sortMenu'
+        'click th': 'sortMenu',
+        'click #menu_prev': 'prev',
+        'click #menu_next':'next'
     },
     editMenu: function(ev) {
         // change current values fields into text fields
@@ -32,14 +37,16 @@ var DishMenuView = Backbone.View.extend({
                 var text = $(this).html();
                 $(this).html('<input type="text" value="' + text + '">');
             }
-        })
-
+        });
+        $(ev.currentTarget).parents('[id^=menu_]').find('td:first-child').find('input').addClass('datepicker');
+        $(ev.currentTarget).parents('[id^=menu_]').find('td:nth-child(2)').html('<select><option>Lunch</option><option>Dinner</option></select>');
         // change edit icon to save icon		
         $(ev.currentTarget).attr('id', function() {
             return $(this).attr('id').replace('edit', 'save');
         });
         // bind save event to the button
         this.delegateEvents();
+        init();
     },
     saveMenu: function(ev) {
         var id = $(ev.currentTarget).data('id');
@@ -48,6 +55,11 @@ var DishMenuView = Backbone.View.extend({
         $(ev.currentTarget).parents('[id^=menu_]').find('td').each(function() {
             if ($(this).find('input').length) {
                 model.set($(this).data('attribute'), $(this).find('input').val());
+            }
+        });
+        $(ev.currentTarget).parents('[id^=menu_]').find('td').each(function() {
+            if ($(this).find('select').length) {
+                model.set($(this).data('attribute'), $(this).find('select').val());
             }
         });
         model.save();
@@ -68,5 +80,24 @@ var DishMenuView = Backbone.View.extend({
         this.collection.sort();
         // reverse sort direction
         this.collection.sort_order[attribute] = -this.collection.sort_order[attribute];
+    },
+    prev:function(){
+        if(this.page>0){
+                this.page--;
+            this.collection.fetch({data:$.param({page:this.page,number:5})});
+        }
+        else
+            this.page==0;
+        
+    },
+    next:function(){
+        if(this.page<2) {
+            this.page++;
+            this.collection.fetch({data:$.param({page:this.page,number:5})});
+        }
+        else
+            this.page==2;
+        
+        
     }
 })
