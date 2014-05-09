@@ -365,10 +365,25 @@ header {
   width: 100%;
   font-weight: normal;
 }
-
+#print_menu .table .reference td {
+  padding: 5px 0px;
+}
+.table .reference td input{
+  width: 90%;
+}
+.table .reference td:first-child input {
+  width: 70%;
+  margin-right: 2px;
+}
+.table .reference td:first-child img {
+  margin-top: -10px;
+}
 /* line 290, ../../sass/style.scss */
 .table .reference tr:first-child th {
   padding: 10px 0px;
+}
+.table .reference tr:first-child th:first-child {
+  width: 130px;
 }
 
 /* line 293, ../../sass/style.scss */

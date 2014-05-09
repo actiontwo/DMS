@@ -1,7 +1,6 @@
 <div class="header">
     <span>Print Menu</span>
 </div>
-<figure class="iconsp-cancer-15px close_popup"></figure>
 <div class="content">
     <div class="find">
         <div class="find-from">
@@ -24,7 +23,6 @@
         <table class="reference">
             <tbody>
                 <tr>
-                    <th>No</th>
                     <th>Date(dd/mm/yy)</th>
                     <th>Brunch</th>
                     <th>Dish1</th>
@@ -36,23 +34,22 @@
                 </tr>
                 {{#menu}}
                 <tr>
-	                <th>{{no}}</th>
-	                <th>{{date}}</th>
-	                <th>{{brunch}}</th>
-	                <th>{{dish1}}</th>
-	                <th>{{dish2}}</th>
-	                <th>{{dish3}}</th>
-	                <th>{{dish4}}</th>
-	                <th>{{dish5}}</th>
-	                <th>{{note}}</th>
+                    <td data-attribute="date" data-id="{{id}}">{{date}}</td>
+                    <td data-attribute="brunch" data-id="{{id}}">{{brunch}}</td>
+                    <td data-attribute="dish1" data-id="{{id}}">{{dish1}}</td>
+                    <td data-attribute="dish2" data-id="{{id}}">{{dish2}}</td>
+                    <td data-attribute="dish3" data-id="{{id}}">{{dish3}}</td>
+                    <td data-attribute="dish4" data-id="{{id}}">{{dish4}}</td>
+                    <td data-attribute="dish5" data-id="{{id}}">{{dish5}}</td>
+                    <td data-attribute="note" data-id="{{id}}">{{note}}</td>
                 </tr>
                 {{/menu}}
             </tbody>
         </table>
     </div>
     <div class="btn-end">
-        <a href="#">Delete</a>
-        <a href="#" onclick="show_popup('.mn-create-menu')">Create</a>
+        <a href="#dish_menu">Back</a>
+        <a href="#">Print</Delete>
     </div>
     <div class="clear-fix"></div>
 </div>
