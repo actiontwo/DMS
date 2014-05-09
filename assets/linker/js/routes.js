@@ -18,9 +18,9 @@ var AppRouter = Backbone.Router.extend({
 	},
 	createDish: function(){
 		dishListCollection = new DishListCollection;
-		dishListView = new DisListView({collection:dishListCollection});
+		dishListView = new DishListView({collection:dishListCollection});
 		dishListCollection.fetch();
-		#('#main').html(dishListView.el);
+		$('#main').html(dishListView.el);
 	}
 
 
