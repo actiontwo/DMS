@@ -3,7 +3,7 @@ var DishMenuView = Backbone.View.extend({
     className: 'menus',
     id: 'dish_menu',
     initialize: function() {
-        this.listenTo(this.collection, 'sync reset sort', this.render);
+        this.listenTo(this.collection, 'sync reset sort remove', this.render);
         this.collection.sort_order = {
             date: 1,
             brunch: 1,
