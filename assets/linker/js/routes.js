@@ -2,6 +2,7 @@ var AppRouter = Backbone.Router.extend({
 	routes: {
 		dish_menu: 'loadDishMenu',
 		print_menu:'loadPrintMenu',
+		expense_menu: 'loadExpenseMenu'
 		create_dish: 'createDish'
 	},
 	loadDishMenu: function() {
@@ -15,6 +16,12 @@ var AppRouter = Backbone.Router.extend({
 		printMenuView = new PrintMenuView({collection:printMenuCollection});
 		printMenuCollection.fetch();
 		$('#main').html(printMenuView.el);
+	},
+	loadExpenseMenu: function(){
+		expenseMenuCollection = new ExpenseMenuCollection;
+		expenseMenuView = new ExpenseMenuView({collection: expenseMenuCollection});
+		expenseMenuCollection.fetch();
+		$("#main").html(expenseMenuView.el);
 	},
 	createDish: function(){
 		dishListCollection = new DishListCollection;

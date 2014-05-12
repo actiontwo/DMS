@@ -830,7 +830,11 @@ header {
   top: 5px;
 }
 .menus .iconsp-edit-25px {
-  cursor:pointer;
+  cursor: pointer;
+}
+
+.menus .iconsp-remove-red-25px{
+  cursor: pointer;
 }
 
 /* line 668, ../../sass/style.scss */

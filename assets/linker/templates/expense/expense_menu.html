@@ -1,0 +1,54 @@
+<div class="header">
+	<span>Expense</span>
+</div>
+<div class="content">
+	<div class="find">
+		<div class="find-from">
+			<div>From: <input class="datepicker" type="text" placeholder="11/11/2013"></div>
+		</div>
+		<div class="find-to">
+			<div>To: <input class="datepicker" type="text" placeholder="19/11/2013"></div>
+		</div>
+	</div>
+	<div class="clear-fix"></div>
+	<div class="confirm">
+		<a href="#">OK</a>
+	</div>
+	<div class="clear-fix"></div>
+	<div class="table">
+		<table class="reference">
+			<tbody>
+				<tr>
+					<th></th>
+					<th>Date(dd/mm/yy)</th>
+					<th>Money(VND)</th>
+					<th>Invoice ID</th>
+					<th class="invoice-img">Invoice Images</th>
+					<th class="note">Note</th>
+					<th class="rm-edit"></th>
+				</tr>
+				{{#expense}}
+				<tr>
+					<td><input type="checkbox">{{check}}</td>
+					<td>{{date}}</td>
+					<td>{{money}}</td>
+					<td>{{invoiceID}}</td>
+					<td>
+						<figure class="iconsp-invoice-25px">{{invoiceImage}}</figure>
+					</td>
+					<td>{{note}}</td>
+					<td>
+						<figure class="iconsp-remove-red-25px" id="delete-expense-{{id}}"></figure>
+						<figure class="iconsp-edit-25px" id="edit-expense-{{id}}"></figure>
+					</td>
+				</tr>
+				{{/expense}}
+			</tbody>
+		</table>
+	</div>
+	<div class="btn-end">
+		<a  href="#" onclick="show_popup('.es-delete')">Delete</a>
+		<a href="#" onclick="show_popup('.es-create-expense')">Create</a>
+	</div>
+	<div class="clear-fix"></div>
+</div>
