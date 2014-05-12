@@ -16,6 +16,7 @@ var DishMenuView = Backbone.View.extend({
         };
     },
     page:0,
+    number:5,
     render: function() {
         this.$el.html(Templates['menu/view_menu']({
             menu: this.collection.toJSON()
@@ -24,16 +25,18 @@ var DishMenuView = Backbone.View.extend({
         
     },
     events: {
-        'click [id^="edit-menu"]': 'editMenu',
-        'click [id^="save-menu"]': 'saveMenu',
+        'click [id^="button-edit-menu"]': 'editMenu',
+        'click [id^="button-save-menu"]': 'saveMenu',
+        'click [id^="button-remove-menu"]':'removeMenu',
         'click th': 'sortMenu',
         'click #menu_prev': 'prev',
-        'click #menu_next':'next'
+        'click #menu_next':'next',
+        'change #menu_number':'select'
     },
     editMenu: function(ev) {
         // change current values fields into text fields
         $(ev.currentTarget).parents('[id^=menu_]').find('td').each(function() {
-            if (!$(this).find('[id^="edit-menu"]').length) {
+            if (!$(this).find('[id^="button"]').length) {
                 var text = $(this).html();
                 $(this).html('<input type="text" value="' + text + '">');
             }
@@ -44,6 +47,10 @@ var DishMenuView = Backbone.View.extend({
         $(ev.currentTarget).attr('id', function() {
             return $(this).attr('id').replace('edit', 'save');
         });
+        $(ev.currentTarget).attr('class', function() {
+            return $(this).attr('class').replace('edit', 'edit-red');
+        });
+
         // bind save event to the button
         this.delegateEvents();
         init();
@@ -70,6 +77,16 @@ var DishMenuView = Backbone.View.extend({
         // bind edit event to the button
         this.render();
     },
+    removeMenu:function(ev){
+        var id = $(ev.currentTarget).data('id');
+        var model = this.collection.get(id);
+        model.destroy({
+            success: this.collection.fetch.bind(this.collection, {data:$.param({page:0,number:5})}),
+            error: function(err) {
+                alert("cannot delete the dish: " + err);
+            }
+        });    
+    },
     sortMenu: function(ev) {
     	var attribute = $(ev.currentTarget).data('attribute');
         this.collection.comparator = function(menuA, menuB) {            
@@ -84,7 +101,7 @@ var DishMenuView = Backbone.View.extend({
     prev:function(){
         if(this.page>0){
                 this.page--;
-            this.collection.fetch({data:$.param({page:this.page,number:5})});
+            this.collection.fetch({data:$.param({page:this.page,number:this.number})});
         }
         else
             this.page==0;
@@ -93,11 +110,14 @@ var DishMenuView = Backbone.View.extend({
     next:function(){
         if(this.page<2) {
             this.page++;
-            this.collection.fetch({data:$.param({page:this.page,number:5})});
+            this.collection.fetch({data:$.param({page:this.page,number:this.number})});
         }
         else
             this.page==2;
-        
-        
+    },
+    select:function(ev){
+        var number=$(ev.currentTarget).val();
+        this.number = number;
+        this.collection.fetch({data:$.param({page:0,number:number})});
     }
 })

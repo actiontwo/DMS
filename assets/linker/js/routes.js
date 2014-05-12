@@ -34,10 +34,7 @@ var AppRouter = Backbone.Router.extend({
 		createMenuCollection = new DishMenuCollection;
 		createMenuView = new CreateMenuView({collection:createMenuCollection});
 		$("#main").html(createMenuView.el);
-		init();
 	}
-
-
 })
 
 $(function() {
