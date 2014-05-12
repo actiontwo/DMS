@@ -372,7 +372,7 @@ header {
   width: 90%;
 }
 .table .reference td:first-child input {
-  width: 70%;
+  width: 70%!important;
   margin-right: 2px;
 }
 .table .reference td:first-child img {
@@ -887,10 +887,7 @@ header {
   height: 24px;
   text-align: center;
 }
-/* line 711, ../../sass/style.scss */
-.mn-create-menu .table tr:first-child th:first-child {
-  width: 5%;
-}
+
 /* line 714, ../../sass/style.scss */
 .mn-create-menu .table th {
   padding: 5px 0px;

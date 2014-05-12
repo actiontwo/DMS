@@ -286,6 +286,9 @@ header {
     border-collapse: collapse;
     width: 100%;
     font-weight: normal;
+    input {
+        width: 90%;
+    }
 }
 .table .reference tr:first-child th {
     padding: 10px 0px;
