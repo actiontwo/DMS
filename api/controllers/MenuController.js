@@ -25,19 +25,24 @@ module.exports = {
    * (specific to MenuController)
    */
   _config: {} ,
-  find:function(req,res){
-  		//client send page number and number display in a page
-  		var page = parseInt(req.query.page);
-  		var number = parseInt(req.query.number);
-  		Menu.find().limit(number).skip(number*page).done(function(err,data){
-  			if(err)
-  				console.log(err);
-  			else
-  			{
-  				res.send(data);
-  			}	
-  		});
-
+  find:function(req,res, next){
+    
+  		//client send page number and number display in a page      
+  		if (req.query.page && req.query.number) {
+        page = req.query.page;
+        number = req.query.number;
+    		Menu.find().limit(number).skip(number*page).done(function(err,data){
+    			if(err)
+    				console.log(err);
+    			else
+    			{
+    				res.send(data);
+    			}	
+    		});
+      } else {
+        next();
+      }
+        
   },
  
 };
