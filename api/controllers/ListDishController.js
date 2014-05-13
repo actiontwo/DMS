@@ -24,25 +24,6 @@ module.exports = {
    * Overrides for the settings in `config/controllers.js`
    * (specific to ListDishController)
    */
-  _config: {},
-  getall:function(req,res){ 	
-  	ListDish.find().done(function(err,data){
-  		if(err)
-  			console.log('ERROR',err);
-  		else
-  			res.send({'listdish':data});
-  	});
-  },
-  create:function(req,res){
-    //var dish = req.param('dish');
-    console.log(req.params.all());  
-    ListDish.create(req.params.all(),function(err,data){
-       if(err)
-         console.log('ERROR',err);
-       else
-         res.send(data);
-    });
-  }
-
+  _config: {}
   
 };

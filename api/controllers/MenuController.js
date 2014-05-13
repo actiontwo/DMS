@@ -24,5 +24,20 @@ module.exports = {
    * Overrides for the settings in `config/controllers.js`
    * (specific to MenuController)
    */
-  _config: {} 
+  _config: {} ,
+  find:function(req,res){
+  		//client send page number and number display in a page
+  		var page = parseInt(req.query.page);
+  		var number = parseInt(req.query.number);
+  		Menu.find().limit(number).skip(number*page).done(function(err,data){
+  			if(err)
+  				console.log(err);
+  			else
+  			{
+  				res.send(data);
+  			}	
+  		});
+
+  },
+ 
 };

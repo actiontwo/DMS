@@ -37,6 +37,14 @@ input {
   clear: both;
 }
 
+.checkAll{
+  cursor: pointer;
+}
+
+.uncheckAll{
+  cursor: pointer;
+}
+
 /* line 30, ../../sass/style.scss */
 th, td {
   border: 1px solid #bbb;
@@ -92,6 +100,10 @@ figure {
   background-position: -96px 0px;
 }
 
+.menus .iconsp-remove-25px {
+  cursor: pointer;
+}
+
 /* line 68, ../../sass/style.scss */
 .iconsp-remove-red-25px {
   background-position: -96px -23px;
@@ -105,6 +117,10 @@ figure {
 /* line 74, ../../sass/style.scss */
 .iconsp-edit-red-25px {
   background-position: -76px -23px;
+}
+
+.menus .iconsp-edit-red-25px{
+  cursor: pointer;
 }
 
 /* line 77, ../../sass/style.scss */
@@ -308,6 +324,7 @@ header {
   float: right;
   margin-bottom: 14px;
   margin-top: 10px;
+  margin-right: 5px;
 }
 /* line 242, ../../sass/style.scss */
 .confirm:hover {
@@ -365,10 +382,25 @@ header {
   width: 100%;
   font-weight: normal;
 }
-
+#print_menu .table .reference td {
+  padding: 5px 0px;
+}
+.table .reference td input{
+  width: 90%;
+}
+.table .reference td:first-child input {
+  width: 70%;
+  margin-right: 2px;
+}
+.table .reference td:first-child img {
+  margin-top: -10px;
+}
 /* line 290, ../../sass/style.scss */
 .table .reference tr:first-child th {
   padding: 10px 0px;
+}
+.table .reference tr:first-child th:first-child {
+  width: 130px;
 }
 
 /* line 293, ../../sass/style.scss */

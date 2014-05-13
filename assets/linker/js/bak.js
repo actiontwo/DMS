@@ -71,4 +71,8 @@ function show_popup(name_popup) {
     $('[class*="style_popup"]').hide();
     $(name_popup).show();
     $('.popup_area').show();
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 86770a2544c7c721bb75f35a812f810919740e8d
