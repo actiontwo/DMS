@@ -21,10 +21,17 @@ var PrintMenuView = Backbone.View.extend({
         this.$el.html(Templates['menu/print_menu']({
             menu: this.collection.toJSON()
         }));
-        init();
+        // Calendar
+        this.$('.datepicker').datepicker({      
+            showOn: "button",
+            buttonImage: "images/calendar.png",
+            buttonImageOnly: true,
+        });
+        return this;
     },
     events: {
-        'click th': 'sortMenu'
+        'click th': 'sortMenu',
+        'click .confirm':'filterMenu'
     },
     sortMenu: function(ev) {
     	var attribute = $(ev.currentTarget).data('attribute');
@@ -37,4 +44,27 @@ var PrintMenuView = Backbone.View.extend({
         // reverse sort direction
         this.collection.sort_order[attribute] = -this.collection.sort_order[attribute];
     },
+    filterMenu:function(){
+        var from = $('.find-from input').val();
+        var to = $('.find-to input').val();
+        if(from>to||from===''||to===''){
+            alert('Input invalid');
+            return;
+        }
+        var event = _.filter(this.collection.toJSON(),function(model){
+            return (model.date>=from&&model.date<=to);
+        });
+        //check result search
+        
+          //render view
+         this.$el.html(Templates['menu/print_menu']({
+            menu: event
+        }));
+        //calendar
+         this.$('.datepicker').datepicker({      
+            showOn: "button",
+            buttonImage: "images/calendar.png",
+            buttonImageOnly: true,
+        });    
+    }
 });

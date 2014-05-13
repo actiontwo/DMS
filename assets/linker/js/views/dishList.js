@@ -9,7 +9,12 @@ var DishListView = Backbone.View.extend({
         this.$el.html(Templates['menu/create_dish']({
             listdish: this.collection.toJSON()
         }));
-        init();
+        this.$('.datepicker').datepicker({      
+            showOn: "button",
+            buttonImage: "images/calendar.png",
+            buttonImageOnly: true,
+        });
+        return this;
         
     },
     events:{
@@ -18,7 +23,12 @@ var DishListView = Backbone.View.extend({
     saveDish: function(){
         var model = new DishListModel;
         model.set({dish:$('#dishname').val()});
-        model.save();
-        this.collection.add(model);
+        if(model.get('dish')!='')
+        {
+            model.save();
+            this.collection.add(model);
+        }
+        else 
+            alert('Please enter dish name!')
     }
 });

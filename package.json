@@ -10,7 +10,7 @@
     "ejs": "0.8.4",
     "optimist": "0.3.4",
     "waterline": "*",
-    "sails-mongo": "*",
+    "sails-mongo": "0.9.x",
     "handlebars": "*",
     "helpers": "*",
     "grunt-contrib-handlebars": "^0.8.0"

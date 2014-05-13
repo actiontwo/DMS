@@ -17,11 +17,16 @@ var DishMenuView = Backbone.View.extend({
     },
     page:0,
     number:5,
-    render: function() {
-        this.$el.html(Templates['menu/view_menu']({
-            menu: this.collection.toJSON()
-        }));
-        init();
+    render: function() {      
+            this.$el.html(Templates['menu/view_menu']({
+                menu: this.collection.toJSON()
+            }));
+        this.$('.datepicker').datepicker({      
+            showOn: "button",
+            buttonImage: "images/calendar.png",
+            buttonImageOnly: true,
+        });
+        return this;
         
     },
     events: {
@@ -31,7 +36,8 @@ var DishMenuView = Backbone.View.extend({
         'click th': 'sortMenu',
         'click #menu_prev': 'prev',
         'click #menu_next':'next',
-        'change #menu_number':'select'
+        'change #menu_number':'select',
+        'click #filter_menu': 'filterMenu'
     },
     editMenu: function(ev) {
         // change current values fields into text fields
@@ -48,12 +54,18 @@ var DishMenuView = Backbone.View.extend({
             return $(this).attr('id').replace('edit', 'save');
         });
         $(ev.currentTarget).attr('class', function() {
-            return $(this).attr('class').replace('edit', 'edit-red');
+            return $(this).attr('class').replace('edit', 'save');
         });
 
         // bind save event to the button
         this.delegateEvents();
-        init();
+        // calendar
+        this.$('.datepicker').datepicker({      
+            showOn: "button",
+            buttonImage: "images/calendar.png",
+            buttonImageOnly: true,
+        });
+        return this;
     },
     saveMenu: function(ev) {
         var id = $(ev.currentTarget).data('id');
@@ -97,6 +109,28 @@ var DishMenuView = Backbone.View.extend({
         this.collection.sort();
         // reverse sort direction
         this.collection.sort_order[attribute] = -this.collection.sort_order[attribute];
+    },
+    filterMenu:function(){
+        var from = $('.find-from input').val();
+        var to = $('.find-to input').val();
+        //check date filter
+         if(from>to||from===''||to===''){
+            alert('Input invalid');
+            return;
+        }
+        var event = _.filter(this.collection.toJSON(),function(model){
+            return (model.date>=from&&model.date<=to);
+        });
+        //render view
+         this.$el.html(Templates['menu/view_menu']({
+            menu: event
+        }));
+        //calendar
+         this.$('.datepicker').datepicker({      
+            showOn: "button",
+            buttonImage: "images/calendar.png",
+            buttonImageOnly: true,
+        });    
     },
     prev:function(){
         if(this.page>0){

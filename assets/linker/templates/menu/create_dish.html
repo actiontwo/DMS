@@ -2,7 +2,7 @@
     <span>Create Dish</span>
 </div>
 <div class="content">
-    <form action="" method="POST" id="create-dish" class="create_form_popup ">
+    <div id="create-dish" class="create_form_popup">
         <label>List Dish</label>
         <select id="list_dish">
             {{#listdish}}
@@ -14,7 +14,10 @@
         <label>Note</label>
         <textarea name="note"></textarea>
         <div id="btn-save" class="confirm" >
-            <a class="submit">Save</a>
+            <a>Save</a>
         </div>
-    </form>
+        <div class="confirm" >
+            <a href="#dish_menu">Back</a>
+        </div>
+    </div>
 </div>

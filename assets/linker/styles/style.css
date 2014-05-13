@@ -89,7 +89,7 @@ figure {
 
 /* line 65, ../../sass/style.scss */
 .iconsp-remove-25px {
-  background-position: -96px 0px;
+  background-position: -97px 3px;
   cursor: pointer;
 }
 
@@ -101,7 +101,7 @@ figure {
 
 /* line 71, ../../sass/style.scss */
 .iconsp-edit-25px {
-  background-position: -76px 0px;
+  background-position: -73px 2px;
   cursor: pointer;
 }
 
@@ -125,7 +125,7 @@ figure {
 
 /* line 83, ../../sass/style.scss */
 .iconsp-save-25px {
-  background-position: -28px -22px;
+  background-position: -25px -21px;
   cursor: pointer;
 }
 
@@ -805,6 +805,12 @@ header {
 }
 
 /*---Menus ---*/
+#dish_menu table th:nth-child(9),#dish_menu table th:nth-child(10){
+  width: 20px;
+}
+#dish_menu table th:nth-child(2) {
+  width: 68px;
+}
 /* line 640, ../../sass/style.scss */
 .menus .content {
   padding: 40px 60px;
@@ -836,10 +842,6 @@ header {
   position: relative;
   top: 5px;
 }
-.menus .iconsp-edit-25px, .menus .iconsp-remove-25px {
-  
-}
-
 .menus .iconsp-remove-red-25px{
   cursor: pointer;
 }
@@ -1328,4 +1330,8 @@ header {
 /* line 1087, ../../sass/style.scss */
 .create_form_popup .datepicker {
   width: inherit;
+}
+.create_form_popup .confirm {
+  margin-right: 10px;
+  cursor: pointer;
 }
