@@ -5,6 +5,7 @@ var AppRouter = Backbone.Router.extend({
 		expense_menu: 'loadExpenseMenu',
 		create_dish: 'createDish',
 		create_menu: 'createMenu',
+		deposit:'loadDeposit',
 	},
 	loadDishMenu: function() {
 		dishMenuCollection = new DishMenuCollection;
@@ -34,6 +35,12 @@ var AppRouter = Backbone.Router.extend({
 		createMenuCollection = new DishMenuCollection;
 		createMenuView = new CreateMenuView({collection:createMenuCollection});
 		$("#main").html(createMenuView.el);
+	},
+	loadDeposit:function(){
+		depositCollection = new DepositCollection;
+		depositView = new DepositView({collection:depositCollection});
+		depositCollection.fetch();
+		$("#main").html(depositView.el);
 	}
 })
 
