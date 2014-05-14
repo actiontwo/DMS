@@ -4,18 +4,14 @@
 <div class="content">
     <div class="find">
         <div class="find-from">
-            <div>From:
-                <input class="datepicker" type="text">
-            </div>
+            From:<input class="datepicker" type="text">
         </div>
         <div class="find-to">
-            <div>To:
-                <input class="datepicker" type="text">
-            </div>
+            To:<input class="datepicker" type="text">
         </div>
     </div>
     <div class="clear-fix"></div>
-    <div class="confirm">
+    <div id="filter_menu" class="confirm">
         <a href="#">OK</a>
     </div>
     <div class="clear-fix"></div>
@@ -32,6 +28,7 @@
                     <th data-attribute="dish5">Dish5</th>
                     <th data-attribute="note">Note</th>
                     <th></th>
+                    <th></th>
                 </tr>
                 {{#menu}}
                 <tr id="menu_{{id}}" data-id="{{id}}">
@@ -44,7 +41,10 @@
                     <td data-attribute="dish5" data-id="{{id}}">{{dish5}}</td>
                     <td data-attribute="note" data-id="{{id}}">{{note}}</td>
                     <td>
-                        <figure class="iconsp-edit-25px" id="edit-menu-{{id}}" data-id="{{id}}"></figure>
+                        <figure class="iconsp-edit-25px" id="button-edit-menu-{{id}}" data-id="{{id}}"></figure>
+                    </td>
+                    <td>
+                        <figure class="iconsp-remove-25px" id="button-remove-menu-{{id}}" data-id="{{id}}"></figure>
                     </td>
                 </tr>
                 {{/menu}}

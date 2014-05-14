@@ -1,3 +1,3 @@
 var DishMenuModel = Backbone.Model.extend({
-	url:'/menu'	
+	urlRoot:'/menu'
 })

@@ -16,7 +16,7 @@ module.exports = {
   		type: "date",
   		required: true
   	},
-  	bruch: {
+  	brunch: {
   		type:"string",
   		required: true
   	},

@@ -1,5 +1,5 @@
 /**
- * MenuController
+ * DepositController
  *
  * @module      :: Controller
  * @description	:: A set of functions called `actions`.
@@ -22,27 +22,9 @@ module.exports = {
 
   /**
    * Overrides for the settings in `config/controllers.js`
-   * (specific to MenuController)
+   * (specific to DepositController)
    */
-  _config: {} ,
-  find:function(req,res, next){
-    
-  		//client send page number and number display in a page      
-  		if (req.query.page && req.query.number) {
-        page = req.query.page;
-        number = req.query.number;
-    		Menu.find().limit(number).skip(number*page).done(function(err,data){
-    			if(err)
-    				console.log(err);
-    			else
-    			{
-    				res.send(data);
-    			}	
-    		});
-      } else {
-        next();
-      }
-        
-  },
- 
+  _config: {}
+
+  
 };

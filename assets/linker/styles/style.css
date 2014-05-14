@@ -97,7 +97,8 @@ figure {
 
 /* line 65, ../../sass/style.scss */
 .iconsp-remove-25px {
-  background-position: -96px 0px;
+  background-position: -97px 3px;
+  cursor: pointer;
 }
 
 .menus .iconsp-remove-25px {
@@ -107,16 +108,19 @@ figure {
 /* line 68, ../../sass/style.scss */
 .iconsp-remove-red-25px {
   background-position: -96px -23px;
+  cursor: pointer;
 }
 
 /* line 71, ../../sass/style.scss */
 .iconsp-edit-25px {
-  background-position: -76px 0px;
+  background-position: -73px 2px;
+  cursor: pointer;
 }
 
 /* line 74, ../../sass/style.scss */
 .iconsp-edit-red-25px {
   background-position: -76px -23px;
+  cursor: pointer;
 }
 
 .menus .iconsp-edit-red-25px{
@@ -126,16 +130,19 @@ figure {
 /* line 77, ../../sass/style.scss */
 .iconsp-invoice-25px {
   background-position: 0px -22px;
+  cursor: pointer;
 }
 
 /* line 80, ../../sass/style.scss */
 .iconsp-cancer-15px {
   background-position: 0px -48px;
+  cursor: pointer;
 }
 
 /* line 83, ../../sass/style.scss */
 .iconsp-save-25px {
-  background-position: -28px -22px;
+  background-position: -25px -21px;
+  cursor: pointer;
 }
 
 /* line 86, ../../sass/style.scss */
@@ -389,7 +396,7 @@ header {
   width: 90%;
 }
 .table .reference td:first-child input {
-  width: 70%;
+  width: 70%!important;
   margin-right: 2px;
 }
 .table .reference td:first-child img {
@@ -815,6 +822,12 @@ header {
 }
 
 /*---Menus ---*/
+#dish_menu table th:nth-child(9),#dish_menu table th:nth-child(10){
+  width: 20px;
+}
+#dish_menu table th:nth-child(2) {
+  width: 68px;
+}
 /* line 640, ../../sass/style.scss */
 .menus .content {
   padding: 40px 60px;
@@ -846,10 +859,6 @@ header {
   position: relative;
   top: 5px;
 }
-.menus .iconsp-edit-25px {
-  cursor: pointer;
-}
-
 .menus .iconsp-remove-red-25px{
   cursor: pointer;
 }
@@ -904,10 +913,7 @@ header {
   height: 24px;
   text-align: center;
 }
-/* line 711, ../../sass/style.scss */
-.mn-create-menu .table tr:first-child th:first-child {
-  width: 5%;
-}
+
 /* line 714, ../../sass/style.scss */
 .mn-create-menu .table th {
   padding: 5px 0px;
@@ -1341,4 +1347,8 @@ header {
 /* line 1087, ../../sass/style.scss */
 .create_form_popup .datepicker {
   width: inherit;
+}
+.create_form_popup .confirm {
+  margin-right: 10px;
+  cursor: pointer;
 }
