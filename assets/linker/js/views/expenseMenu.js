@@ -59,7 +59,6 @@ ExpenseMenuView = Backbone.View.extend({
         });
         // bind save event to the button
         this.delegateEvents();
-        
 	},
     saveExpense: function(ev) {
         var id = $(ev.currentTarget).data('id');

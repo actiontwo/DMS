@@ -8,6 +8,8 @@ var AppRouter = Backbone.Router.extend({
 		create_dish: 'createDish',
 		create_menu: 'createMenu',
 		deposit:'loadDeposit',
+		register_meal: 'loadRegisterMeal',
+		view_register_meal: 'loadViewRegisterMeal'
 	},
 	loadDishMenu: function() {
 		dishMenuCollection = new DishMenuCollection;
@@ -43,6 +45,16 @@ var AppRouter = Backbone.Router.extend({
 		depositView = new DepositView({collection:depositCollection});
 		depositCollection.fetch();
 		$("#main").html(depositView.el);
+	},
+	loadRegisterMeal: function(){
+		registerMealCollection = new RegisterMealCollection();
+		registerMealView = new RegisterMealView({collection: registerMealCollection});
+		registerMealCollection.fetch();
+		$("#main").html(registerMealView.el);
+	},
+	loadViewRegisterMeal: function(){
+		viewRegisterMealView = new ViewRegisterMealView({collection: registerMealCollection});
+		$("#main").html(viewRegisterMealView.el);
 	}
 })
 

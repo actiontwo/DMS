@@ -1,3 +1,3 @@
-var ExpenseMenuModel = Backbone.Model.extend({
+ExpenseMenuModel = Backbone.Model.extend({
 	urlRoot:'/expense'
 });
