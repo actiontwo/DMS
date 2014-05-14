@@ -28,7 +28,8 @@ ExpenseMenuView = Backbone.View.extend({
         'click [class="uncheckAll"]' : 'uncheckAll',
         'click [id="btnViewByDay"]' : 'viewByDay',
         'click [id="btnAddCreateExpense"]' : 'btnAddCreateExpense',
-        'click [id="btnSaveCreateExpense"]' : 'saveCreateExpense'
+        'click [id="btnSaveCreateExpense"]' : 'btnSaveCreateExpense',
+        'click [id="btnRemoveCreateExpense"]' : 'btnRemoveCreateExpense'
 
     },
     editExpense: function(ev){
@@ -189,7 +190,7 @@ ExpenseMenuView = Backbone.View.extend({
 
         $('#tbodyCreateExpense').append(blankTH);
     },
-    saveCreateExpense: function(){
+    btnSaveCreateExpense: function(){
         var tempModel;
         var count = 0;
         $('#tbodyCreateExpense tr.dataTR').each(function(){
@@ -197,12 +198,14 @@ ExpenseMenuView = Backbone.View.extend({
             tempModel = new ExpenseMenuModel();
             $(this).find('th').each(function(){
                 if($(this).attr('class')=="es-cr-edit")
-                    //console.log($(this).find('input').val());
-                    //model.set($(this).data('attribute'), $(this).find('input').val());
                     tempModel.set($(this).data('attribute'), $(this).find('input').val());
             });
             expenseMenuCollection.create(tempModel);
         });
         alert(count + " item(s) added succesfully !");
+    },
+    btnRemoveCreateExpense: function(ev){
+        var toBeRemoved = $(ev.currentTarget).parent().parent();
+        toBeRemoved.remove();
     }
 });
