@@ -1,54 +1,171 @@
-<div class="header">
-	<span>Expense</span>
-</div>
-<div class="content">
-	<div class="find">
-		<div class="find-from">
-			<div>From: <input class="datepicker" type="text" placeholder="11/11/2013"></div>
+<section class="main">
+	<div class="expense">
+		<div class="header">
+			<span>Expense</span>
 		</div>
-		<div class="find-to">
-			<div>To: <input class="datepicker" type="text" placeholder="19/11/2013"></div>
+		<div class="content">
+			<div class="find">
+				<div class="find-from">
+					<div>From: <input class="datepicker" type="text" placeholder="11/11/2013"></div>
+				</div>
+				<div class="find-to">
+					<div>To: <input class="datepicker" type="text" placeholder="19/11/2013"></div>
+				</div>
+			</div>
+			<div class="clear-fix"></div>
+			<div class="confirm" id="btnViewByDay">
+				<a href="#expense_menu">OK</a>
+			</div>
+			<div class="clear-fix"></div>
+			<div class="table">
+				<table class="reference">
+					<tbody>
+						<tr>
+							<th id="th_{{id}}" class='checkAll'> Check All </th>
+							<th id="th_{{id}}" data-attribute="date">Date(dd/mm/yy)</th>
+							<th id="th_{{id}}" data-attribute="money">Money(VND)</th>
+							<th id="th_{{id}}" data-attribute="invoiceID">Invoice ID</th>
+							<th id="th_{{id}}" data-attribute="invoiceImage" class="invoice-img">Invoice Images</th>
+							<th id="th_{{id}}" data-attribute="note" class="note">Note</th>
+							<th id="th_{{id}}" class="rm-edit"></th>
+						</tr>
+						{{#expense}}
+						<tr id="expenseTR_{{id}}" data-id="{{id}}">
+							<td id="cbox_{{id}}" data-id="{{id}}"><input type="checkbox">{{check}}</td>
+							<td data-attribute="date" data-id="{{id}}"> {{date}}</td>
+							<td data-attribute="money" data-id="{{id}}">{{money}}</td>
+							<td data-attribute="invoiceID" data-id="{{id}}">{{invoiceID}}</td>
+							<td data-id="{{id}}">
+								<figure class="iconsp-invoice-25px">{{invoiceImage}}</figure>
+							</td>
+							<td data-attribute="note" data-id="{{id}}">{{note}}</td>
+							<td data-id="{{id}}">
+								<figure class="iconsp-remove-25px" id="delete-expense-{{id}}" data-id="{{id}}"></figure>
+								<figure class="iconsp-edit-25px" id="edit-expense-{{id}}" data-id="{{id}}"></figure>
+							</td>
+						</tr>
+						{{/expense}}
+					</tbody>
+				</table>
+			</div>
+			<div class="btn-end">
+				<a  href="#expense_menu" onclick="show_popup('.es-delete')" id="btn-del-expense">Delete</a>
+				<a href="#expense_menu" onclick="show_popup('.es-create-expense')" id="btn-create-expense">Create</a>
+			</div>
+			<div class="clear-fix"></div>
 		</div>
 	</div>
-	<div class="clear-fix"></div>
-	<div class="confirm">
-		<a href="#">OK</a>
+</section>
+<div class="popup_area">
+	<div class="mask_popup"></div>
+	<div class="content_popup">
+		<div class="wrapper_content_popup">
+			<div class="content_detail_popup">
+				<div class="es-delete style_popup-940px">
+					<figure class="iconsp-cancer-15px close_popup"></figure>
+					<span>Are you sure you want to delete this item?</span>
+					<div class="btn-end">
+						<a href="#expense_menu" class="btn-cancel">Cancel</a>
+						<a  href="#expense_menu" id="btnDeleteOK">OK</a>
+					</div>
+					<div class="clear-fix"></div>
+				</div>
+				<div class="es-update style_popup-940px">
+					<div class="header">
+						<span>Update Expense</span>
+					</div>
+					<figure class="iconsp-cancer-15px close_popup"></figure>
+					<div class="content">
+						<div class="update-info">
+							<div class="update-date">
+								<div>Date(dd/mm/yy) <input class="datepicker" type="text" placeholder="11/11/2013"></div>
+							</div>
+							<div class="update-money">
+								<div>Money(VND) <input type="text" placeholder="100.000"></div>
+							</div>
+							<div class="update-id">
+								<div>Invoice ID <input type="text" placeholder="12345678"></div>
+							</div>	
+						</div>
+						<div class="update-img">
+							<span>Images</span>
+							<div class="images">
+								<img src="images/update-img.png">
+							</div>
+							<a href="#">Browse</a>
+						</div>
+						<div class="limit-img">
+							<span>(*.jpg,*.ipeg,*.gif,*png)(MaxSize: 3Mb)</span>
+						</div>
+						<div class="update-note">
+							<span>Note</span>
+							<textarea class="form-control"></textarea>
+						</div>
+						<div class="btn-end">
+							<a  href="#">Update</a>
+							<a href="#" class="btn-cancel">Cancel</a>
+						</div>
+						<div class="clear-fix"></div>
+					</div>
+				</div>
+				<div class="es-create-expense style_popup-940px">
+					<div class="header">
+						<span>Create Expense</span>
+					</div>
+					<figure class="iconsp-cancer-15px close_popup"></figure>
+					<div class="content">
+						<div class="clear-fix"></div>
+						<div class="confirm" id="btnAddCreateExpense">
+							<a href="#expense_menu">Add</a>
+						</div>
+						<div class="confirm" id="btnSaveCreateExpense">
+							<a href="#expense_menu">Save</a>
+						</div>
+						<div class="confirm">
+							<a href="#expense_menu" class="btn-cancel">Cancel</a>
+						</div>
+						<div class="clear-fix"></div>
+						<div class="table">
+							<table class="reference">
+								<tbody id="tbodyCreateExpense">
+									<tr>
+										<th>Date(dd/mm/yy)</th>
+										<th>Money(VND)</th>
+										<th>Invoice ID</th>
+										<th>Images</th>
+										<th>Note</th>
+										<th>Actions</th>
+									</tr>
+
+									<tr class="dataTR">
+										<th class="es-cr-edit" data-attribute="date">
+											<div><input class="datepicker" type="text" placeholder="11/11/2013"></div>
+										</th>
+										<th class="es-cr-edit" data-attribute="money">
+											<div><input type="text"></div>
+										</th>
+										<th class="es-cr-edit" data-attribute="invoiceID">
+											<div><input type="text"></div>
+										</th>
+										<th class="es-cr-edit">
+											<div class="btn-end" data-attribute="invoiceImage">
+												<a href="#">Browse</a>
+											</div>
+										</th>
+										<th class="es-cr-edit" data-attribute="note">
+											<div><input type="text"></div>
+										</th>
+										<th>
+											<figure id="btnRemoveCreateExpense" class="iconsp-remove-25px"></figure>
+											<!--<figure class="iconsp-edit-25px"></figure>-->
+										</th>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="clear-fix"></div>
-	<div class="table">
-		<table class="reference">
-			<tbody>
-				<tr>
-					<th></th>
-					<th>Date(dd/mm/yy)</th>
-					<th>Money(VND)</th>
-					<th>Invoice ID</th>
-					<th class="invoice-img">Invoice Images</th>
-					<th class="note">Note</th>
-					<th class="rm-edit"></th>
-				</tr>
-				{{#expense}}
-				<tr>
-					<td><input type="checkbox">{{check}}</td>
-					<td>{{date}}</td>
-					<td>{{money}}</td>
-					<td>{{invoiceID}}</td>
-					<td>
-						<figure class="iconsp-invoice-25px">{{invoiceImage}}</figure>
-					</td>
-					<td>{{note}}</td>
-					<td>
-						<figure class="iconsp-remove-red-25px" id="delete-expense-{{id}}"></figure>
-						<figure class="iconsp-edit-25px" id="edit-expense-{{id}}"></figure>
-					</td>
-				</tr>
-				{{/expense}}
-			</tbody>
-		</table>
-	</div>
-	<div class="btn-end">
-		<a  href="#" onclick="show_popup('.es-delete')">Delete</a>
-		<a href="#" onclick="show_popup('.es-create-expense')">Create</a>
-	</div>
-	<div class="clear-fix"></div>
 </div>

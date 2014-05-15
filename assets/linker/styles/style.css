@@ -31,6 +31,14 @@
  .clear-fix {
     clear: both;
 }
+.checkAll{
+  cursor: pointer;
+}
+
+.uncheckAll{
+  cursor: pointer;
+}
+
 /* line 30, ../../sass/style.scss */
  th, td {
     border: 1px solid #bbb;
@@ -79,6 +87,10 @@
     background-position: -97px 3px;
     cursor: pointer;
 }
+.menus .iconsp-remove-25px {
+  cursor: pointer;
+}
+
 /* line 68, ../../sass/style.scss */
  .iconsp-remove-red-25px {
     background-position: -96px -23px;
@@ -94,6 +106,10 @@
     background-position: -76px -23px;
     cursor: pointer;
 }
+.menus .iconsp-edit-red-25px{
+  cursor: pointer;
+}
+
 /* line 77, ../../sass/style.scss */
  .iconsp-invoice-25px {
     background-position: 0px -22px;
@@ -285,6 +301,7 @@
     float: right;
     margin-bottom: 14px;
     margin-top: 10px;
+  margin-right: 5px;
 }
 /* line 242, ../../sass/style.scss */
  .confirm:hover {

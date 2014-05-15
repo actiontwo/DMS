@@ -31,3 +31,5 @@ function show_popup(name_popup) {
     $(name_popup).show();
     $('.popup_area').show();
 }
+
+

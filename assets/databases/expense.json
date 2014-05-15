@@ -3,22 +3,22 @@
 		{
 			"date": "11/11/2013",
 			"money": "100000",
-			"invoiceId": "123456",
-			"invoiceImages": "Image goes here",
+			"invoiceID": "123456",
+			"invoiceImage": "Image goes here",
 			"note": ""
 		},
 		{
 			"date": "11/11/2013",
 			"money": "100000",
-			"invoiceId": "123456",
-			"invoiceImages": "Image goes here",
+			"invoiceID": "123456",
+			"invoiceImage": "Image goes here",
 			"note": ""
 		},
 		{
 			"date": "11/11/2013",
 			"money": "100000",
-			"invoiceId": "123456",
-			"invoiceImages": "Image goes here",
+			"invoiceID": "123456",
+			"invoiceImage": "Image goes here",
 			"note": ""
 		}
 	]
