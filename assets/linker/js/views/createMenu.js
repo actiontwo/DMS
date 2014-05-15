@@ -8,7 +8,7 @@ var CreateMenuView = Backbone.View.extend({
         this.render();
     },
     render: function() {
-        this.$el.html(Templates['menu/create_menu']({'dish_menu':this.collection.models}));
+        this.$el.html(Templates['menu/create_menu']({'dish_menu':this.collection.models,'list':dishListCollection.toJSON()}));
         var subViews = this.subViews;
         this.$('#create-menu').find('tr').each(function(){
             subViews[$(this).data('cid')].setElement(this);

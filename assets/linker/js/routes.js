@@ -1,11 +1,16 @@
+var dishListCollection = new DishListCollection;
+dishListCollection.fetch();
+
+
+
 var AppRouter = Backbone.Router.extend({
 	routes: {
-		dish_menu: 'loadDishMenu',
-		print_menu:'loadPrintMenu',
-		expense_menu: 'loadExpenseMenu',
-		create_dish: 'createDish',
-		create_menu: 'createMenu',
-		deposit:'loadDeposit',
+		'menu': 'loadDishMenu',
+		'menu/print':'loadPrintMenu',
+		'expense': 'loadExpenseMenu',
+		'menu/create_dish': 'createDish',
+		'menu/create_menu': 'createMenu',
+		'deposit':'loadDeposit',
 	},
 	loadDishMenu: function() {
 		dishMenuCollection = new DishMenuCollection;
