@@ -9,9 +9,6 @@
 module.exports = {
 
   attributes: {
-  	no: {
-  		type: "integer"
-  	},
   	date: {
   		type: "date",
   		required: true
