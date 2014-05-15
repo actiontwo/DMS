@@ -14,8 +14,8 @@ var AppRouter = Backbone.Router.extend({
 	},
 	loadDishMenu: function() {
 		dishMenuCollection = new DishMenuCollection;
-		dishMenuView = new DishMenuView({collection: dishMenuCollection});
-		dishMenuCollection.fetch({data:$.param({page:0,number:5})});
+		dishMenuView = new DishMenuView({collection: dishMenuCollection});//{data:$.param({page:0,number:5})}
+		dishMenuCollection.fetch();		
 		$("#main").html(dishMenuView.el);
 	},
 	loadPrintMenu:function(){
