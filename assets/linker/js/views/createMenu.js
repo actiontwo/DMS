@@ -2,16 +2,17 @@ var CreateMenuView = Backbone.View.extend({
     tagName: 'div',
     className: 'mn-create-menu',
     id: 'create_menu',
-    initialize: function() {
-    	this.render();
+    subViews: {},
+    initialize: function() {    	
         this.listenTo(this.collection, 'add reset destroy', this.render);  
+        this.render();
     },
     render: function() {
-        this.$el.html(Templates['menu/create_menu']({'dish_menu':this.collection.toJSON()}));
-        this.$('.datepicker').datepicker({      
-            showOn: "button",
-            buttonImage: "images/calendar.png",
-            buttonImageOnly: true,
+        this.$el.html(Templates['menu/create_menu']({'dish_menu':this.collection.models}));
+        var subViews = this.subViews;
+        this.$('#create-menu').find('tr').each(function(){
+            subViews[$(this).data('cid')].setElement(this);
+            subViews[$(this).data('cid')].render();
         });
         return this;
     },
@@ -20,23 +21,13 @@ var CreateMenuView = Backbone.View.extend({
     	'click #btn-save'	:'Save',
     },
     Add:function(){
-    	var model = new DishMenuModel;
+    	var model = new DishMenuModel;        
+        this.subViews[model.cid] = new CreateDishView({model:model});        
         this.collection.add(model);
     },
     Save:function(){
-        var model = new DishMenuModel;
-        $(this.el).find('tbody').find('tr').each(function(){
-             model.set({
-                date:   $(this).find('.date').val(),
-                brunch: $(this).find('.brunch').val(),
-                dish1:  $(this).find('.dish1').val(),
-                dish2:  $(this).find('.dish2').val(),
-                dish3:  $(this).find('.dish3').val(),
-                dish4:  $(this).find('.dish4').val(),
-                dish5:  $(this).find('.dish5').val(),
-                note:   $(this).find('.note').val()
-            }); 
+        _.each(this.collection.models, function(model) {
             model.save();
-        });
+        })
     }
 });

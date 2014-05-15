@@ -28,34 +28,7 @@
             </thead>
             <tbody id="create-menu">
                 {{#dish_menu}}
-                    <tr>
-                        <td class="mn-cr-edit">
-                            <input class="datepicker date" type="text">
-                        </td>
-                        <td class="mn-cr-edit">
-                            <select class = "brunch">
-                                <option>Lunch</option>
-                                <option>Dinner</option>
-                            </select>
-                        </td>
-                        <td class="mn-cr-edit">
-                            <input class = "dish1" type="text">
-                        </td>
-                        <td class="mn-cr-edit">
-                            <input class = "dish2" type="text">
-                        </td>
-                        <td class="mn-cr-edit">
-                            <input class = "dish3" type="text">
-                        </td>
-                        <td class="mn-cr-edit">
-                            <input class = "dish4" type="text">
-                        </td>
-                        <td class="mn-cr-edit">
-                            <input class = "dish5" type="text">
-                        </td>
-                        <td class="mn-cr-edit">
-                            <input class = "note" type="text">
-                        </td>
+                    <tr data-cid={{cid}}>                       
                     </tr>
                 {{/dish_menu}}
             </tbody>
