@@ -29,7 +29,7 @@ var RegisterMealView = Backbone.View.extend({
         'click [id^="edit-registerMeal"]':'editRegisterMeal',
         'click [id^="save-registerMeal"]': 'saveRegisterMeal',
         'click [id="btnViewByDay"]' : 'viewByDay',
-        'click [id="viewViewMealRegister"]' : 'viewViewMealRegister'
+        'click [id="btnViewMealRegister"]' : 'btnViewMealRegister'
     },
     sortRegisterMeals: function(ev) {
         var attribute = $(ev.currentTarget).data('attribute');
@@ -106,13 +106,13 @@ var RegisterMealView = Backbone.View.extend({
         dateFrom = new Date(dateFromString.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
         var dateToString = ($('.find .find-to').find('input').val());
         dateTo = new Date(dateToString.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
-        console.log('dateFrom :' + dateFrom);
-        console.log('dateTo :' + dateTo);
+        //console.log('dateFrom :' + dateFrom);
+        //console.log('dateTo :' + dateTo);
         var tempCollection = new RegisterMealCollection();
         this.collection.each(function(modelIn){
             var dayValue = modelIn.get("date").trim();
             var tempDay = new Date(dayValue.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
-            console.log(tempDay);
+            //console.log(tempDay);
             if(tempDay > dateFrom && tempDay < dateTo)
             {
                 tempCollection.add(modelIn);
@@ -132,6 +132,10 @@ var RegisterMealView = Backbone.View.extend({
 
         $('.find .find-from').find('input').val(dateFromString);
         $('.find .find-to').find('input').val(dateToString);
+    },
+    btnViewMealRegister: function(){
+        var viewMealRegister_new = new ViewRegisterMealView({collection: this.collection});
+        viewMealRegister_new.render();
     }
 
 });

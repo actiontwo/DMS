@@ -1,0 +1,76 @@
+	<div class="register-meal" id="tabs">
+		<div class="header">
+			<ul>
+				<li><a href="#btn-rg-meal">Register Meal</a></li>
+				<li><a href="#btn-rg-view-meal">View Meal Registration</a></li>
+			</ul>
+		</div>
+
+		<div class="rg-view-meal" id="btn-rg-view-meal">
+			<div class="content">
+				<div class="find">
+					<div class="find-name">
+						<div>Name:
+							<select>
+								<option></option>
+								<option>Mr.Hung</option>
+								<option>Mr. Cuong</option>
+								<option>Mr. Khiem</option>
+							</select>
+						</div>
+					</div>
+					<div class="find-from">
+						<div>From: <input class="datepicker" type="text"></div>
+					</div>
+					<div class="find-to">
+						<div>To: <input class="datepicker" type="text"></div>
+					</div>
+				</div>
+				<div class="clear-fix"></div>
+				<div class="confirm">
+					<a href="#">OK</a>
+				</div>
+				<div class="clear-fix"></div>
+				<div class="table">
+					<table class="reference">
+						<tbody>
+							<tr>
+								<th>No</th>
+								<th data-attribute="date">Date(dd/mm/yy)</th>
+								<th data-attribute="lunch">Lunch</th>
+								<th data-attribute="dinner">Dinner</th>
+							</tr>
+							{{#viewRegisterMeals}}
+							<tr class="viewRegisterMealTR">
+								<td class="no_td"></td>
+								<td data-attribute="date">{{date}}</td>
+								<td data-attribute="lunch">
+									{{#if lunch}}
+									<input id="checkbox_{{id}}" type="checkbox" disabled checked>
+									{{else}}
+									<input id="checkbox_{{id}}" type="checkbox" disabled>
+									{{/if}}
+								</td>
+								<td data-attribute="dinner">
+									{{#if dinner}}
+									<input id="checkbox_{{id}}" type="checkbox" disabled checked>
+									{{else}}
+									<input id="checkbox_{{id}}" type="checkbox" disabled>
+									{{/if}}
+								</td>
+							</tr>
+							{{/viewRegisterMeals}}
+							<tr>
+								<th class="total" colspan='2'>Total:</th>
+								<th>15</th>
+								<th>0</th>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$("#tabs").tabs();
+	</script>

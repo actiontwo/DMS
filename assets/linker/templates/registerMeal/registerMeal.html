@@ -1,138 +1,146 @@
-<div class="register-meal" id="tabs">
-	<div class="header">
-		<ul>
-			<li><a href="#register_meal" id="viewRegisterMeal">Register Meal</a></li>
-			<li><a href="#view_register_meal" id="viewViewMealRegister">View Meal Register</a></li>
-		</ul>
-	</div>
-	<div class="rg-meal" id="btn-rg-meal">
-		<div class="content">
-			<div class="find">
-				<div class="find-from">
-					<div>From: <input class="datepicker" type="text"></div>
+<section class="main">
+	<div class="register-meal" id="tabs">
+		<div class="header">
+			<ul>
+				<li><a href="#btn-rg-meal">Register Meal</a></li>
+				<li><a href="#" id="btnViewMealRegister">View Meal Registration</a></li>
+			</ul>
+		</div>
+		<!-- Register Meal -->
+		<div class="rg-meal" id="btn-rg-meal">
+			<div class="content">
+				<div class="find">
+					<div class="find-from">
+						<div>From: <input class="datepicker" type="text"></div>
+					</div>
+					<div class="find-to">
+						<div>To: <input class="datepicker" type="text"></div>
+					</div>
 				</div>
-				<div class="find-to">
-					<div>To: <input class="datepicker" type="text"></div>
+				<div class="clear-fix"></div>
+				<div class="confirm" id="btnViewByDay">
+					<a href="#">OK</a>
 				</div>
-			</div>
-			<div class="clear-fix"></div>
-			<div class="confirm" id="btnViewByDay">
-				<a href="#register_meal">OK</a>
-			</div>
-			<div class="clear-fix"></div>
-			<div class="table">
-				<table class="reference">
-					<tbody id="tbodyRegisterMeal">
-						<tr>
-							<th>No</th>
-							<th id="th_{{id}}" data-attribute="date">Date(dd/mm/yy)</th>
-							<th id="th_{{id}}" data-attribute="name">Name</th>
-							<th id="th_{{id}}" data-attribute="lunch">Lunch</th>
-							<th id="th_{{id}}" data-attribute="dinner">Dinner</th>
-							<th id="th_{{id}}" data-attribute="updateBy">Update By</th>
-							<th></th>
-						</tr>
-						{{#registerMeals}}
-						<tr id="registerMealTR_{{id}}" class="registerMealTR">
-							<td class="no_td" id="{{id}}"></td>
-							<td data-attribute="date">{{date}}</td>
-							<td data-attribute="name">{{name}}</td>
-							<td data-attribute="lunch">
-								{{#if lunch}}
+				<div class="clear-fix"></div>
+				<div class="table">
+					<table class="reference">
+						<tbody>
+							<tr>
+								<th>No</th>
+								<th id="th_" data-attribute="date">Date(dd/mm/yy)</th>
+								<th id="th_" data-attribute="name">Name</th>
+								<th id="th_" data-attribute="lunch">Lunch</th>
+								<th id="th_" data-attribute="dinner">Dinner</th>
+								<th id="th_" data-attribute="updateBy">Update By</th>
+								<th></th>
+							</tr>
+							{{#registerMeals}}
+							<tr id="registerMealTR_{{id}}" class="registerMealTR">
+								<td class="no_td" id="{{id}}"></td>
+								<td data-attribute="date">{{date}}</td>
+								<td data-attribute="name">{{name}}</td>
+								<td data-attribute="lunch">
+									{{#if lunch}}
 									<input id="checkbox_{{id}}" type="checkbox" disabled checked>
-								{{else}}
+									{{else}}
 									<input id="checkbox_{{id}}" type="checkbox" disabled>
-								{{/if}}
-							</td>
-							<td data-attribute="dinner">
-								{{#if dinner}}
+									{{/if}}
+								</td>
+								<td data-attribute="dinner">
+									{{#if dinner}}
 									<input id="checkbox_{{id}}" type="checkbox" disabled checked>
-								{{else}}
+									{{else}}
 									<input id="checkbox_{{id}}" type="checkbox" disabled>
-								{{/if}}
-							</td>
-							<td data-attribute="updateBy">{{updateBy}}</th>
-							<td>
-								<figure class="iconsp-edit-25px" id="edit-registerMeal-{{id}}" data-id="{{id}}"></figure>
-							</td>
-						</tr>
-						{{/registerMeals}}
-					</tr>
-					<th class="total" colspan="7"><span>Total:</span></th>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	<div class="notice">
-		<p>Edit meals before 10h30 A.M for lunch and  4h30 P.M for dinner</p>
-	</div>
-	<div class="clear-fix"></div>
-</div>
-</div>
-<!-- <div class="rg-view-meal" id="btn-rg-view-meal">
-	<div class="content">
-		<div class="find">
-			<div class="find-name">
-				<div>Name:
-					<select>
-						<option></option>
-						<option>Mr.Hung</option>
-						<option>Mr. Cuong</option>
-						<option>Mr. Khiem</option>
-					</select>
+									{{/if}}
+								</td>
+								<td data-attribute="updateBy">{{updateBy}}</td>
+								<td>
+									<figure class="iconsp-edit-25px" id="edit-registerMeal-{{id}}" data-id="{{id}}"></figure>
+								</td>
+							</tr>
+							{{/registerMeals}}
+							<th class="total" colspan="7"><span>Total:</span></th>
+						</tbody>
+					</table>
 				</div>
-			</div>
-			<div class="find-from">
-				<div>From: <input class="datepicker" type="text"></div>
-			</div>
-			<div class="find-to">
-				<div>To: <input class="datepicker" type="text"></div>
+				<div class="notice">
+					<p>Edit meals before 10h30 A.M for lunch and  4h30 P.M for dinner</p>
+				</div>
+				<div class="clear-fix"></div>
 			</div>
 		</div>
-		<div class="clear-fix"></div>
-		<div class="confirm">
-			<a href="#register_meal">OK</a>
-		</div>
-		<div class="clear-fix"></div>
-		<div class="table">
-			<table class="reference">
-				<tbody>
-					<tr>
-						<th>No</th>
-						<th>Date(dd/mm/yy)</th>
-						<th>Lunch</th>
-						<th>Dinner</th>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>11/11/2013-Mon</td>
-						<td><input type="checkbox" checked></td>
-						<td><input type="checkbox" checked></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>11/11/2013-Mon</td>
-						<td><input type="checkbox" checked></td>
-						<td><input type="checkbox" checked></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>11/11/2013-Mon</td>
-						<td><input type="checkbox" checked></td>
-						<td><input type="checkbox" checked></td>
-					</tr>
 
-					<tr>
-						<th class="total" colspan='2'>Total:</th>
-						<th>15</th>
-						<th>0</th>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+		<!-- END Register Meal -->
+
+		<!-- View Register Meal -->
+
+		<!-- <div class="rg-view-meal" id="btn-rg-view-meal">
+			<div class="content">
+				<div class="find">
+					<div class="find-name">
+						<div>Name:
+							<select>
+								<option></option>
+								<option>Mr.Hung</option>
+								<option>Mr. Cuong</option>
+								<option>Mr. Khiem</option>
+							</select>
+						</div>
+					</div>
+					<div class="find-from">
+						<div>From: <input class="datepicker" type="text"></div>
+					</div>
+					<div class="find-to">
+						<div>To: <input class="datepicker" type="text"></div>
+					</div>
+				</div>
+				<div class="clear-fix"></div>
+				<div class="confirm">
+					<a href="#">OK</a>
+				</div>
+				<div class="clear-fix"></div>
+				<div class="table">
+					<table class="reference">
+						<tbody>
+							<tr>
+								<th>No</th>
+								<th>Date(dd/mm/yy)</th>
+								<th>Lunch</th>
+								<th>Dinner</th>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>11/11/2013-Mon</td>
+								<td><input type="checkbox" disabled></td>
+								<td><input type="checkbox" disabled></td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>11/11/2013-Mon</td>
+								<td><input type="checkbox" disabled></td>
+								<td><input type="checkbox" disabled></td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>11/11/2013-Mon</td>
+								<td><input type="checkbox"></td>
+								<td><input type="checkbox"></td>
+							</tr>
+
+							<tr>
+								<th class="total" colspan='2'>Total:</th>
+								<th>15</th>
+								<th>0</th>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div> -->
+
+		<!-- END View Register Meal -->
 	</div>
-</div> -->
-</div>
-<script type="text/javascript">
-$("#tabs").tabs();
-</script>
+	<script type="text/javascript">
+	$("#tabs").tabs();
+	</script>
+</section>

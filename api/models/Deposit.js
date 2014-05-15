@@ -11,7 +11,7 @@ module.exports = {
   attributes: {
     no: {
       type: 'string'
-    }
+    },
   	date:{
   		type:'date',
   		required:true
