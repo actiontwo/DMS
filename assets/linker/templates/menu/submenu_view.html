@@ -1,0 +1,53 @@
+       {{#if date}}
+        <td data-attribute="date" data-id="{{id}}">{{date}}</td>
+        <td data-attribute="brunch" data-id="{{id}}">{{brunch}}</td>
+        <td data-attribute="dish1" data-id="{{id}}">{{dish1}}</td>
+        <td data-attribute="dish2" data-id="{{id}}">{{dish2}}</td>
+        <td data-attribute="dish3" data-id="{{id}}">{{dish3}}</td>
+        <td data-attribute="dish4" data-id="{{id}}">{{dish4}}</td>
+        <td data-attribute="dish5" data-id="{{id}}">{{dish5}}</td>
+        <td data-attribute="note" data-id="{{id}}">{{note}}</td>
+        <td>
+            <figure class="iconsp-edit-25px" id="button-edit-menu" data-id="{{id}}"></figure>
+        </td>
+        <td>
+            <figure class="iconsp-remove-25px" id="button-remove-menu" data-id="{{id}}"></figure>
+        </td>
+        {{else}}
+         <td class="mn-cr-edit">
+                <input class="datepicker date" type="text"  data-attribute="date">
+            </td>
+            <td class="mn-cr-edit">
+                <select class = "brunch" data-attribute="brunch">
+                    <option>Select</option>
+                    <option>Lunch</option>
+                    <option>Dinner</option>
+                </select>
+            </td>
+            <td class="mn-cr-edit">
+                <input class = "dish" type="text" value="{{dish1}}" data-attribute="dish1"> 
+            </td>
+            <td class="mn-cr-edit">
+                <input class = "dish" type="text" value="{{dish2}}" data-attribute="dish2">
+            </td>
+            <td class="mn-cr-edit">
+                <input class = "dish" type="text" value="{{dish3}}" data-attribute="dish3">
+            </td>
+            <td class="mn-cr-edit">
+                <input class = "dish" type="text" value="{{dish4}}" data-attribute="dish4">
+            </td>
+            <td class="mn-cr-edit">
+                <input class = "dish" type="text" value="{{dish5}}" data-attribute="dish5">
+            </td>
+            <td class="mn-cr-edit">
+                <input class = "note" type="text" value="{{note}}" data-attribute="note">
+            </td>
+            <td>
+                <figure class="iconsp-edit-25px" id="button-edit-menu" data-id="{{id}}"></figure>
+            </td>
+            <td>
+                <figure class="iconsp-remove-25px" id="button-remove-menu" data-id="{{id}}"></figure>
+            </td>
+
+
+        {{/if}}

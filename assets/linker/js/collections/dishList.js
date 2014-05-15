@@ -1,4 +1,4 @@
 var DishListCollection = Backbone.Collection.extend({
-	url:'/listdish',
+	url:'/dish',
 	model: DishListModel
 })

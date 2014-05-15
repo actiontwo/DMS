@@ -1,19 +1,20 @@
+var dishListCollection = new DishListCollection;
+dishListCollection.fetch();
+
 var AppRouter = Backbone.Router.extend({
 	routes: {
-		dish_menu: 'loadDishMenu',
-		print_menu:'loadPrintMenu',
-		expense_menu: 'loadExpenseMenu',
-		create_dish: 'createDish',
-		expense_menu: 'loadExpenseMenu',
-		create_dish: 'createDish',
-		create_menu: 'createMenu',
-		deposit:'loadDeposit',
+		'menu': 'loadDishMenu',
+		'menu/print':'loadPrintMenu',
+		'expense': 'loadExpenseMenu',
+		'menu/create_dish': 'createDish',
+		'menu/create_menu': 'createMenu',
+		'deposit':'loadDeposit',
 		register_meal: 'loadRegisterMeal'
 	},
 	loadDishMenu: function() {
 		dishMenuCollection = new DishMenuCollection;
-		dishMenuView = new DishMenuView({collection: dishMenuCollection});
-		dishMenuCollection.fetch({data:$.param({page:0,number:5})});
+		dishMenuView = new DishMenuView({collection: dishMenuCollection});//{data:$.param({page:0,number:5})}
+		dishMenuCollection.fetch();		
 		$("#main").html(dishMenuView.el);
 	},
 	loadPrintMenu:function(){
