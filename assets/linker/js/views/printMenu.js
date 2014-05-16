@@ -66,5 +66,7 @@ var PrintMenuView = Backbone.View.extend({
             buttonImage: "images/calendar.png",
             buttonImageOnly: true,
         });    
+        $('.find-from input').val(from);
+        $('.find-to input').val(to);
     }
 });

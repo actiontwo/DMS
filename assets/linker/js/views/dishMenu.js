@@ -6,7 +6,7 @@ var DishMenuView = Backbone.View.extend({
     page:0,
     number:5,
     initialize: function() {        
-        this.listenTo(this.collection, 'reset destroy sort', this.render);  
+        this.listenTo(this.collection, 'reset destroy sort sync', this.render);  
         this.render();
           this.collection.sort_order = {
             date: 1,
@@ -78,5 +78,40 @@ var DishMenuView = Backbone.View.extend({
         var number=$(ev.currentTarget).val();
         this.number = number;
         this.collection.fetch({data:$.param({page:this.page,number:number})});
-    }
+    },
+    filterMenu:function(){
+        var from = $('.find-from input').val();
+        var to = $('.find-to input').val();
+        //check date filter
+         if(from>to||from===''||to===''){
+            alert('Input invalid, from must be less to');
+            return;
+        }
+        var result = _.filter(this.collection.toJSON(),function(model){
+            return (model.date>=from&&model.date<=to);
+        });
+        //check result
+        if(result.length<=0){
+            alert('No found menu');
+            return;
+        }
+        //render view
+         this.$el.html(Templates['menu/view_menu']({
+            dish_menu: result
+        }));
+        for (i in result) {
+            var model = result[i]; 
+            this.$('tbody').append(
+           this.subViews[model.id].el);
+        }
+
+        //calendar
+         this.$('.datepicker').datepicker({      
+            showOn: "button",
+            buttonImage: "images/calendar.png",
+            buttonImageOnly: true,
+        });
+        $('.find-from input').val(from);
+        $('.find-to input').val(to);
+    },
 });
