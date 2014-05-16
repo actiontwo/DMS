@@ -9,7 +9,7 @@ var AppRouter = Backbone.Router.extend({
 		'menu/create_dish': 'createDish',
 		'menu/create_menu': 'createMenu',
 		'deposit':'loadDeposit',
-		register_meal: 'loadRegisterMeal'
+		'register_meal': 'loadRegisterMeal'
 	},
 	loadDishMenu: function() {
 		dishMenuCollection = new DishMenuCollection;
