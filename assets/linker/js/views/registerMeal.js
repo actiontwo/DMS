@@ -124,7 +124,7 @@ var RegisterMealView = Backbone.View.extend({
         }));
         init();
         var count = 1;
-        if (this.collection.length == 0) count = 0;
+        if (tempCollection.length == 0) count = 0;
         $('.registerMealTR').each(function(){
             $(this).find('.no_td').html(count);
                 count++;
@@ -134,7 +134,9 @@ var RegisterMealView = Backbone.View.extend({
         $('.find .find-to').find('input').val(dateToString);
     },
     btnViewMealRegister: function(){
+        this.remove();
         var viewMealRegister_new = new ViewRegisterMealView({collection: this.collection});
+        $("#main").html(viewMealRegister_new.el);
         viewMealRegister_new.render();
     }
 

@@ -1,8 +1,8 @@
 	<div class="register-meal" id="tabs">
 		<div class="header">
 			<ul>
-				<li><a href="#btn-rg-meal">Register Meal</a></li>
-				<li><a href="#btn-rg-view-meal">View Meal Registration</a></li>
+				<li><a href="#register_meal" id="btnRegisterMeal">Register Meal</a></li>
+				<li><a href="#register_meal">View Meal Registration</a></li>
 			</ul>
 		</div>
 
@@ -11,11 +11,8 @@
 				<div class="find">
 					<div class="find-name">
 						<div>Name:
-							<select>
+							<select id="nameToBeSelected">
 								<option></option>
-								<option>Mr.Hung</option>
-								<option>Mr. Cuong</option>
-								<option>Mr. Khiem</option>
 							</select>
 						</div>
 					</div>
@@ -28,7 +25,7 @@
 				</div>
 				<div class="clear-fix"></div>
 				<div class="confirm">
-					<a href="#">OK</a>
+					<a href="#" id="btnViewByDayAndName">OK</a>
 				</div>
 				<div class="clear-fix"></div>
 				<div class="table">
@@ -36,9 +33,9 @@
 						<tbody>
 							<tr>
 								<th>No</th>
-								<th data-attribute="date">Date(dd/mm/yy)</th>
-								<th data-attribute="lunch">Lunch</th>
-								<th data-attribute="dinner">Dinner</th>
+								<th id="th_" data-attribute="date">Date(dd/mm/yy)</th>
+								<th id="th_" data-attribute="lunch">Lunch</th>
+								<th id="th_" data-attribute="dinner">Dinner</th>
 							</tr>
 							{{#viewRegisterMeals}}
 							<tr class="viewRegisterMealTR">
@@ -62,8 +59,8 @@
 							{{/viewRegisterMeals}}
 							<tr>
 								<th class="total" colspan='2'>Total:</th>
-								<th>15</th>
-								<th>0</th>
+								<th id="thTotalLunch"></th>
+								<th id="thTotalDinner"></th>
 							</tr>
 						</tbody>
 					</table>
@@ -71,6 +68,7 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript">
+<!-- <script type="text/javascript">
 		$("#tabs").tabs();
-	</script>
+	</script>	 -->
+	
