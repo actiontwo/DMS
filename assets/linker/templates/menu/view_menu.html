@@ -4,10 +4,12 @@
 <div class="content">
     <div class="find">
         <div class="find-from">
-            From:<input class="datepicker" type="text">
+            From:
+            <input class="datepicker" type="text">
         </div>
         <div class="find-to">
-            To:<input class="datepicker" type="text">
+            To:
+            <input class="datepicker" type="text">
         </div>
     </div>
     <div class="clear-fix"></div>
@@ -58,5 +60,9 @@
         <a id="add" href="#">Add</a>
     </div>
     <div class="clear-fix"></div>
-
 </div>
+<ul id="list_dish_menu">
+    {{#list}}
+    <li>{{dish}}</li>
+    {{/list}}
+</ul>

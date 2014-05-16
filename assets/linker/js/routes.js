@@ -1,8 +1,6 @@
 var dishListCollection = new DishListCollection;
 dishListCollection.fetch();
 
-
-
 var AppRouter = Backbone.Router.extend({
 	routes: {
 		'menu': 'loadDishMenu',

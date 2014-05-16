@@ -10,7 +10,7 @@ var CreateDishView = Backbone.View.extend({
     },
     events: {
         'change input, select': 'updateModel',
-        'keyup  input.dish, select': 'filtDish'
+        'keyup  input.dish, select': 'filtDish' 
     },
     updateModel: function(ev) {
         this.model.set($(ev.currentTarget).data('attribute'), $(ev.currentTarget).val());
@@ -81,7 +81,5 @@ var CreateDishView = Backbone.View.extend({
             next_word = this.reselectDish(tip, num_word, key, next_word);
         }
         return next_word;
-
     }
-
 })
