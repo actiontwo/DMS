@@ -6,6 +6,11 @@ var DepositView = Backbone.View.extend({
 	initialize:function(){
 		this.render();
 		this.listenTo(this.collection, 'sync reset sort remove',this.render );
+		this.collection.sort_order ={
+			'date':1,
+			'username':1,
+			'amount':1
+		}
 	},
 	render:function(){
 		this.$el.html(Templates['deposit/deposit']({'deposit':this.collection.toJSON(),'user':userCollection.toJSON()}));
@@ -31,7 +36,8 @@ var DepositView = Backbone.View.extend({
 		});
 	},
 	events:{
-		'click #btn-create-deposit': 'Create_Deposit'
+		'click #btn-create-deposit': 'Create_Deposit',
+		'click th':'SortDeposit'
 	},
 	Create_Deposit:function(){
 		var model = new DepositModel;
@@ -42,5 +48,15 @@ var DepositView = Backbone.View.extend({
 		});
 		this.collection.add(model);
 		model.save();
+	},
+	SortDeposit:function(ev){
+		var attribute = $(ev.currentTarget).data('attribute');
+		this.collection.comparator = function(menuA,menuB){
+			 if (menuA.get(attribute) > menuB.get(attribute)) return this.sort_order[attribute];
+            if (menuA.get(attribute) < menuB.get(attribute)) return -this.sort_order[attribute];
+           	 return 0;
+		}
+		this.collection.sort();
+		 this.collection.sort_order[attribute] = -this.collection.sort_order[attribute];
 	}
 })
