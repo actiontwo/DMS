@@ -5,7 +5,7 @@ function init(){
         buttonImageOnly: true,
     });
 
-    $("#tabs").tabs();
+    //$("#tabs").tabs();
 
     $('.close_popup,.btn-cancel').click(function() {
         $('.popup_area').hide();

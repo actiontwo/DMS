@@ -9,8 +9,7 @@ var AppRouter = Backbone.Router.extend({
 		'menu/create_dish': 'createDish',
 		'menu/create_menu': 'createMenu',
 		'deposit':'loadDeposit',
-		register_meal: 'loadRegisterMeal',
-		view_register_meal: 'loadViewRegisterMeal'
+		'register_meal': 'loadRegisterMeal'
 	},
 	loadDishMenu: function() {
 		dishMenuCollection = new DishMenuCollection;
@@ -52,10 +51,6 @@ var AppRouter = Backbone.Router.extend({
 		registerMealView = new RegisterMealView({collection: registerMealCollection});
 		registerMealCollection.fetch();
 		$("#main").html(registerMealView.el);
-	},
-	loadViewRegisterMeal: function(){
-		viewRegisterMealView = new ViewRegisterMealView({collection: registerMealCollection});
-		$("#main").html(viewRegisterMealView.el);
 	}
 })
 
