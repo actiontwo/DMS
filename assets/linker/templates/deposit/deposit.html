@@ -8,16 +8,16 @@
 									<select>
 										<option></option>
 										{{#user}}
-										<option>{{firstname}}{{lastname}}</option>
+										<option>{{firstname}} {{lastname}}</option>
 										{{/user}}
 									</select>
 								</div>
 							</div>
 							<div class="find-from">
-								<div>From: <input class="datepicker" type="text" placeholder="11/11/2013"></div>	
+								<div>From: <input class="datepicker" type="text"></div>	
 							</div>
 							<div class="find-to">
-								<div>To: <input class="datepicker" type="text" placeholder="19/11/2013"></div>
+								<div>To: <input class="datepicker" type="text"></div>
 							</div>
 						</div>
 						<div class="clear-fix"></div>
@@ -53,7 +53,6 @@
 					</div>
 
 					
-		<!-- </div>
 		<div class="popup_area">
 		    <div class="mask_popup"></div>
 		    <div class="content_popup">
@@ -76,17 +75,22 @@
 							<div class="content">
 								<div class="new-info">
 									<div class="new-date">
-										<div>Date: <input class="datepicker" type="text" placeholder="11/11/2013"></div>
+										Date: <input id="date" class="datepicker" type="text">
 									</div>
 									<div class="new-name">
-										<div>Name: <input type="text" placeholder="Name of member"></div>
+										Name: <select id="deposit-new-user" class="deposit-new-user">
+												<option></option>
+												{{#user}}
+												<option>{{firstname}} {{lastname}}</option>
+												{{/user}}
+											</select>
 									</div>
 									<div class="new-deposit">
-										<div>Deposit: <input type="text" placeholder="500.000"> (VND)</div>
+										Deposit: <input id="deposit-amount" type="text"> (VND)
 									</div>	
 								</div>
 								<div class="btn-end">
-									<a  href="#">OK</a>
+									<a  href="#" id="btn-create-deposit">OK</a>
 									<a href="#" class="btn-cancel">Cancel</a>
 								</div>
 								<div class="clear-fix"></div>
@@ -95,4 +99,4 @@
 				   </div>
 		        </div>
 		    </div>
-		</div> -->
+		</div>

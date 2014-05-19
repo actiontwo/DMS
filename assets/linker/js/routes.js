@@ -1,5 +1,7 @@
 var dishListCollection = new DishListCollection;
 dishListCollection.fetch();
+var userCollection = new UserCollection;
+userCollection.fetch();
 
 var AppRouter = Backbone.Router.extend({
 	routes: {

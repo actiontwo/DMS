@@ -275,7 +275,7 @@
     border-radius: 2px;
     border: 1px solid #bbb;
     background: #fff;
-    color: #a0a0a0;
+    color: #666666;
 }
 /* line 219, ../../sass/style.scss */
  .confirm {
@@ -301,7 +301,11 @@
     float: right;
     margin-bottom: 14px;
     margin-top: 10px;
-  margin-right: 5px;
+    margin-right: 5px;
+}
+.confirm span {
+    cursor: pointer;
+    color: #fff;
 }
 /* line 242, ../../sass/style.scss */
  .confirm:hover {
@@ -484,8 +488,14 @@
 /*------------------------------------ MANGER ------------------------------------ */
 
 /*--- Deposit ---*/
- #deposit .table input {
+ #deposit .table input[type="checkbox"] {
     width: 35%;
+}
+#deposit .table input[type="text"] {
+    width: 80%
+}
+#deposit .table tbody tr:first-child td:nth-child(3) img {
+    margin-top: -10px;
 }
 #deposit .table .reference tr:first-child th:first-child {
     width: 40px;
@@ -537,6 +547,7 @@
     width: 520px !important;
     border: 1px solid #cccccc;
     margin-top: 40px;
+    margin: 0 auto;
 }
 /* line 425, ../../sass/style.scss */
  .ds-new-deposit .content {
@@ -580,6 +591,13 @@
 /* line 456, ../../sass/style.scss */
  .ds-new-deposit .btn-end {
     margin-right: 35px;
+}
+.ds-new-deposit .deposit-new-user {
+    margin-left: 59px;
+    margin-bottom: 10px;
+    height: 22px;
+    width: 166px;
+    color: #666;
 }
 /*--- Expense ---*/
 
