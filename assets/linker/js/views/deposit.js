@@ -25,6 +25,7 @@ var DepositView = Backbone.View.extend({
             buttonImage: "images/calendar.png",
             buttonImageOnly: true,
         });
+
         this.auto_index();
         return this;
 	},
@@ -36,10 +37,12 @@ var DepositView = Backbone.View.extend({
 		});
 	},
 	events:{
-		'click #btn-create-deposit': 'Create_Deposit',
-		'click th':'SortDeposit'
+		'click #btn-create-deposit': 'createDeposit',
+		'click th':'sortDeposit',
+		'change #user-deposit':'filterDeposit1',
+		'click .confirm':'filterDeposit'
 	},
-	Create_Deposit:function(){
+	createDeposit:function(){
 		var model = new DepositModel;
 		model.set({
 			'date':$('#date').val(),
@@ -49,7 +52,7 @@ var DepositView = Backbone.View.extend({
 		this.collection.add(model);
 		model.save();
 	},
-	SortDeposit:function(ev){
+	sortDeposit:function(ev){
 		var attribute = $(ev.currentTarget).data('attribute');
 		this.collection.comparator = function(menuA,menuB){
 			 if (menuA.get(attribute) > menuB.get(attribute)) return this.sort_order[attribute];
@@ -58,5 +61,31 @@ var DepositView = Backbone.View.extend({
 		}
 		this.collection.sort();
 		 this.collection.sort_order[attribute] = -this.collection.sort_order[attribute];
+	},
+	filterDeposit:function(ev){
+		var name,from,to;
+		name = this.$('#user-deposit').val();
+		from = this.$('.find-from input').val();
+		to = this.$('.find-to input').val();
+		if(name=='') return;
+		var result = _.filter(this.collection.toJSON(),function(model){
+			if(from&&to) return (model.date>=from&&model.date<=to);
+			if(name&&from&&to) return (model.username==name&&(model.date>=from&&model.date<=to));
+			if(name) return model.username==name;			
+		});
+		//render view
+		 this.$el.html(Templates['deposit/deposit']({
+            deposit: result,'user':userCollection.toJSON()
+        }));
+		for (i in result){
+			var model = result[i];
+			this.$('tbody').append(
+           this.subViews[model.id].el);
+		}
+		this.$('.datepicker').datepicker({      
+            showOn: "button",
+            buttonImage: "images/calendar.png",
+            buttonImageOnly: true,
+        });
 	}
 })

@@ -20,7 +20,6 @@ var SubDepositView = Backbone.View.extend({
 	editDeposit:function(){
 		var date = this.model.get('date');
 		var no = this.$el.find('td:first-child').html();
-		console.log(no);
 		this.model.unset('date');
 		this.render();
 		this.model.set({date:date});

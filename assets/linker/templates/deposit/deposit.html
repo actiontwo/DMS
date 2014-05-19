@@ -4,14 +4,13 @@
 					<div class="content">
 						<div class="find">
 							<div class="find-name">
-								<div>Name:
-									<select>
+								Name:
+									<select id="user-deposit">
 										<option></option>
 										{{#user}}
 										<option>{{firstname}} {{lastname}}</option>
 										{{/user}}
 									</select>
-								</div>
 							</div>
 							<div class="find-from">
 								<div>From: <input class="datepicker" type="text"></div>	
@@ -22,7 +21,7 @@
 						</div>
 						<div class="clear-fix"></div>
 						<div class="confirm">
-							<a href="#">OK</a>
+							<a>OK</a>
 						</div>
 						<div class="clear-fix"></div>
 						<div class="table">
@@ -31,9 +30,9 @@
 									<tr>
 										<th>No</th>
 										<th></th>
-										<th>Date(dd/mm/yy)</th>
-										<th>Name</th>
-										<th>Deposit</th>
+										<th data-attribute="date">Date(dd/mm/yy)</th>
+										<th data-attribute="username">Name</th>
+										<th data-attribute="amount">Deposit</th>
 										<th></th>
 										<th></th>
 									</tr>

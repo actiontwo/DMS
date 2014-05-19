@@ -302,6 +302,7 @@
     margin-bottom: 14px;
     margin-top: 10px;
     margin-right: 5px;
+    cursor: pointer;
 }
 .confirm span {
     cursor: pointer;
@@ -494,7 +495,7 @@
 #deposit .table input[type="text"] {
     width: 80%
 }
-#deposit .table tbody tr:first-child td:nth-child(3) img {
+#deposit .table tbody tr td:nth-child(3) img {
     margin-top: -10px;
 }
 #deposit .table .reference tr:first-child th:first-child {
