@@ -17,6 +17,7 @@ var DepositView = Backbone.View.extend({
 		this.$el.html(Templates['deposit/deposit']({'deposit':this.collection.toJSON(),'user':userCollection.toJSON()}));
 		for(i in this.collection.models){
 			var model = this.collection.models[i];
+			model.set({no:i});//set serial number
 			var subviewdeposit = new SubDepositView({model:model,el:this.$('tr[data-id="'+model.id +'"]')});
 			subviewdeposit.render();
 			this.subViews[model.id] = subviewdeposit;
@@ -44,6 +45,9 @@ var DepositView = Backbone.View.extend({
 			'amount':$('#deposit-amount').val()		//set amount model equal amount user input 
 		});											//get input from user
 		this.collection.add(model);					//add model in collection
+		model.on("invalid",function(model,err){
+			alert(err);
+		});
 		model.save();								//save model in database
 	},
 	sortDeposit:function(ev){

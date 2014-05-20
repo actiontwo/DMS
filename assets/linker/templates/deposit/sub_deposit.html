@@ -1,20 +1,7 @@
-{{#if date}}
+{{#if editor}}
+
 <td>
-</td>
-<td>
-    <input data-id="{{id}}" type="checkbox">
-</td>
-<td data-attribute="date">{{date}}</td>
-<td data-attribute="username">{{username}}</td>
-<td data-attribute="amount">{{amount}}</td>
-<td>
-    <figure class="iconsp-edit-25px" id="btn-edit-deposit"></figure>
-</td>
-<td>
-    <figure class="iconsp-remove-25px" id="btn-remove-deposit"></figure>
-</td>
-{{else}}
-<td>
+	{{no}}
 </td>
 <td>
     <input data-id="{{id}}"type="checkbox">
@@ -24,6 +11,23 @@
 <td><input type="text" value="{{amount}}"data-attribute="amount"</td>
 <td>
     <figure class="iconsp-save-25px" id="btn-save-deposit"></figure>
+</td>
+<td>
+    <figure class="iconsp-remove-25px" id="btn-remove-deposit"></figure>
+</td>
+
+{{else}}
+<td>
+	{{no}}
+</td>
+<td>
+    <input data-id="{{id}}" type="checkbox">
+</td>
+<td data-attribute="date">{{date}}</td>
+<td data-attribute="username">{{username}}</td>
+<td data-attribute="amount">{{amount}}</td>
+<td>
+    <figure class="iconsp-edit-25px" id="btn-edit-deposit"></figure>
 </td>
 <td>
     <figure class="iconsp-remove-25px" id="btn-remove-deposit"></figure>

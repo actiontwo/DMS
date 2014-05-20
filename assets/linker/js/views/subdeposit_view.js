@@ -16,23 +16,27 @@ var SubDepositView = Backbone.View.extend({
 		'click #btn-edit-deposit':'editDeposit',
 		'click #btn-remove-deposit':'removeDeposit',
 		'click #btn-save-deposit':'saveDeposit',
-		'change input':'updateDeposit'
+		'change input':'updateDeposit',
 	},
 	editDeposit:function(){
-		var date = this.model.get('date');
-		var no = this.$el.find('td:first-child').html();
-		this.model.unset('date');
+		//if editor is true model render views which user can edit value,
+		//otherwise model render view which you can't edit value 
+		this.model.set({editor:'true'});
 		this.render();
-		this.model.set({date:date});
-		$('.date').val(date);
-		this.$el.find('td:first-child').html(no);
 	},
 	removeDeposit:function(){
 		this.model.destroy();
 	},
 	saveDeposit:function(){
+		this.model.on('invalid',function(model,err){
+			alert(err);
+			//if user input invalid, user can continue input again
+			this.model.set({editor:'true'});	
+		});
 		this.model.save();
+		this.model.unset('editor');	//unset editor then  render normal views,views can't input 
 		this.render();
+
 	},
 	updateDeposit:function(ev){
 		//update model every input change value
