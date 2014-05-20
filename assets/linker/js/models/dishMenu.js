@@ -11,23 +11,17 @@ var DishMenuModel = Backbone.Model.extend({
 		{
 			var list = dishListCollection.models[i].attributes.dish;
 
-			switch(list){
-				case attr.dish1:
-					dish1='true';
-					break;
-				case attr.dish2:
-					dish2='true';
-					break;
-				case attr.dish3:
-					dish3='true';
-					break;
-				case attr.dish4:
-					dish4='true';
-					break;
-				case attr.dish5:
-					dish5='true';
-					break;
-			}
+			if(list==attr.dish1||attr.dish1=='')
+				dish1='true';
+			if(list==attr.dish2||attr.dish2=='')
+				dish2='true';
+			if(list==attr.dish3||attr.dish3=='')
+				dish3='true';
+			if(list==attr.dish4||attr.dish4=='')
+				dish4='true';
+			if(list==attr.dish5||attr.dish5=='')
+				dish5='true';
+
 		}
 
 		if(dish1==false)
