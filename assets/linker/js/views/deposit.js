@@ -33,7 +33,8 @@ var DepositView = Backbone.View.extend({
 		'click #btn-create-deposit': 'createDeposit',	
 		'click th':'sortDeposit',
 		'change #user-deposit':'filterDeposit1',
-		'click .confirm':'filterDeposit'
+		'click .confirm':'filterDeposit',
+		'click #btn-delete-selected':'deleteSelected'
 	},
 	createDeposit:function(){
 		var model = new DepositModel;				//create new model Deposit
@@ -54,6 +55,19 @@ var DepositView = Backbone.View.extend({
 		}
 		this.collection.sort();
 		 this.collection.sort_order[attribute] = -this.collection.sort_order[attribute];
+	},
+	deleteSelected:function(){
+		that =this;						//assign that equal this, using in each loop
+		//loop though tbody get all td second
+		this.$el.find('tbody tr td:nth-child(2) input').each(function(){
+			//check if checked then delete 
+			if($(this).prop('checked')){		
+				var id=$(this).data('id');					//get id of model
+				var model = that.collection.get(id);		//get model from collection with id have above
+				that.collection.remove(model);				//remove model out collection
+				model.destroy();							//end destroy model from database
+			}
+		});
 	},
 	filterDeposit:function(ev){
 		var name,from,to;							//declare var name,date-from,date-to using filter
