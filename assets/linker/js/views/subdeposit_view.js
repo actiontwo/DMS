@@ -4,6 +4,7 @@ var SubDepositView = Backbone.View.extend({
 	},
 	render:function(){
 		this.$el.html(Templates['deposit/sub_deposit'](this.model.attributes));
+		//display calendar
 		this.$('.datepicker').datepicker({      
             showOn: "button",
             buttonImage: "images/calendar.png",
@@ -34,6 +35,7 @@ var SubDepositView = Backbone.View.extend({
 		this.render();
 	},
 	updateDeposit:function(ev){
+		//update model every input change value
 		this.model.set($(ev.currentTarget).data('attribute'),$(ev.currentTarget).val());
 	}
 })

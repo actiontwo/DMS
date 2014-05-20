@@ -4,6 +4,7 @@ var SubMenuView = Backbone.View.extend({
 	},
     render: function() {
         this.$el.html(Templates['menu/submenu_view'](this.model.attributes));
+        //display calendar
         this.$('.datepicker').datepicker({
             showOn: "button",
             buttonImage: "images/calendar.png",
@@ -19,13 +20,16 @@ var SubMenuView = Backbone.View.extend({
         'keyup  input.dish, select': 'FillDish'
     },
     editMenu: function() {
-    	var date = this.model.get('date');
-    	var brunch = this.model.get('brunch');
-    	this.model.set({'date':''});
-    	this.render();
-    	this.model.set({'date':date});
-    	this.$('.date').val(date);
-    	this.$('.brunch').val(brunch);
+        //when user click edit icon all element in row convert input or select
+        //if date value is empty, view render input and select, else view render tag td and text inside
+    	
+        var date = this.model.get('date');          //get date value before set it empty
+    	var brunch = this.model.get('brunch');      //get brunch value 
+    	this.model.set({'date':''});                //set date value is empty
+    	this.render();                              // render view 
+    	this.model.set({'date':date});              //update date value in model
+    	this.$('.date').val(date);                  //update html display date
+    	this.$('.brunch').val(brunch);              //update html display brunch
     },
     removeMenu:function(){
     	this.model.destroy();

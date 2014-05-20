@@ -6,6 +6,7 @@ var DepositView = Backbone.View.extend({
 	initialize:function(){
 		this.render();
 		this.listenTo(this.collection, 'sync reset sort remove',this.render );
+		//default sort with 1 increase and -1 decrease
 		this.collection.sort_order ={
 			'date':1,
 			'username':1,
@@ -25,32 +26,24 @@ var DepositView = Backbone.View.extend({
             buttonImage: "images/calendar.png",
             buttonImageOnly: true,
         });
-
-        this.auto_index();
+        auto_index();//index table
         return this;
 	},
-	auto_index:function(){
-		var i =1;
-		$('tbody').find('tr td:first-child').each(function(){
-			$(this).html(i);
-			i++;
-		});
-	},
 	events:{
-		'click #btn-create-deposit': 'createDeposit',
+		'click #btn-create-deposit': 'createDeposit',	
 		'click th':'sortDeposit',
 		'change #user-deposit':'filterDeposit1',
 		'click .confirm':'filterDeposit'
 	},
 	createDeposit:function(){
-		var model = new DepositModel;
+		var model = new DepositModel;				//create new model Deposit
 		model.set({
-			'date':$('#date').val(),
-			'username':$('#deposit-new-user').val(),
-			'amount':$('#deposit-amount').val()
-		});
-		this.collection.add(model);
-		model.save();
+			'date':$('#date').val(),				//set date model equal date user input
+			'username':$('#deposit-new-user').val(),//set username model equal username user input 
+			'amount':$('#deposit-amount').val()		//set amount model equal amount user input 
+		});											//get input from user
+		this.collection.add(model);					//add model in collection
+		model.save();								//save model in database
 	},
 	sortDeposit:function(ev){
 		var attribute = $(ev.currentTarget).data('attribute');
@@ -63,25 +56,27 @@ var DepositView = Backbone.View.extend({
 		 this.collection.sort_order[attribute] = -this.collection.sort_order[attribute];
 	},
 	filterDeposit:function(ev){
-		var name,from,to;
-		name = this.$('#user-deposit').val();
-		from = this.$('.find-from input').val();
-		to = this.$('.find-to input').val();
-		if(name=='') return;
+		var name,from,to;							//declare var name,date-from,date-to using filter
+		name = this.$('#user-deposit').val();		//get name value filter with name 
+		from = this.$('.find-from input').val();	//get date from filter with date
+		to = this.$('.find-to input').val();		//get date to filter with date
+		//using _.filter function  in undercore.js to filter data, all model accord condition stored result`
 		var result = _.filter(this.collection.toJSON(),function(model){
-			if(from&&to) return (model.date>=from&&model.date<=to);
-			if(name&&from&&to) return (model.username==name&&(model.date>=from&&model.date<=to));
-			if(name) return model.username==name;			
+			if(from&&to) return (model.date>=from&&model.date<=to);									//return model have from <= model.date <= to
+			if(name&&from&&to) return (model.username==name&&(model.date>=from&&model.date<=to));	//return model accord condition 
+			if(name) return model.username==name;													//return model accord condition username equal name user input			
 		});
-		//render view
+		//after filter,render view with result found
 		 this.$el.html(Templates['deposit/deposit']({
             deposit: result,'user':userCollection.toJSON()
         }));
+		 //render subview 
 		for (i in result){
 			var model = result[i];
 			this.$('tbody').append(
            this.subViews[model.id].el);
 		}
+		//after render, display again calendar
 		this.$('.datepicker').datepicker({      
             showOn: "button",
             buttonImage: "images/calendar.png",

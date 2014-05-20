@@ -3,7 +3,7 @@ var DishMenuView = Backbone.View.extend({
     className: 'menus',
     id: 'dish_menu',
     subViews: {},
-    page:0,
+    page:1,
     number:5,
     initialize: function() {        
         this.listenTo(this.collection, 'reset destroy sort sync', this.render);  
@@ -18,6 +18,9 @@ var DishMenuView = Backbone.View.extend({
             dish5: 1,
             note: 1
         };
+        //init page and perPage(number)
+        this.page = 1;
+        typeof(this.number) != 'underfined' || (this.number = 5);        
     },
     render: function() {
         this.$el.html(Templates['menu/view_menu']({'dish_menu':this.collection.toJSON(),'list':dishListCollection.toJSON()}));
@@ -38,6 +41,9 @@ var DishMenuView = Backbone.View.extend({
                 $(this).attr('selected','selected');
         })    
     },
+    pagination:function(){
+        
+    },
     events:{
         'click th':'sortMenu',
         'click #menu_prev': 'prev',
@@ -57,22 +63,37 @@ var DishMenuView = Backbone.View.extend({
         // reverse sort direction
         this.collection.sort_order[attribute] = -this.collection.sort_order[attribute];
     },
-    prev:function(){
-        if(this.page>0){
-                this.page--;
-            this.collection.fetch({data:$.param({page:this.page,number:this.number})});
+    prev:function(){   
+        var that =this;   
+       if(this.page){
+             if($('tbody').html()){
+                    this.page--;
+                     this.collection.fetch({
+                            data:$.param({page:this.page,number:this.number})
+                        }).done(function(){
+                               
+                            });       
+                    return;
+            }
         }
         else
-            this.page==0;
-        
+            return;
     },
     next:function(){
-        if(this.page<2) {
-            this.page++;
-            this.collection.fetch({data:$.param({page:this.page,number:this.number})});
+        var that =this;
+        if(this.collection.length){ 
+              this.collection.fetch({
+                data:$.param({page:this.page,number:this.number})
+            }).done(function(){
+                if($('tbody').html())
+                    that.page++;
+                return;
+            });
+        } 
+        else{
+            this.page = that.page;
+            return;
         }
-        else
-            this.page==2;
     },
     select:function(ev){
         var number=$(ev.currentTarget).val();
