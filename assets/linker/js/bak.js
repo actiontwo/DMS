@@ -104,3 +104,10 @@ function reselectDish(tip, num_word, key, temp) {
     }
     return next_word;
 };
+function formatDate(){
+    var date = new Date();
+    var month= date.getMonth()+1;
+    var dates = date.getDate();
+    var year = date.getFullYear();
+    return '0'+month+'/'+dates+'/'+year;
+}

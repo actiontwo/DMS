@@ -21,22 +21,24 @@ var SubMenuView = Backbone.View.extend({
     },
     editMenu: function() {
         //when user click edit icon all element in row convert input or select
-        //if date value is empty, view render input and select, else view render tag td and text inside
-    	
-        var date = this.model.get('date');          //get date value before set it empty
-    	var brunch = this.model.get('brunch');      //get brunch value 
-    	this.model.set({'date':''});                //set date value is empty
+        //if editor value is true, view render input and select, else view render tag td and text inside
+    	this.model.set({input:'true'})
+        var brunch = this.model.get('brunch');
     	this.render();                              // render view 
-    	this.model.set({'date':date});              //update date value in model
-    	this.$('.date').val(date);                  //update html display date
     	this.$('.brunch').val(brunch);              //update html display brunch
     },
     removeMenu:function(){
     	this.model.destroy();
     },
     saveMenu:function(){ 
-    	$('#list_dish_menu').appendTo('.table').css('display','none');//fix function fillDish working correct  	   	
+    	$('#list_dish_menu').appendTo('.table').css('display','none');//fix function fillDish working correct  
+        //check valid input 
+        this.model.on("invalid",function(model,err){
+            alert(err);
+            this.model.unset('input');
+        });	   	
     	this.model.save();
+        this.model.unset('input');
     	this.render();
     },
     updateModel: function(ev) {

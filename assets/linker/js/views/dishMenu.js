@@ -6,7 +6,7 @@ var DishMenuView = Backbone.View.extend({
     page:1,
     number:5,
     initialize: function() {        
-        this.listenTo(this.collection, 'reset destroy sort sync', this.render);  
+        this.listenTo(this.collection, 'reset  destroy sort sync remove', this.render);  
         this.render();
           this.collection.sort_order = {
             date: 1,
@@ -26,10 +26,18 @@ var DishMenuView = Backbone.View.extend({
         this.$el.html(Templates['menu/view_menu']({'dish_menu':this.collection.toJSON(),'list':dishListCollection.toJSON()}));
         for (i in this.collection.models) {
             var model = this.collection.models[i];
+            //check date current if current date greater model.attributes.date then model can edit, otherwise model can't edit
+            var now = formatDate();                                //get current date with format mm/dd/yyyy 
+            if(model.attributes.date>=now)          
+                model.set({'editor':'true'})                       //editor is true then model can edit
+            else 
+                model.unset('editor');                            //model can't edit
+            //create a new subView
             var submenu_view = new SubMenuView({model:model,el:this.$('tr[data-id="' + model.id + '"]')});
-            submenu_view.render();   
-            this.subViews[model.id] =  submenu_view;
+            submenu_view.render();                               //Render Subview   
+            this.subViews[model.id] =  submenu_view;               //a object subViews manager subView
         }
+        //display calendar
         this.$('.datepicker').datepicker({
             showOn: "button",
             buttonImage: "images/calendar.png",
