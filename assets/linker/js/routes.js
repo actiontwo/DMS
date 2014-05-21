@@ -63,7 +63,9 @@ var AppRouter = Backbone.Router.extend({
 		$("#main").html(dishMenuView.el);
 	},
 	loadRegisterUser:function(){
-		userView = new UserView({collection:userCollection});
+		var userCollections = new UserCollection;
+		userView = new UserView({collection:userCollections});
+		userCollections.fetch();
 		$("#main").html(userView.el);
 	}
 })
