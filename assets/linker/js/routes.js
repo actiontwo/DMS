@@ -12,13 +12,8 @@ var AppRouter = Backbone.Router.extend({
 		'menu/create_dish': 'createDish',
 		'menu/create_menu': 'createMenu',
 		'deposit':'loadDeposit',
-		'register_meal': 'loadRegisterMeal'
-	},
-	paginationMenu: function(page, number){
-		dishMenuCollection = new DishMenuCollection;
-		dishMenuView = new DishMenuView({collection: dishMenuCollection,page:page,number:number});
-		dishMenuCollection.fetch({data:$.param({page:page,number:number})});		
-		$("#main").html(dishMenuView.el);
+		'register_meal': 'loadRegisterMeal',
+		'register/User':'loadRegisterUser',
 	},
 	loadDishMenu: function() {
 		dishMenuCollection = new DishMenuCollection;
@@ -60,6 +55,16 @@ var AppRouter = Backbone.Router.extend({
 		registerMealView = new RegisterMealView({collection: registerMealCollection});
 		registerMealCollection.fetch();
 		$("#main").html(registerMealView.el);
+	},
+	paginationMenu: function(page, number){
+		dishMenuCollection = new DishMenuCollection;
+		dishMenuView = new DishMenuView({collection: dishMenuCollection,page:page,number:number});
+		dishMenuCollection.fetch({data:$.param({page:page,number:number})});		
+		$("#main").html(dishMenuView.el);
+	},
+	loadRegisterUser:function(){
+		userView = new UserView({collection:userCollection});
+		$("#main").html(userView.el);
 	}
 })
 
