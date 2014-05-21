@@ -6,6 +6,7 @@ userCollection.fetch();
 var AppRouter = Backbone.Router.extend({
 	routes: {
 		'menu': 'loadDishMenu',
+		'menu/page/:page/n:number':'paginationMenu',
 		'menu/print':'loadPrintMenu',
 		'expense': 'loadExpenseMenu',
 		'menu/create_dish': 'createDish',
@@ -13,9 +14,15 @@ var AppRouter = Backbone.Router.extend({
 		'deposit':'loadDeposit',
 		'register_meal': 'loadRegisterMeal'
 	},
+	paginationMenu: function(page, number){
+		dishMenuCollection = new DishMenuCollection;
+		dishMenuView = new DishMenuView({collection: dishMenuCollection,page:page,number:number});
+		dishMenuCollection.fetch({data:$.param({page:page,number:number})});		
+		$("#main").html(dishMenuView.el);
+	},
 	loadDishMenu: function() {
 		dishMenuCollection = new DishMenuCollection;
-		dishMenuView = new DishMenuView({collection: dishMenuCollection});//{data:$.param({page:0,number:5})}
+		dishMenuView = new DishMenuView({collection: dishMenuCollection});
 		dishMenuCollection.fetch({data:$.param({page:0,number:5})});		
 		$("#main").html(dishMenuView.el);
 	},

@@ -3,9 +3,9 @@ var DishMenuView = Backbone.View.extend({
     className: 'menus',
     id: 'dish_menu',
     subViews: {},
-    page:1,
+    page:0,
     number:5,
-    initialize: function() {        
+    initialize: function(options) {        
         this.listenTo(this.collection, 'reset  destroy sort sync remove', this.render);  
         this.render();
           this.collection.sort_order = {
@@ -19,8 +19,8 @@ var DishMenuView = Backbone.View.extend({
             note: 1
         };
         //init page and perPage(number)
-        this.page = 1;
-        typeof(this.number) != 'underfined' || (this.number = 5);        
+        this.page = options.page;
+        this.number = options.number;     
     },
     render: function() {
         this.$el.html(Templates['menu/view_menu']({'dish_menu':this.collection.toJSON(),'list':dishListCollection.toJSON()}));
@@ -71,46 +71,35 @@ var DishMenuView = Backbone.View.extend({
         // reverse sort direction
         this.collection.sort_order[attribute] = -this.collection.sort_order[attribute];
     },
-    prev:function(){   
-        var that =this;   
-       if(this.page){
-             if($('tbody').html()){
-                    this.page--;
-                     this.collection.fetch({
-                            data:$.param({page:this.page,number:this.number})
-                        }).done(function(){
-                               
-                            });       
-                    return;
-            }
-        }
-        else
-            return;
+    prev:function(){
+        //if user click prev button, page decrease one unit 
+       this.page--;
+       if(this.page<0)                                  //if page less than zero, 
+            this.page=0;                                //set page equal zero
+       var url='menu/page/'+this.page+'/n'+this.number; //set a url typical   page current
+       appRouter.navigate(url,{trigger:false,replace:true});//make url in broswer change to url above 
+       this.collection.fetch({data:$.param({page:this.page,number:this.number})});//fetch data for new page
     },
-    next:function(){
-        var that =this;
-        if(this.collection.length){ 
-              this.collection.fetch({
-                data:$.param({page:this.page,number:this.number})
-            }).done(function(){
-                if($('tbody').html())
-                    that.page++;
-                return;
-            });
-        } 
-        else{
-            this.page = that.page;
-            return;
-        }
+    next:function(){   
+        //if user click next button, page increase one unit  
+       this.page++;
+       if(this.collection.length==0)                    //if page current not found any data, toward the page end.
+            this.page--;                                //decrease one unit
+       var url = 'menu/page/'+this.page+'/n'+this.number;//set url typical page current
+       appRouter.navigate(url,{trigger:false,replace:true});//make url in browser change to url above
+      this.collection.fetch({data:$.param({page:this.page,number:this.number})});//fetch data for new page
     },
     select:function(ev){
-        var number=$(ev.currentTarget).val();
-        this.number = number;
-        this.collection.fetch({data:$.param({page:this.page,number:number})});
+        //if user select number per page, 
+        var number = $(ev.currentTarget).val(); //get number user select
+        this.number = number;                   //asign this.number equal user select
+        var url = 'menu/page/'+this.page+'/n'+this.number;  //set url typical page current
+        appRouter.navigate(url,{trigger:false,replace:true});//make url in browser change to url above
+        this.collection.fetch({data:$.param({page:this.page,number:number})});//fetch data 
     },
     filterMenu:function(){
         var from = $('.find-from input').val();
-        var to = $('.find-to input').val();
+        var to   = $('.find-to input').val();
         //check date filter
          if(from>to||from===''||to===''){
             alert('Input invalid, from must be less to');
