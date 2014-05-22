@@ -14,6 +14,7 @@ var AppRouter = Backbone.Router.extend({
 		'deposit':'loadDeposit',
 		'register_meal': 'loadRegisterMeal',
 		'register/User':'loadRegisterUser',
+		'login':'loadLogin'
 	},
 	loadDishMenu: function() {
 		dishMenuCollection = new DishMenuCollection;
@@ -63,10 +64,14 @@ var AppRouter = Backbone.Router.extend({
 		$("#main").html(dishMenuView.el);
 	},
 	loadRegisterUser:function(){
-		var userCollections = new UserCollection;
-		userView = new UserView({collection:userCollections});
-		userCollections.fetch();
+		userView = new UserView();
 		$("#main").html(userView.el);
+	},
+	loadLogin:function(){
+		var userModel = new UserModel;
+		userModel.set({'login':'true'});
+		var loginView = new LoginView({model:userModel});
+		$("#main").html(loginView.el);
 	}
 })
 
