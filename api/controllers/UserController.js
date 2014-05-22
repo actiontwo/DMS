@@ -16,15 +16,25 @@
  */
 
 module.exports = {
-    
-  
-
-
-  /**
-   * Overrides for the settings in `config/controllers.js`
-   * (specific to UserController)
-   */
-  _config: {}
-
-  
+    /**
+     * Overrides for the settings in `config/controllers.js`
+     * (specific to UserController)
+     */
+    _config: {},
+    create: function(req, res, next) {
+        User.findOneByEmail(req.param('email'), function(err, user) {
+            if (err) {
+                next(err);
+            } else
+            if (user) {
+            	res.send('Email already exists');
+    			return;
+            } else
+            	next();
+        });
+    },
+    error:function(req,res,next){
+    	res.send("Password does't match password comfirmation.");
+    	next();
+    }
 };
