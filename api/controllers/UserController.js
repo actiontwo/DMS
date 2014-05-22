@@ -32,9 +32,5 @@ module.exports = {
             } else
             	next();
         });
-    },
-    error:function(req,res,next){
-    	res.send("Password does't match password comfirmation.");
-    	next();
     }
 };
