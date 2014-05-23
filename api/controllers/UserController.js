@@ -21,16 +21,34 @@ module.exports = {
      * (specific to UserController)
      */
     _config: {},
-    create: function(req, res, next) {
-        User.findOneByEmail(req.param('email'), function(err, user) {
-            if (err) {
-                next(err);
-            } else
-            if (user) {
-            	res.send('Email already exists');
-    			return;
-            } else
-            	next();
+     register: function (req, res) {
+        res.view({
+            partials: {
+                header_login: '../partials/site/header_login',
+                footer: '../partials/site/footer'
+            },
+        });  
+    },
+   create: function(req,res,next){
+        if(!req.param('email')||!req.param('password')||!req.param('confirm')){
+            console.log('You must enter email,password,corfirm');
+            res.redirect('/register');
+            return;
+        }
+        if(req.param('password')!=req.param('confirm')){
+            console.log('Password and Confirm not match');
+            res.redirect('/register');
+            return; 
+        }
+        User.findOneByEmail(req.param('email'), function (err,user){
+            if(err) next(err);
+            if(user) {
+                console.log('Email Exists!');
+                res.redirect('/register');
+                return;
+            }
+            next();
+            res.redirect('/#menu') ;
         });
-    }
+    },
 };

@@ -5,8 +5,8 @@
  * @description :: A short summary of how this model works and what it represents.
  * @docs		:: http://sailsjs.org/#!documentation/models
  */
-var bcrypt = require('bcrypt');
-module.exports = {
+ var bcrypt = require('bcrypt');
+ module.exports = {
 
     attributes: {
         email: {
@@ -30,18 +30,25 @@ module.exports = {
         },
         join_date: {
             type: 'date'
-        }
-        /* e.g.
-  	nickname: 'string'
-  	*/
-    },
+        },
+        toJSON: function() {
+          var obj = this.toObject();
+          delete obj.password;
+          return obj;
+      }
+  },
     //hash password after crease user
-    beforeCreate: function(values, next) {
-        bcrypt.hash(values.password, 10, function(err, hash) {
-            if (err) return next(err);
-            values.password = hash;
-            next();
-        });
-        
+    beforeCreate: function(user, cb) {
+        bcrypt.genSalt(10, function(err, salt) {
+          bcrypt.hash(user.password, salt, function(err, hash) {
+            if (err) {
+              console.log(err);
+              cb(err);
+          }else{
+              user.password = hash;
+              cb(null, user);
+          }
+      });
+      });
     }
 };
