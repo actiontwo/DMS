@@ -14,7 +14,8 @@ var AppRouter = Backbone.Router.extend({
 		'deposit':'loadDeposit',
 		'register_meal': 'loadRegisterMeal',
 		'profile/user/:id':'updateProfile',
-		'login':'loadLogin'
+		'login':'loadLogin',
+		'expense/create_expense': 'createExpense'
 	},
 	loadDishMenu: function() {
 		dishMenuCollection = new DishMenuCollection;
@@ -29,8 +30,8 @@ var AppRouter = Backbone.Router.extend({
 		$('#main').html(printMenuView.el);
 	},
 	loadExpenseMenu: function(){
-		expenseMenuCollection = new ExpenseMenuCollection;
-		expenseMenuView = new ExpenseMenuView({collection: expenseMenuCollection});
+		var expenseMenuCollection = new ExpenseMenuCollection;
+		var expenseMenuView = new ExpenseMenuView({collection: expenseMenuCollection});
 		expenseMenuCollection.fetch();
 		$("#main").html(expenseMenuView.el);
 	},
@@ -52,8 +53,8 @@ var AppRouter = Backbone.Router.extend({
 		$("#main").html(depositView.el);
 	},
 	loadRegisterMeal: function(){
-		registerMealCollection = new RegisterMealCollection();
-		registerMealView = new RegisterMealView({collection: registerMealCollection});
+		var registerMealCollection = new RegisterMealCollection();
+		var registerMealView = new RegisterMealView({collection: registerMealCollection});
 		registerMealCollection.fetch();
 		$("#main").html(registerMealView.el);
 	},
@@ -74,8 +75,14 @@ var AppRouter = Backbone.Router.extend({
 		userModel.set({'login':'true'});
 		var loginView = new LoginView({model:userModel});
 		$("#main").html(loginView.el);
+	},
+
+	createExpense: function(){
+		// var createExpenseCollection = new ExpenseMenuCollection();
+		// var createExpenseView = new CreateExpenseView({collection: createExpenseCollection});
+		// $("#main").html(createExpenseView.el);
 	}
-})
+});
 
 
 	var appRouter = new AppRouter();	

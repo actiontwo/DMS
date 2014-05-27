@@ -23,6 +23,12 @@ var RegisterMealView = Backbone.View.extend({
                 count++;
         });
         init();
+        //display calendar
+        this.$('.datepicker').datepicker({
+            showOn: "button",
+            buttonImage: "images/calendar.png",
+            buttonImageOnly: true,
+        });
 	},
 	events: {
         'click [id^="th_"]': 'sortRegisterMeals',

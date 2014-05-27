@@ -1,0 +1,54 @@
+<div class="header">
+	<span>Create Expense</span>
+</div>
+<div class="content">
+	<div class="clear-fix"></div>
+	<div class="confirm" id="btnAddCreateExpense">
+		<a href="#expense/create_expense">Add</a>
+	</div>
+	<div class="confirm" id="btnSaveCreateExpense">
+		<a href="#expense/create_expense">Save</a>
+	</div>
+	<div class="confirm">
+		<a href="#expense/create_expense" id="btnCancelCreateExpense" class="btn-cancel">Cancel</a>
+	</div>
+	<div class="clear-fix"></div>
+	<div class="table">
+		<table class="reference">
+			<tbody id="tbodyCreateExpense">
+				<tr>
+					<th>Date(dd/mm/yy)</th>
+					<th>Money(VND)</th>
+					<th>Invoice ID</th>
+					<th>Images</th>
+					<th>Note</th>
+					<th>Actions</th>
+				</tr>
+
+				<tr class="dataTR">
+					<th class="es-cr-edit" data-attribute="date">
+						<div><input class="datepicker" type="text" placeholder="11/11/2013"></div>
+					</th>
+					<th class="es-cr-edit" data-attribute="money">
+						<div><input type="text"></div>
+					</th>
+					<th class="es-cr-edit" data-attribute="invoiceID">
+						<div><input type="text"></div>
+					</th>
+					<th class="es-cr-edit">
+						<div class="btn-end" data-attribute="invoiceImage">
+							<a href="#">Browse</a>
+						</div>
+					</th>
+					<th class="es-cr-edit" data-attribute="note">
+						<div><input type="text"></div>
+					</th>
+					<th>
+						<figure id="btnRemoveCreateExpense" class="iconsp-remove-25px"></figure>
+						<!--<figure class="iconsp-edit-25px"></figure>-->
+					</th>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
