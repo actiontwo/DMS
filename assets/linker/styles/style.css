@@ -409,6 +409,34 @@
     margin-left: 10px;
     text-align: center;
 }
+
+  input.btn-register {
+    background: #7a7a7a !important;
+    /* Old browsers */
+    background: -moz-linear-gradient(top, #7a7a7a 52%, #5e5e5e 52%, #7a7a7a 100%) !important;
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(52%, #7a7a7a), color-stop(52%, #5e5e5e), color-stop(100%, #7a7a7a)) !important;
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #7a7a7a 52%, #5e5e5e 52%, #7a7a7a 100%) !important; 
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #7a7a7a 52%, #5e5e5e 52%, #7a7a7a 100%) !important;
+    /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #7a7a7a 52%, #5e5e5e 52%, #7a7a7a 100%) !important;
+    /* IE10+ */
+    background: linear-gradient(to bottom, #7a7a7a 52%, #5e5e5e 52%, #7a7a7a 100%) !important;
+    /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7a7a7a', endColorstr='#7a7a7a', GradientType=0);
+    /* IE6-9 */
+    padding: 0px 5px !important;
+    display: inline-block;
+    border-radius: 2px;
+    margin-top: 14px !important;
+    margin-left: 36px !important;
+    text-align: center !important;
+    color:#fff;
+    width: 80px !important;
+    cursor: pointer;
+}
 /* line 319, ../../sass/style.scss */
  .btn-end a:hover, .btn-end a:active {
     background: #545454;
@@ -1159,18 +1187,28 @@
 
 /* line 945, ../../sass/style.scss */
  .mem-register .content {
-    background: #e2dfdf;
-    position: relative;
+    background-color: #e2dfdf;
+    background-image: url('/images/rg-register.png');
+    /* position: relative; */
     padding: 0px;
     text-align: center;
-    margin: auto;
+    height: 500px;
+    width: 940px;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+    display: block;
+    background-position: top center;
 }
 /* line 952, ../../sass/style.scss */
  .mem-register .rg-box-input {
-    position: absolute;
-    top: 184px;
-    right: 395px;
+    width: 155px;
+    /* top: 184px; */
+    /* right: 395px; */
     text-align: center;
+    margin: 0 auto;
+    /* margin-top: 54px; */
+    display: block;
+    padding-top: 176px;
 }
 /* line 958, ../../sass/style.scss */
  .mem-register .rg-box-input h3 {

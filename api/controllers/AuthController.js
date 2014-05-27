@@ -2,9 +2,10 @@
 //  * AuthController
 //  *
 //  */
-var bcrypt = require('bcrypt');
+//var bcrypt = require('bcrypt');
 module.exports = {
     login: function (req, res) {
+        console.log("LOGIN ok");
         res.view({
             partials: {
                 header_login: '../partials/site/header_login',
@@ -27,15 +28,15 @@ module.exports = {
         		res.redirect('/login');
         		return;
         	}
-        	bcrypt.compare(req.param('password'),user.password, function(err,valid){
-        		if(err) return next(err);
-        		if(!valid) {
-        			res.send('Invalid username and password combination');
-        			res.redirect('/login');
-        			return;
-        		}
-        		res.redirect('/#menu');
-        	});
+        	// bcrypt.compare(req.param('password'),user.password, function(err,valid){
+        	// 	if(err) return next(err);
+        	// 	if(!valid) {
+        	// 		res.send('Invalid username and password combination');
+        	// 		res.redirect('/login');
+        	// 		return;
+        	// 	}
+        	// 	res.redirect('/#menu');
+        	// });
         });
     },
 

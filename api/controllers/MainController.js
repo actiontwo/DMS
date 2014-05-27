@@ -31,7 +31,7 @@ module.exports = {
   		partials: {
   			header: '../partials/site/header',
   			footer: '../partials/site/footer',
-  			menu: '../partials/site/menu',
+  			menu: '../partials/site/menu'
   		},
   	});  
   }

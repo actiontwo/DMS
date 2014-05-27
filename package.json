@@ -13,8 +13,7 @@
     "sails-mongo": "0.9.x",
     "handlebars": "*",
     "helpers": "*",
-    "grunt-contrib-handlebars": "^0.8.0",
-    "bcrypt": "^0.7.8"
+    "grunt-contrib-handlebars": "^0.8.0"
   },
   "scripts": {
     "start": "node app.js",

@@ -68,7 +68,7 @@ var AppRouter = Backbone.Router.extend({
 		var userView = new UserView({model:userModel});
 		userModel.fetch({id:id});
 		$('#main').html(userView.el);
-
+	},
 	loadLogin:function(){
 		var userModel = new UserModel;
 		userModel.set({'login':'true'});

@@ -30,6 +30,8 @@ module.exports = {
         });  
     },
    create: function(req,res,next){
+    console.log("create");
+    console.log(req.param('email'));
         if(!req.param('email')||!req.param('password')||!req.param('confirm')){
             console.log('You must enter email,password,corfirm');
             res.redirect('/register');
