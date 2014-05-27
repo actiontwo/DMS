@@ -9,10 +9,10 @@
 module.exports = {
 
   attributes: {
-  	_id:{
-  		type:"integer",
- 		unique: true
-  	},
+  	// _id:{
+  	// 	type:"integer",
+ 		// unique: true
+  	// },
     dish:{
     	type:"string",
     	required:true

@@ -30,8 +30,9 @@ module.exports = {
         });  
     },
    create: function(req,res,next){
-    console.log("create");
     console.log(req.param('email'));
+    email = req.param('email');
+    password = req.param('password');
         if(!req.param('email')||!req.param('password')||!req.param('confirm')){
             console.log('You must enter email,password,corfirm');
             res.redirect('/register');
@@ -49,7 +50,20 @@ module.exports = {
                 res.redirect('/register');
                 return;
             }
-            next();
+                 var hasher = require("password-hash");
+                 password = hasher.generate(password);
+                 console.log(password);
+            //next();
+
+            User.create({email: email, password: password}).done(function(error, user) {
+                if (error) {
+                    res.send(500, {error: "DB Error"});
+                } else {
+                    console.log("OK");
+                    // req.session.user = user;
+                    // res.send(user);
+                }
+            });
             res.redirect('/#menu') ;
         });
     },

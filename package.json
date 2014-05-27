@@ -13,7 +13,8 @@
     "sails-mongo": "0.9.x",
     "handlebars": "*",
     "helpers": "*",
-    "grunt-contrib-handlebars": "^0.8.0"
+    "grunt-contrib-handlebars": "^0.8.0",
+    "password-hash":"1.2.2"
   },
   "scripts": {
     "start": "node app.js",
