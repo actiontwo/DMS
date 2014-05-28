@@ -81,7 +81,7 @@ var AppRouter = Backbone.Router.extend({
 		// var createExpenseCollection = new ExpenseMenuCollection();
 		// var createExpenseView = new CreateExpenseView({collection: createExpenseCollection});
 		// $("#main").html(createExpenseView.el);
-	}
+	},
 });
 
 
