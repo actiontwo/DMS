@@ -48,9 +48,58 @@ var UserView = Backbone.View.extend({
   className:'men-register',
   id:'user',
   initialize:function(){
-  	this.listenTo( this.model, 'change sync',this.render);
+  	this.listenTo( this.model, 'sync',this.render);
   },
   render:function(){
   	this.$el.html(Templates['user/profileUser'](this.model.attributes));
+  },
+  events:{
+  	'click .btn-end':'updateProfile',
+  	'change input':'updateModel'
+  },
+// -------------------------------------------------------------------
+// updateModel ( ev )
+//
+// PARAMETERS:
+//            ev :current DOM element when user click
+// RETURNS:
+//          	no return
+// DEPENDENCIES:
+//            none
+// PURPOSE:
+//            update model when user fill information
+// NOTES:
+//            none
+// REVISIONS:
+//            05/28/2014: Phuc Nguyen
+// -------------------------------------------------------------------
+  updateModel:function(ev){
+  	this.model.set($(ev.currentTarget).data('attribute'),$(ev.currentTarget).val());
+  },
+// -------------------------------------------------------------------
+// updateProfile (  )
+//
+// PARAMETERS:
+//            none
+// RETURNS:
+//          	no return
+// DEPENDENCIES:
+//            updateModel
+// PURPOSE:
+//            update profile user into database
+// NOTES:
+//            none
+// REVISIONS:
+//            05/28/2014: Phuc Nguyen
+// -------------------------------------------------------------------
+  updateProfile:function(){
+  	this.model.save(null,{
+  		success:function(){
+  			console.log('Success');
+  		},
+  		error:function(){
+  			console.log('Failed');
+  		}
+  	});
   }
 });

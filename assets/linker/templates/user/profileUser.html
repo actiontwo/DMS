@@ -4,11 +4,11 @@
             <div class="rg-box-input">
               <h3>Welcome {{firstname}} {{lastname}}</h3>
               <span>Please update information</span>
-              <form action="">
-                <input type="text" name="firstname" placeholder="FirstName"/>
-                <input type="test" name="lastname" placeholder="LastName"/>
-                <input type="submit" value="submit"/>
-              </form>
+                <input type="text" data-attribute ="firstname" placeholder="FirstName"/>
+                <input type="test" data-attribute ="lastname" placeholder="LastName"/>
+                <div class="btn-end">
+                 <a>Update</a>
+                </div>
             {{else}}
                <h3>Welcome Adminastrator {{firstname}} {{lastname}}</h3>
               <span>Please update information</span>

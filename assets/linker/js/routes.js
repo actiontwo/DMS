@@ -65,13 +65,13 @@ var AppRouter = Backbone.Router.extend({
 		$("#main").html(dishMenuView.el);
 	},
 	updateProfile:function(id){
-		var userModel = new UserModel;
+		var userModel = new UserModel({id:id});
 		var userView = new UserView({model:userModel});
-		userModel.fetch({id:id});
+		userModel.fetch();
 		$('#main').html(userView.el);
 	},
 	loadLogin:function(){
-		var userModel = new UserModel;
+		var userModel = new UserModel();
 		userModel.set({'login':'true'});
 		var loginView = new LoginView({model:userModel});
 		$("#main").html(loginView.el);
