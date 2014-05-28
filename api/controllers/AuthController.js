@@ -5,7 +5,6 @@
 //var bcrypt = require('bcrypt');
 module.exports = {
     login: function (req, res) {
-        console.log("LOGIN ok");
         res.view({
             partials: {
                 header_login: '../partials/site/header_login',
@@ -13,30 +12,36 @@ module.exports = {
             },
         });  
     },
-    process: function(req,res,next){
-    	console.log('Emai'+req.param('email'));
-    	console.log('Emai'+req.param('password'));
-        if(!req.param('email')||!req.param('password')){
-        	res.send('You must enter both a email and password');
-        	res.redirect('/login');
+    process: function(req,res){
+        email = req.param('email');
+        password = req.param('password');
+        console.log(email);
+        console.log(password);
+        if(!email||!password){
+            console.log('You must enter both a email and password');
+        	//res.send(400, {error: "You must enter both a email and password"});
+            res.view('auth/login', {error: "You must enter both a email and password"});
+        	//res.redirect('/login');
         	return;
         }
-        User.findOneByEmail(req.param('email'), function (err,user){
+        User.findOneByEmail(email, function (err,user){ 
         	if(err) next(err);
         	if(!user) {
-        		res.send('Email not found!');
-        		res.redirect('/login');
+                console.log('Email not found!');
+        		res.view('auth/login', { error: "Email not found!" });
+        		//res.redirect('/login');
         		return;
         	}
-        	// bcrypt.compare(req.param('password'),user.password, function(err,valid){
-        	// 	if(err) return next(err);
-        	// 	if(!valid) {
-        	// 		res.send('Invalid username and password combination');
-        	// 		res.redirect('/login');
-        	// 		return;
-        	// 	}
-        	// 	res.redirect('/#menu');
-        	// });
+            var hasher = require("password-hash");
+             if (hasher.verify(password, user.password)) {
+                    console.log(user.id);
+                } else {
+                    console.log('Wrong password');
+                    res.view('auth/login',{error: "Wrong Password"});
+                    //res.redirect('/login');
+                    return;
+                }
+            res.redirect('/#menu'); 
         });
     },
 
