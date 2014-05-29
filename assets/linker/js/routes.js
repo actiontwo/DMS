@@ -15,7 +15,10 @@ var AppRouter = Backbone.Router.extend({
 		'register_meal': 'loadRegisterMeal',
 		'profile/user/:id':'updateProfile',
 		'login':'loadLogin',
-		'expense/create_expense': 'createExpense'
+		'expense/create_expense': 'createExpense',
+		'report': 'loadReport',
+		'report/btn-rp-cost-meal': 'loadReport',
+		'report/btn-rp-expense': 'loadReportExpense'
 	},
 	loadDishMenu: function() {
 		dishMenuCollection = new DishMenuCollection;
@@ -65,13 +68,13 @@ var AppRouter = Backbone.Router.extend({
 		$("#main").html(dishMenuView.el);
 	},
 	updateProfile:function(id){
-		var userModel = new UserModel;
+		var userModel = new UserModel({id:id});
 		var userView = new UserView({model:userModel});
-		userModel.fetch({id:id});
+		userModel.fetch();
 		$('#main').html(userView.el);
 	},
 	loadLogin:function(){
-		var userModel = new UserModel;
+		var userModel = new UserModel();
 		userModel.set({'login':'true'});
 		var loginView = new LoginView({model:userModel});
 		$("#main").html(loginView.el);
@@ -81,6 +84,17 @@ var AppRouter = Backbone.Router.extend({
 		// var createExpenseCollection = new ExpenseMenuCollection();
 		// var createExpenseView = new CreateExpenseView({collection: createExpenseCollection});
 		// $("#main").html(createExpenseView.el);
+	},
+	loadReport: function(){
+		reportCollection = new ReportCollection;
+		reportView = new ReportView({collection: reportCollection});
+		// reportCollection.fetch();
+		$('#main').html(reportView.el);
+	},
+	loadReportExpense: function(){
+		reportExpenseCollection = new ReportCollection;
+		reportExpenseView = new ReportExpenseView({collection: reportExpenseCollection})
+		$('#main').html(reportExpenseView.el);
 	}
 });
 
