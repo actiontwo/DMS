@@ -29,11 +29,12 @@ var ReportView = Backbone.View.extend({
 	id: 'report',
 	className: 'menus',
 	initialize: function(){
-		//this.listenTo(this.collection, 'change', this.render);
-		this.render();
+		this.listenTo(this.collection, 'sync reset', this.render);
 	},
 	render: function(){
-		this.$el.html(Templates['report/reportCostMeal'] ({}));
+		this.$el.html(Templates['report/reportCostMeal'] ({
+			'report': this.collection.toJSON(),'user':userCollection.toJSON()
+		}));
 
 	}
 })
