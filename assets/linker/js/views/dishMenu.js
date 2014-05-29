@@ -1,3 +1,45 @@
+//
+// ============================================================================
+// Copyright:
+//          This source is subject to the Designveloper JSC (designveloper.com)
+//          All using or modify must have permission from us.
+//
+// Name:    DSVScriptTemplate
+// Purpose:
+//          create page menu, display full list menu created 
+// Class:
+//          DishMenuView
+// Functions:
+//          one ; two ; three
+// Called From:
+//          (script) assets/linker/router.js
+// Author:
+//          Nguyen Phuc (phucnt@designveloper.com)
+// Notes:
+//          Additional information [long version]
+// Changelog:
+//          05/29/2014 - Phuc Nguyen - Init DishMenuView, refactor code.
+// ============================================================================
+//
+
+// -------------------------------------------------------------------
+// DishMenuView ( @parameter1 )
+//
+// PARAMETERS:
+//            @parameter1 () collection DishMenuCollection
+// METHODS:
+//            initialize, render, renderSubMenu, renderFilter
+//            sortMenu, prevPage, nextPage, selecPerPage
+// DEPENDENCIES:
+//            none
+// PURPOSE:
+//            Use this function to create View for page Menu
+// NOTES:
+//            none
+// REVISIONS:
+//            05/29/14 - Phuc Nguyen Initial Class, refactor code.
+// -------------------------------------------------------------------
+
 var DishMenuView = Backbone.View.extend({
     tagName: 'div',
     className: 'menus',
@@ -5,10 +47,27 @@ var DishMenuView = Backbone.View.extend({
     subViews: {},
     page:0,
     number:5,
-    initialize: function(options) {        
+// -------------------------------------------------------------------
+// initialize (  )
+//
+// PARAMETERS:
+//            no
+// RETURNS:
+//            no return
+// DEPENDENCIES:
+//            init class DishMenu
+// PURPOSE:
+//            render view for menu page
+// NOTES:
+//            none
+// REVISIONS:
+//            05/29/2014: Phuc Nguyen
+// -------------------------------------------------------------------
+    initialize: function(options) { 
+        //listen event on collection if collection change then render view      
         this.listenTo(this.collection, 'reset  destroy sort sync remove', this.render);  
-        this.render();
-          this.collection.sort_order = {
+        //using for sort order
+        this.collection.sort_order = {
             date: 1,
             brunch: 1,
             dish1: 1,
@@ -19,87 +78,198 @@ var DishMenuView = Backbone.View.extend({
             note: 1
         };
         //init page and perPage(number)
-        this.page = options.page;
-        this.number = options.number;     
+        if(typeof options ==="underfind"){
+            this.page = options.page;
+            this.number = options.number;
+        }else{
+            this.page=0;
+            this.number=5;
+        } 
     },
+// -------------------------------------------------------------------
+// render (  )
+//
+// PARAMETERS:
+//            no
+// RETURNS:
+//            no return
+// DEPENDENCIES:
+//            rendersubView
+// PURPOSE:
+//            render view for menu page
+// NOTES:
+//            none
+// REVISIONS:
+//            05/29/2014: Phuc Nguyen
+// -------------------------------------------------------------------
     render: function() {
-        this.$el.html(Templates['menu/view_menu']({'dish_menu':this.collection.toJSON(),'list':dishListCollection.toJSON()}));
+        this.$el.html(Templates['menu/view_menu']({
+            'dish_menu':this.collection.toJSON(),
+            'list':dishListCollection.toJSON()
+        }));
         for (i in this.collection.models) {
             var model = this.collection.models[i];
-            //check date current if current date greater model.attributes.date then model can edit, otherwise model can't edit
-            var now = formatDate();                                //get current date with format mm/dd/yyyy 
-            if(model.attributes.date>=now)          
-                model.set({'editor':'true'})                       //editor is true then model can edit
-            else 
-                model.unset('editor');                            //model can't edit
-            //create a new subView
-            var submenu_view = new SubMenuView({model:model,el:this.$('tr[data-id="' + model.id + '"]')});
-            submenu_view.render();                               //Render Subview   
-            this.subViews[model.id] =  submenu_view;               //a object subViews manager subView
+            this.subViews[model.id] = this.renderSubView(model);
         }
-        //display calendar
-        this.$('.datepicker').datepicker({
-            showOn: "button",
-            buttonImage: "images/calendar.png",
-            buttonImageOnly: true,
-        });
+        displayCalendar();//display calendar jquery ui
         var number = this.number;
         this.$('#menu_number').find('option').each(function(){
             if(number==$(this).html())
                 $(this).attr('selected','selected');
-        })    
-    },
-    pagination:function(){
+        })   
         
     },
+
     events:{
         'click th':'sortMenu',
-        'click #menu_prev': 'prev',
-        'click #menu_next':'next',
-        'change #menu_number':'select',
+        'click #menu_prev': 'prevPage',
+        'click #menu_next':'nextPage',
+        'change #menu_number':'selectPerPage',
         'click #filter_menu': 'filterMenu'
     },
-    //Add Menu Sort functionn
+// -------------------------------------------------------------------
+// sortMenu ( ev )
+//
+// PARAMETERS:
+//            ev: events
+// RETURNS:
+//            no
+// DEPENDENCIES:
+//            none
+// PURPOSE:
+//            when user click header table, menu page display data sorted
+// NOTES:
+//            none
+// REVISIONS:
+//            05/01/2014: Hung Vo
+// -------------------------------------------------------------------
     sortMenu:function(ev){
         var attribute = $(ev.currentTarget).data('attribute');
         this.collection.comparator = function(menuA, menuB) {            
-            if (menuA.get(attribute) > menuB.get(attribute)) return this.sort_order[attribute];
-            if (menuA.get(attribute) < menuB.get(attribute)) return -this.sort_order[attribute];
+            if (menuA.get(attribute) > menuB.get(attribute)) 
+                return this.sort_order[attribute];
+            if (menuA.get(attribute) < menuB.get(attribute)) 
+                return -this.sort_order[attribute];
             return 0;
         };
         this.collection.sort();
         // reverse sort direction
         this.collection.sort_order[attribute] = -this.collection.sort_order[attribute];
     },
-    prev:function(){
+// -------------------------------------------------------------------
+// prevPage (  )
+//
+// PARAMETERS:
+//            no
+// RETURNS:
+//            no
+// DEPENDENCIES:
+//            none
+// PURPOSE:
+//            every this function called, menu page  get previous data 
+//            from server through fetch() display previous Page
+// NOTES:
+//            none
+// REVISIONS:
+//            05/29/2014: Phuc Nguyen, Duong Linh
+// -------------------------------------------------------------------
+    prevPage:function(){
         //if user click prev button, page decrease one unit 
        this.page--;
-       if(this.page<0)                                  //if page less than zero, 
-            this.page=0;                                //set page equal zero
-       var url='menu/page/'+this.page+'/n'+this.number; //set a url typical   page current
-       appRouter.navigate(url,{trigger:false,replace:true});//make url in broswer change to url above 
-       this.collection.fetch({data:$.param({page:this.page,number:this.number})});//fetch data for new page
+       //if page less than zero,
+       //set page equal zero 
+       if(this.page<0)                                  
+            this.page=0;  
+        //set a url typical   page current                              
+       var url='menu/page/'+this.page+'/n'+this.number;
+       //make url in broswer change to url above 
+       appRouter.navigate(url,{trigger:false,replace:true});
+       //fetch data for new page 
+       this.collection.fetch({data:$.param({page:this.page,number:this.number})});
     },
-    next:function(){   
+// -------------------------------------------------------------------
+// nextPage (  )
+//
+// PARAMETERS:
+//            no
+// RETURNS:
+//            no
+// DEPENDENCIES:
+//            none
+// PURPOSE:
+//            every this function called, menu page  get next data
+//            from server through fetch() display next Page
+// NOTES:
+//            none
+// REVISIONS:
+//            05/29/2014: Phuc Nguyen, Duong Linh
+// -------------------------------------------------------------------
+    nextPage:function(){   
         //if user click next button, page increase one unit  
        this.page++;
-       if(this.collection.length==0)                    //if page current not found any data, toward the page end.
-            this.page--;                                //decrease one unit
-       var url = 'menu/page/'+this.page+'/n'+this.number;//set url typical page current
-       appRouter.navigate(url,{trigger:false,replace:true});//make url in browser change to url above
-      this.collection.fetch({data:$.param({page:this.page,number:this.number})});//fetch data for new page
+        //if page current not found any data, toward the page end.
+        //decrease one unit
+       if(this.collection.length==0)                    
+            this.page--;
+        //set url typical page current                               
+       var url = 'menu/page/'+this.page+'/n'+this.number;
+       //make url in browser change to url above
+       appRouter.navigate(url,{trigger:false,replace:true});
+       //fetch data for new page
+      this.collection.fetch({data:$.param({
+        page:this.page,number:this.number})
+        });
     },
-    select:function(ev){
-        //if user select number per page, 
-        var number = $(ev.currentTarget).val(); //get number user select
-        this.number = number;                   //asign this.number equal user select
-        var url = 'menu/page/'+this.page+'/n'+this.number;  //set url typical page current
-        appRouter.navigate(url,{trigger:false,replace:true});//make url in browser change to url above
-        this.collection.fetch({data:$.param({page:this.page,number:number})});//fetch data 
+// -------------------------------------------------------------------
+// selectPerPage ( ev )
+//
+// PARAMETERS:
+//            ev :events
+// RETURNS:
+//            no
+// DEPENDENCIES:
+//            none
+// PURPOSE:
+//            select number dish menu display in one page
+// NOTES:
+//            none
+// REVISIONS:
+//            05/29/2014: Phuc Nguyen, Duong Linh
+// -------------------------------------------------------------------
+    selectPerPage:function(ev){
+        //if user select number per page,
+        //get number user select 
+        var number = $(ev.currentTarget).val();
+        //asign this.number equal user select 
+        this.number = number;
+        //set url typical page current                   
+        var url = 'menu/page/'+this.page+'/n'+this.number;
+        //make url in browser change to url above  
+        appRouter.navigate(url,{trigger:false,replace:true});
+        //fetch data
+        this.collection.fetch({data:$.param({
+            page:this.page,number:number})
+        }); 
     },
+// -------------------------------------------------------------------
+// filterMenu (  )
+//
+// PARAMETERS:
+//            no
+// RETURNS:
+//            no
+// DEPENDENCIES:
+//            none
+// PURPOSE:
+//            filter dish menu with date, if dish menu have date term condition 
+// NOTES:
+//            none
+// REVISIONS:
+//            05/29/2014: Phuc Nguyen, Duong Linh
+// -------------------------------------------------------------------
     filterMenu:function(){
-        var from = $('.find-from input').val();
-        var to   = $('.find-to input').val();
+        var from = this.$('.find-from input').val();
+        var to   = this.$('.find-to input').val();
         //check date filter
          if(from>to||from===''||to===''){
             alert('Input invalid, from must be less to');
@@ -113,23 +283,75 @@ var DishMenuView = Backbone.View.extend({
             alert('No found menu');
             return;
         }
+        this.renderFilter(result,'tbody','menu/view_menu');
+    },
+    // -------------------------------------------------------------------
+// renderFilter ( result,element )
+//
+// PARAMETERS:
+//            result: array model 
+//            element: dom html (string)
+// RETURNS:
+//            no return
+// DEPENDENCIES:
+//            none
+// PURPOSE:
+//            render result after filter
+// NOTES:
+//            none
+// REVISIONS:
+//            05/29/2014: Phuc Nguyen
+// -------------------------------------------------------------------
+    renderFilter:function(result,element,template){
         //render view
-         this.$el.html(Templates['menu/view_menu']({
+         this.$el.html(Templates[template]({
             dish_menu: result
         }));
         for (i in result) {
             var model = result[i]; 
-            this.$('tbody').append(
+            this.$(element).append(
            this.subViews[model.id].el);
         }
-
         //calendar
-         this.$('.datepicker').datepicker({      
-            showOn: "button",
-            buttonImage: "images/calendar.png",
-            buttonImageOnly: true,
-        });
+         displayCalendar();
         $('.find-from input').val(from);
         $('.find-to input').val(to);
     },
+// -------------------------------------------------------------------
+// renderSubView ( model )
+//
+// PARAMETERS:
+//            model: DishMenuModel
+// RETURNS:
+//            SubMenuView
+// DEPENDENCIES:
+//            none
+// PURPOSE:
+//            render subview for menu page
+// NOTES:
+//            none
+// REVISIONS:
+//            05/29/2014: Phuc Nguyen
+// -------------------------------------------------------------------
+    renderSubView:function(model){
+            //  check date current if current date greater 
+            //  model.attributes.date then model can edit,
+            //  otherwise model can't edit
+            //  get current date with format mm/dd/yyyy 
+            var now = formatDate(); 
+            //  editor is true then model can edit
+            //  else model can't edit
+            if(model.attributes.date>=now)          
+                model.set({'editor':'true'})                       
+            else 
+                model.unset('editor');                           
+            //create a new subView
+            var submenu_view = new SubMenuView({
+                model:model,el:this.$('tr[data-id="' + model.id + '"]')
+            });
+            //Render Subview 
+            submenu_view.render();  
+            //a object subViews manager subView
+            return submenu_view; 
+    }
 });
