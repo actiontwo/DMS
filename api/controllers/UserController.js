@@ -35,19 +35,22 @@ module.exports = {
     password = req.param('password');
         if(!req.param('email')||!req.param('password')||!req.param('confirm')){
             console.log('You must enter email,password,corfirm');
-            res.redirect('/register');
+            res.view('user/register',{error: 'You must enter email,password,corfirm'});
+            //res.redirect('/register');
             return;
         }
         if(req.param('password')!=req.param('confirm')){
             console.log('Password and Confirm not match');
-            res.redirect('/register');
+            res.view('user/register',{error: 'Password and Confirm not match'});
+            //res.redirect('/register');
             return; 
         }
         User.findOneByEmail(req.param('email'), function (err,user){
             if(err) next(err);
             if(user) {
                 console.log('Email Exists!');
-                res.redirect('/register');
+                res.view('user/register',{error: 'Email Exists!'});
+                //res.redirect('/register');
                 return;
             }
                  var hasher = require("password-hash");
@@ -64,7 +67,7 @@ module.exports = {
                     // res.send(user);
                 }
             });
-            res.redirect('/#menu') ;
+            res.redirect('/login') ;
         });
     },
 };
