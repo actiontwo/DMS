@@ -29,7 +29,7 @@
 //            @parameter1 () collection DishMenuCollection
 // METHODS:
 //            initialize, render, renderSubMenu, renderFilter
-//            sortMenu, prevPage, nextPage, selecPerPage
+//            sortMenu, prevPage, nextPage, selecPerPage, filterMenu
 // DEPENDENCIES:
 //            none
 // PURPOSE:
@@ -285,12 +285,13 @@ var DishMenuView = Backbone.View.extend({
         }
         this.renderFilter(result,'tbody','menu/view_menu');
     },
-    // -------------------------------------------------------------------
-// renderFilter ( result,element )
+// -------------------------------------------------------------------
+// renderFilter ( result,element,template )
 //
 // PARAMETERS:
 //            result: array model 
 //            element: dom html (string)
+//            template:  path template render(string)
 // RETURNS:
 //            no return
 // DEPENDENCIES:
