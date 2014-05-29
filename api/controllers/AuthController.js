@@ -41,7 +41,13 @@ module.exports = {
                     //res.redirect('/login');
                     return;
                 }
-            res.redirect('/#menu'); 
+
+            if(user.firstname && user.lastname){
+                res.redirect('/#menu');
+            }else{
+                res.redirect('/#profile/user/' + user.id); 
+            }
+          
         });
     },
 
