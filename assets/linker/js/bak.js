@@ -111,3 +111,10 @@ function formatDate(){
     var year = date.getFullYear();
     return '0'+month+'/'+dates+'/'+year;
 }
+function displayCalendar(){
+    this.$('.datepicker').datepicker({
+            showOn: "button",
+            buttonImage: "images/calendar.png",
+            buttonImageOnly: true,
+        });
+}
