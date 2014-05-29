@@ -30,8 +30,10 @@
 // PARAMETERS:
 //            @parameter1 (userModel) model User
 // METHODS:
-//            one
-//            two
+//            initialize
+//            reder
+//            updateMedel
+//            updateProfile
 // DEPENDENCIES:
 //            none
 // PURPOSE:
@@ -47,9 +49,42 @@ var UserView = Backbone.View.extend({
   tagName:'div',
   className:'men-register',
   id:'user',
+// -------------------------------------------------------------------
+// initialize (  )
+//
+// PARAMETERS:
+//            no
+// RETURNS:
+//            no return
+// DEPENDENCIES:
+//            none
+// PURPOSE:
+//            init view profile,
+// NOTES:
+//            none
+// REVISIONS:
+//            05/28/2014: Phuc Nguyen
+// -------------------------------------------------------------------
   initialize:function(){
+    //listen on model, when model change render profile view
   	this.listenTo( this.model, 'sync',this.render);
   },
+// -------------------------------------------------------------------
+// render (  )
+//
+// PARAMETERS:
+//            no
+// RETURNS:
+//            no return
+// DEPENDENCIES:
+//            none
+// PURPOSE:
+//            render view for user profile
+// NOTES:
+//            none
+// REVISIONS:
+//            05/28/2014: Phuc Nguyen
+// -------------------------------------------------------------------
   render:function(){
   	this.$el.html(Templates['user/profileUser'](this.model.attributes));
   },
