@@ -150,7 +150,7 @@ var ExpenseMenuView = Backbone.View.extend({
         this.collection.each(function(modelIn){
             var dayValue = modelIn.get("date").trim();
             var tempDay = new Date(dayValue.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
-            console.log(tempDay);
+            //console.log(tempDay);
             if(tempDay > dateFrom && tempDay < dateTo)
             {
                 tempCollection.add(modelIn);

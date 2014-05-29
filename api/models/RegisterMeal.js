@@ -20,10 +20,11 @@ module.exports = {
     },
     dinner: {
       type: 'boolean'
-    },
-    updateBy: {
-      type: 'string'
     }
+    // ,
+    // updateBy: {
+    //   type: 'string'
+    // }
   }
 
 };
