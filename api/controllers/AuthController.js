@@ -41,9 +41,9 @@ module.exports = {
         //res.redirect('/login');
         return;
       }
-
+      req.session.user = user;
       if(user.firstname && user.lastname){
-        res.redirect('/#menu');
+        res.redirect('/#active/'+user.id);
       }else{
         res.redirect('/#profile/user/' + user.id); 
       }

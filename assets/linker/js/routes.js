@@ -18,7 +18,8 @@ var AppRouter = Backbone.Router.extend({
 		'expense/create_expense': 'createExpense',
 		'report': 'loadReport',
 		'report/btn-rp-cost-meal': 'loadReport',
-		'report/btn-rp-expense': 'loadReportExpense'
+		'report/btn-rp-expense': 'loadReportExpense',
+		'active/:id':'activeAcount'
 	},
 	loadDishMenu: function() {
 		dishMenuCollection = new DishMenuCollection;
@@ -50,10 +51,12 @@ var AppRouter = Backbone.Router.extend({
 		$("#main").html(createMenuView.el);
 	},
 	loadDeposit:function(){
-		depositCollection = new DepositCollection;
-		depositView = new DepositView({collection:depositCollection});
-		depositCollection.fetch();
-		$("#main").html(depositView.el);
+		if(localStorage.user){
+			depositCollection = new DepositCollection;
+			depositView = new DepositView({collection:depositCollection});
+			depositCollection.fetch();
+			$("#main").html(depositView.el);
+		}
 	},
 	loadRegisterMeal: function(){
 		var registerMealCollection = new RegisterMealCollection();
@@ -95,6 +98,13 @@ var AppRouter = Backbone.Router.extend({
 		reportExpenseCollection = new ReportCollection;
 		reportExpenseView = new ReportExpenseView({collection: reportExpenseCollection})
 		$('#main').html(reportExpenseView.el);
+	},
+	activeAcount:function(id){
+		var user = new UserModel({id:id});
+		user.fetch().done(function(account){
+			localStorage.user = account;
+			window.location = "/";
+		})
 	}
 });
 
