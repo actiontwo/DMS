@@ -21,51 +21,51 @@ module.exports = {
      * (specific to UserController)
      */
     _config: {},
-     register: function (req, res) {
-        res.view({
-            partials: {
-                header_login: '../partials/site/header_login',
-                footer: '../partials/site/footer'
-            },
-        });  
+    register: function (req, res) {
+      res.view({
+        partials: {
+          header_login: '../partials/site/header_login',
+          footer: '../partials/site/footer'
+        },
+      });  
     },
-   create: function(req,res,next){
-    console.log(req.param('email'));
-    email = req.param('email');
-    password = req.param('password');
+    create: function(req,res,next){
+      console.log(req.param('email'));
+      email = req.param('email');
+      password = req.param('password');
         if(!req.param('email')||!req.param('password')||!req.param('confirm')){
-            console.log('You must enter email,password,corfirm');
-            res.view('user/register',{error: 'You must enter email,password,corfirm'});
-            //res.redirect('/register');
-            return;
+          console.log('You must enter email,password,corfirm');
+          res.view('user/register',{error: 'You must enter email,password,corfirm'});
+          //res.redirect('/register');
+          return;
         }
         if(req.param('password')!=req.param('confirm')){
-            console.log('Password and Confirm not match');
-            res.view('user/register',{error: 'Password and Confirm not match'});
-            //res.redirect('/register');
-            return; 
+          console.log('Password and Confirm not match');
+          res.view('user/register',{error: 'Password and Confirm not match'});
+          //res.redirect('/register');
+          return; 
         }
         User.findOneByEmail(req.param('email'), function (err,user){
-            if(err) next(err);
-            if(user) {
-                console.log('Email Exists!');
-                res.view('user/register',{error: 'Email Exists!'});
-                //res.redirect('/register');
-                return;
-            }
-                 var hasher = require("password-hash");
-                 password = hasher.generate(password);
-                 console.log(password);
+          if(err) next(err);
+          if(user) {
+            console.log('Email Exists!');
+            res.view('user/register',{error: 'Email Exists!'});
+            //res.redirect('/register');
+            return;
+          }
+            var hasher = require("password-hash");
+            password = hasher.generate(password);
+            console.log(password);
             //next();
 
             User.create({email: email, password: password}).done(function(error, user) {
-                if (error) {
-                    res.send(500, {error: "DB Error"});
-                } else {
-                    console.log("OK");
-                    // req.session.user = user;
-                    // res.send(user);
-                }
+              if (error) {
+                res.send(500, {error: "DB Error"});
+              } else {
+                console.log("OK");
+                // req.session.user = user;
+                // res.send(user);
+              }
             });
             res.redirect('/login') ;
         });
