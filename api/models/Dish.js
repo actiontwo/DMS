@@ -10,12 +10,12 @@ module.exports = {
 
   attributes: {
     dish:{
-    	type:"string",
-    	required:true,
-    	unique: true
+      type:"string",
+      required:true,
+      unique: true
     },
     note: {
-    	type: 'string'
+      type: 'string'
     }
   }
 };

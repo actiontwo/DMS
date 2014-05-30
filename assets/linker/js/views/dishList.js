@@ -39,9 +39,9 @@
 //            05/29/14 - Phuc Nguyen Initial Class, refactor code.
 // -------------------------------------------------------------------
 var DishListView = Backbone.View.extend({
-    tagName: 'div',
-    className: 'mn-create-dish',
-    id: 'create_dish',
+  tagName: 'div',
+  className: 'mn-create-dish',
+  id: 'create_dish',
 // -------------------------------------------------------------------
 // initialize (  )
 //
@@ -58,9 +58,9 @@ var DishListView = Backbone.View.extend({
 // REVISIONS:
 //            05/29/2014: Phuc Nguyen
 // -------------------------------------------------------------------
-    initialize: function() {
-        this.listenTo(this.collection, 'sync reset sort', this.render);
-    },
+  initialize: function() {
+    this.listenTo(this.collection, 'sync reset sort', this.render);
+  },
 // -------------------------------------------------------------------
 // render (  )
 //
@@ -77,15 +77,15 @@ var DishListView = Backbone.View.extend({
 // REVISIONS:
 //            05/29/2014: Phuc Nguyen
 // -------------------------------------------------------------------
-    render: function() {
-        this.$el.html(Templates['menu/create_dish']({
-            listdish: this.collection.toJSON()
-        }));
-        displayCalendar();
-    },
-    events:{
-        'click #btn-save': 'saveDish'
-    },
+  render: function() {
+    this.$el.html(Templates['menu/create_dish']({
+      listdish: this.collection.toJSON()
+    }));
+    displayCalendar();
+  },
+  events:{
+    'click #btn-save': 'saveDish'
+  },
 // -------------------------------------------------------------------
 // saveDish (  )
 //
@@ -102,15 +102,14 @@ var DishListView = Backbone.View.extend({
 // REVISIONS:
 //            05/29/2014: Phuc Nguyen
 // -------------------------------------------------------------------
-    saveDish: function(){
-        var model = new DishListModel;
-        model.set({dish:$('#dishname').val()});
-        if(model.get('dish')!='')
-        {
-            model.save();
-            this.collection.add(model);
-        }
-        else 
-            alert('Please enter dish name!')
+  saveDish: function(){
+    var model = new DishListModel;
+    model.set({dish:$('#dishname').val()});
+    if(model.get('dish')!=''){
+      model.save();
+      this.collection.add(model);
+    }else{
+      alert('Please enter dish name!');
     }
+  }
 });

@@ -27,20 +27,25 @@ module.exports = {
   _config: {} ,
   find:function(req,res, next){
     
-  		//client send page number and number display in a page      
-  		if (req.query.page && req.query.number) {
-        page = req.query.page;
-        number = req.query.number;
-    		Menu.find().limit(number).skip(number*page).done(function(err,data){
-    			if(err)
-    				console.log(err);
-    			else
-    			{
-    				res.send(data);
-    			}	
-    		});
+  	//client send page number and number display in a page      
+  	if (req.query.page && req.query.number) {
+      page = req.query.page;
+      number = req.query.number;
+    	Menu.find().limit(number).skip(number*page).done(function(err,data){
+    		if(err)
+    			console.log(err);
+    		else{
+    			res.send(data);
+    		}	
+    	});
       } else {
-        next();
+        Menu.find().done(function(err,data){
+        if(err)
+          console.log(err);
+        else{
+          res.send(data);
+        } 
+      });
       }
         
   },

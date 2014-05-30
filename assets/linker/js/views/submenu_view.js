@@ -57,9 +57,9 @@ var SubMenuView = Backbone.View.extend({
 // REVISIONS:
 //            05/29/2014: Phuc Nguyen
 // -------------------------------------------------------------------
-    initialize:function(){
-		this.listenTo(this.model ,'sync', this.render);
-	},
+  initialize:function(){
+	this.listenTo(this.model ,'sync', this.render);
+  },
 // -------------------------------------------------------------------
 // render (  )
 //
@@ -76,17 +76,17 @@ var SubMenuView = Backbone.View.extend({
 // REVISIONS:
 //            05/29/2014: Phuc Nguyen
 // -------------------------------------------------------------------
-    render: function() {
-        this.$el.html(Templates['menu/submenu_view'](this.model.attributes));
-        return this.el;
-    },
-    events:{
-    	'click #button-edit-menu' : 'editMenu',
-    	'click #button-save-menu': 'saveMenu',
-    	'click #button-remove-menu':'removeMenu',
-    	'change input, select': 'updateModel',
-        'keyup  input.dish, select': 'fillDish'
-    },
+  render: function() {
+    this.$el.html(Templates['menu/submenu_view'](this.model.attributes));
+    return this.el;
+  },
+  events:{
+    'click #button-edit-menu' : 'editMenu',
+    'click #button-save-menu': 'saveMenu',
+    'click #button-remove-menu':'removeMenu',
+    'change input, select': 'updateModel',
+    'keyup  input.dish, select': 'fillDish'
+  },
 // -------------------------------------------------------------------
 // editMenu (  )
 //
@@ -103,19 +103,19 @@ var SubMenuView = Backbone.View.extend({
 // REVISIONS:
 //            05/29/2014: Phuc Nguyen
 // -------------------------------------------------------------------
-    editMenu: function() {
-        //when user click edit icon all element in row convert input or select
-        //if editor value is true, view render input and select,
-        // else view render tag td and text inside
-    	this.model.set({input:'true'})
-        var brunch = this.model.get('brunch');
-    	this.render();
-        this.model.unset(input);
-        //display calendar
-        displayCalendar();
-        //update html display brunch                              
-    	this.$('.brunch').val(brunch);              
-    },
+  editMenu: function() {
+    //when user click edit icon all element in row convert input or select
+    //if editor value is true, view render input and select,
+    // else view render tag td and text inside
+    this.model.set({input:'true'})
+    var brunch = this.model.get('brunch');
+    this.render();
+    this.model.unset(input);
+    //display calendar
+    displayCalendar();
+    //update html display brunch                              
+    this.$('.brunch').val(brunch);              
+  },
 // -------------------------------------------------------------------
 // removeMenu (  )
 //
@@ -132,9 +132,9 @@ var SubMenuView = Backbone.View.extend({
 // REVISIONS:
 //            05/29/2014: Phuc Nguyen
 // -------------------------------------------------------------------
-    removeMenu:function(){
-    	this.model.destroy();
-    },
+  removeMenu:function(){
+    this.model.destroy();
+  },
 // -------------------------------------------------------------------
 // saveMenu (  )
 //
@@ -151,18 +151,18 @@ var SubMenuView = Backbone.View.extend({
 // REVISIONS:
 //            05/29/2014: Phuc Nguyen
 // -------------------------------------------------------------------
-    saveMenu:function(){ 
-        //fix function fillDish working correct  
-    	$('#list_dish_menu').appendTo('.table').css('display','none');
-        //check valid input 
-        this.model.on("invalid",function(model,err){
-            alert(err);
-            this.model.unset('input');
-        });	   	
-    	this.model.save();
-        this.model.unset('input');
-    	this.render();
-    },
+  saveMenu:function(){ 
+    //fix function fillDish working correct  
+    $('#list_dish_menu').appendTo('.table').css('display','none');
+    //check valid input 
+    this.model.on("invalid",function(model,err){
+      alert(err);
+      this.model.unset('input');
+    });	   	
+    this.model.save();
+    this.model.unset('input');
+    this.render();
+  },
 // -------------------------------------------------------------------
 // updateModel (  )
 //
@@ -179,9 +179,9 @@ var SubMenuView = Backbone.View.extend({
 // REVISIONS:
 //            05/29/2014: Phuc Nguyen
 // -------------------------------------------------------------------
-    updateModel: function(ev) {
-    	this.model.set($(ev.currentTarget).data('attribute'), $(ev.currentTarget).val());
-    },
+  updateModel: function(ev) {
+    this.model.set($(ev.currentTarget).data('attribute'), $(ev.currentTarget).val());
+  },
 // -------------------------------------------------------------------
 // fillDish (  )
 //
@@ -198,8 +198,8 @@ var SubMenuView = Backbone.View.extend({
 // REVISIONS:
 //            05/29/2014: Phuc Nguyen
 // -------------------------------------------------------------------
-    fillDish:function(ev){
-        fillDish(ev,this);
-    }
+  fillDish:function(ev){
+    fillDish(ev,this);
+  }
   
 });
