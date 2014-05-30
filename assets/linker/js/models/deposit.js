@@ -40,7 +40,7 @@
 //            05/30/14 - Phuc Nguyen Initial Class, refactor code.
 // -------------------------------------------------------------------
 var DepositModel = Backbone.Model.extend({
-	urlRoot:'/deposit',
+  urlRoot:'/deposit',
 	validate:function(attr,option){
 		//check user input is Valid
 		if(attr.amount<=0)
