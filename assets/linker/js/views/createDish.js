@@ -20,8 +20,7 @@
 // Changelog:
 //          05/29/2014 - Phuc Nguyen - Init CreateDishView, refactor code.
 // ============================================================================
-//
-
+//   
 // -------------------------------------------------------------------
 // CreateDishView ( menuModel )
 //
@@ -53,17 +52,18 @@ var CreateDishView = Backbone.View.extend({
 // NOTES:
 //            none
 // REVISIONS:
-//            05/29/2014: Phuc Nguyen
+//            05/29/2014: Phuc Nguyen   
 // -------------------------------------------------------------------
-    render: function() {
-        this.$el.html(Templates['menu/dish_menu'](this.model.attributes));
-        displayCalendar();
-        return this.el;
-    },
-    events: {
-        'change input, select': 'updateModel',
-        'keyup  input.dish, select': 'FillDish'
-    },
+  render: function() {
+    this.$el.html(Templates['menu/dish_menu'](this.model.attributes));
+    displayCalendar();
+    return this.el;
+  },
+ events: {
+   'change input, select': 'updateModel',
+   'keyup  input.dish, select': 'FillDish'
+},
+
 // -------------------------------------------------------------------
 // updateModel (  )
 //
@@ -80,9 +80,9 @@ var CreateDishView = Backbone.View.extend({
 // REVISIONS:
 //            05/29/2014: Phuc Nguyen
 // -------------------------------------------------------------------
-    updateModel: function(ev) {
-        this.model.set($(ev.currentTarget).data('attribute'), $(ev.currentTarget).val());
-    },
+ updateModel: function(ev) {
+   this.model.set($(ev.currentTarget).data('attribute'), $(ev.currentTarget).val());
+ },
 // -------------------------------------------------------------------
 // FillDish (  )
 //
@@ -99,9 +99,12 @@ var CreateDishView = Backbone.View.extend({
 // REVISIONS:
 //            05/29/2014: Phuc Nguyen
 // -------------------------------------------------------------------
-    FillDish:function(ev){
-        fillDish(ev,this);
-    }
+  FillDish:function(ev){
+    fillDish(ev,this);
+  }
    
 })
+
+
+
 

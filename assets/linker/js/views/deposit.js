@@ -18,7 +18,7 @@
 // Notes:
 //          Additional information [long version]
 // Changelog:
-//          05/30/2014 - Phuc Nguyen - Init DishMenuView, refactor code.
+//          05/30/2014 - Phuc Nguyen - Init DepositView, refactor code.
 // ============================================================================
 //
 
@@ -39,7 +39,6 @@
 // REVISIONS:
 //            05/30/14 - Phuc Nguyen Initial Class, refactor code.
 // -------------------------------------------------------------------
-
 var DepositView = Backbone.View.extend({
   tagName:'div',
   className:'deposit',
@@ -164,9 +163,9 @@ var DepositView = Backbone.View.extend({
 // REVISIONS:
 //            05/30/2014: Phuc Nguyen
 // -------------------------------------------------------------------
-closeDeposit:function(){
-	this.render();
-},
+  closeDeposit:function(){
+	  this.render();
+  },
 
 // -------------------------------------------------------------------
 // sortDeposit (ev  )
@@ -187,15 +186,15 @@ closeDeposit:function(){
   sortDeposit:function(ev){
     var attribute = $(ev.currentTarget).data('attribute');
     this.collection.comparator = function(menuA,menuB){
-       if (menuA.get(attribute) > menuB.get(attribute)) 
-              return this.sort_order[attribute];
-       if (menuA.get(attribute) < menuB.get(attribute)) 
-              return -this.sort_order[attribute];
-       return 0;
-    }
+      if (menuA.get(attribute) > menuB.get(attribute)) 
+        return this.sort_order[attribute];
+      if (menuA.get(attribute) < menuB.get(attribute)) 
+        return -this.sort_order[attribute];
+      return 0;
+      }
     this.collection.sort();
-     this.collection.sort_order[attribute] = 
-     -this.collection.sort_order[attribute];
+    this.collection.sort_order[attribute] = 
+    -this.collection.sort_order[attribute];
   },
 // -------------------------------------------------------------------
 // deleteSelected (  )
@@ -249,7 +248,7 @@ closeDeposit:function(){
 //            05/30/2014: Phuc Nguyen
 // -------------------------------------------------------------------
   filterDeposit:function(ev){
-  	//declare var name,date-from,date-to using filter 
+    //declare var name,date-from,date-to using filter 
   	//get name value filter with name          
     var name = this.$('#user-deposit').val();
     //get date from filter with date   
@@ -269,14 +268,14 @@ closeDeposit:function(){
     });
 
     //after filter,render view with result found
-     this.$el.html(Templates['deposit/deposit']({
-            deposit: result,'user':userCollection.toJSON()
-        }));
+    this.$el.html(Templates['deposit/deposit']({
+      deposit: result,'user':userCollection.toJSON()
+      }));
      //render subview 
     for (i in result){
       var model = result[i];
       this.$('tbody').append(
-           this.subViews[model.id].el);
+        this.subViews[model.id].el);
     }
     //after render, display again calendar
    displayCalendar();

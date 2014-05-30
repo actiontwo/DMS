@@ -174,7 +174,7 @@ var SubDepositView = Backbone.View.extend({
 // REVISIONS:
 //            05/30/2014: Phuc Nguyen
 // -------------------------------------------------------------------
-	updateDeposit:function(ev){
+  updateDeposit:function(ev){
 		//update model every input change value
 		this.model.set($(ev.currentTarget).data('attribute'),$(ev.currentTarget).val());
 	}
