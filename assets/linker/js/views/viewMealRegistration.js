@@ -4,23 +4,19 @@ var ViewRegisterMealView = Backbone.View.extend({
 	id: 'view_meal_registration',
 	initialize: function() {
 		this.listenTo(this.collection, 'sync reset sort remove add create', this.render);
-        this.collection.sort_order = {
-            date: 1,
-            lunch: 1,
-            dinner: 1,
-        };
-
+        // this.collection.sort_order = {
+        //     date: 1,
+        //     lunch: 1,
+        //     dinner: 1,
+        // };
 	},
     events: {
         'click [id="btnViewByDayAndName"]' : 'viewMealRegistrationByNameAndDay',
-        'click [id="btnRegisterMeal"]' : 'btnRegisterMeal',
-        'click [id^="th_"]' : 'sortViewMealRegistrations'
-
+        'click [id="btnRegisterMeal"]' : 'btnRegisterMeal'
+        //,'click [id^="th_"]' : 'sortViewMealRegistrations'
     },
-	render: function() {
-		this.$el.html(Templates['registerMeal/viewMealRegistration']({
-			viewRegisterMeals: this.collection.toJSON()
-		}));
+    addDetailsInfo: function()
+    {
         // add numbers to "no" collumn
         var count = 1;
         if (this.collection.length == 0) count = 0;
@@ -44,8 +40,15 @@ var ViewRegisterMealView = Backbone.View.extend({
                 myArray.push(name);
         });
         for (var i = 0; i<myArray.length;i++){
-            $('#nameToBeSelected').append('<option class="selectedName">'+myArray[i]+'</option>');
+            $('#nameToBeSelected').append('<option class="selectedName" value="'+myArray[i]+'"'+'">'+myArray[i]+'</option>');
         }
+    },
+	render: function() {
+		this.$el.html(Templates['registerMeal/viewMealRegistration']({
+			viewRegisterMeals: this.collection.toJSON()
+		}));
+        // add some details information like collumn numbers, calendar & comboxBox to select username
+        this.addDetailsInfo();  
 	},
     btnRegisterMeal: function(){
         // remove current view
@@ -58,12 +61,13 @@ var ViewRegisterMealView = Backbone.View.extend({
     viewMealRegistrationByNameAndDay: function(){
         // identify input name, dateFrom, dateTo
         var nameSelected = $('.find .find-name select').val();
+        // get the date-from and date-to selected, then convert them to date object
         var dateFromString = ($('.find .find-from').find('input').val());
         dateFrom = new Date(dateFromString.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
         var dateToString = ($('.find .find-to').find('input').val());
         dateTo = new Date(dateToString.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
 
-        // create a new collection, using this same View Meal Registration view
+        // create a new collection to contain the temp search result, using this same View Meal Registration view
         var tempCollection = new RegisterMealCollection();
         var numberOfLunches = 0;
         var numberOfDinners = 0;
@@ -85,34 +89,15 @@ var ViewRegisterMealView = Backbone.View.extend({
             if (modelIn.get('dinner')==true) numberOfDinners++;
         });
 
+        // render this view with collection = tempCollection
         this.$el.html(Templates['registerMeal/viewMealRegistration']({
             viewRegisterMeals: tempCollection.toJSON()
         }));
-        // add numbers to "no" collumn
-        var count = 1;
-        if (tempCollection.length == 0) count = 0;
-        $('.viewRegisterMealTR').each(function(){
-            $(this).find('.no_td').html(count);
-                count++;
-        });
-        init();
-        //display calendar
-        this.$('.datepicker').datepicker({
-            showOn: "button",
-            buttonImage: "images/calendar.png",
-            buttonImageOnly: true,
-        });
 
-        // add list of usernames to the comboBox '#nameToBeSelected'
-        var myArray = [];
-        this.collection.each(function(model){
-            var name = model.get('name');
-            if (myArray.indexOf(name) < 0)
-                myArray.push(name);
-        });
-        for (var i = 0; i<myArray.length;i++){
-            $('#nameToBeSelected').append('<option class="selectedName">'+myArray[i]+'</option>');
-        }
+        this.addDetailsInfo();
+
+        // display current name in the comboBox '#nameToBeSelected'
+        $('#nameToBeSelected').val(nameSelected);
 
         // display current dateFrom, dateTo the view
         $('.find .find-from').find('input').val(dateFromString);
@@ -120,17 +105,17 @@ var ViewRegisterMealView = Backbone.View.extend({
         // fill information to TOTAL row
         $('#thTotalLunch').html(numberOfLunches);
         $('#thTotalDinner').html(numberOfDinners);
-    },
-    sortViewMealRegistrations: function(ev) {
-        var attribute = $(ev.currentTarget).data('attribute');
-        this.collection.comparator = function(menuA, menuB) {            
-            if (menuA.get(attribute) > menuB.get(attribute)) return this.sort_order[attribute];
-            if (menuA.get(attribute) < menuB.get(attribute)) return -this.sort_order[attribute];
-            return 0;
-        };
-        this.collection.sort();
-        // reverse sort direction
-        this.collection.sort_order[attribute] = -this.collection.sort_order[attribute];
     }
+    // ,sortViewMealRegistrations: function(ev) {
+    //     var attribute = $(ev.currentTarget).data('attribute');
+    //     this.collection.comparator = function(menuA, menuB) {            
+    //         if (menuA.get(attribute) > menuB.get(attribute)) return this.sort_order[attribute];
+    //         if (menuA.get(attribute) < menuB.get(attribute)) return -this.sort_order[attribute];
+    //         return 0;
+    //     };
+    //     this.collection.sort();
+    //     // reverse sort direction
+    //     this.collection.sort_order[attribute] = -this.collection.sort_order[attribute];
+    // }
 });
 

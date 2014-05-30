@@ -1,3 +1,4 @@
+var tempCollection;
 var RegisterMealView = Backbone.View.extend({
 	tagName: 'div',
 	className: 'menus',
@@ -23,7 +24,26 @@ var RegisterMealView = Backbone.View.extend({
         'click [id="btnSaveAll"]' : 'saveAllItems',
         'click [id="btnEditAll"]' : 'editAllItems'
     },
+    addDetailsInfo: function()
+    {
+        // add details information such as datepicker, "No" column
+        init();
+        //display calendar
+        this.$('.datepicker').datepicker({
+            showOn: "button",
+            buttonImage: "images/calendar.png",
+            buttonImageOnly: true,
+        });
+        // display no (number) column
+        var count = 1;
+        if (tempCollection.length == 0) count = 0;
+        $('.registerMealTR').each(function(){
+            $(this).find('.no_td').html(count);
+                count++;
+        });
+    },
     getCurrentMonth: function(){
+        // return the name of the current month
         var d = new Date();
         var month = new Array();
         month[0] = "January";
@@ -41,7 +61,10 @@ var RegisterMealView = Backbone.View.extend({
         var n = month[d.getMonth()].toUpperCase();
         return n;
     },
-    initRegisterMeal: function(){
+    checkIfCurrentMonthExisted: function(){
+        // check if the days for current month of this year are already existed
+
+        // get current day, month and year
         var currentDay = new Date();
         var currentMonth = currentDay.getMonth()+1;
         var currentYear = currentDay.getFullYear();
@@ -49,7 +72,8 @@ var RegisterMealView = Backbone.View.extend({
         var thisCollection = this.collection;
         var i=1;
         var already = 0;
-        //var models = new Array();
+
+        // this part check whether the current month of this year already existed in the database
         this.collection.each(function(modelIn){
             var dayValue = modelIn.get("date").trim();
             var tempDay = new Date(dayValue.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
@@ -58,8 +82,8 @@ var RegisterMealView = Backbone.View.extend({
             if (modelMonth == currentMonth && modelYear == currentYear) already = 1;
         });
         if (already == 0 )
+            // if not already existed, create new models for the current month of this year
         {
-            //console.log("already = 0");
             for (i=1; i<=dayCount; i++)
             {
                 var tempModel;
@@ -71,18 +95,19 @@ var RegisterMealView = Backbone.View.extend({
                 tempModel.set("dinner", false);
                 tempModel.set("name", "this username");
                 thisCollection.create(tempModel);
-
             }
         }
         else if (already == 1)
+            // if already existed, do nothing
         {
-            //console.log("already = 1");
         }
     },
     getDaysInMonth: function(month,year){
+        // return the number of days of a specified month of a year
         return new Date(year, month, 0).getDate();
     },
     getDayString: function(_date){
+        // parse argument as a Date object, return a string with the following format mm/dd/yyyy
         var month = _date.getMonth()+1;
         if (month.toString().length==1) month = "0" + month;
         var date = _date.getDate();
@@ -91,6 +116,7 @@ var RegisterMealView = Backbone.View.extend({
     },
     getDaysInWeek: function(_currentDay, _currentMonth, _currentYear)
     {
+        // return the first 3 characters from the name of a day in a week
         var d = new Date(_currentYear, _currentMonth - 1, _currentDay);
         var weekday = new Array(7);
         weekday[0]=  "Sunday";
@@ -105,15 +131,16 @@ var RegisterMealView = Backbone.View.extend({
     },
 	render: function() {
 
-        //display all days in current month
-        this.initRegisterMeal();
+        // check if the days for current month of this year are already existed
+        this.checkIfCurrentMonthExisted();
 
-        // display only days of this month
+        // By default, display only days of this month in the current view
         var currentDay = new Date();
         var currentMonth = currentDay.getMonth()+1;
         var currentYear = currentDay.getFullYear();
-        var tempCollection = new RegisterMealCollection();
+        tempCollection = new RegisterMealCollection();
 
+        // add all models of the current month of this year to variable "tempCollection"
         this.collection.each(function(modelIn){
             var dayValue = modelIn.get("date").trim();
             var tempDay = new Date(dayValue.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
@@ -122,26 +149,15 @@ var RegisterMealView = Backbone.View.extend({
             if (modelMonth == currentMonth && modelYear == currentYear) tempCollection.add(modelIn);
         });
 
+        // render this view using the tempCollection
 		this.$el.html(Templates['registerMeal/registerMeal']({
 			//registerMeals: this.collection.toJSON()
             registerMeals: tempCollection.toJSON()
 		}));
-        var count = 1;
-        if (this.collection.length == 0) count = 0;
-        $('.registerMealTR').each(function(){
-            $(this).find('.no_td').html(count);
-                count++;
-        });
-        init();
-        //display calendar
-        this.$('.datepicker').datepicker({
-            showOn: "button",
-            buttonImage: "images/calendar.png",
-            buttonImageOnly: true,
-        });
+        // add details information such as datepicker, "No" column
+        this.addDetailsInfo();
         //display current month
         $('#h1MonthInfo').html(this.getCurrentMonth());
-
 	},
     sortRegisterMeals: function(ev) {
         var attribute = $(ev.currentTarget).data('attribute');
@@ -155,6 +171,7 @@ var RegisterMealView = Backbone.View.extend({
         this.collection.sort_order[attribute] = -this.collection.sort_order[attribute];
     },
     editRegisterMeal: function(ev){
+        // this function is triggered when user click on the "edit" button
         var id = $(ev.currentTarget).data('id');
         // change current values fields into text fields
         $(ev.currentTarget).removeClass('iconsp-edit-25px').addClass('iconsp-edit-red-25px');
@@ -166,7 +183,6 @@ var RegisterMealView = Backbone.View.extend({
                     if ($(this).data('attribute')=="lunch" || $(this).data('attribute')=="dinner")
                     {   
                         var isChecked = $(this).find('input').is(':checked');
-                        //console.log(isChecked);
                         if (isChecked)
                             $(this).html('<input type="checkbox" checked>');
                         else
@@ -213,86 +229,59 @@ var RegisterMealView = Backbone.View.extend({
         this.render();
     },
     viewByDay: function(){
+        // create date objects from dateTo & dateFrom string
         var dateFromString = ($('.find .find-from').find('input').val());
         dateFrom = new Date(dateFromString.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
         var dateToString = ($('.find .find-to').find('input').val());
         dateTo = new Date(dateToString.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
-        //console.log('dateFrom :' + dateFrom);
-        //console.log('dateTo :' + dateTo);
-        var tempCollection = new RegisterMealCollection();
+        // create a tempCollection to contains search results
+        tempCollection = new RegisterMealCollection();
+        // add results to the tempCollection
         this.collection.each(function(modelIn){
             var dayValue = modelIn.get("date").trim();
             var tempDay = new Date(dayValue.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
-            //console.log(tempDay);
             if(tempDay >= dateFrom && tempDay <= dateTo)
             {
                 tempCollection.add(modelIn);
             }
         });
-
         this.$el.html(Templates['registerMeal/registerMeal']({
             registerMeals: tempCollection.toJSON()
         }));
-        init();
-        //display calendar
-        this.$('.datepicker').datepicker({
-            showOn: "button",
-            buttonImage: "images/calendar.png",
-            buttonImageOnly: true,
-        });
-        //display current month
+        // add details information such as datepicker, "No" column
+        this.addDetailsInfo();
+        // display current month
         $('#h1MonthInfo').html(this.getCurrentMonth());
-
-        // display no (number) collumn
-        var count = 1;
-        if (tempCollection.length == 0) count = 0;
-        $('.registerMealTR').each(function(){
-            $(this).find('.no_td').html(count);
-                count++;
-        });
-
+        // display current dateFrom and dateTo back to this view
         $('.find .find-from').find('input').val(dateFromString);
         $('.find .find-to').find('input').val(dateToString);
     },
     viewMealRegistration: function(){
+        // change to the "View Meal Registration" tab
         this.remove();
         var viewMealRegister_new = new ViewRegisterMealView({collection: this.collection});
         $("#main").html(viewMealRegister_new.el);
         viewMealRegister_new.render();
     },
     deleteAllItems: function(){
+        // deletet all Items from this.collection
         var thisCollection = this.collection;
         var i = 1;
         thisCollection.each(function(modelIn){
             modelIn.destroy();
-            console.log(i);
             i++;
         });
     },
     showAllItems: function(){
-        $('#h1MonthInfo').html('SHOW ALL ITEMS');
-
         this.$el.html(Templates['registerMeal/registerMeal']({
             registerMeals: this.collection.toJSON()
-            //registerMeals: tempCollection.toJSON()
         }));
-        var count = 1;
-        if (this.collection.length == 0) count = 0;
-        $('.registerMealTR').each(function(){
-            $(this).find('.no_td').html(count);
-                count++;
-        });
-        init();
-        //display calendar
-        this.$('.datepicker').datepicker({
-            showOn: "button",
-            buttonImage: "images/calendar.png",
-            buttonImageOnly: true,
-        });
+        // add details information such as datepicker, "No" column
+        this.addDetailsInfo();
+        // display the title as "Show all items"
+        $('#h1MonthInfo').html("SHOW ALL ITEMS");
     },
     saveAllItems: function(){
-        //var id = $(ev.currentTarget).data('id');
-        //var model = this.collection.get(id);
         var id, model;
         var thisCollection = this.collection;
         $('[id^="registerMealTR"]').each(function(){
@@ -314,7 +303,6 @@ var RegisterMealView = Backbone.View.extend({
             model.save();          
         });
         this.render();
-
     },
     editAllItems: function(){
         $('[id^="registerMealTR"]').each(function(){
