@@ -89,14 +89,18 @@ var AppRouter = Backbone.Router.extend({
 		// $("#main").html(createExpenseView.el);
 	},
 	loadReport: function(){
-		reportCollection = new ReportCollection;
-		reportView = new ReportView({collection: reportCollection});
+		// reportCollection = new ReportCollection;
+		depositCollection = new DepositCollection;
+		reportView = new ReportView({collection: depositCollection});
+		depositCollection.fetch();
 		// reportCollection.fetch();
 		$('#main').html(reportView.el);
 	},
 	loadReportExpense: function(){
-		reportExpenseCollection = new ReportCollection;
-		reportExpenseView = new ReportExpenseView({collection: reportExpenseCollection})
+		var expenseMenuCollection = new ExpenseMenuCollection;
+		//reportExpenseCollection = new ReportCollection;
+		var reportExpenseView = new ReportExpenseView({collection: expenseMenuCollection});
+		expenseMenuCollection.fetch();
 		$('#main').html(reportExpenseView.el);
 	},
 	activeAcount:function(id){
