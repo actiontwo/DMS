@@ -111,4 +111,5 @@ var DishListView = Backbone.View.extend({
     }else{
       alert('Please enter dish name!');
     }
-  });
+  }
+});
