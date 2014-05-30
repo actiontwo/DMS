@@ -9,32 +9,32 @@
  module.exports = {
 
     attributes: {
-        email: {
-            type: 'string',
-            email: true,
-            unique: true,
-            required: true
-        },
-        password: {
-            type: 'string',
-            required:true
-        },
-        firstname: {
-            type: 'string'
-        },
-        lastname: {
-            type: 'string'
-        },
-        role: {
-            type: 'string'
-        },
-        join_date: {
-            type: 'date'
-        },
-        toJSON: function() {
-          var obj = this.toObject();
-          delete obj.password;
-          return obj;
+      email: {
+        type: 'string',
+        email: true,
+        unique: true,
+        required: true
+      },
+      password: {
+        type: 'string',
+        required:true
+      },
+      firstname: {
+        type: 'string'
+      },
+      lastname: {
+        type: 'string'
+      },
+      role: {
+        type: 'string'
+      },
+      join_date: {
+        type: 'date'
+      },
+      toJSON: function() {
+        var obj = this.toObject();
+        delete obj.password;
+        return obj;
       }
   }
     //hash password after crease user

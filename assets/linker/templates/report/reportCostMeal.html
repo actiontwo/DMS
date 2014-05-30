@@ -1,0 +1,115 @@
+<!--
+// ============================================================================
+// ,,,,,,,,, ,,,
+// ,,,,,,,, ,,,  Copyright:
+// ,,,     ,,,          This source is subject to the Designveloper JSC
+// ,,,    ,,,           All using or modify must have permission from us.
+// ,,,   ,,,            http://designveloper.com
+// ,,,,,,,,
+// ,,,,,,,       Name:  DSVScriptTemplate
+//
+// Purpose:
+//          Content report cost meal
+// Class:
+//         
+// Functions:
+//         
+// Called From:
+//          (script) any
+// Author:
+//          Hien Lam (hienlt@designveloper.com)
+// Notes:
+//          Additional information [long version]
+// Changelog:
+//          05/29/2014 - Hien Lam - Init first revision.
+// ============================================================================
+-->
+
+<div class="report" id="tabs">
+	<div class="header">
+		<ul>
+			<li><a href="#report/btn-rp-cost-meal">Report Cost Meal</a></li>
+			<li><a href="#report/btn-rp-expense">Report Expense</a></li>
+		</ul>
+	</div>
+	<div class="rp-cost-meal" id="btn-rp-cost-meal">
+		<div class="content">
+			<div class="find">
+				<div class="find-name">
+					<div>Name:
+						<select>
+							<option></option>
+							{{#user}}
+							<option>{{firstname}} {{lastname}}</option>
+							{{/user}}
+						</select>
+					</div>
+				</div>
+				<div class="find-from">
+					<div>From: <input class="datepicker" type="text"></div>
+				</div>
+				<div class="find-to">
+					<div>To: <input class="datepicker" type="text"></div>
+				</div>
+			</div>
+			<div class="clear-fix"></div>
+			<div class="confirm">
+				<a href="#">Show</a>
+			</div>
+			<div class="clear-fix"></div>
+			<div class="table">
+				<table class="reference">
+					<tbody>
+						<tr>
+							<th>No</th>
+							<th>Date From</th>
+							<th>Date To</th>
+							<th>Name</th>
+							<th>Begin Balance</th>
+							<th>Deposit</th>
+							<th>Adjusted Balance</th>
+							<th>Meals</th>
+							<th>Per Meals</th>
+							<th>Meal Cost</th>
+							<th>Facilities Cost</th>
+							<th>End Balance</th>
+						</tr>
+						{{#report}}
+						<tr>
+							<th>1</th>
+							<th>{{date}}</th>
+							<th>{{date}}</th>
+							<th>{{username}}</th>
+							<th>0</th>
+							<th>{{amount}}</th>
+							<th>{{amount}}</th>
+							<th>10</th>
+							<th>0</th>
+							<th>{{amount}}</th>
+							<th>{{amount}}</th>
+							<th>{{amount}}</th>
+						</tr>
+						{{/report}}
+						<tr>
+							<th class="total" colspan='4'><span>Total:</span></th>
+							<th>3.000.000</th>
+							<th>100</th>
+							<th>25.700</th>
+							<th>2.000.000</th>
+							<th>2.000.000</th>
+							<th>2.500.000</th>
+							<th>5.870.000</th>
+							<th>5.000.000</th>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="btn-end">
+				<a href="#">Send Report</a>
+			</div>
+			<div class="clear-fix"></div>
+		</div>
+	</div>
+	
+</div>
+		
