@@ -1,3 +1,44 @@
+//
+// ============================================================================
+// Copyright:
+//          This source is subject to the Designveloper JSC (designveloper.com)
+//          All using or modify must have permission from us.
+//
+// Name:    DSVScriptTemplate
+// Purpose:
+//          create model using in collection 
+// Class:
+//          DepositModel
+// Functions:
+//          one ; two ; three
+// Called From:
+//          (script) assets/linker/js/collections/deposit.js
+// Author:
+//          Nguyen Phuc (phucnt@designveloper.com)
+// Notes:
+//          Additional information [long version]
+// Changelog:
+//          05/30/2014 - Phuc Nguyen - Init DepositModel, refactor code.
+// ============================================================================
+//
+
+// -------------------------------------------------------------------
+// DepositModel (  )
+//
+// PARAMETERS:
+//            
+// METHODS:
+//            
+// DEPENDENCIES:
+//            none
+// PURPOSE:
+//            a model deposit typical a row in table deposit 
+//						in page deposit
+// NOTES:
+//            none
+// REVISIONS:
+//            05/30/14 - Phuc Nguyen Initial Class, refactor code.
+// -------------------------------------------------------------------
 var DepositModel = Backbone.Model.extend({
 	urlRoot:'/deposit',
 	validate:function(attr,option){
