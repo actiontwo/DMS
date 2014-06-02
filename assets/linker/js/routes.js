@@ -2,7 +2,21 @@ var dishListCollection = new DishListCollection;
 dishListCollection.fetch();
 var userCollection = new UserCollection;
 userCollection.fetch();
-
+var userLogin;
+var id = getCookie('userId');
+if(id){
+	if(!userLogin){
+		userLogin = new UserModel({id:id});
+		userLogin.fetch().done(function(user){
+			var lastname = getCookie('lastname');
+			var firstname = getCookie('firstname');
+			if(lastname===user.lastname.trim()&&firstname===user.firstname.trim()){
+				$('#user-account').html('Welcome'+firstname + lastname);
+				window.load('/');
+			}
+		});
+	}
+}
 var AppRouter = Backbone.Router.extend({
 	routes: {
 		'menu': 'loadDishMenu',
@@ -100,11 +114,13 @@ var AppRouter = Backbone.Router.extend({
 		$('#main').html(reportExpenseView.el);
 	},
 	activeAcount:function(id){
-		var user = new UserModel({id:id});
+		userLogin = new UserModel({id:id});
 		user.fetch().done(function(account){
-			localStorage.user = account;
+			setCookie('userId',account.id,1);
+			setCookie('lastname',account.lastname,1);
+			setCookie('firstname',account.firstname,1);
 			window.location = "/";
-		})
+		});
 	}
 });
 
