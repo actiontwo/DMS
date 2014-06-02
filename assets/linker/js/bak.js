@@ -325,3 +325,9 @@ function getCookie(cname) {
     }
     return "";
 }
+//delete cookie
+$('#btn-logout').click(function(){
+  setCookie('userId','',1);
+  setCookie('firstname','',1);
+  setCookie('lastname','',1);
+});
