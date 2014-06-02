@@ -36,36 +36,46 @@ var AppRouter = Backbone.Router.extend({
 		'active/:id':'activeAcount'
 	},
 	loadDishMenu: function() {
-		dishMenuCollection = new DishMenuCollection;
-		dishMenuView = new DishMenuView({collection: dishMenuCollection});
-		dishMenuCollection.fetch({data:$.param({page:0,number:5})});		
-		$("#main").html(dishMenuView.el);
+		if(userLogin){
+			dishMenuCollection = new DishMenuCollection;
+			dishMenuView = new DishMenuView({collection: dishMenuCollection});
+			dishMenuCollection.fetch({data:$.param({page:0,number:5})});		
+			$("#main").html(dishMenuView.el);
+		}
 	},
 	loadPrintMenu:function(){
-		printMenuCollection = new DishMenuCollection;
-		printMenuView = new PrintMenuView({collection:printMenuCollection});
-		printMenuCollection.fetch();
-		$('#main').html(printMenuView.el);
+		if(userLogin){
+			printMenuCollection = new DishMenuCollection;
+			printMenuView = new PrintMenuView({collection:printMenuCollection});
+			printMenuCollection.fetch();
+			$('#main').html(printMenuView.el);
+		}
 	},
 	loadExpenseMenu: function(){
-		var expenseMenuCollection = new ExpenseMenuCollection;
-		var expenseMenuView = new ExpenseMenuView({collection: expenseMenuCollection});
-		expenseMenuCollection.fetch();
-		$("#main").html(expenseMenuView.el);
+		if(userLogin){
+			var expenseMenuCollection = new ExpenseMenuCollection;
+			var expenseMenuView = new ExpenseMenuView({collection: expenseMenuCollection});
+			expenseMenuCollection.fetch();
+			$("#main").html(expenseMenuView.el);
+		}
 	},
 	createDish: function(){
-		dishListCollection = new DishListCollection;
-		dishListView = new DishListView({collection:dishListCollection});
-		dishListCollection.fetch();
-		$('#main').html(dishListView.el);
+		if(userLogin){
+			dishListCollection = new DishListCollection;
+			dishListView = new DishListView({collection:dishListCollection});
+			dishListCollection.fetch();
+			$('#main').html(dishListView.el);
+		}
 	},
 	createMenu:function(){
-		createMenuCollection = new DishMenuCollection;
-		createMenuView = new CreateMenuView({collection:createMenuCollection});
-		$("#main").html(createMenuView.el);
+		if(userLogin){
+			createMenuCollection = new DishMenuCollection;
+			createMenuView = new CreateMenuView({collection:createMenuCollection});
+			$("#main").html(createMenuView.el);
+		}
 	},
 	loadDeposit:function(){
-		if(localStorage.user){
+		if(userLogin){
 			depositCollection = new DepositCollection;
 			depositView = new DepositView({collection:depositCollection});
 			depositCollection.fetch();
@@ -73,22 +83,28 @@ var AppRouter = Backbone.Router.extend({
 		}
 	},
 	loadRegisterMeal: function(){
-		var registerMealCollection = new RegisterMealCollection();
-		var registerMealView = new RegisterMealView({collection: registerMealCollection});
-		registerMealCollection.fetch();
-		$("#main").html(registerMealView.el);
+		if(userLogin){
+			var registerMealCollection = new RegisterMealCollection();
+			var registerMealView = new RegisterMealView({collection: registerMealCollection});
+			registerMealCollection.fetch();
+			$("#main").html(registerMealView.el);
+		}
 	},
 	paginationMenu: function(page, number){
-		dishMenuCollection = new DishMenuCollection;
-		dishMenuView = new DishMenuView({collection: dishMenuCollection,page:page,number:number});
-		dishMenuCollection.fetch({data:$.param({page:page,number:number})});		
-		$("#main").html(dishMenuView.el);
+		if(userLogin){
+			dishMenuCollection = new DishMenuCollection;
+			dishMenuView = new DishMenuView({collection: dishMenuCollection,page:page,number:number});
+			dishMenuCollection.fetch({data:$.param({page:page,number:number})});		
+			$("#main").html(dishMenuView.el);
+		}
 	},
 	updateProfile:function(id){
-		var userModel = new UserModel({id:id});
-		var userView = new UserView({model:userModel});
-		userModel.fetch();
-		$('#main').html(userView.el);
+		if(userLogin){
+			var userModel = new UserModel({id:id});
+			var userView = new UserView({model:userModel});
+			userModel.fetch();
+			$('#main').html(userView.el);
+		}
 	},
 	loadLogin:function(){
 		var userModel = new UserModel();
@@ -103,19 +119,23 @@ var AppRouter = Backbone.Router.extend({
 		// $("#main").html(createExpenseView.el);
 	},
 	loadReport: function(){
-		reportCollection = new ReportCollection;
-		reportView = new ReportView({collection: reportCollection});
-		// reportCollection.fetch();
-		$('#main').html(reportView.el);
+		if(userLogin){
+			reportCollection = new ReportCollection;
+			reportView = new ReportView({collection: reportCollection});
+			// reportCollection.fetch();
+			$('#main').html(reportView.el);
+		}
 	},
 	loadReportExpense: function(){
-		reportExpenseCollection = new ReportCollection;
-		reportExpenseView = new ReportExpenseView({collection: reportExpenseCollection})
-		$('#main').html(reportExpenseView.el);
+		if(userLogin){
+			reportExpenseCollection = new ReportCollection;
+			reportExpenseView = new ReportExpenseView({collection: reportExpenseCollection})
+			$('#main').html(reportExpenseView.el);
+		}
 	},
 	activeAcount:function(id){
 		userLogin = new UserModel({id:id});
-		user.fetch().done(function(account){
+		userLogin.fetch().done(function(account){
 			setCookie('userId',account.id,1);
 			setCookie('lastname',account.lastname,1);
 			setCookie('firstname',account.firstname,1);
