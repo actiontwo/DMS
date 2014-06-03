@@ -88,7 +88,7 @@ var AppRouter = Backbone.Router.extend({
 		}
 	},
 	updateProfile:function(){
-			var userView = new UserView({model:userLogin});
+			var userView = new UserView({model: userLogin});
 			$('#main').html(userView.el);
 	},
 	loadLogin:function(){

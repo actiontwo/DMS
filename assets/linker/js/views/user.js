@@ -68,6 +68,7 @@ var UserView = Backbone.View.extend({
   initialize:function(){
     //listen on model, when model change render profile view
   	this.listenTo( this.model, 'sync',this.render);
+    this.render();
   },
 // -------------------------------------------------------------------
 // render (  )
@@ -86,7 +87,10 @@ var UserView = Backbone.View.extend({
 //            05/28/2014: Phuc Nguyen
 // -------------------------------------------------------------------
   render:function(){
-  	this.$el.html(Templates['user/profileUser'](this.model.attributes));
+    if(userLogin.attributes.role == 'admin'){
+      this.model.set({admin:'true'});
+    }
+    this.$el.html(Templates['user/profileUser'](this.model.attributes));
   },
   events:{
   	'click .btn-end':'updateProfile',
