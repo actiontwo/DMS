@@ -13,7 +13,7 @@ var AppRouter = Backbone.Router.extend({
 		'menu/create_menu': 'createMenu',
 		'deposit':'loadDeposit',
 		'register_meal': 'loadRegisterMeal',
-		'profile/user/:id':'updateProfile',
+		'profile/user':'updateProfile',
 		'login':'loadLogin',
 		'expense/create_expense': 'createExpense',
 		'report': 'loadReport',
@@ -87,10 +87,8 @@ var AppRouter = Backbone.Router.extend({
 			$("#main").html(dishMenuView.el);
 		}
 	},
-	updateProfile:function(id){
-			var userModel = new UserModel({id:id});
-			var userView = new UserView({model:userModel});
-			userModel.fetch();
+	updateProfile:function(){
+			var userView = new UserView({model:userLogin});
 			$('#main').html(userView.el);
 	},
 	loadLogin:function(){
