@@ -42,18 +42,18 @@ module.exports = {
         return;
       }
       req.session.user = user;
-      if(user.firstname && user.lastname){
-        res.redirect('/#active/'+user.id);
-      }else{
-        res.redirect('/#profile/user/' + user.id); 
-      }
-          
+      //if user click remmeber 
+      console.log(req.param('remember'));
+      if(req.param('remember'))
+        res.redirect('/#active/'+user.id+'/'+'remember');
+      else 
+        res.redirect('/#active/'+user.id+'/'+'noremember'); 
     });
 },
 
   logout: function (req,res){
-    req.logout();
-    res.send('logout successful');
+    req.session.user='';
+    res.redirect('/');
   },
 };
 

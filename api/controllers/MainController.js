@@ -50,21 +50,12 @@ module.exports = {
 //            05/30/2014: Phuc Nguyen
 // -------------------------------------------------------------------
   index: function(req,res) {
-    if(!req.session.user){
-      res.view('auth/login',{
+    res.view({
         partials: {
-          header_login: '../partials/site/header_login',
-          footer: '../partials/site/footer'
+          header: '../partials/site/header',
+          footer: '../partials/site/footer',
+          menu: '../partials/site/menu'
         },
-      })
-    }else{
-    	res.view({
-    		partials: {
-    			header: '../partials/site/header',
-    			footer: '../partials/site/footer',
-    			menu: '../partials/site/menu'
-    		},
-    	});
-    }  
+      });
   }
 };

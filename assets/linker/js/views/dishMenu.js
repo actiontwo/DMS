@@ -19,6 +19,8 @@
 //          Additional information [long version]
 // Changelog:
 //          05/29/2014 - Phuc Nguyen - Init DishMenuView, refactor code.
+//          06/03/2014 - Phuc Nguyen - check if user is admin or memeber 
+//                        render view differents.
 // ============================================================================
 //
 
@@ -101,14 +103,20 @@ var DishMenuView = Backbone.View.extend({
 //            none
 // REVISIONS:
 //            05/29/2014: Phuc Nguyen
+//            06/03/2014: add condition if user is admin or menber 
+//                        render view different
 // -------------------------------------------------------------------
   render: function() {
+    if(userLogin.attributes.role==='admin')
+      userLogin.set({'admin':'true'});
     this.$el.html(Templates['menu/view_menu']({
       'dish_menu':this.collection.toJSON(),
-      'list':dishListCollection.toJSON()
+      'list':dishListCollection.toJSON(),
+      'user':userLogin.attributes
     }));
     for (i in this.collection.models) {
       var model = this.collection.models[i];
+      model.set({admin:userLogin.get('admin')});
       this.subViews[model.id] = this.renderSubView(model);
     }
     displayCalendar();//display calendar jquery ui
@@ -334,19 +342,22 @@ var DishMenuView = Backbone.View.extend({
 //            none
 // REVISIONS:
 //            05/29/2014: Phuc Nguyen
+//            06/03/2014: add condition if user is admin
 // -------------------------------------------------------------------
   renderSubView:function(model){
-    //  check date current if current date greater 
-    //  model.attributes.date then model can edit,
-    //  otherwise model can't edit
-    //  get current date with format mm/dd/yyyy 
-    var now = formatDate(); 
-    //  editor is true then model can edit
-    //  else model can't edit
-    if(model.attributes.date>=now)          
-      model.set({'editor':'true'})                       
-    else 
-      model.unset('editor');                           
+    if(model.get('admin')){
+      //  check date current if current date greater 
+      //  model.attributes.date then model can edit,
+      //  otherwise model can't edit
+      //  get current date with format mm/dd/yyyy 
+      var now = formatDate(); 
+      //  editor is true then model can edit
+      //  else model can't edit
+      if(model.attributes.date>=now)          
+        model.set({'editor':'true'})                       
+      else 
+        model.unset('editor');
+    }                           
       //create a new subView
       var submenu_view = new SubMenuView({
       model:model,el:this.$('tr[data-id="' + model.id + '"]')

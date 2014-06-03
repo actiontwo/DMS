@@ -22,7 +22,27 @@
 //          05/30/2014 - Phuc Nguyen - Init file, refactor code.
 // ============================================================================
 //
+//
+var userLogin;
+var id = getCookie('userId');
+if(id){
+  if(!userLogin){
+    userLogin = new UserModel({id:id});
+    id='';
+    userLogin.fetch().done(function(user){
+      var lastname = getCookie('lastname');
+      var firstname = getCookie('firstname');
+      if(lastname===user.lastname.trim()&&firstname===user.firstname.trim()){
+        $('#user-account').html('Welcome'+firstname + lastname);
 
+      }
+    });
+  }
+  else{
+    console.log('user exit');
+  }
+}
+//
 function init() {
     //$("#tabs").tabs();
   $('.close_popup,.btn-cancel').click(function() {
@@ -276,3 +296,58 @@ function displayCalendar(){
     buttonImageOnly: true,
   });
 }
+// -------------------------------------------------------------------
+// setCookie (cname,cvalue,exdays)
+//
+// PARAMETERS:
+//            cname:key cookies
+//            cvalue: value cookies
+//            exdays: expires day
+// RETURNS:
+//            no
+// DEPENDENCIES:
+//            
+// PURPOSE:
+//            set  cookies
+// NOTES:
+//            none
+// REVISIONS:
+//            06/02/2014: Phuc Nguyen init code 
+// -------------------------------------------------------------------
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toGMTString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+// -------------------------------------------------------------------
+// getCookie ()
+//
+// PARAMETERS:
+//            cname
+// RETURNS:
+//            value cooki 
+// DEPENDENCIES:
+//            
+// PURPOSE:
+//            get value cookies typical cname param cname 
+// NOTES:
+//            none
+// REVISIONS:
+//            05/30/2014: Phuc Nguyen init code 
+// -------------------------------------------------------------------
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i].trim();
+        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+    }
+    return "";
+}
+//delete cookie
+$('#btn-logout').click(function(){
+  setCookie('userId','',1);
+  setCookie('firstname','',1);
+  setCookie('lastname','',1);
+});
