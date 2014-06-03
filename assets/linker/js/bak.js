@@ -22,7 +22,27 @@
 //          05/30/2014 - Phuc Nguyen - Init file, refactor code.
 // ============================================================================
 //
+//
+var userLogin;
+var id = getCookie('userId');
+if(id){
+  if(!userLogin){
+    userLogin = new UserModel({id:id});
+    id='';
+    userLogin.fetch().done(function(user){
+      var lastname = getCookie('lastname');
+      var firstname = getCookie('firstname');
+      if(lastname===user.lastname.trim()&&firstname===user.firstname.trim()){
+        $('#user-account').html('Welcome'+firstname + lastname);
 
+      }
+    });
+  }
+  else{
+    console.log('user exit');
+  }
+}
+//
 function init() {
     //$("#tabs").tabs();
   $('.close_popup,.btn-cancel').click(function() {

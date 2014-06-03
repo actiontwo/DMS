@@ -2,26 +2,7 @@ var dishListCollection = new DishListCollection;
 dishListCollection.fetch();
 var userCollection = new UserCollection;
 userCollection.fetch();
-var userLogin;
-var id = getCookie('userId');
-if(id){
-	if(!userLogin){
-		userLogin = new UserModel({id:id});
-		id='';
-		userLogin.fetch().done(function(user){
-			var lastname = getCookie('lastname');
-			var firstname = getCookie('firstname');
-			if(lastname===user.lastname.trim()&&firstname===user.firstname.trim()){
-				$('#user-account').html('Welcome'+firstname + lastname);
 
-			}
-		});
-	}
-	else{
-		console.log('user exit');
-	}
-
-}
 var AppRouter = Backbone.Router.extend({
 	routes: {
 		'menu': 'loadDishMenu',
@@ -38,14 +19,17 @@ var AppRouter = Backbone.Router.extend({
 		'report': 'loadReport',
 		'report/btn-rp-cost-meal': 'loadReport',
 		'report/btn-rp-expense': 'loadReportExpense',
-		'active/:id':'activeAcount'
+		'active/:id/:remember':'activeAcount'
 	},
 	loadDishMenu: function() {
-		if(userLogin.attributes.role){
+		if(userLogin){
 			dishMenuCollection = new DishMenuCollection;
 			dishMenuView = new DishMenuView({collection: dishMenuCollection});
 			dishMenuCollection.fetch({data:$.param({page:0,number:5})});		
 			$("#main").html(dishMenuView.el);
+		}
+		else{
+			
 		}
 	},
 	loadPrintMenu:function(){
@@ -136,13 +120,17 @@ var AppRouter = Backbone.Router.extend({
 			$('#main').html(reportExpenseView.el);
 		}
 	},
-	activeAcount:function(id){
+	activeAcount:function(id,remember){
 		userLogin = new UserModel({id:id});
+		
 		userLogin.fetch().done(function(account){
-			setCookie('userId',account.id,1);
-			setCookie('lastname',account.lastname,1);
-			setCookie('firstname',account.firstname,1);
-			window.location = "/";
+			if(remember==='remember'){
+				setCookie('userId',account.id,1);
+				setCookie('lastname',account.lastname,1);
+				setCookie('firstname',account.firstname,1);
+				window.location ='/';
+			}
+			appRouter.navigate('/',{trigger:true,replace:true});
 		});
 	}
 });
