@@ -7,15 +7,20 @@ var id = getCookie('userId');
 if(id){
 	if(!userLogin){
 		userLogin = new UserModel({id:id});
+		id='';
 		userLogin.fetch().done(function(user){
 			var lastname = getCookie('lastname');
 			var firstname = getCookie('firstname');
 			if(lastname===user.lastname.trim()&&firstname===user.firstname.trim()){
 				$('#user-account').html('Welcome'+firstname + lastname);
-				window.load('/');
+
 			}
 		});
 	}
+	else{
+		console.log('user exit');
+	}
+
 }
 var AppRouter = Backbone.Router.extend({
 	routes: {
@@ -36,7 +41,7 @@ var AppRouter = Backbone.Router.extend({
 		'active/:id':'activeAcount'
 	},
 	loadDishMenu: function() {
-		if(userLogin){
+		if(userLogin.attributes.role){
 			dishMenuCollection = new DishMenuCollection;
 			dishMenuView = new DishMenuView({collection: dishMenuCollection});
 			dishMenuCollection.fetch({data:$.param({page:0,number:5})});		
@@ -99,12 +104,10 @@ var AppRouter = Backbone.Router.extend({
 		}
 	},
 	updateProfile:function(id){
-		if(userLogin){
 			var userModel = new UserModel({id:id});
 			var userView = new UserView({model:userModel});
 			userModel.fetch();
 			$('#main').html(userView.el);
-		}
 	},
 	loadLogin:function(){
 		var userModel = new UserModel();

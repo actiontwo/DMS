@@ -19,6 +19,8 @@
 //          Additional information [long version]
 // Changelog:
 //          05/29/2014 - Phuc Nguyen - Init DishMenuView, refactor code.
+//          06/03/2014 - Phuc Nguyen - Add condition render 
+//                       if account is user or admin
 // ============================================================================
 //
 

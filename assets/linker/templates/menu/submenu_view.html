@@ -41,7 +41,9 @@
 <td data-attribute="dish4" data-id="{{id}}">{{dish4}}</td>
 <td data-attribute="dish5" data-id="{{id}}">{{dish5}}</td>
 <td data-attribute="note" data-id="{{id}}">{{note}}</td>
+ {{#if admin}}
 <td>
+   
     {{#unless editor}}
     <figure class="iconsp-edit-red-25px" id="button-edit-red-menu" data-id="{{id}}"></figure>
     {{else}}
@@ -51,4 +53,5 @@
 <td>
     <figure class="iconsp-remove-25px" id="button-remove-menu" data-id="{{id}}"></figure>
 </td>
+{{/if}}
 {{/if}}
