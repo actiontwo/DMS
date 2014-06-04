@@ -33,8 +33,12 @@
 										<th data-attribute="date">Date(dd/mm/yy)</th>
 										<th data-attribute="username">Name</th>
 										<th data-attribute="amount">Deposit</th>
+										{{#checkuser}}
+										{{#if admin}}
 										<th></th>
 										<th></th>
+										{{/if}}
+										{{/checkuser}}
 									</tr>
 								</thead>
 								<tbody>
@@ -44,10 +48,14 @@
 								</tbody>
 							</table>
 						</div>
+						{{#checkuser}}
+						{{#if admin}}
 						<div class="btn-end">
 							<a href="#" onclick="show_popup('.ds-new-deposit')">New Deposit</a>
 							<a  href="#" id="btn-delete-selected">Delete Selected</a>
 						</div>
+						{{/if}}
+						{{/checkuser}}
 						<div class="clear-fix"></div>
 					</div>
 

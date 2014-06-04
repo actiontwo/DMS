@@ -87,8 +87,11 @@ var DepositView = Backbone.View.extend({
 //            05/29/2014: Phuc Nguyen
 // -------------------------------------------------------------------
   render:function(){
+    if(userLogin.attributes.role == 'admin')
+      userLogin.set({'admin': 'true'})
     this.$el.html(Templates['deposit/deposit']({
-      'deposit':this.collection.toJSON(),'user':userCollection.toJSON()
+      'deposit':this.collection.toJSON(),'user':userCollection.toJSON(),
+      'checkuser':userLogin.attributes
     }));
     for(i in this.collection.models){
       var model = this.collection.models[i];

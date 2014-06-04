@@ -25,9 +25,11 @@
 //
 var userLogin;
 var id = getCookie('userId');
+console.log(id);
 if(id){
   if(!userLogin){
     userLogin = new UserModel({id:id});
+    console.log(userLogin);
     id='';
     userLogin.fetch().done(function(user){
       var lastname = getCookie('lastname');

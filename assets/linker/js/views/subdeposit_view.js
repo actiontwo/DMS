@@ -76,7 +76,12 @@ var SubDepositView = Backbone.View.extend({
 //            05/30/2014: Phuc Nguyen
 // -------------------------------------------------------------------
 	render:function(){
-		this.$el.html(Templates['deposit/sub_deposit'](this.model.attributes));
+		if(userLogin.attributes.role == 'admin')
+      this.model.set({'admin': 'true'})
+    console.log(this.model.attributes);
+		this.$el.html(Templates['deposit/sub_deposit'](
+			this.model.attributes
+			));
 		//display calendar
 		displayCalendar();
 		return this.el;

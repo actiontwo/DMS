@@ -1,5 +1,5 @@
-{{#if editor}}
 
+{{#if editor}}
 <td>
 	{{no}}
 </td>
@@ -9,12 +9,14 @@
 <td><input type="text" class="datepicker date" value="{{date}}" data-attribute="date"/></td>
 <td><input type="text" value="{{username}}" data-attribute="username"/></td>
 <td><input type="text" value="{{amount}}"data-attribute="amount"</td>
+{{#if admin}}
 <td>
     <figure class="iconsp-save-25px" id="btn-save-deposit"></figure>
 </td>
 <td>
     <figure class="iconsp-remove-25px" id="btn-remove-deposit"></figure>
 </td>
+{{/if}}
 
 {{else}}
 <td>
@@ -26,6 +28,8 @@
 <td data-attribute="date">{{date}}</td>
 <td data-attribute="username">{{username}}</td>
 <td data-attribute="amount">{{amount}}</td>
+
+{{#if admin}}
 <td>
     <figure class="iconsp-edit-25px" id="btn-edit-deposit"></figure>
 </td>
@@ -33,3 +37,5 @@
     <figure class="iconsp-remove-25px" id="btn-remove-deposit"></figure>
 </td>
 {{/if}}
+{{/if}}
+
