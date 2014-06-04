@@ -1208,13 +1208,20 @@
     margin: 0 auto;
     /* margin-top: 54px; */
     display: block;
-    padding-top: 176px;
+    padding-top: 150px;
 }
 /* line 958, ../../sass/style.scss */
  .mem-register .rg-box-input h3 {
     font-size: 18px;
     margin: 10px;
     color: #afafaf;
+}
+#checkbox-remember{
+padding: 0px 1px;
+width: 15px;
+margin: 0px 6px;
+display: inline-block;
+vertical-align: middle;
 }
 /* line 963, ../../sass/style.scss */
  .mem-register .rg-box-input input {

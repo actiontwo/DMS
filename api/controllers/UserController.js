@@ -58,7 +58,11 @@ module.exports = {
             console.log(password);
             //next();
 
-            User.create({email: email, password: password,role:'user'}).done(function(error, user) {
+            User.create({email: email,
+                         password: password,
+                         firstname: req.param('firstname'),
+                         lastname: req.param('lastname'),
+                         role:'user'}).done(function(error, user) {
               if (error) {
                 res.send(500, {error: "DB Error"});
               } else {
