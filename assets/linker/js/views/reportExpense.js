@@ -47,7 +47,7 @@ var ReportExpenseView = Backbone.View.extend({
 // -------------------------------------------------------------------
 	initialize: function(){
 		this.listenTo(this.collection, 'sync', this.render);
-		//this.render();
+	//	this.render();
 	},
 // -------------------------------------------------------------------
 // render function:

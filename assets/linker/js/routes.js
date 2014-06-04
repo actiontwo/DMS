@@ -113,8 +113,9 @@ var AppRouter = Backbone.Router.extend({
 	},
 	loadReportExpense: function(){
 		if(userLogin){
-			reportExpenseCollection = new ReportCollection;
-			reportExpenseView = new ReportExpenseView({collection: reportExpenseCollection})
+		var expenseMenuCollection = new ExpenseMenuCollection;
+			reportExpenseView = new ReportExpenseView({collection: expenseMenuCollection})
+			expenseMenuCollection.fetch();
 			$('#main').html(reportExpenseView.el);
 		}
 	},
