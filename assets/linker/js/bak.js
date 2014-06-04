@@ -33,8 +33,9 @@ if(id){
       var lastname = getCookie('lastname');
       var firstname = getCookie('firstname');
       if(lastname===user.lastname.trim()&&firstname===user.firstname.trim()){
-        $('#user-account').html('Welcome'+firstname + lastname);
-
+        $('#user-account').html('Welcome '+ firstname + ' ' + lastname);
+        $('#btn-log').attr("href", "/logout");
+        $('#btn-log').html('Logout');  
       }
     });
   }
@@ -346,7 +347,7 @@ function getCookie(cname) {
     return "";
 }
 //delete cookie
-$('#btn-logout').click(function(){
+$('#btn-log').click(function(){
   setCookie('userId','',1);
   setCookie('firstname','',1);
   setCookie('lastname','',1);
