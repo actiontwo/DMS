@@ -27,32 +27,28 @@
 							<th id="th_{{id}}" data-attribute="invoiceID">Invoice ID</th>
 							<th id="th_{{id}}" data-attribute="invoiceImage" class="invoice-img">Invoice Images</th>
 							<th id="th_{{id}}" data-attribute="note" class="note">Note</th>
+							{{#user}}
+							{{#if admin}}
 							<th id="th_{{id}}" class="rm-edit"></th>
+							{{/if}}
+							{{/user}}
 						</tr>
 						{{#expense}}
 						<tr id="expenseTR_{{id}}" data-id="{{id}}">
-							<td id="cbox_{{id}}" data-id="{{id}}"><input type="checkbox">{{check}}</td>
-							<td data-attribute="date" data-id="{{id}}"> {{date}}</td>
-							<td data-attribute="money" data-id="{{id}}">{{money}}</td>
-							<td data-attribute="invoiceID" data-id="{{id}}">{{invoiceID}}</td>
-							<td data-id="{{id}}">
-								<figure class="iconsp-invoice-25px">{{invoiceImage}}</figure>
-							</td>
-							<td data-attribute="note" data-id="{{id}}">{{note}}</td>
-							<td data-id="{{id}}">
-								<figure class="iconsp-remove-25px" id="delete-expense-{{id}}" data-id="{{id}}"></figure>
-								<figure class="iconsp-edit-25px" id="edit-expense-{{id}}" data-id="{{id}}"></figure>
-							</td>
 						</tr>
 						{{/expense}}
 					</tbody>
 				</table>
 			</div>
+			{{#user}}
+			{{#if admin}}
 			<div class="btn-end">
 				<a href="#expense" onclick="show_popup('.es-delete')" id="btn-del-expense">Delete</a>
 				<!-- onclick="show_popup('.es-create-expense')" -->
 				<a href="#expense/create_expense" id="btn-create-expense">Create</a>
 			</div>
+			{{/if}}
+			{{/user}}
 			<div class="clear-fix"></div>
 		</div>
 	</div>

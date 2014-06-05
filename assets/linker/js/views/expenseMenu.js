@@ -29,6 +29,7 @@ var ExpenseMenuView = Backbone.View.extend({
 	tagName: 'div',
 	className: 'menus',
 	id: 'expense_menu',
+	subViews: {},
 	initialize: function() {
 		this.listenTo(this.collection, 'sync reset sort remove add create', this.render);
 		this.collection.sort_order = {
@@ -40,10 +41,23 @@ var ExpenseMenuView = Backbone.View.extend({
 		};
 	},		
 	render: function() {
+		if(userLogin.attributes.role == 'admin')
+			userLogin.set({'admin': 'true'})
 		this.$el.html(Templates['expense/expense_menu']({
-			expense: this.collection.toJSON()
+			'expense': this.collection.toJSON(),
+			'user': userLogin.attributes
 		}));
-		init();
+		for(i in this.collection.models){
+			var model = this.collection.models[i];
+			//subexpense
+			var subExpenseView = new SubExpenseView({
+					model: model,
+					el: this.$('tr[data-id="' + model.id + '"]')
+			});
+			subExpenseView.render();
+			this.subViews[model.id] = subExpenseView;
+		}
+		//init();
 		//display calendar
 		this.$('.datepicker').datepicker({
 			showOn: "button",
