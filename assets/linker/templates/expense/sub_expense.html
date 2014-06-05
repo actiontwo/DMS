@@ -1,0 +1,15 @@
+
+<td id="cbox_{{id}}" data-id="{{id}}"><input type="checkbox">{{check}}</td>
+<td data-attribute="date" data-id="{{id}}"> {{date}}</td>
+<td data-attribute="money" data-id="{{id}}">{{money}}</td>
+<td data-attribute="invoiceID" data-id="{{id}}">{{invoiceID}}</td>
+<td data-id="{{id}}">
+  <figure class="iconsp-invoice-25px">{{invoiceImage}}</figure>
+</td>
+<td data-attribute="note" data-id="{{id}}">{{note}}</td>
+{{#if admin}}
+<td data-id="{{id}}">
+  <figure class="iconsp-remove-25px" id="delete-expense-{{id}}" data-id="{{id}}"></figure>
+  <figure class="iconsp-edit-25px" id="edit-expense-{{id}}" data-id="{{id}}"></figure>
+</td> 
+{{/if}}
