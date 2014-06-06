@@ -269,30 +269,38 @@ var ExpenseMenuView = Backbone.View.extend({
 		//            05/30/14 - Son Le - Initial revision
 		// -------------------------------------------------------------------
 		viewByDay: function(){
-				var dateFromString = ($('.find .find-from').find('input').val());
-				dateFrom = new Date(dateFromString.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
-				var dateToString = ($('.find .find-to').find('input').val());
-				dateTo = new Date(dateToString.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
-				console.log('dateFrom :' + dateFrom);
-				console.log('dateTo :' + dateTo);
-				var tempCollection = new ExpenseMenuCollection();
-				this.collection.each(function(modelIn){
-						var dayValue = modelIn.get("date").trim();
-						var tempDay = new Date(dayValue.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
-						//console.log(tempDay);
-						if(tempDay > dateFrom && tempDay < dateTo)
-						{
-								tempCollection.add(modelIn);
-						}
-				});
+				var from = this.$('.find-from input').val();
+		    var to   = this.$('.find-to input').val();
+		    //check date filter
+		    if(from>to||from===''||to===''){
+		      alert('Input invalid, from must be less to');
+		      return;
+		    }
+		    var result = _.filter(this.collection.toJSON(),function(model){
+		      return (model.date>=from&&model.date<=to);
+		    });
 
-				this.$el.html(Templates['expense/expense_menu']({
-						expense: tempCollection.toJSON()
-				}));
-				init();
-				$('.find .find-from').find('input').val(dateFromString);
-				$('.find .find-to').find('input').val(dateToString);
+		    //check result
+		    if(result.length<=0){
+		      alert('No found menu');
+		      return;
+		    }
+		    this.renderFilter(result,'tbody','expense/expense_menu');
+
 		},
+
+			renderFilter:function(result,element,template){
+	    //render view
+	    this.$el.html(Templates[template]({
+	    	user: userLogin.attributes
+	    }));
+	    for (i in result) {
+	      var model = result[i]; 
+	      this.$(element).append(
+	      this.subViews[model.id].el);
+	    }
+  },
+
 		// -------------------------------------------------------------------
 		// openCreateExpenseView ()
 		// RETURNS:

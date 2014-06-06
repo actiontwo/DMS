@@ -19,7 +19,7 @@
 			<div class="clear-fix"></div>
 			<div class="table">
 				<table class="reference">
-					<tbody>
+					<thead>
 						<tr>
 							<th class='checkAll'> Check All </th>
 							<th id="th_{{id}}" data-attribute="date">Date(dd/mm/yy)</th>
@@ -33,6 +33,8 @@
 							{{/if}}
 							{{/user}}
 						</tr>
+					</thead>
+					<tbody>
 						{{#expense}}
 						<tr id="expenseTR_{{id}}" data-id="{{id}}">
 						</tr>
