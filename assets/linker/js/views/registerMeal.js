@@ -228,13 +228,16 @@ var RegisterMealView = Backbone.View.extend({
 
 				// add all models of the current month of this year to variable "tempCollection"
 				this.collection.each(function(modelIn){
+						console.log(userLogin.get('firstname'));
+						var name = userLogin.get('firstname')+ ' ' +userLogin.get('lastname');
+						modelIn.set({'name': name});
+						
 						var dayValue = modelIn.get("date").trim();
 						var tempDay = new Date(dayValue.replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
 						var modelMonth = tempDay.getMonth()+1;
 						var modelYear= tempDay.getFullYear();
 						if (modelMonth == currentMonth && modelYear == currentYear) tempCollection.add(modelIn);
 				});
-
 				// render this view using the tempCollection
 		this.$el.html(Templates['registerMeal/registerMeal']({
 			//registerMeals: this.collection.toJSON()
