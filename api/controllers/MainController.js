@@ -23,8 +23,8 @@
 //
 
 module.exports = {
-    
-  
+
+
 
 
   /**
@@ -32,30 +32,36 @@ module.exports = {
    * (specific to MainController)
    */
   _config: {},
-// -------------------------------------------------------------------
-// index ( req,res )
-//
-// PARAMETERS:
-//            req:request from cllient
-//            res:response server send client
-// RETURNS:
-//            no return
-// DEPENDENCIES:
-//            
-// PURPOSE:
-//            init view for client
-// NOTES:
-//            none
-// REVISIONS:
-//            05/30/2014: Phuc Nguyen
-// -------------------------------------------------------------------
-  index: function(req,res) {
-    res.view({
+  // -------------------------------------------------------------------
+  // index ( req,res )
+  //
+  // PARAMETERS:
+  //            req:request from cllient
+  //            res:response server send client
+  // RETURNS:
+  //            no return
+  // DEPENDENCIES:
+  //            
+  // PURPOSE:
+  //            init view for client
+  // NOTES:
+  //            none
+  // REVISIONS:
+  //            05/30/2014: Phuc Nguyen
+  // -------------------------------------------------------------------
+  index: function(req, res) {
+    console.log(req.session.user);
+    if (req.session.user) {
+      res.view({
         partials: {
           header: '../partials/site/header',
           footer: '../partials/site/footer',
           menu: '../partials/site/menu'
         },
       });
+    }else{
+        res.redirect('/login');
+    }
+
   }
 };

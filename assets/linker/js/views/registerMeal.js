@@ -218,7 +218,7 @@ var RegisterMealView = Backbone.View.extend({
 	render: function() {
 
 				// check if the days for current month of this year are already existed
-				this.checkIfCurrentMonthExisted();
+				//this.checkIfCurrentMonthExisted();
 
 				// By default, display only days of this month in the current view
 				var currentDay = new Date();
