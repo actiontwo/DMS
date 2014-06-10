@@ -12,7 +12,7 @@ module.exports = {
         },
     });  
   },
-  process: function(req,res){
+  process: function(req,res,next){
     email = req.param('email');
     password = req.param('password');
     console.log(email);
@@ -49,6 +49,7 @@ module.exports = {
       else 
         res.redirect('/#active/'+user.id+'/'+'noremember'); 
     });
+    next();
 },
 
   logout: function (req,res){
