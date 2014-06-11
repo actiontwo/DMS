@@ -34,28 +34,43 @@ module.exports.routes = {
   // (This would also work if you had a file at: `/views/home.ejs`)
   '/': {
     //view: 'site/index'
-     controller:'main'     
+     controller:'main'
   },
+
+  // User Controller
   '/login': {
-    controller: 'auth',
+    controller: 'user',
     action:'login'
   },
-  '/process': {
-    controller: 'auth',
-    action:'process'
-  },
-  '/logout': {
-    controller: 'auth',
+  '/logout':{
+    controller:'user',
     action:'logout'
   },
-  '/register':{
+  '/registerUser':{
     controller:'user',
     action:'register'
   },
-  '/create':{
+  '/checkUserLogin':{
     controller:'user',
-    action:'create'
-  }
+    action:'checkUserLogin'
+  },
+
+  'get /user/:id?': {
+    controller    : 'user',
+    action        : 'find'
+  },
+  'post /user': {
+    controller    : 'user',
+    action        : 'create'
+  },
+  'put /user/:id': {
+    controller    : 'user',
+    action        : 'update'
+  },
+  'delete /user/:id': {
+    controller    : 'user',
+    action        : 'destroy'
+  },
 //  'dish':{
 //    controller:'main',
 //    action:'dish'
