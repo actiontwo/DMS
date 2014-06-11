@@ -283,4 +283,4 @@ var DepositView = Backbone.View.extend({
     //after render, display again calendar
    displayCalendar();
   }
-})
+});

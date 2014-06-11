@@ -1,0 +1,11 @@
+{ "dish" : "Rau Xao Thit Bo", "createdAt" : { "$date" : 1402388652208 }, "updatedAt" : { "$date" : 1402388652208 }, "_id" : { "$oid" : "5396c0ac942cb573188f89d2" } }
+{ "dish" : "Cá diêu hồng chiên", "createdAt" : { "$date" : 1402393969964 }, "updatedAt" : { "$date" : 1402393969964 }, "_id" : { "$oid" : "5396d571d3d197681d7983e7" } }
+{ "dish" : "Thịt gân bò xào", "createdAt" : { "$date" : 1402393989791 }, "updatedAt" : { "$date" : 1402393989791 }, "_id" : { "$oid" : "5396d585d3d197681d7983e8" } }
+{ "dish" : "Thịt luộc + cà pháo", "createdAt" : { "$date" : 1402394005555 }, "updatedAt" : { "$date" : 1402394005555 }, "_id" : { "$oid" : "5396d595d3d197681d7983e9" } }
+{ "dish" : "Gà kho gừng", "createdAt" : { "$date" : 1402394016281 }, "updatedAt" : { "$date" : 1402394016281 }, "_id" : { "$oid" : "5396d5a0d3d197681d7983ea" } }
+{ "dish" : "Đậu hủ dồn thịt", "createdAt" : { "$date" : 1402394025358 }, "updatedAt" : { "$date" : 1402394025358 }, "_id" : { "$oid" : "5396d5a9d3d197681d7983eb" } }
+{ "dish" : "Trứng chiên", "createdAt" : { "$date" : 1402394033413 }, "updatedAt" : { "$date" : 1402394033413 }, "_id" : { "$oid" : "5396d5b1d3d197681d7983ec" } }
+{ "dish" : "Cá lóc kho tiêu", "createdAt" : { "$date" : 1402394043531 }, "updatedAt" : { "$date" : 1402394043531 }, "_id" : { "$oid" : "5396d5bbd3d197681d7983ed" } }
+{ "dish" : "Đùi gà chiên mắm", "createdAt" : { "$date" : 1402394091236 }, "updatedAt" : { "$date" : 1402394091236 }, "_id" : { "$oid" : "5396d5ebd3d197681d7983fe" } }
+{ "dish" : "Đùi gà luộc + muối tiêu chanh", "createdAt" : { "$date" : 1402394103365 }, "updatedAt" : { "$date" : 1402394103365 }, "_id" : { "$oid" : "5396d5f7d3d197681d7983ff" } }
+{ "dish" : "Mực xào thơm cà", "createdAt" : { "$date" : 1402394113788 }, "updatedAt" : { "$date" : 1402394113788 }, "_id" : { "$oid" : "5396d601d3d197681d798400" } }

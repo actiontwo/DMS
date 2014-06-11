@@ -16,8 +16,8 @@
  */
 
 module.exports = {
-    
-  
+
+
 
 
   /**
@@ -25,6 +25,21 @@ module.exports = {
    * (specific to RegisterMealController)
    */
   _config: {}
+//  index: function(req, res) {
+//  	console.log(req.session.user);
+//    if (req.session.user) {
+//      Menu.find().exec(function(err, menu) {
+//
+//        res.send(menu);
+//      });
+//    } else {
+//      res.redirect("/");
+//    }
+//
+//  },
+//  create: function(req, res) {
+//    res.send('ad');
+//  }
 
-  
+
 };

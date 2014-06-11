@@ -49,7 +49,7 @@ module.exports = {
   // REVISIONS:
   //            05/30/2014: Phuc Nguyen
   // -------------------------------------------------------------------
-  index: function(req, res) {
+  index: function (req, res) {
     console.log(req.session.user);
     if (req.session.user) {
       res.view({
@@ -59,9 +59,28 @@ module.exports = {
           menu: '../partials/site/menu'
         },
       });
-    }else{
-        res.redirect('/login');
+    } else {
+      res.redirect('/login');
     }
 
   }
+  //  dish:function(req,res){
+  //    var collection = Menu;
+  //
+  //    console.log(req.param('id'));
+  //    collection.findByBrunch('Lunch').exec(function(err,data){
+  //      res.send(data);
+  //    })
+  //  },
+  //  menu:function(req,res){
+  //    Menu.find().exec(function(err,data){
+  //      res.send(data);
+  //    })
+  //  },
+  //  registermeal:function(req,res){
+  //    RegisterMeal.find().exec(function(err,data){
+  //      res.send(data);
+  //    })
+  //  }
+
 };

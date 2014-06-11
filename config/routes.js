@@ -56,6 +56,14 @@ module.exports.routes = {
     controller:'user',
     action:'create'
   }
+//  'dish':{
+//    controller:'main',
+//    action:'dish'
+//  },
+//  'get /dish/:id?':{
+//    controller:'main',
+//    action:'dish'
+//  }
 
   
   //get all menu from database

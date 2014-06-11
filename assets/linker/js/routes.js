@@ -22,152 +22,154 @@ var AppRouter = Backbone.Router.extend({
     'report/btn-rp-expense': 'loadReportExpense',
     'active/:id/:remember': 'activeAcount'
   },
-  loadDishMenu: function() {
-    if (userLogin) {
-      dishMenuCollection = new DishMenuCollection;
-      dishMenuView = new DishMenuView({
-        collection: dishMenuCollection
+  initialize: function () {
+    if(userLogin) {
+      this.dishMenuView = new DishMenuView({
+        collection: new DishMenuCollection
       });
-      dishMenuCollection.fetch({
+
+      this.printMenuView = new PrintMenuView({
+        collection: new DishMenuCollection
+      });
+
+      this.expenseMenuView = new ExpenseMenuView({
+        collection: new ExpenseMenuCollection
+      });
+
+      this.dishListView = new DishListView({
+        collection: new DishListCollection
+      });
+      this.createMenuView = new CreateMenuView({
+        collection: new DishMenuCollection
+      });
+
+      this.depositView = new DepositView({
+        collection: new DepositCollection
+      });
+      this.registerMealView = new RegisterMealView({
+        collection: new RegisterMealCollection
+      });
+
+      this.dishMenuView = new DishMenuView({
+        collection: new DishMenuCollection
+      });
+
+      this.userView = new UserView({
+        model: userLogin
+      });
+      //    var userModel = new UserModel();
+      //    userModel.set({
+      //      'login': 'true'
+      //    });
+      this.loginView = new LoginView({
+        model: new UserModel({
+          set: {
+            'login': 'true'
+          }
+        })
+      });
+      this.reportView = new ReportView({
+        collection: new DepositCollection
+      });
+
+      this.reportExpenseView = new ReportExpenseView({
+        collection: new ExpenseMenuCollection
+      });
+    }
+  },
+  loadDishMenu: function () {
+    if (userLogin) {
+      this.dishMenuView.collection.fetch({
         data: $.param({
           page: 0,
           number: 5
         })
       });
-      $("#main").html(dishMenuView.el);
+      $("#main").html(this.dishMenuView.el);
     }
   },
-  loadPrintMenu: function() {
+  loadPrintMenu: function () {
     if (userLogin) {
-      printMenuCollection = new DishMenuCollection;
-      printMenuView = new PrintMenuView({
-        collection: printMenuCollection
-      });
-      printMenuCollection.fetch();
-      $('#main').html(printMenuView.el);
+      this.printMenuView.collection.fetch();
+      $('#main').html(this.printMenuView.el);
     }
   },
-  loadExpenseMenu: function() {
+  loadExpenseMenu: function () {
     if (userLogin) {
-      var expenseMenuCollection = new ExpenseMenuCollection;
-      var expenseMenuView = new ExpenseMenuView({
-        collection: expenseMenuCollection
-      });
-      expenseMenuCollection.fetch();
-      $("#main").html(expenseMenuView.el);
+      this.expenseMenuView.collection.fetch();
+      $("#main").html(this.expenseMenuView.el);
     }
   },
-  createDish: function() {
+  createDish: function () {
     if (userLogin) {
-      dishListCollection = new DishListCollection;
-      dishListView = new DishListView({
-        collection: dishListCollection
-      });
-      dishListCollection.fetch();
-      $('#main').html(dishListView.el);
+      this.dishListView.collection.fetch();
+      $('#main').html(this.dishListView.el);
     }
   },
-  createMenu: function() {
+  createMenu: function () {
     if (userLogin) {
-      createMenuCollection = new DishMenuCollection;
-      createMenuView = new CreateMenuView({
-        collection: createMenuCollection
-      });
-      $("#main").html(createMenuView.el);
+      $("#main").html(this.createMenuView.el);
     }
   },
-  loadDeposit: function() {
+  loadDeposit: function () {
     if (userLogin) {
-      depositCollection = new DepositCollection;
-      depositView = new DepositView({
-        collection: depositCollection
-      });
-      depositCollection.fetch();
-      $("#main").html(depositView.el);
+      this.depositView.collection.fetch();
+      $("#main").html(this.depositView.el);
     }
   },
-  loadRegisterMeal: function() {
+  loadRegisterMeal: function () {
     if (userLogin) {
-      var registerMealCollection = new RegisterMealCollection();
-      var registerMealView = new RegisterMealView({
-        collection: registerMealCollection
-      });
-      registerMealCollection.fetch();
-      $("#main").html(registerMealView.el);
+      this.registerMealView.collection.fetch();
+      $("#main").html(this.registerMealView.el);
     }
   },
-  paginationMenu: function(page, number) {
+  paginationMenu: function (page, number) {
     if (userLogin) {
-      dishMenuCollection = new DishMenuCollection;
-      dishMenuView = new DishMenuView({
-        collection: dishMenuCollection,
-        page: page,
-        number: number
-      });
-      dishMenuCollection.fetch({
+      this.dishMenuView.collection.fetch({
         data: $.param({
           page: page,
           number: number
         })
       });
-      $("#main").html(dishMenuView.el);
+      $("#main").html(this.dishMenuView.el);
     }
   },
-  updateProfile: function() {
-    var userView = new UserView({
-      model: userLogin
-    });
-    $('#main').html(userView.el);
+  updateProfile: function () {
+    $('#main').html(this.userView.el);
   },
-  loadLogin: function() {
+  loadLogin: function () {
     console.log('login');
-    var userModel = new UserModel();
-    userModel.set({
-      'login': 'true'
-    });
-    var loginView = new LoginView({
-      model: userModel
-    });
-    $("#main").html(loginView.el);
+    $("#main").html(this.loginView.el);
   },
 
-  createExpense: function() {
+  createExpense: function () {
     // var createExpenseCollection = new ExpenseMenuCollection();
     // var createExpenseView = new CreateExpenseView({collection: createExpenseCollection});
     // $("#main").html(createExpenseView.el);
   },
-  loadReport: function() {
-    // reportCollection = new ReportCollection;
-    depositCollection = new DepositCollection;
-    reportView = new ReportView({
-      collection: depositCollection
-    });
-    depositCollection.fetch();
-    // reportCollection.fetch();
-    $('#main').html(reportView.el);
+  loadReport: function () {
+    this.reportView.collection.fetch();
+    $('#main').html(this.reportView.el);
   },
-  loadReportExpense: function() {
+  loadReportExpense: function () {
     if (userLogin) {
-      var expenseMenuCollection = new ExpenseMenuCollection;
-      reportExpenseView = new ReportExpenseView({
-        collection: expenseMenuCollection
-      })
-      expenseMenuCollection.fetch();
-      $('#main').html(reportExpenseView.el);
+      this.reportExpenseView.collection.fetch();
+      $('#main').html(this.reportExpenseView.el);
     }
   },
-  activeAcount: function(id, remember) {
+  activeAcount: function (id, remember) {
     userLogin = new UserModel({
       id: id
     });
 
-    userLogin.fetch().done(function(account) {
+    userLogin.fetch().done(function (account) {
       if (remember === 'remember') {
         setCookie('userId', account.id, 1);
         setCookie('lastname', account.lastname, 1);
         setCookie('firstname', account.firstname, 1);
         window.location = '/';
       }
+      this.initialize();
       appRouter.navigate('/', {
         trigger: true,
         replace: true
@@ -175,7 +177,7 @@ var AppRouter = Backbone.Router.extend({
     });
   }
 });
+console.log(userLogin);
 
-
-var appRouter = new AppRouter();
-Backbone.history.start();
+  var appRouter = new AppRouter();
+  Backbone.history.start();

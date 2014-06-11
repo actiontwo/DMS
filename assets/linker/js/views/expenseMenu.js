@@ -41,6 +41,7 @@ var ExpenseMenuView = Backbone.View.extend({
 		};
 	},		
 	render: function() {
+
 		if(userLogin.attributes.role == 'admin')
 			userLogin.set({'admin': 'true'})
 		this.$el.html(Templates['expense/expense_menu']({
