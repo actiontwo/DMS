@@ -1,26 +1,19 @@
-//
-// ============================================================================
-// Copyright:
-//          This source is subject to the Designveloper JSC (designveloper.com)
-//          All using or modify must have permission from us.
-//
-// Name:    DSVScriptTemplate
-// Purpose:
-//          create page menu, display full list menu created 
-// Class:
-//          
-// Functions:
-//          
-// Called From:
-//          (script) local/router.js
-// Author:
-//          Nguyen Phuc (phucnt@designveloper.com)
-// Notes:
-//          Additional information [long version]
-// Changelog:
-//          05/29/2014 - Phuc Nguyen - Init File, refactor code.
-// ============================================================================
-//
+/**
+ * MainController
+ *
+ * @module      :: Controller
+ * @description  :: A set of functions called `actions`.
+ *
+ *                 Actions contain code telling Sails how to respond to a certain type of request.
+ *                 (i.e. do stuff, then send some JSON, show an HTML page, or redirect to another URL)
+ *
+ *                 You can configure the blueprint URLs which trigger these actions (`config/controllers.js`)
+ *                 and/or override them with custom routes (`config/routes.js`)
+ *
+ *                 NOTE: The code you write here supports both HTTP and Socket.io automatically.
+ *
+ * @docs        :: http://sailsjs.org/#!documentation/controllers
+ */
 
 module.exports = {
 
@@ -41,7 +34,7 @@ module.exports = {
   // RETURNS:
   //            no return
   // DEPENDENCIES:
-  //            
+  //
   // PURPOSE:
   //            init view for client
   // NOTES:
@@ -58,29 +51,14 @@ module.exports = {
           footer: '../partials/site/footer',
           menu: '../partials/site/menu'
         },
+        status:"Logout",
+        welcomeUser:"Welcome : " + req.session.user.lastname
       });
     } else {
       res.redirect('/login');
     }
 
-  }
-  //  dish:function(req,res){
-  //    var collection = Menu;
-  //
-  //    console.log(req.param('id'));
-  //    collection.findByBrunch('Lunch').exec(function(err,data){
-  //      res.send(data);
-  //    })
-  //  },
-  //  menu:function(req,res){
-  //    Menu.find().exec(function(err,data){
-  //      res.send(data);
-  //    })
-  //  },
-  //  registermeal:function(req,res){
-  //    RegisterMeal.find().exec(function(err,data){
-  //      res.send(data);
-  //    })
-  //  }
+  },
+
 
 };

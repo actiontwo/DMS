@@ -2,7 +2,7 @@
  * UserController
  *
  * @module      :: Controller
- * @description	:: A set of functions called `actions`.
+ * @description  :: A set of functions called `actions`.
  *
  *                 Actions contain code telling Sails how to respond to a certain type of request.
  *                 (i.e. do stuff, then send some JSON, show an HTML page, or redirect to another URL)
@@ -16,62 +16,162 @@
  */
 
 module.exports = {
-    /**
-     * Overrides for the settings in `config/controllers.js`
-     * (specific to UserController)
-     */
-    _config: {},
-    register: function (req, res) {
-      res.view({
-        partials: {
-          header_login: '../partials/site/header_login',
-          footer: '../partials/site/footer'
-        },
-      });  
-    },
-    create: function(req,res,next){
-      console.log(req.param('email'));
-      email = req.param('email');
-      password = req.param('password');
-        if(!req.param('email')||!req.param('password')||!req.param('confirm')){
-          console.log('You must enter email,password,corfirm');
-          res.view('user/register',{error: 'You must enter email,password,corfirm'});
-          //res.redirect('/register');
-          return;
-        }
-        if(req.param('password')!=req.param('confirm')){
-          console.log('Password and Confirm not match');
-          res.view('user/register',{error: 'Password and Confirm not match'});
-          //res.redirect('/register');
-          return; 
-        }
-        User.findOneByEmail(req.param('email'), function (err,user){
-          if(err) next(err);
-          if(user) {
-            console.log('Email Exists!');
-            res.view('user/register',{error: 'Email Exists!'});
-            //res.redirect('/register');
-            return;
-          }
-            var hasher = require("password-hash");
-            password = hasher.generate(password);
-            console.log(password);
-            //next();
 
-            User.create({email: email,
-                         password: password,
-                         firstname: req.param('firstname'),
-                         lastname: req.param('lastname'),
-                         role:'user'}).done(function(error, user) {
-              if (error) {
-                res.send(500, {error: "DB Error"});
-              } else {
-                console.log("OK");
-                // req.session.user = user;
-                // res.send(user);
-              }
-            });
-            res.redirect('/login') ;
+
+  /**
+   * Action blueprints:
+   *    `/user/find`
+   */
+  register: function (req, res) {
+    res.view({
+      partials: {
+        header: '../partials/site/header_login',
+        footer: '../partials/site/footer'
+      },
+    });
+  },
+  login: function (req, res) {
+    res.view({
+      partials: {
+        header_login: '../partials/site/header_login',
+        footer: '../partials/site/footer'
+      }
+    });
+  },
+  logout: function (req, res) {
+    req.session.user = '';
+    res.redirect('/');
+  },
+  checkUserLogin: function (req, res) {
+    var data = {
+      email : req.body.email,
+      password :req.body.password,
+      remember: req.body.remember
+    };
+
+    if (!data.email || !data.password) {
+      console.log('You must enter both a email and password');
+      res.view('user/login', {error: "You must enter both a email and password"});
+      return;
+    }
+    User.findOneByEmail(data.email, function (err, user) {
+      if (err) next(err);
+      if (!user) {
+        console.log('Email not found!');
+        res.view('user/login', { error: "Email not found!" });
+        return;
+      }
+      var hasher = require("password-hash");
+      if (hasher.verify(data.password, user.password)) {
+        req.session.user = user;
+        //  if user click remmeber
+        if (data.remember)
+          req.session.user.remember = "yes";
+        else
+          req.session.user.remember = "no";
+        res.redirect("/");
+      } else {
+        console.log('Wrong password');
+        res.view('user/login', {error: "Wrong Password"});
+        return;
+      }
+    });
+
+  },
+
+  find: function (req, res) {
+
+    // Send a JSON response
+    return res.json({
+      hello: 'Find'
+    });
+  },
+
+  /**
+   * Action blueprints:
+   *    `/user/create`
+   */
+  create: function (req, res) {
+    var data = {
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      email: req.body.email,
+      password: req.body.password,
+      confirmPassword: req.body.confirmPassword,
+      role: "user"
+    };
+    //check information empty
+    for (key in data) {
+      if (!data[key]) {
+        res.view('user/register',{error: 'Please fill your information'});
+        return;
+      }
+    }
+    //check password confirm
+    if (data.password !== data.confirmPassword) {
+      res.view('user/register',{error: 'Please make sure your password'});
+      return;
+    }
+    //check user exits!
+    User.findOneByEmail(data.email).exec(function (err, user) {
+      if (user) {
+        //if user exit --> render page register and alert user exit
+
+        res.view('user/register',{error: 'Email exit!, please choose another email'});
+      }
+      else {
+        // if user not exit --> create a new user
+        var hasher = require("password-hash");
+        data.password = hasher.generate(data.password);
+        User.create(data).done(function (err, user) {
+          // Error handling
+          if (err) {
+            return console.log(err);
+
+          } else {
+            // The User was created successfully!
+            req.session.user = user;
+            req.session.user.remeber = "yes";
+            res.redirect('/');
+          }
         });
-    },
+      }
+
+    });
+
+    // Send a JSON response
+    // res.send(data);
+  },
+
+  /**
+   * Action blueprints:
+   *    `/user/update`
+   */
+  update: function (req, res) {
+
+    // Send a JSON response
+    return res.json({
+      hello: 'update'
+    });
+  },
+
+  /**
+   * Action blueprints:
+   *    `/user/destroy`
+   */
+  destroy: function (req, res) {
+
+    // Send a JSON response
+    return res.json({
+      hello: 'destroy'
+    });
+  },
+
+  /**
+   * Overrides for the settings in `config/controllers.js`
+   * (specific to UserController)
+   */
+  _config: {}
+
+
 };

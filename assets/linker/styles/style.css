@@ -1383,3 +1383,6 @@ vertical-align: middle;
 #list_dish_menu li.focus {
     color:red;
 }
+a#user-account {
+  color: red;
+}
