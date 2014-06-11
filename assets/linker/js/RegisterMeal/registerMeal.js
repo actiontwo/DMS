@@ -15,8 +15,8 @@ var RegisterMealView = Backbone.View.extend({
     this.listenTo(this.collection, 'sync reset sort remove add create', this.render);
   },
   render:function (){
-    this.$el.html(Templates['user/mem-register-meal']());
-
+    this.$el.html(Templates['user/mem-register-meal'](this.collection.models[0].attributes));
+    initDatePicker($('.datepicker'));
     return this;
   }
 });

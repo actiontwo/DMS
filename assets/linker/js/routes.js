@@ -24,7 +24,8 @@ var AppRouter = Backbone.Router.extend({
     })
   },
   registerMealRender: function () {
-    $('#main').html(this.registerMealView.render().el);
+    this.registerMealView.collection.fetch({reset:true});
+    $('#main').html(this.registerMealView.el);
     initDatePicker($('.datepicker'));
   },
   menuRender: function () {

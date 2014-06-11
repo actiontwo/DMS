@@ -16,7 +16,6 @@
  * Middleware included with `app.use` is run first, before the router
  */
 
-
 /**
  * (2) Static routes
  *
@@ -34,53 +33,69 @@ module.exports.routes = {
   // (This would also work if you had a file at: `/views/home.ejs`)
   '/': {
     //view: 'site/index'
-     controller:'main'
+    controller: 'main'
   },
 
   // User Controller
   '/login': {
     controller: 'user',
-    action:'login'
+    action: 'login'
   },
-  '/logout':{
-    controller:'user',
-    action:'logout'
+  '/logout': {
+    controller: 'user',
+    action: 'logout'
   },
-  '/registerUser':{
-    controller:'user',
-    action:'register'
+  '/registerUser': {
+    controller: 'user',
+    action: 'register'
   },
-  '/checkUserLogin':{
-    controller:'user',
-    action:'checkUserLogin'
+  '/checkUserLogin': {
+    controller: 'user',
+    action: 'checkUserLogin'
   },
 
   'get /user/:id?': {
-    controller    : 'user',
-    action        : 'find'
+    controller: 'user',
+    action: 'find'
   },
   'post /user': {
-    controller    : 'user',
-    action        : 'create'
+    controller: 'user',
+    action: 'create'
   },
   'put /user/:id': {
-    controller    : 'user',
-    action        : 'update'
+    controller: 'user',
+    action: 'update'
   },
   'delete /user/:id': {
-    controller    : 'user',
-    action        : 'destroy'
+    controller: 'user',
+    action: 'destroy'
   },
-//  'dish':{
-//    controller:'main',
-//    action:'dish'
-//  },
-//  'get /dish/:id?':{
-//    controller:'main',
-//    action:'dish'
-//  }
+  // Register Meal Conttroler
+  'get /registermeal/:id?': {
+    controller: 'registermeal',
+    action: 'find'
+  },
+  'post /registermeal': {
+    controller: 'registermeal',
+    action: 'create'
+  },
+  'put /registermeal/:id': {
+    controller: 'registermeal',
+    action: 'update'
+  },
+  'delete /registermeal/:id': {
+    controller: 'registermeal',
+    action: 'destroy'
+  },
+  //  'dish':{
+  //    controller:'main',
+  //    action:'dish'
+  //  },
+  //  'get /dish/:id?':{
+  //    controller:'main',
+  //    action:'dish'
+  //  }
 
-  
   //get all menu from database
   // '/menu':{
   //   controller:'menu',
@@ -113,67 +128,65 @@ module.exports.routes = {
   // }
 
   /*
-  // But what if you want your home page to display
-  // a signup form located at `views/user/signup.ejs`?
-  '/': {
-    view: 'user/signup'
-  }
+   // But what if you want your home page to display
+   // a signup form located at `views/user/signup.ejs`?
+   '/': {
+   view: 'user/signup'
+   }
 
 
-  // Let's say you're building an email client, like Gmail
-  // You might want your home route to serve an interface using custom logic.
-  // In this scenario, you have a custom controller `MessageController`
-  // with an `inbox` action.
-  '/': 'MessageController.inbox'
+   // Let's say you're building an email client, like Gmail
+   // You might want your home route to serve an interface using custom logic.
+   // In this scenario, you have a custom controller `MessageController`
+   // with an `inbox` action.
+   '/': 'MessageController.inbox'
 
 
-  // Alternatively, you can use the more verbose syntax:
-  '/': {
-    controller: 'MessageController',
-    action: 'inbox'
-  }
+   // Alternatively, you can use the more verbose syntax:
+   '/': {
+   controller: 'MessageController',
+   action: 'inbox'
+   }
 
 
-  // If you decided to call your action `index` instead of `inbox`,
-  // since the `index` action is the default, you can shortcut even further to:
-  '/': 'MessageController'
+   // If you decided to call your action `index` instead of `inbox`,
+   // since the `index` action is the default, you can shortcut even further to:
+   '/': 'MessageController'
 
 
-  // Up until now, we haven't specified a specific HTTP method/verb
-  // The routes above will apply to ALL verbs!
-  // If you want to set up a route only for one in particular
-  // (GET, POST, PUT, DELETE, etc.), just specify the verb before the path.
-  // For example, if you have a `UserController` with a `signup` action,
-  // and somewhere else, you're serving a signup form looks like: 
-  //
-  //    <form action="/signup">
-  //      <input name="username" type="text"/>
-  //      <input name="password" type="password"/>
-  //      <input type="submit"/>
-  //    </form>
+   // Up until now, we haven't specified a specific HTTP method/verb
+   // The routes above will apply to ALL verbs!
+   // If you want to set up a route only for one in particular
+   // (GET, POST, PUT, DELETE, etc.), just specify the verb before the path.
+   // For example, if you have a `UserController` with a `signup` action,
+   // and somewhere else, you're serving a signup form looks like:
+   //
+   //    <form action="/signup">
+   //      <input name="username" type="text"/>
+   //      <input name="password" type="password"/>
+   //      <input type="submit"/>
+   //    </form>
 
-  // You would want to define the following route to handle your form:
-  'post /signup': 'UserController.signup'
+   // You would want to define the following route to handle your form:
+   'post /signup': 'UserController.signup'
 
 
-  // What about the ever-popular "vanity URLs" aka URL slugs?
-  // (you might remember doing this with `mod_rewrite` in Apache)
-  //
-  // This is where you want to set up root-relative dynamic routes like:
-  // http://yourwebsite.com/twinkletoez
-  //
-  // NOTE:
-  // You'll still want to allow requests through to the static assets,
-  // so we need to set up this route to ignore URLs that have a trailing ".":
-  // (e.g. your javascript, CSS, and image files)
-  'get /*(^.*)': 'UserController.profile'
+   // What about the ever-popular "vanity URLs" aka URL slugs?
+   // (you might remember doing this with `mod_rewrite` in Apache)
+   //
+   // This is where you want to set up root-relative dynamic routes like:
+   // http://yourwebsite.com/twinkletoez
+   //
+   // NOTE:
+   // You'll still want to allow requests through to the static assets,
+   // so we need to set up this route to ignore URLs that have a trailing ".":
+   // (e.g. your javascript, CSS, and image files)
+   'get /*(^.*)': 'UserController.profile'
 
-  */
+   */
 };
 
-
-
-/** 
+/**
  * (3) Action blueprints
  * These routes can be disabled by setting (in `config/controllers.js`):
  * `module.exports.controllers.blueprints.actions = false`
