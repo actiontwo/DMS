@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <title>
+	        IS DSV - Expense
+	    </title>
+	    <link rel="icon" href="static/images/favicon.png" type="image/x-icon">
+	    <link type="text/css" href="css/ui-lightness/jquery-ui-1.10.4.custom.css">
+	    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+	    <script type="text/javascript" src="js/jquery-2.1.0.min.js"></script>
+  		<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  		<script type="text/javascript" src="js/jquery-bak.js"></script>
+  		<link href="css/style.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="container">
+			<header>
+				<div class="logo">
+					<figure>
+						<img src="images/logo.png">
+					</figure>
+					<span>Meal Resitration System</span>
+				</div>
+				<div class="menu">
+					<ul>
+						<li><a href="register-meal.html">Register Meal</a></li>
+						<li><a href="menus.html">Menu</a></li>
+						<li><a href="expense.html">Expense</a></li>
+						<li><a href="deposit.html">Deposit</a></li>
+						<li><a href="report.html">Report</a></li>
+						<li><a href="#">Welcome DSV Logout</a></li>
+					</ul>
+				</div>
+			</header>
+			<section class="main">
+				<div class="expense">
+					<div class="header">
+						<span>Expense</span>
+					</div>
+					<div class="content">
+						<div class="find">
+							<div class="find-from">
+								<div>From: <input class="datepicker" type="text" placeholder="11/11/2013"></div>
+							</div>
+							<div class="find-to">
+								<div>To: <input class="datepicker" type="text" placeholder="19/11/2013"></div>
+							</div>
+						</div>
+						<div class="clear-fix"></div>
+						<div class="confirm">
+							<a href="#">OK</a>
+						</div>
+						<div class="clear-fix"></div>
+						<div class="table">
+							<table class="reference">
+								<tbody>
+									<tr>
+										<th></th>
+										<th>Date(dd/mm/yy)</th>
+										<th>Money(VND)</th>
+										<th>Invoice ID</th>
+										<th class="invoice-img">Invoice Images</th>
+										<th class="note">Note</th>
+										<th class="rm-edit"></th>
+									</tr>
+									<tr>
+										<th><input type="checkbox"></th>
+										<th>11/11/2013</th>
+										<th>100.000</th>
+										<th>123456</th>
+										<th>
+											<figure class="iconsp-invoice-25px"></figure>
+										</th>
+										<th></th>
+										<th>
+											<figure class="iconsp-remove-red-25px"></figure>
+											<figure class="iconsp-edit-25px"></figure>
+										</th>
+									</tr>
+									<tr>
+										<th><input type="checkbox"></th>
+										<th>11/11/2013</th>
+										<th>100.000</th>
+										<th>123456</th>
+										<th>
+											<figure class="iconsp-invoice-25px"></figure>
+										</th>
+										<th></th>
+										<th>
+											<figure class="iconsp-remove-25px"></figure>
+											<figure class="iconsp-edit-red-25px"></figure>
+										</th>
+									</tr>
+									<tr>
+										<th><input type="checkbox"></th>
+										<th>11/11/2013</th>
+										<th>100.000</th>
+										<th>123456</th>
+										<th>
+											<figure class="iconsp-invoice-25px"></figure>
+										</th>
+										<th></th>
+										<th>
+											<figure class="iconsp-remove-red-25px"></figure>
+											<figure class="iconsp-edit-25px"></figure>
+										</th>
+									</tr>
+									<tr>
+										<th><input type="checkbox"></th>
+										<th>11/11/2013</th>
+										<th>100.000</th>
+										<th>123456</th>
+										<th>
+											<figure class="iconsp-invoice-25px"></figure>
+										</th>
+										<th></th>
+										<th>
+											<figure class="iconsp-remove-25px"></figure>
+											<figure class="iconsp-edit-red-25px"></figure>
+										</th>
+									</tr>
+									<tr>
+										<th><input type="checkbox"></th>
+										<th>11/11/2013</th>
+										<th>100.000</th>
+										<th>123456</th>
+										<th>
+											<figure class="iconsp-invoice-25px"></figure>
+										</th>
+										<th></th>
+										<th>
+											<figure class="iconsp-remove-25px"></figure>
+											<figure class="iconsp-edit-25px"></figure>
+										</th>
+									</tr>
+									<tr>
+										<th><input type="checkbox"></th>
+										<th>11/11/2013</th>
+										<th>100.000</th>
+										<th>123456</th>
+										<th>
+											<figure class="iconsp-invoice-25px"></figure>
+										</th>
+										<th></th>
+										<th>
+											<figure class="iconsp-remove-25px"></figure>
+											<figure class="iconsp-edit-25px"></figure>
+										</th>
+									</tr>
+									<tr>
+										<th><input type="checkbox"></th>
+										<th>11/11/2013</th>
+										<th>100.000</th>
+										<th>123456</th>
+										<th>
+											<figure class="iconsp-invoice-25px"></figure>
+										</th>
+										<th></th>
+										<th>
+											<figure class="iconsp-remove-25px"></figure>
+											<figure class="iconsp-edit-25px"></figure>
+										</th>
+									</tr>
+										<th><input type="checkbox"></th>
+										<th>11/11/2013</th>
+										<th>100.000</th>
+										<th>123456</th>
+										<th>
+											<figure class="iconsp-invoice-25px"></figure>
+										</th>
+										<th></th>
+										<th>
+											<figure class="iconsp-remove-25px"></figure>
+											<figure class="iconsp-edit-25px"></figure>
+										</th>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="btn-end">
+							<a  href="#" onclick="show_popup('.es-delete')">Delete</a>
+							<a href="#" onclick="show_popup('.es-create-expense')">Create</a>
+						</div>
+						<div class="clear-fix"></div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<div class="popup_area">
+		    <div class="mask_popup"></div>
+		    <div class="content_popup">
+		        <div class="wrapper_content_popup">
+		            <div class="content_detail_popup">
+						<div class="es-delete style_popup-940px">
+							<figure class="iconsp-cancer-15px close_popup"></figure>
+							<span>Are you sure you want to delete this item?</span>
+							<div class="btn-end">
+								<a href="#" class="btn-cancel">Cancel</a>
+								<a  href="#">OK</a>
+							</div>
+							<div class="clear-fix"></div>
+						</div>
+						<div class="es-update style_popup-940px">
+							<div class="header">
+								<span>Update Expense</span>
+							</div>
+							<figure class="iconsp-cancer-15px close_popup"></figure>
+							<div class="content">
+								<div class="update-info">
+									<div class="update-date">
+										<div>Date(dd/mm/yy) <input class="datepicker" type="text" placeholder="11/11/2013"></div>
+									</div>
+									<div class="update-money">
+										<div>Money(VND) <input type="text" placeholder="100.000"></div>
+									</div>
+									<div class="update-id">
+										<div>Invoice ID <input type="text" placeholder="12345678"></div>
+									</div>	
+								</div>
+								<div class="update-img">
+									<span>Images</span>
+									<div class="images">
+										<img src="images/update-img.png">
+									</div>
+									<a href="#">Browse</a>
+								</div>
+								<div class="limit-img">
+									<span>(*.jpg,*.ipeg,*.gif,*png)(MaxSize: 3Mb)</span>
+								</div>
+								<div class="update-note">
+									<span>Note</span>
+									<textarea class="form-control"></textarea>
+								</div>
+								<div class="btn-end">
+									<a  href="#">Update</a>
+									<a href="#" class="btn-cancel">Cancel</a>
+								</div>
+								<div class="clear-fix"></div>
+							</div>
+						</div>
+						<div class="es-create-expense style_popup-940px">
+							<div class="header">
+								<span>Create Expense</span>
+							</div>
+							<figure class="iconsp-cancer-15px close_popup"></figure>
+							<div class="content">
+								<div class="clear-fix"></div>
+								<div class="confirm">
+									<a href="#">Add</a>
+								</div>
+								<div class="confirm">
+									<a href="#">Save</a>
+								</div>
+								<div class="confirm">
+									<a href="#" class="btn-cancel">Cancel</a>
+								</div>
+								<div class="clear-fix"></div>
+								<div class="table">
+									<table class="reference">
+										<tbody>
+											<tr>
+												<th>Date(dd/mm/yy)</th>
+												<th>Money(VND)</th>
+												<th>Invoice ID</th>
+												<th>Images</th>
+												<th>Note</th>
+												<th>Actions</th>
+											</tr>
+											<tr>
+												<th class="es-cr-edit">
+													<div><input class="datepicker" type="text" placeholder="11/11/2013"></div>
+												</th>
+												<th class="es-cr-edit">
+													<div><input type="text"></div>
+												</th>
+												<th class="es-cr-edit">
+													<div><input type="text"></div>
+												</th>
+												<th>
+													<div class="btn-end">
+														<a  href="#">Browse	</a>
+													</div>
+												</th>
+												<th class="es-cr-edit">
+													<div><input type="text"></div>
+												</th>
+												<th>
+													<figure class="iconsp-remove-25px"></figure>
+													<figure class="iconsp-edit-25px"></figure>
+												</th>
+											</tr>
+											<tr>
+												<th class="es-cr-edit">
+													<div><input class="datepicker" type="text" placeholder="11/11/2013"></div>
+												</th>
+												<th class="es-cr-edit">
+													<div><input type="text"></div>
+												</th>
+												<th class="es-cr-edit">
+													<div><input type="text"</div>
+												</th>
+												<th>
+													<div class="btn-end">
+														<a  href="#">Browse	</a>
+													</div>
+												</th>
+												<th class="es-cr-edit">
+													<div><input type="text"></div>
+												</th>
+												<th>
+													<figure class="iconsp-remove-25px"></figure>
+													<figure class="iconsp-edit-25px"></figure>
+												</th>
+											</tr>
+											<tr>
+												<th class="es-cr-edit">
+													<div><input class="datepicker" type="text" placeholder="11/11/2013"></div>
+												</th>
+												<th class="es-cr-edit">
+													<div><input type="text"></div>
+												</th>
+												<th class="es-cr-edit">
+													<div><input type="text"></div>
+												</th>
+												<th>
+													<div class="btn-end">
+														<a  href="#">Browse	</a>
+													</div>
+												</th>
+												<th class="es-cr-edit">
+													<div><input type="text"></div>
+												</th>
+												<th>
+													<figure class="iconsp-remove-25px"></figure>
+													<figure class="iconsp-edit-25px"></figure>
+												</th>
+											</tr>
+											<tr>
+												<th class="es-cr-edit">
+													<div><input class="datepicker" type="text" placeholder="11/11/2013"></div>
+												</th>
+												<th class="es-cr-edit">
+													<div><input type="text"></div>
+												</th>
+												<th class="es-cr-edit">
+													<div><input type="text"></div>
+												</th>
+												<th>
+													<div class="btn-end">
+														<a  href="#">Browse	</a>
+													</div>
+												</th>
+												<th class="es-cr-edit">
+													<div><input type="text"></div>
+												</th>
+												<th>
+													<figure class="iconsp-remove-25px"></figure>
+													<figure class="iconsp-edit-25px"></figure>
+												</th>
+											</tr>
+											<tr>
+												<th class="es-cr-edit">
+													<div><input class="datepicker" type="text" placeholder="11/11/2013"></div>
+
+												</th>
+												<th class="es-cr-edit">
+													<div><input type="text"></div>
+												</th>
+												<th class="es-cr-edit">
+													<div><input type="text"></div>
+												</th>
+												<th>
+													<div class="btn-end">
+														<a  href="#">Browse	</a>
+													</div>
+												</th>
+												<th class="es-cr-edit">
+													<div><input type="text"></div>
+												</th>
+												<th>
+													<figure class="iconsp-remove-25px"></figure>
+													<figure class="iconsp-edit-25px"></figure>
+												</th>
+											</tr>
+											<tr>
+												<th class="es-cr-edit">
+													<div><input class="datepicker" type="text" placeholder="11/11/2013"></div>
+												</th>
+												<th class="es-cr-edit">
+													<div><input type="text"></div>
+												</th>
+												<th class="es-cr-edit">
+													<div><input type="text"></div>
+												</th>
+												<th>
+													<div class="btn-end">
+														<a  href="#">Browse	</a>
+													</div>
+												</th>
+												<th class="es-cr-edit">
+													<div><input type="text"></div>
+												</th>
+												<th>
+													<figure class="iconsp-remove-25px"></figure>
+													<figure class="iconsp-edit-25px"></figure>
+												</th>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+		        </div>
+		    </div>
+		</div>
+	</body>

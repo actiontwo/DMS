@@ -17,14 +17,19 @@ var RegisterMealView = Backbone.View.extend({
   },
   render: function () {
     this.$el.html(Templates['user/mem-register-meal'](this.collection));
+
+    //inint animation and count regiters meal
     initDatePicker($('.datepicker'));
     $('.numberLunchCheck').html($('.lunchCheckbox:checked').length);
     $('.numberDinnerCheck').html($('.dinnerCheckbox:checked').length);
+
+    //declare events for views
     this.delegateEvents({
       'change .lunchCheckbox,.dinnerCheckbox': 'updateStatus'
     });
     return this;
   },
+  // when user check
   updateStatus: function (el) {
     var ev = $(el.currentTarget);
     var data = {

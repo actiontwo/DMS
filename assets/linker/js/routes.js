@@ -1,10 +1,11 @@
+var role;
 var AppRouter = Backbone.Router.extend({
   routes: {
     '': 'registerMealRender',
     'menu': 'menuRender',
     'expense': 'expenseRender',
-    'deposit':'depositRender',
-    'report':'reportRender'
+    'deposit': 'depositRender',
+    'report': 'reportRender'
   },
   initialize: function () {
     this.registerMealView = new RegisterMealView({
@@ -22,11 +23,20 @@ var AppRouter = Backbone.Router.extend({
     });
     this.reportView = new ReportView({
       collection: new ReportCollection
-    })
+    });
+    if (role === "admin") {
+      this.registerMealAdView = new RegisterMealAdView({
+        collection: new RegisterMealAdCollection
+      })
+    }
   },
   registerMealRender: function () {
-    this.registerMealView.collection.fetch({reset:true});
+    this.registerMealView.collection.fetch({reset: true});
     $('#main').html(this.registerMealView.el);
+    console.log(role);
+    if(role === 'admin'){
+      $('#subMain').html(this.registerMealAdView.render().el);
+    }
   },
   menuRender: function () {
     $('#main').html(this.menuView.render().el);
@@ -34,15 +44,18 @@ var AppRouter = Backbone.Router.extend({
   expenseRender: function () {
     $('#main').html(this.expenseView.render().el);
   },
-  depositRender:function(){
+  depositRender: function () {
     $('#main').html(this.depositView.render().el);
     initDatePicker($('.datepicker'));
   },
-  reportRender:function(){
+  reportRender: function () {
     $('#main').html(this.reportView.render().el);
     initDatePicker($('.datepicker'));
   }
 });
+$.get('/roleCheck', function (data) {
+  role = data;
+  var appRouter = new AppRouter();
+  Backbone.history.start();
+});
 
-var appRouter = new AppRouter();
-Backbone.history.start();

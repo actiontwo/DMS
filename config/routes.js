@@ -35,7 +35,10 @@ module.exports.routes = {
     //view: 'site/index'
     controller: 'main'
   },
-
+  '/roleCheck': {
+    controller: 'user',
+    action: 'roleCheck'
+  },
   // User Controller
   '/login': {
     controller: 'user',
@@ -101,7 +104,7 @@ module.exports.routes = {
   //   controller:'menu',
   //   action:'getall'
   // },
-  // //create new menu and save into database 
+  // //create new menu and save into database
   // '/menu/create':{
   //   controller:'menu',
   //   action:'create'
@@ -111,7 +114,7 @@ module.exports.routes = {
   //   controller:'suggestion',
   //   action:'getall'
   // },
-  // //get all list dish from database 
+  // //get all list dish from database
   // '/listdish':{
   //   controller:'listdish',
   //   action:'getall'
@@ -184,7 +187,8 @@ module.exports.routes = {
    'get /*(^.*)': 'UserController.profile'
 
    */
-};
+}
+;
 
 /**
  * (3) Action blueprints

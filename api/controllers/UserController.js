@@ -22,6 +22,12 @@ module.exports = {
    * Action blueprints:
    *    `/user/find`
    */
+  roleCheck: function (req, res) {
+    if (!req.session.user) {
+      return;
+    }
+    res.send(req.session.user.role);
+  },
   register: function (req, res) {
     res.view({
       partials: {
@@ -44,8 +50,8 @@ module.exports = {
   },
   checkUserLogin: function (req, res) {
     var data = {
-      email : req.body.email,
-      password :req.body.password,
+      email: req.body.email,
+      password: req.body.password,
       remember: req.body.remember
     };
 
@@ -103,13 +109,13 @@ module.exports = {
     //check information empty
     for (key in data) {
       if (!data[key]) {
-        res.view('user/register',{error: 'Please fill your information'});
+        res.view('user/register', {error: 'Please fill your information'});
         return;
       }
     }
     //check password confirm
     if (data.password !== data.confirmPassword) {
-      res.view('user/register',{error: 'Please make sure your password'});
+      res.view('user/register', {error: 'Please make sure your password'});
       return;
     }
     //check user exits!
@@ -117,7 +123,7 @@ module.exports = {
       if (user) {
         //if user exit --> render page register and alert user exit
 
-        res.view('user/register',{error: 'Email exit!, please choose another email'});
+        res.view('user/register', {error: 'Email exit!, please choose another email'});
       }
       else {
         // if user not exit --> create a new user
