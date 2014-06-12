@@ -90,6 +90,75 @@ module.exports.routes = {
     controller: 'registermeal',
     action: 'destroy'
   },
+
+  // Menu Controller
+  'get /menu/:id?': {
+    controller: 'menu',
+    action: 'find'
+  },
+  'post /menu': {
+    controller: 'menu',
+    action: 'create'
+  },
+  'put /menu/:id': {
+    controller: 'menu',
+    action: 'update'
+  },
+  'delete /menu/:id': {
+    controller: 'menu',
+    action: 'destroy'
+  },
+   // Expense Controller
+  'get /expense/:id?': {
+    controller: 'expense',
+    action: 'find'
+  },
+  'post /expense': {
+    controller: 'expense',
+    action: 'create'
+  },
+  'put /expense/:id': {
+    controller: 'expense',
+    action: 'update'
+  },
+  'delete /expense/:id': {
+    controller: 'expense',
+    action: 'destroy'
+  },
+   // Deposit Controller
+  'get /deposit/:id?': {
+    controller: 'deposit',
+    action: 'find'
+  },
+  'post /deposit': {
+    controller: 'deposit',
+    action: 'create'
+  },
+  'put /deposit/:id': {
+    controller: 'deposit',
+    action: 'update'
+  },
+  'delete /deposit/:id': {
+    controller: 'deposit',
+    action: 'destroy'
+  },
+   // Report Controller
+  'get /report/:id?': {
+    controller: 'report',
+    action: 'find'
+  },
+  'post /report': {
+    controller: 'report',
+    action: 'create'
+  },
+  'put /report/:id': {
+    controller: 'report',
+    action: 'update'
+  },
+  'delete /report/:id': {
+    controller: 'report',
+    action: 'destroy'
+  }
   //  'dish':{
   //    controller:'main',
   //    action:'dish'

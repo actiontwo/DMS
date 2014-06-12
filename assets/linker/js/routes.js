@@ -39,17 +39,24 @@ var AppRouter = Backbone.Router.extend({
     }
   },
   menuRender: function () {
-    $('#main').html(this.menuView.render().el);
+     this.menuView.collection.fetch({reset:true});
+    $('#subMain').html("");
+    $('#main').html(this.menuView.el);
   },
   expenseRender: function () {
+    this.expenseView.collection.fetch({reset:true});
+    $('#subMain').html("");
     $('#main').html(this.expenseView.render().el);
   },
   depositRender: function () {
+    this.depositView.collection.fetch();
     $('#main').html(this.depositView.render().el);
+    $('#subMain').html("");
     initDatePicker($('.datepicker'));
   },
   reportRender: function () {
     $('#main').html(this.reportView.render().el);
+    $('#subMain').html("");
     initDatePicker($('.datepicker'));
   }
 });

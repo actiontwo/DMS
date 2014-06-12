@@ -1,63 +1,35 @@
-<div class="mem-deposit">
-    <div class="header">
-        <span>Deposit</span>
-    </div>
-    <div class="content">
-        <div class="find">
-            <div class="find-from">
-                <div>From: <input class="datepicker" type="text"
-                                  placeholder="11/11/2013"></div>
-            </div>
-            <div class="find-to">
-                <div>To: <input class="datepicker" type="text"
-                                placeholder="19/11/2013"></div>
-            </div>
-        </div>
-        <div class="clear-fix"></div>
-        <div class="confirm">
-            <a href="#">OK</a>
-        </div>
-        <div class="clear-fix"></div>
-        <div class="table">
-            <table class="reference">
-                <tbody>
-                <tr>
-                    <th>No</th>
-                    <th>Date</th>
-                    <th>Deposit</th>
-                </tr>
-                <tr>
-                    <th>1</th>
-                    <th>11/11/2013-Mon</th>
-                    <th>500.000</th>
-                </tr>
-                <tr>
-                    <th>2</th>
-                    <th>11/11/2013-Mon</th>
-                    <th>500.000</th>
-                </tr>
-                <tr>
-                    <th>3</th>
-                    <th>11/11/2013-Mon</th>
-                    <th>500.000</th>
-                </tr>
-                <tr>
-                    <th>4</th>
-                    <th>11/11/2013-Mon</th>
-                    <th>500.000</th>
-                </tr>
-                <tr>
-                    <th>5</th>
-                    <th>11/11/2013-Mon</th>
-                    <th>500.000</th>
-                </tr>
-                <tr>
-                    <th>6</th>
-                    <th>11/11/2013-Mon</th>
-                    <th>500.000</th>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+<div class="header">
+    <span>Deposit</span>
 </div>
+<ul class="searchForm">
+    <li class="find-from">
+        <p>From: <input class="datepicker" type="text"
+                        placeholder="11/11/2013"></p>
+    </li>
+    <li class="find-to">
+        <p>To: <input class="datepicker" type="text"
+                      placeholder="19/11/2013"></p>
+    </li>
+</ul>
+<div class="groupBtn">
+    <a href="#" class="btn-black">Search</a>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th>No</th>
+        <th>Date</th>
+        <th>Deposit</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#deposit}}
+    <tr>
+        <td>{{no}}</td>
+        <td>{{date}}</td>
+        <td>{{amount}}</td>
+    </tr>
+    {{/deposit}}
+    </tbody>
+</table>
+

@@ -1,22 +1,48 @@
 {{> header}}
-<div class="mem-register">
-					<div class="content">
-						<div class="rg-box-input">
-							<h3>Quick Register</h3>
-							{{error}}
-							<form name="register" action="/user" method="post">
-								<input type="text" id="Email" name="email" placeholder="Email"/>
-								<input type="text" name ="firstname" placeholder="FirstName"/>
-                <input type="test" name ="lastname" placeholder="LastName"/>
-								<input type="password" id="Password" name="password" placeholder="Password"/>
-								<input type="password" id="Confirm" name="confirmPassword" placeholder="Confirm Password"/>
-								<input type="submit" value="Register" class="btn-register">
-							</form>	
-							<div class="clear-fix"></div>
-							<div class="link-email">
-								<a href="#">Email of DSV company</a>
-							</div>
-						</div>
-					</div>
-				</div>
+<div class="container">
+    <header>
+        <div class="logo">
+            <figure>
+                <img src="images/logo.png">
+            </figure>
+            <span>Meal Resitration System</span>
+        </div>
+        <div class="clear-fix"></div>
+    </header>
+
+    <div class="content">
+        <div class="rg-box-input">
+            <h3>Quick Register</h3>
+          {{error}}
+            <form name="register" action="/user" method="post">
+                <label>Email: </label>
+                <input type="email" id="Email" name="email"
+                       placeholder="Email"/>
+                <br/>
+                <label>FirstName: </label>
+                <input type="text" name="firstname" placeholder="FirstName"/>
+                <br/>
+                <label>LastName: </label>
+                <input type="text" name="lastname" placeholder="LastName"/>
+                <br/>
+                <label>Password: </label>
+                <input type="password" id="Password" name="password"
+                       placeholder="Password"/>
+                <br/>
+                <label for=""></label>
+                <input type="password" id="Confirm" name="confirmPassword"
+                       placeholder="Confirm Password"/>
+                <br/>
+                <button type="submit"
+                        class="btn-register btn-black">Register
+                </button>
+            </form>
+            <div class="link">
+                <a href="#"><ins>Email of DSV company</ins></a>,
+                <a href="/login"><ins>Login</ins></a>
+            </div>
+        </div>
+    </div>
+</div>
+
 {{> footer}}

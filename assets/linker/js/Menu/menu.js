@@ -12,7 +12,11 @@ var MenuView = Backbone.View.extend({
     this.listenTo(this.collection, 'reset  destroy sort sync remove', this.render);
   },
   render:function (){
-    this.$el.html(Templates['user/mem-view-menu']());
+    this.$el.html(Templates['user/mem-view-menu'](this.collection));
+    var i =1;
+    $('tbody tr').find('td:first-child').each(function(){
+      $(this).html(i);i++
+    })
     return this;
   }
 });

@@ -1,6 +1,6 @@
 var DepositModel = Backbone.Model.extend({});
 var DepositCollection = Backbone.Collection.extend({
-  url: "/menu",
+  url: "/deposit",
   model: DepositModel
 });
 var DepositView = Backbone.View.extend({
@@ -12,7 +12,14 @@ var DepositView = Backbone.View.extend({
     this.listenTo(this.collection, 'reset  destroy sort sync remove', this.render);
   },
   render:function (){
-    this.$el.html(Templates['user/mem-deposit']());
+    this.$el.html(Templates['user/mem-deposit']({
+      'deposit': this.collection.toJSON()
+    }));
+    var i =1;
+    $('tbody tr').find('th:first-child').each(function(){
+      $(this).html(i);
+      i++
+    });
     return this;
   }
 });

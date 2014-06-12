@@ -47,9 +47,11 @@ body {
   display: inline-block;
   margin-left: 15px;
 }
+
 .menu {
   margin: 20px 0;
 }
+
 .menu ul {
   display: table;
   width: 100%;
@@ -86,7 +88,7 @@ body {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#545454', endColorstr='#4d4d4d', GradientType=0); /* IE6-9 */
 }
 
-input[type='text'] {
+input[type='text'] ,input[type='password'],input[type='email']{
   padding: 4px 10px;
   border-radius: 5px;
   margin: 0 5px;
@@ -130,6 +132,10 @@ tbody tr:nth-child(odd) {
   background: #ececec;
 }
 
+tbody {
+  font-size: 14px;
+}
+
 .header {
   font-size: 40px;
   text-align: center;
@@ -161,11 +167,12 @@ ul.searchForm img {
   padding: 5px 20px;
   display: inline-block;
   border-radius: 2px;
-  float: right;
   margin-bottom: 14px;
   margin-top: 10px;
   color: #fff
 
+;
+  border: none;
 }
 
 .btn-black:hover {
@@ -177,4 +184,25 @@ ul.searchForm img {
   background: -ms-linear-gradient(top, rgba(84, 84, 84, 1) 52%, rgba(77, 77, 77, 1) 53%, rgba(77, 77, 77, 1) 100%); /* IE10+ */
   background: linear-gradient(to bottom, rgba(84, 84, 84, 1) 52%, rgba(77, 77, 77, 1) 53%, rgba(77, 77, 77, 1) 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#545454', endColorstr='#4d4d4d', GradientType=0); /* IE6-9 */
+}
+
+.tb-menu tbody tr td {
+  padding: 3px
+}
+div.rg-box-input {
+  width: 400px;
+  margin: 0 auto;
+  padding: 10px;
+}
+div.rg-box-input label {
+  width: 75px;
+  display: inline-block;
+}
+div.rg-box-input input {
+  width: 200px;
+  margin: 2px 0;
+}
+.link {
+  color: #f7ba13;
+  font-size: 12px;
 }
