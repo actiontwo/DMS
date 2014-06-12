@@ -1,0 +1,41 @@
+{{> header_login}}
+<div class="container">
+<header>
+    <div class="logo">
+        <figure>
+            <img src="images/logo.png">
+        </figure>
+        <span>Meal Resitration System</span>
+    </div>
+    <div class="clear-fix"></div>
+</header>
+</div>
+<div class="mem-register">
+    <div class="content">
+        <div class="rg-box-input">
+            <h3>Login Register Meal</h3>
+          {{error}}
+            <form name="login" action="/checkUserLogin" method="POST">
+                <input type="text" id="Email" name="email"
+                       placeholder="Email"/>
+                <input type="password" id="Password" name="password"
+                       placeholder="Password"/>
+                <input type="checkbox" id="checkbox-remember"
+                       name="remember"> Remember me
+                <input type="submit" value="Login" class="btn-register">
+            </form>
+            <div class="clear-fix"></div>
+            <div class="link-email">
+                <a href="#">Forgot Password</a>
+            </div>
+            <br>
+
+            <div class="link-email">
+                <a href="/registerUser">Register Account</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{{> footer}}

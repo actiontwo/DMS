@@ -18,6 +18,74 @@
 module.exports = {
     
   
+  /**
+   * Action blueprints:
+   *    `/expense/find`
+   */
+   find: function (req, res) {
+     if (req.param('id')) {
+      res.send('find ID');
+    }
+    else {
+       Expense.find().done(function(err,data){
+        if(err)
+          console.log(err);
+        else{
+          res.send(data);
+        } 
+      })
+    }
+  },
+
+
+  /**
+   * Action blueprints:
+   *    `/expense/create`
+   */
+   create: function (req, res) {
+   var data ={
+      date : req.body.date,
+      money : req.body.money,
+      invoiceID : req.body.invoiceID,
+      invoiceImage : req.body.invoiceImage,
+      note : req.body.note
+   };
+   Expense.create(data).done(function(err, data){
+    if(err){
+      res.send(err)
+    }else{
+      res.send(data);
+    }
+   })
+  },
+
+
+  /**
+   * Action blueprints:
+   *    `/expense/destroy`
+   */
+   destroy: function (req, res) {
+    
+    // Send a JSON response
+    return res.json({
+      hello: 'world'
+    });
+  },
+
+
+  /**
+   * Action blueprints:
+   *    `/expense/update`
+   */
+   update: function (req, res) {
+    
+    // Send a JSON response
+    return res.json({
+      hello: 'world'
+    });
+  },
+
+
 
 
   /**

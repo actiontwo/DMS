@@ -6,9 +6,10 @@
  * @docs		:: http://sailsjs.org/#!documentation/models
  */
 
- module.exports = {
+module.exports = {
+
   attributes: {
-  	date: {
+    date: {
       type: 'date'
     },
     money: {
@@ -24,4 +25,5 @@
       type: 'string'
     }
   }
+
 };

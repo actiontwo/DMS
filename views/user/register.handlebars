@@ -1,15 +1,15 @@
-{{> header_login}}
+{{> header}}
 <div class="mem-register">
 					<div class="content">
 						<div class="rg-box-input">
 							<h3>Quick Register</h3>
 							{{error}}
-							<form name="register" action="/create" method="post">
+							<form name="register" action="/user" method="post">
 								<input type="text" id="Email" name="email" placeholder="Email"/>
 								<input type="text" name ="firstname" placeholder="FirstName"/>
                 <input type="test" name ="lastname" placeholder="LastName"/>
 								<input type="password" id="Password" name="password" placeholder="Password"/>
-								<input type="password" id="Confirm" name="confirm" placeholder="Confirm Password"/>
+								<input type="password" id="Confirm" name="confirmPassword" placeholder="Confirm Password"/>
 								<input type="submit" value="Register" class="btn-register">
 							</form>	
 							<div class="clear-fix"></div>

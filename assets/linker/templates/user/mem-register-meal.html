@@ -1,0 +1,49 @@
+<div class="header">
+    <span>Register Meal</span>
+</div>
+<div class="content">
+    <div class="find">
+        <div class="find-from">
+            <div>From: <input class="datepicker" type="text"
+                              placeholder="11/11/2013"></div>
+        </div>
+        <div class="find-to">
+            <div>To: <input class="datepicker" type="text"
+                            placeholder="19/11/2013"></div>
+        </div>
+    </div>
+    <div class="clear-fix"></div>
+    <div class="confirm">
+        <a href="#">OK</a>
+    </div>
+    <div class="clear-fix"></div>
+    <div class="table">
+        <table class="reference">
+            <tbody>
+            <tr>
+                <th>No</th>
+                <th>Date(dd/mm/yy)</th>
+                <th>Lunch</th>
+                <th>Dinner</th>
+            </tr>
+            {{#each dateDetail}}
+            <tr>
+                <th>{{number}}</th>
+                <th>{{date}}-{{day}}</th>
+                <th><input type="checkbox" {{lunch.disabled}}
+                    {{lunch.check}}>
+                </th>
+                <th><input type="checkbox" {{dinner.disabled}}
+                    {{dinner.check}}>
+                </th>
+            </tr>
+            {{/each}}
+            </tr>
+            <th class="total" colspan="2"><span>Total:</span></th>
+            <th>15</th>
+            <th>0</th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

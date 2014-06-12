@@ -18,36 +18,72 @@
 module.exports = {
     
   
+  /**
+   * Action blueprints:
+   *    `/menu/find`
+   */
+   find: function (req, res) {
+    if (req.param('id')) {
+      res.send('find ID');
+    }
+    else {
+       Menu.find().done(function(err,data){
+        if(err)
+          console.log(err);
+        else{
+          res.send(data);
+        } 
+      })
+    }
+  },
+
+
+  /**
+   * Action blueprints:
+   *    `/menu/create`
+   */
+   create: function (req, res) {
+    
+    // Send a JSON response
+    return res.json({
+      hello: 'world'
+    });
+  },
+
+
+  /**
+   * Action blueprints:
+   *    `/menu/destroy`
+   */
+   destroy: function (req, res) {
+    
+    // Send a JSON response
+    return res.json({
+      hello: 'world'
+    });
+  },
+
+
+  /**
+   * Action blueprints:
+   *    `/menu/update`
+   */
+   update: function (req, res) {
+    
+    // Send a JSON response
+    return res.json({
+      hello: 'world'
+    });
+  },
+
+
 
 
   /**
    * Overrides for the settings in `config/controllers.js`
    * (specific to MenuController)
    */
-  _config: {} ,
-  find:function(req,res, next){
-    
-  	//client send page number and number display in a page      
-  	if (req.query.page && req.query.number) {
-      page = req.query.page;
-      number = req.query.number;
-    	Menu.find().limit(number).skip(number*page).done(function(err,data){
-    		if(err)
-    			console.log(err);
-    		else{
-    			res.send(data);
-    		}	
-    	});
-      } else {
-        Menu.find().done(function(err,data){
-        if(err)
-          console.log(err);
-        else{
-          res.send(data);
-        } 
-      });
-      }
-        
-  },
- 
+  _config: {}
+
+  
 };

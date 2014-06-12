@@ -1,5 +1,5 @@
 /**
- * DepositController
+ * ReportController
  *
  * @module      :: Controller
  * @description	:: A set of functions called `actions`.
@@ -20,45 +20,41 @@ module.exports = {
   
   /**
    * Action blueprints:
-   *    `/deposit/find`
+   *    `/report/find`
    */
    find: function (req, res) {
-    if (req.param('id')) {
-      res.send('find ID');
-    }
-    else {
-       Deposit.find().done(function(err,data){
-        if(err)
-          console.log(err);
-        else{
+    if(req.param('id')){
+      res.send('Find ID')
+    }else{
+      Report.find().done(function(err, data){
+        if(err){
+          res.send(err);
+        }else{
           res.send(data);
-        } 
+        }
       })
     }
+
+    
   },
 
 
   /**
    * Action blueprints:
-   *    `/deposit/create`
+   *    `/report/create`
    */
    create: function (req, res) {
-      var data = { 
-        date: req.body.date,
-        amount: req.body.amount
-      }
-      Deposit.create(data).done(function(err, data){
-        if(err)
-          res.send(err)
-        else
-          res.send(data)
-      })
+    
+    // Send a JSON response
+    return res.json({
+      hello: 'world'
+    });
   },
 
 
   /**
    * Action blueprints:
-   *    `/deposit/destroy`
+   *    `/report/destroy`
    */
    destroy: function (req, res) {
     
@@ -71,7 +67,7 @@ module.exports = {
 
   /**
    * Action blueprints:
-   *    `/deposit/update`
+   *    `/report/update`
    */
    update: function (req, res) {
     
@@ -86,7 +82,7 @@ module.exports = {
 
   /**
    * Overrides for the settings in `config/controllers.js`
-   * (specific to DepositController)
+   * (specific to ReportController)
    */
   _config: {}
 

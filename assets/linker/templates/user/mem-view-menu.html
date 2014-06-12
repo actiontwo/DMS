@@ -1,0 +1,58 @@
+<div class="mem-view-menu">
+    <div class="header">
+        <span>View Menu</span>
+    </div>
+    <div class="content">
+        <div class="find">
+            <div class="find-from">
+                <div>From: <input class="datepicker" type="text"
+                                  placeholder="11/11/2013"></div>
+            </div>
+            <div class="find-to">
+                <div>To: <input class="datepicker" type="text"
+                                placeholder="19/11/2013"></div>
+            </div>
+        </div>
+        <div class="clear-fix"></div>
+        <div class="confirm">
+            <a href="#">OK</a>
+        </div>
+        <div class="clear-fix"></div>
+        <div class="table">
+            <table class="reference tb-menu">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Date(dd/mm/yy)</th>
+                        <th>Brunch</th>
+                        <th>Dish1</th>
+                        <th>Dish2</th>
+                        <th>Dish3</th>
+                        <th>Dish4</th>
+                        <th>Dish5</th>
+                        <th>Note</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each models}}
+                    <tr>
+                        <td></td>
+                        <td>{{attributes.date}}</td>
+                        <td>{{attributes.brunch}}</td>
+                        <td>{{attributes.dish1}}</td>
+                        <td>{{attributes.dish2}}</td>
+                        <td>{{attributes.dish3}}</td>
+                        <td>{{attributes.dish4}}</td>
+                        <td>{{attributes.dish5}}</td>
+                        <td>{{attributes.note}}</td>
+                    </tr>
+                     {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <div class="sg-menu">
+            <a href="mem-suggest-menu.html">Suggest Menu</a>
+        </div>
+        <div class="clear-fix"></div>
+    </div>
+</div>
