@@ -8,7 +8,8 @@ var AppRouter = Backbone.Router.extend({
   },
   initialize: function () {
     this.registerMealView = new RegisterMealView({
-      collection: new RegisterMealCollection
+      collection: new RegisterMealCollection,
+      model: new RegisterMealModel
     });
     this.menuView = new MenuView({
       collection: new MenuCollection
@@ -26,7 +27,6 @@ var AppRouter = Backbone.Router.extend({
   registerMealRender: function () {
     this.registerMealView.collection.fetch({reset:true});
     $('#main').html(this.registerMealView.el);
-    initDatePicker($('.datepicker'));
   },
   menuRender: function () {
     $('#main').html(this.menuView.render().el);

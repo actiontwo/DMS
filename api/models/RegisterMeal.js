@@ -12,13 +12,13 @@ module.exports = {
     date: {
       type: 'date'
     },
-    name: {
+    userId: {
       type: 'string'
     },
-    lunch: {
-      type: 'boolean'
+    meal: {
+      type: 'string'
     },
-    dinner: {
+    status: {
       type: 'boolean'
     }
   }

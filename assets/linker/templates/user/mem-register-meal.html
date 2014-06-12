@@ -26,22 +26,29 @@
                 <th>Lunch</th>
                 <th>Dinner</th>
             </tr>
-            {{#each dateDetail}}
-            <tr>
-                <th>{{number}}</th>
-                <th>{{date}}-{{day}}</th>
-                <th><input type="checkbox" {{lunch.disabled}}
-                    {{lunch.check}}>
+            {{#each models}}
+            <tr class="dateRegister">
+                <th>{{attributes.number}}</th>
+                <th class="date" data-date="{{attributes.date}}">
+                    {{attributes.date}}-{{attributes
+                    .day}}
                 </th>
-                <th><input type="checkbox" {{dinner.disabled}}
-                    {{dinner.check}}>
+                <th><input class='lunchCheckbox' type="checkbox"
+                           data-meal="lunch"
+                    {{attributes.lunch.disabled}}
+                    {{attributes.lunch.check}}>
+                </th>
+                <th><input class='dinnerCheckbox' type="checkbox"
+                           data-meal="dinner"
+                    {{attributes.dinner.disabled}}
+                    {{attributes.dinner.check}}>
                 </th>
             </tr>
             {{/each}}
             </tr>
             <th class="total" colspan="2"><span>Total:</span></th>
-            <th>15</th>
-            <th>0</th>
+            <th class="numberLunchCheck">15</th>
+            <th class="numberDinnerCheck">0</th>
             </tr>
             </tbody>
         </table>
