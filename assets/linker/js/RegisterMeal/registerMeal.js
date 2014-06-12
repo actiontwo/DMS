@@ -1,5 +1,6 @@
 //Declare Model
 var RegisterMealModel = Backbone.Model.extend({
+  urlRoot: "/registermeal"
 });
 //Declare Collection
 var RegisterMealCollection = Backbone.Collection.extend({
@@ -12,11 +13,29 @@ var RegisterMealView = Backbone.View.extend({
   className: 'menus',
   id: 'register_meal',
   initialize: function () {
-    this.listenTo(this.collection, 'sync reset sort remove add create', this.render);
+    this.listenTo(this.collection, 'reset sort', this.render);
   },
-  render:function (){
-    this.$el.html(Templates['user/mem-register-meal'](this.collection.models[0].attributes));
+  render: function () {
+    this.$el.html(Templates['user/mem-register-meal'](this.collection));
     initDatePicker($('.datepicker'));
+    $('.numberLunchCheck').html($('.lunchCheckbox:checked').length);
+    $('.numberDinnerCheck').html($('.dinnerCheckbox:checked').length);
+    this.delegateEvents({
+      'change .lunchCheckbox,.dinnerCheckbox': 'updateStatus'
+    });
     return this;
+  },
+  updateStatus: function (el) {
+    var ev = $(el.currentTarget);
+    var data = {
+      date: ev.parents('.dateRegister').find('.date').data('date'),
+      status: ev.prop('checked'),
+      meal: ev.data('meal')
+    };
+    var model = this.collection.add(data);
+    model.save();
+    this.collection.remove(model);
+    $('.numberLunchCheck').html($('.lunchCheckbox:checked').length);
+    $('.numberDinnerCheck').html($('.dinnerCheckbox:checked').length);
   }
 });

@@ -23,6 +23,9 @@ module.exports = {
    *    `/registermeal/find`
    */
   find: function (req, res) {
+    if (!req.session.user) {
+      return;
+    }
     if (req.param('id')) {
       res.send('find ID');
     }
@@ -32,25 +35,28 @@ module.exports = {
       var year = date.getFullYear();
       var month = date.getMonth();
       var numberDayOfThisMonth = new Date(year, (month + 1), 0).getDate();
+      var data = [];
+      console.log(req.session.user.id);
+      RegisterMeal.find({userId: req.session.user.id, status: false}).done(function (err, meal) {
+        // console.log(search('6/12/2014','lunch',meal));
+        for (i = 1; i <= numberDayOfThisMonth; i++) {
+          var disabled = '';
+          if (i < date.getDate())
+            disabled = 'disabled';
+          var dateText = (month + 1) + "/" + i + "/" + year;
 
-      var data = {
-        month: new Date(year, month, 0).toString().split(" ")[1]
-      };
-      var dateDetail = [];
-      for (i = 1; i <= numberDayOfThisMonth; i++) {
-        var disabled = '';
-        if (i < date.getDate())
-          disabled = 'disabled';
-        dateDetail.push({
-          number: i,
-          date: month + "/" + i + "/" + year,
-          day: new Date(year, month, i).toString().split(" ")[0],
-          lunch: {disabled: disabled, check: "checked"},
-          dinner: {disabled: disabled, check: "checked"}
-        });
-      }
-      data.dateDetail = dateDetail;
-      res.send(data);
+          data.push({
+            number: i,
+            date: dateText,
+            day: new Date(year, month, i).toString().split(" ")[0],
+            lunch: {disabled: disabled, check: search(dateText, 'lunch', meal)},
+            dinner: {disabled: disabled, check: search(dateText, 'dinner', meal)}
+          });
+        }
+        res.send(data);
+      });
+
+      //res.send(data);
     }
 
   },
@@ -60,8 +66,32 @@ module.exports = {
    *    `/registermeal/create`
    */
   create: function (req, res) {
-
-    res.send('create');
+    var data = {
+      date: req.body.date,
+      meal: req.body.meal,
+      userId: req.session.user.id//req.body.userId
+    };
+    //check user registed this day or not
+    RegisterMeal.find(data).done(function (err, meal) {
+      if (err) {
+        res.send(err);
+      }
+      else {
+        if (meal.length > 0) {
+          // day registered --> update status
+          RegisterMeal.update(data, {status: req.body.status}).done(function (err, meal) {
+            return;
+          });
+        }
+        else {
+          // create new register meal if day register meal not exits
+          data.status = req.body.status;
+          RegisterMeal.create(data).done(function (err, meal) {
+            return;
+          });
+        }
+      }
+    });
   },
 
   /**
@@ -85,7 +115,16 @@ module.exports = {
    * Overrides for the settings in `config/controllers.js`
    * (specific to RegisterMealController)
    */
-  _config: {}
-
-
+  _config: {
+  }
 };
+
+function search(date, meal, myArray) {
+  var result = 'checked';
+  for (j = 0; j < myArray.length; j++) {
+    if ((myArray[j].date == date) && (myArray[j].meal == meal)) {
+      result = '';
+    }
+  }
+  return result;
+}
