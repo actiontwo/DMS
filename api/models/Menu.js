@@ -17,20 +17,8 @@ module.exports = {
       type:"string",
       required: true
     },
-    dish1: {
-      type: "string"
-    },
-    dish2: {
-      type: "string"
-    },
-    dish3: {
-      type: "string"
-    },
-    dish4: {
-      type: "string"
-    },
-    dish5: {
-      type: "string"
+    dish: {
+      type: "array"
     },
     note: {
       type: "string"

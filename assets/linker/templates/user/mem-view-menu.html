@@ -21,27 +21,23 @@
             <th>No</th>
             <th>Date(dd/mm/yy)</th>
             <th>Brunch</th>
-            <th>Dish1</th>
-            <th>Dish2</th>
-            <th>Dish3</th>
-            <th>Dish4</th>
-            <th>Dish5</th>
+            <th colspan="5">Menu</th>
             <th>Note</th>
         </tr>
         </thead>
         <tbody>
         {{#each models}}
+        {{#with attributes}}
         <tr>
-            <td></td>
-            <td>{{attributes.date}}</td>
-            <td>{{attributes.brunch}}</td>
-            <td>{{attributes.dish1}}</td>
-            <td>{{attributes.dish2}}</td>
-            <td>{{attributes.dish3}}</td>
-            <td>{{attributes.dish4}}</td>
-            <td>{{attributes.dish5}}</td>
-            <td>{{attributes.note}}</td>
+            <td>{{@index}}</td>
+            <td>{{date}}</td>
+            <td>{{brunch}}</td>
+            {{#each dish}}
+            <td>{{this}}</td>
+            {{/each}}
+            <td>{{note}}</td>
         </tr>
+        {{/with}}
         {{/each}}
         </tbody>
     </table>

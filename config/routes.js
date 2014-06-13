@@ -73,14 +73,11 @@ module.exports.routes = {
     controller: 'user',
     action: 'destroy'
   },
+
   // Register Meal Conttroler
-  'get /registermealAd/:id?': {
+  'get /registermealAd': {
     controller: 'registermeal',
     action: 'indexAdmin'
-  },
-  'get /registermeal/': {
-    controller: 'registermeal',
-    action: 'index'
   },
   'get /registermeal/:id': {
     controller: 'registermeal',
@@ -100,7 +97,7 @@ module.exports.routes = {
   },
 
   // Menu Controller
-  'get /menu/:id?': {
+  'get /menu/:id': {
     controller: 'menu',
     action: 'find'
   },
@@ -166,7 +163,12 @@ module.exports.routes = {
   'delete /report/:id': {
     controller: 'report',
     action: 'destroy'
-  }
+  },
+   // Search Controller
+  'post /search': {
+    controller: 'search',
+    action: 'index'
+  },
   //  'dish':{
   //    controller:'main',
   //    action:'dish'
