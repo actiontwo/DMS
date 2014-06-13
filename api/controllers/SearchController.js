@@ -16,66 +16,54 @@
  */
 
 module.exports = {
-    
-  
-  /**
-   * Action blueprints:
-   *    `/search/find`
-   */
+
    index: function (req, res) {
     var models = req.body.model;
-
-     // switch (Expense){
-     //    case RegisterMeal:
-     //            model = 'registerMeal';
-     //            break;
-     //    case Menu:
-     //            model = 'menu';
-     //            break;
-     //    case Expense:
-     //            model = 'expense';
-     //            break;
-     //    case Deposit:
-     //            model = 'deposit';
-     //            break;
-     //    case Report:
-     //            model = 'report';
-     //            break;
-     //    default:
-     //        model = "Not find"; 
-     //        break;
-     // };
-
-     if (models == 'RegisterMeal')
-      {
-        model = 'registerMeal';
-      }
-    else if (models == 'Menu')
-      {
-        model = 'menu';
-     }
-    else if (models == 'Expense')
-      {
-       model = 'expense';
-      }
-    else if (models == 'Deposit')
-      {
-       model = 'deposit';
-      }
-    else
-      {
-       model = 'report'; 
-      }   
-     
-     var data = {
-      dateFrom : req.body.dateFrom,
-      dateTo : req.body.dateTo,
-      model : model,
-
+    var model;
+     switch (models){
+        case 'RegisterMeal':
+                model = RegisterMeal;
+                break;
+        case 'Menu':
+                model = Menu;
+                break;
+        case 'Expense':
+                model = Expense;
+                break;
+        case 'Deposit':
+                model = Deposit;
+                break;
+        case 'Report':
+                model = Report;
+                break;
+        default:
+            model = "Not find"; 
+            break;
      };
-     //  data.model = model;
-     res.send(data);
-    },
+     
+   var data = {
+    dateFrom : req.body.dateFrom,
+    dateTo : req.body.dateTo,
+    model : model
+   };
+   var from = data.dateFrom;
+   var to =  data.dateTo ;
+console.log(data);
+   model.find({
+    where : {
+      date: {
+        '>=' : from,
+        '<=' : to
+      }      
+    }
+   }).done(function(err,docs){
+    if(err)
+      res.send(err);
+    else
+    res.send(docs);
+   })
+    
+  },
 
 _config: {}
 
