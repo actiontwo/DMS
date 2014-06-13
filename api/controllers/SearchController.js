@@ -48,7 +48,7 @@ module.exports = {
    };
    var from = data.dateFrom;
    var to =  data.dateTo ;
-console.log(data);
+
    model.find({
     where : {
       date: {
