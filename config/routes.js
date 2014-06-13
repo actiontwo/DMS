@@ -76,7 +76,7 @@ module.exports.routes = {
   // Register Meal Conttroler
   'get /registermealAd/:id?': {
     controller: 'registermeal',
-    action: 'findAd'
+    action: 'indexAdmin'
   },
   'get /registermeal/': {
     controller: 'registermeal',

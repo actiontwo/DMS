@@ -14,6 +14,7 @@
  *
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
+var tool = require('../tool');
 
 module.exports = {
   /**
@@ -26,28 +27,27 @@ module.exports = {
       return;
     }
     var user = req.session.user;
-    var time = getCurrentDay();
+    var time = tool.getCurrentDay();
     var data = [];
     RegisterMeal.find({userId: user.id, status: false}).done(function (err, meal) {
-      // console.log(search('6/12/2014','lunch',meal));
       for (i = 1; i <= time.numberDayOfThisMonth; i++) {
         var disabled = '';
         if (i < time.date)
           disabled = 'disabled';
-        var dateText = formatTwoNumber(time.month) + "/" + formatTwoNumber(i) + "/" + time.year;
+        var dateText = tool.formatTwoNumber(time.month) + "/" + tool.formatTwoNumber(i) + "/" + time.year;
         data.push({
           number: i,
           date: dateText,
           day: new Date(time.year, time.month - 1, i).toString().split(" ")[0],
-          lunch: {disabled: disabled, check: search(dateText, 'lunch', meal)},
-          dinner: {disabled: disabled, check: search(dateText, 'dinner', meal)}
+          lunch: {disabled: disabled, check: tool.search(dateText, 'lunch', meal)},
+          dinner: {disabled: disabled, check: tool.search(dateText, 'dinner', meal)}
         });
       }
       res.send(data);
     });
   },// End Index
 
-  findAd: function (req, res) {
+  indexAdmin: function (req, res) {
     if (!req.session.user) {
       res.send('You are not login');
       return;
@@ -60,7 +60,7 @@ module.exports = {
       res.send('find ID');
       return;
     }
-    var time = getCurrentDay();
+    var time = tool.getCurrentDay();
     RegisterMeal.find({date: time.currentDay}).done(function (err, meal) {
       if (err) {
         res.send(err);
@@ -85,7 +85,7 @@ module.exports = {
               }
             }
             result.push({
-              number:i+1,
+              number: i + 1,
               date: time.currentDay,
               name: user[i].firstname + " " + user[i].lastname,
               lunch: check.lunch,
@@ -184,32 +184,4 @@ function updateStatus(data, status) {
       }
     }
   });
-}
-;
-function getCurrentDay() {
-  var time = new Date(),
-    year = time.getFullYear(),
-    month = time.getMonth() + 1,
-    date = time.getDate();
-  return {
-    day: new Date(year, month, date).toString().split(" ")[0],
-    date: date,
-    year: year,
-    month: month,
-    numberDayOfThisMonth: new Date(year, month, 0).getDate(),
-    currentDay: formatTwoNumber(month) + "/" + formatTwoNumber(date) + "/" + year};
-}
-function formatTwoNumber(number) {
-  return number < 10
-    ? '0' + number
-    : number;
 };
-function search(date, meal, myArray) {
-  var result = 'checked';
-  for (j = 0; j < myArray.length; j++) {
-    if ((myArray[j].date == date) && (myArray[j].meal == meal)) {
-      result = '';
-    }
-  }
-  return result;
-}
