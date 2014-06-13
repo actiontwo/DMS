@@ -36,11 +36,15 @@ body {
 .logo span {
   font-family: 'EBGaramond-Regular', sans-serif;
   font-size: 48px;
-  color: #f93434;
-  text-shadow: -0.1em 0.1em #d1d1d1;
+  color: #f7ba13;
+  text-shadow: 0.9px 1.1px #A3A0A0;
   float: right;
   margin-top: 36px;
   margin-right: 5px;
+}
+
+.logo img {
+  width: 400px;
 }
 
 .logo figure {
@@ -88,7 +92,7 @@ body {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#545454', endColorstr='#4d4d4d', GradientType=0); /* IE6-9 */
 }
 
-input[type='text'] ,input[type='password'],input[type='email']{
+input[type='text'], input[type='password'], input[type='email'] {
   padding: 4px 10px;
   border-radius: 5px;
   margin: 0 5px;
@@ -169,9 +173,7 @@ ul.searchForm img {
   border-radius: 2px;
   margin-bottom: 14px;
   margin-top: 10px;
-  color: #fff
-
-;
+  color: #fff;
   border: none;
 }
 
@@ -189,19 +191,23 @@ ul.searchForm img {
 .tb-menu tbody tr td {
   padding: 3px
 }
+
 div.rg-box-input {
   width: 400px;
   margin: 0 auto;
   padding: 10px;
 }
+
 div.rg-box-input label {
   width: 75px;
   display: inline-block;
 }
+
 div.rg-box-input input {
   width: 200px;
   margin: 2px 0;
 }
+
 .link {
   color: #f7ba13;
   font-size: 12px;

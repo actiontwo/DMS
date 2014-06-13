@@ -25,22 +25,40 @@ var RegisterMealView = Backbone.View.extend({
 
     //declare events for views
     this.delegateEvents({
-      'change .lunchCheckbox,.dinnerCheckbox': 'updateStatus'
+      'click #saveRegister': 'updateStatus',
+      'change .lunchCheckbox, .dinnerCheckbox': 'changeStatus'
     });
     return this;
   },
-  // when user check
-  updateStatus: function (el) {
+  changeStatus: function (el) {
     var ev = $(el.currentTarget);
-    var data = {
-      date: ev.parents('.dateRegister').find('.date').data('date'),
-      status: ev.prop('checked'),
-      meal: ev.data('meal')
-    };
-    var model = this.collection.add(data);
-    model.save();
-    this.collection.remove(model);
+    ev.toggleClass('changeStatus');
     $('.numberLunchCheck').html($('.lunchCheckbox:checked').length);
     $('.numberDinnerCheck').html($('.dinnerCheckbox:checked').length);
+  },
+  // when user check
+  updateStatus: function (el) {
+    var data = {
+      mealStatus: []
+    };
+    $('.changeStatus').each(function () {
+      data.mealStatus.push({
+        date: $(this).data('date'),
+        meal: $(this).data('meal'),
+        status: $(this).prop('checked')
+      });
+    }).removeClass('changeStatus');
+
+    //var model = this.collection.add(data);
+    this.model.save(data, {
+      success: function (model, response) {
+        console.log(model);
+        console.log(response);
+      },
+      error: function (model, error) {
+        console.log(model.toJSON());
+        console.log(error);
+      }});
+
   }
 });

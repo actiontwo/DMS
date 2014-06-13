@@ -74,7 +74,15 @@ module.exports.routes = {
     action: 'destroy'
   },
   // Register Meal Conttroler
-  'get /registermeal/:id?': {
+  'get /registermealAd/:id?': {
+    controller: 'registermeal',
+    action: 'findAd'
+  },
+  'get /registermeal/': {
+    controller: 'registermeal',
+    action: 'index'
+  },
+  'get /registermeal/:id': {
     controller: 'registermeal',
     action: 'find'
   },
