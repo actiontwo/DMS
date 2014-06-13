@@ -48,7 +48,6 @@ var AppRouter = Backbone.Router.extend({
     this.expenseView.collection.fetch({reset:true});
     $('#subMain').html("");
     $('#main').html(this.expenseView.render().el);
-    initDatePicker($('.datepicker'));
   },
   depositRender: function () {
     this.depositView.collection.fetch();
