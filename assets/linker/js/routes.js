@@ -35,7 +35,8 @@ var AppRouter = Backbone.Router.extend({
     $('#main').html(this.registerMealView.el);
     console.log(role);
     if(role === 'admin'){
-      $('#subMain').html(this.registerMealAdView.render().el);
+      this.registerMealAdView.collection.fetch({reset: true});
+      $('#subMain').html(this.registerMealAdView.el);
     }
   },
   menuRender: function () {
@@ -60,9 +61,10 @@ var AppRouter = Backbone.Router.extend({
     initDatePicker($('.datepicker'));
   }
 });
+var appRouter;
 $.get('/roleCheck', function (data) {
   role = data;
-  var appRouter = new AppRouter();
+  appRouter = new AppRouter();
   Backbone.history.start();
 });
 

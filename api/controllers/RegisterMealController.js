@@ -16,48 +16,98 @@
  */
 
 module.exports = {
+  /**
+   * Action blueprints:
+   *    `/registermealAd/find`
+   */
+  index: function (req, res) {
+    if (!req.session.user) {
+      res.send('You are not login');
+      return;
+    }
+    var user = req.session.user;
+    var time = getCurrentDay();
+    var data = [];
+    RegisterMeal.find({userId: user.id, status: false}).done(function (err, meal) {
+      // console.log(search('6/12/2014','lunch',meal));
+      for (i = 1; i <= time.numberDayOfThisMonth; i++) {
+        var disabled = '';
+        if (i < time.date)
+          disabled = 'disabled';
+        var dateText = formatTwoNumber(time.month) + "/" + formatTwoNumber(i) + "/" + time.year;
+        data.push({
+          number: i,
+          date: dateText,
+          day: new Date(time.year, time.month - 1, i).toString().split(" ")[0],
+          lunch: {disabled: disabled, check: search(dateText, 'lunch', meal)},
+          dinner: {disabled: disabled, check: search(dateText, 'dinner', meal)}
+        });
+      }
+      res.send(data);
+    });
+  },// End Index
 
+  findAd: function (req, res) {
+    if (!req.session.user) {
+      res.send('You are not login');
+      return;
+    }
+    if (req.session.user.role !== 'admin') {
+      res.send('You are not admin');
+      return;
+    }
+    if (req.param('id')) {
+      res.send('find ID');
+      return;
+    }
+    var time = getCurrentDay();
+    RegisterMeal.find({date: time.currentDay}).done(function (err, meal) {
+      if (err) {
+        res.send(err);
+      }
+      else {
+        var data = [];
+        User.find().done(function (err, user) {
+          if (err) {
+            res.send(err)
+          }
+          var result = [];
+          for (i = 0; i < user.length; i++) {
+            var id = user[i].id;
+            var dayNotRegister = 0;
+            var check = {
+              lunch: "checked",
+              dinner: 'checked'
+            };
+            for (j = 0; j < meal.length; j++) {
+              if (id === meal[j].userId && meal[j].status === false) {
+                check[meal[j].meal] = '';
+              }
+            }
+            result.push({
+              number:i+1,
+              date: time.currentDay,
+              name: user[i].firstname + " " + user[i].lastname,
+              lunch: check.lunch,
+              dinner: check.dinner
+            })
+          }
+          res.send(result);
+        });
+      }
+    });
 
+  },
   /**
    * Action blueprints:
    *    `/registermeal/find`
    */
   find: function (req, res) {
     if (!req.session.user) {
+      res.send('Not Working');
       return;
     }
-    if (req.param('id')) {
-      res.send('find ID');
-    }
-    else {
-      var date = new Date();
-      var day = date.getDay();
-      var year = date.getFullYear();
-      var month = date.getMonth();
-      var numberDayOfThisMonth = new Date(year, (month + 1), 0).getDate();
-      var data = [];
-      console.log(req.session.user.id);
-      RegisterMeal.find({userId: req.session.user.id, status: false}).done(function (err, meal) {
-        // console.log(search('6/12/2014','lunch',meal));
-        for (i = 1; i <= numberDayOfThisMonth; i++) {
-          var disabled = '';
-          if (i < date.getDate())
-            disabled = 'disabled';
-          var dateText = (month + 1) + "/" + i + "/" + year;
-
-          data.push({
-            number: i,
-            date: dateText,
-            day: new Date(year, month, i).toString().split(" ")[0],
-            lunch: {disabled: disabled, check: search(dateText, 'lunch', meal)},
-            dinner: {disabled: disabled, check: search(dateText, 'dinner', meal)}
-          });
-        }
-        res.send(data);
-      });
-
-      //res.send(data);
-    }
+    res.send({abc: 121});
 
   },
 
@@ -66,32 +116,27 @@ module.exports = {
    *    `/registermeal/create`
    */
   create: function (req, res) {
-    var data = {
-      date: req.body.date,
-      meal: req.body.meal,
-      userId: req.session.user.id//req.body.userId
-    };
-    //check user registed this day or not
-    RegisterMeal.find(data).done(function (err, meal) {
-      if (err) {
-        res.send(err);
-      }
-      else {
-        if (meal.length > 0) {
-          // day registered --> update status
-          RegisterMeal.update(data, {status: req.body.status}).done(function (err, meal) {
-            return;
-          });
-        }
-        else {
-          // create new register meal if day register meal not exits
-          data.status = req.body.status;
-          RegisterMeal.create(data).done(function (err, meal) {
-            return;
-          });
-        }
-      }
-    });
+
+    console.log(req.session.user);
+    if (!req.session.user || !req.body.mealStatus) {
+      res.send('Bye Bye');
+      return;
+    }
+    var mealStatus = req.body.mealStatus;
+    for (i = 0; i < mealStatus.length; i++) {
+      var data = {
+        date: mealStatus[i].date,
+        meal: mealStatus[i].meal,
+        userId: req.session.user.id
+      };
+      // check user registed this day or not
+      updateStatus(data, mealStatus[i].status);
+    }
+    console.log(mealStatus);
+    res.send([
+      {data: 'update Success'},
+      {data: 'ok'}
+    ]);
   },
 
   /**
@@ -118,7 +163,47 @@ module.exports = {
   _config: {
   }
 };
+function updateStatus(data, status) {
+  collection = RegisterMeal;
+  collection.find(data).done(function (err, meal) {
 
+    if (err) {
+      console.log(err);
+    }
+    else {
+      if (meal.length > 0) {
+        // day registered --> update status
+        collection.update(data, {status: status}).done(function (err, meal) {
+        });
+      }
+      else {
+        // create new register meal if day register meal not exits
+        data.status = status;
+        collection.create(data).done(function (err, meal) {
+        });
+      }
+    }
+  });
+}
+;
+function getCurrentDay() {
+  var time = new Date(),
+    year = time.getFullYear(),
+    month = time.getMonth() + 1,
+    date = time.getDate();
+  return {
+    day: new Date(year, month, date).toString().split(" ")[0],
+    date: date,
+    year: year,
+    month: month,
+    numberDayOfThisMonth: new Date(year, month, 0).getDate(),
+    currentDay: formatTwoNumber(month) + "/" + formatTwoNumber(date) + "/" + year};
+}
+function formatTwoNumber(number) {
+  return number < 10
+    ? '0' + number
+    : number;
+};
 function search(date, meal, myArray) {
   var result = 'checked';
   for (j = 0; j < myArray.length; j++) {

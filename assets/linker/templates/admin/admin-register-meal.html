@@ -23,12 +23,14 @@
     </tr>
     </thead>
     <tbody>
+    {{#each models}}
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>{{attributes.number}}</td>
+        <td>{{attributes.date}}</td>
+        <td>{{attributes.name}}</td>
+        <td><input type="checkbox" {{attributes.lunch}}/></td>
+        <td><input type="checkbox" {{attributes.dinner}}/></td>
     </tr>
+    {{/each}}
     </tbody>
 </table>
