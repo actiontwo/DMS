@@ -91,7 +91,7 @@ module.exports = function (grunt) {
   var templateFilesToCompile = [
     'linker/**/*.html',
     'linker/**/*.hbs',
-    'linker/**/*.handlebars'
+    'linker/**/*forgetpassword.handlebars'
   ];
 
   /////////////////////////////////////////////////////////////////

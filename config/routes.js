@@ -40,6 +40,14 @@ module.exports.routes = {
     action: 'roleCheck'
   },
   // User Controller
+  '/forgetPassword':{
+    controller:'user',
+    action:'forgetPassword'
+  },
+  '/resetPassword':{
+    controller:'user',
+    action:'resetPassword'
+  },
   '/login': {
     controller: 'user',
     action: 'login'
@@ -52,7 +60,7 @@ module.exports.routes = {
     controller: 'user',
     action: 'register'
   },
-  '/checkUserLogin': {
+  '/checkUserLogin/?': {
     controller: 'user',
     action: 'checkUserLogin'
   },

@@ -31,6 +31,12 @@ module.exports = {
     join_date: {
       type: 'date'
     },
+    active:{
+      type:'boolean'
+    },
+    keyConfrim:{
+      type:'string'
+    },
     toJSON: function () {
       var obj = this.toObject();
       delete obj.password;

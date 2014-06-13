@@ -132,7 +132,6 @@ module.exports = {
       // check user registed this day or not
       updateStatus(data, mealStatus[i].status);
     }
-    console.log(mealStatus);
     res.send([
       {data: 'update Success'},
       {data: 'ok'}

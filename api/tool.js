@@ -1,3 +1,5 @@
+var hasher = require("password-hash");
+var nodemailer = require("nodemailer");
 module.exports = {
   getCurrentDay: function () {
     var time = new Date(),
@@ -25,5 +27,16 @@ module.exports = {
       }
     }
     return result;
+  },
+  smtpTransport: function () {
+    return nodemailer.createTransport("SMTP", {
+      host: "just52.justhost.com", // hostname
+      secureConnection: true, // use SSL
+      port: 465, // port for secure SMTP
+      auth: {
+        user: "dms@designveloper.com",
+        pass: "dsv123"
+      }
+    });
   }
 };
