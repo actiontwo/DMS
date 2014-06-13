@@ -17,11 +17,7 @@ var MenuView = Backbone.View.extend({
     this.$el.html(Templates['user/mem-view-menu'](
       this.collection
     ));
-//    var i = 1;
-//    $('tbody tr').find('td:first-child').each(function () {
-//      $(this).html(i);
-//      i++
-//    });
+
     initDatePicker($('.datepicker'));
     return this;
   }
