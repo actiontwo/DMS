@@ -158,7 +158,12 @@ module.exports.routes = {
   'delete /report/:id': {
     controller: 'report',
     action: 'destroy'
-  }
+  },
+   // Search Controller
+  'post /search': {
+    controller: 'search',
+    action: 'index'
+  },
   //  'dish':{
   //    controller:'main',
   //    action:'dish'
