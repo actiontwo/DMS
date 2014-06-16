@@ -65,22 +65,22 @@ module.exports.routes = {
     action: 'checkUserLogin'
   },
 
-  'get /user/:id?': {
-    controller: 'user',
-    action: 'find'
-  },
-  'post /user': {
-    controller: 'user',
-    action: 'create'
-  },
-  'put /user/:id': {
-    controller: 'user',
-    action: 'update'
-  },
-  'delete /user/:id': {
-    controller: 'user',
-    action: 'destroy'
-  },
+//  'get /user/:id?': {
+//    controller: 'user',
+//    action: 'find'
+//  },
+//  'post /user': {
+//    controller: 'user',
+//    action: 'create'
+//  },
+//  'put /user/:id': {
+//    controller: 'user',
+//    action: 'update'
+//  },
+//  'delete /user/:id': {
+//    controller: 'user',
+//    action: 'destroy'
+//  },
 
   // Register Meal Conttroler
   'get /registermealAd': {

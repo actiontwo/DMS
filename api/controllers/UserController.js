@@ -112,6 +112,10 @@ module.exports = {
         return res.redirect('/forgetPassword');
     }
   },
+  abc:function(req,res){
+    console.log(req.method);
+    res.send(req.param('id'));
+  },
   forgetPassword: function (req, res) {
 
     console.log('view');
