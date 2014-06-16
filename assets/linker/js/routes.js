@@ -5,7 +5,8 @@ var AppRouter = Backbone.Router.extend({
     'menu': 'menuRender',
     'expense': 'expenseRender',
     'deposit': 'depositRender',
-    'report': 'reportRender'
+    'report': 'reportRender',
+    'manager': 'managerRender'
   },
   initialize: function () {
     this.registerMealView = new RegisterMealView({
@@ -23,6 +24,9 @@ var AppRouter = Backbone.Router.extend({
     });
     this.reportView = new ReportView({
       collection: new ReportCollection
+    });
+    this.managerView = new ManagerView({
+      collection: new ManagerCollection
     });
     if (role === "admin") {
       this.registerMealAdView = new RegisterMealAdView({
@@ -59,6 +63,9 @@ var AppRouter = Backbone.Router.extend({
     $('#main').html(this.reportView.render().el);
     $('#subMain').html("");
     initDatePicker($('.datepicker'));
+  },
+  managerRender: function(){
+    $('#main').html(this.managerView.render().el);
   }
 });
 var appRouter;

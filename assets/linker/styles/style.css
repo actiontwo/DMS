@@ -215,3 +215,11 @@ div.rg-box-input input {
 .notification{
   color:red;
 }
+.manager_form p{
+  padding: 10px 0;
+}
+.manager_form .manager_lb{
+  display: inline-block;
+  width: 170px;
+}
+}

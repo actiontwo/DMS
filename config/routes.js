@@ -35,9 +35,13 @@ module.exports.routes = {
     //view: 'site/index'
     controller: 'main'
   },
-  '/success': {
+'/success': {
     controller: 'main',
     action: 'success'
+  },
+  'post /manager':{
+    controller: 'main',
+    action: 'manager'
   },
   '/roleCheck': {
     controller: 'user',

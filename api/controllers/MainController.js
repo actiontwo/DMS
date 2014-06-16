@@ -39,7 +39,11 @@ module.exports = {
   //            05/30/2014: Phuc Nguyen
   // -------------------------------------------------------------------
   index: function (req, res) {
+    var admin = false;
     if (req.session.user) {
+      if(req.session.user.role === 'admin'){
+        admin = true;
+      }
       res.view({
         partials: {
           header: '../partials/site/header',
@@ -48,10 +52,14 @@ module.exports = {
         menu: true,
         status: "Logout",
         welcomeUser: "Welcome : " + req.session.user.lastname
+        admin: admin
       });
     } else {
       res.redirect('/login');
     }
+  },
+  manager: function(req, res){
+    res.send(req.session.user);
   },
   success: function (req, res) {
     var view =
