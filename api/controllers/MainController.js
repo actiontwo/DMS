@@ -16,10 +16,6 @@
  */
 
 module.exports = {
-
-
-
-
   /**
    * Overrides for the settings in `config/controllers.js`
    * (specific to MainController)
@@ -43,19 +39,29 @@ module.exports = {
   //            05/30/2014: Phuc Nguyen
   // -------------------------------------------------------------------
   index: function (req, res) {
-    console.log(req.session.user);
     if (req.session.user) {
       res.view({
         partials: {
           header: '../partials/site/header',
-          footer: '../partials/site/footer',
-          menu: '../partials/site/menu'
+          footer: '../partials/site/footer'
         },
-        status:"Logout",
-        welcomeUser:"Welcome : " + req.session.user.lastname
+        menu: true,
+        status: "Logout",
+        welcomeUser: "Welcome : " + req.session.user.lastname
       });
     } else {
       res.redirect('/login');
     }
+  },
+  success: function (req, res) {
+    var view =
+    {
+      partials: {
+        header: '../partials/site/header',
+        footer: '../partials/site/footer'
+      },
+      notification: ""
+    };
+    res.view(view);
   }
-};
+}

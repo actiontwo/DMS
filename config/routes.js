@@ -35,18 +35,26 @@ module.exports.routes = {
     //view: 'site/index'
     controller: 'main'
   },
+  '/success': {
+    controller: 'main',
+    action:'success'
+  },
   '/roleCheck': {
     controller: 'user',
     action: 'roleCheck'
   },
   // User Controller
-  '/forgetPassword':{
-    controller:'user',
-    action:'forgetPassword'
+  '/forgetPassword': {
+    controller: 'user',
+    action: 'forgetPassword'
   },
-  '/resetPassword':{
-    controller:'user',
-    action:'resetPassword'
+  '/resetPassword': {
+    controller: 'user',
+    action: 'resetPassword'
+  },
+  '/confirmResetPassword':{
+    controller: 'user',
+    action: 'confirmResetPassword'
   },
   '/login': {
     controller: 'user',
@@ -65,22 +73,22 @@ module.exports.routes = {
     action: 'checkUserLogin'
   },
 
-//  'get /user/:id?': {
-//    controller: 'user',
-//    action: 'find'
-//  },
-//  'post /user': {
-//    controller: 'user',
-//    action: 'create'
-//  },
-//  'put /user/:id': {
-//    controller: 'user',
-//    action: 'update'
-//  },
-//  'delete /user/:id': {
-//    controller: 'user',
-//    action: 'destroy'
-//  },
+  //  'get /user/:id?': {
+  //    controller: 'user',
+  //    action: 'find'
+  //  },
+  //  'post /user': {
+  //    controller: 'user',
+  //    action: 'create'
+  //  },
+  //  'put /user/:id': {
+  //    controller: 'user',
+  //    action: 'update'
+  //  },
+  //  'delete /user/:id': {
+  //    controller: 'user',
+  //    action: 'destroy'
+  //  },
 
   // Register Meal Conttroler
   'get /registermealAd': {
@@ -121,7 +129,7 @@ module.exports.routes = {
     controller: 'menu',
     action: 'destroy'
   },
-   // Expense Controller
+  // Expense Controller
   'get /expense/:id?': {
     controller: 'expense',
     action: 'find'
@@ -138,7 +146,7 @@ module.exports.routes = {
     controller: 'expense',
     action: 'destroy'
   },
-   // Deposit Controller
+  // Deposit Controller
   'get /deposit/:id?': {
     controller: 'deposit',
     action: 'find'
@@ -155,7 +163,7 @@ module.exports.routes = {
     controller: 'deposit',
     action: 'destroy'
   },
-   // Report Controller
+  // Report Controller
   'get /report/:id?': {
     controller: 'report',
     action: 'find'
@@ -172,7 +180,7 @@ module.exports.routes = {
     controller: 'report',
     action: 'destroy'
   },
-   // Search Controller
+  // Search Controller
   'post /search': {
     controller: 'search',
     action: 'index'

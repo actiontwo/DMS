@@ -34,7 +34,7 @@ module.exports = {
     active:{
       type:'boolean'
     },
-    keyConfrim:{
+    keyConfirm:{
       type:'string'
     },
     toJSON: function () {

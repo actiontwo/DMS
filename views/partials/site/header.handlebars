@@ -37,10 +37,35 @@
 
 <body>
 <div class="container">
-  {{> menu}}
+    <header>
+        <div class="userInfo link">
+            <a href="#profile/user" id="user-account">{{welcomeUser}}</a>
+            ,
+            <a href="/logout" id="btn-log">
+                <ins>{{status}}</ins>
+            </a>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="logo">
+            <figure>
+                <img src="images/logo.png">
+            </figure>
+            <span>Meal Registration System</span>
+        </div>
+      {{#if menu}}
+          <div class="menu">
+              <ul>
+                  <li><a href="/">Register Meal</a></li>
+                  <li><a href="#menu">Menu</a></li>
+                  <li><a href="#expense">Expense</a></li>
+                  <li><a href="#deposit">Deposit</a></li>
+                  <li><a href="#report">Report</a></li>
+              </ul>
+          </div>
+      {{/if}}
+    </header>
     <section class="content">
         <section class="main content" id="main">
         </section>
         <section class="subMain content" id="subMain"></section>
-    </section>
-</div>

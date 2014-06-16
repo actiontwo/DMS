@@ -28,7 +28,7 @@ module.exports = {
   register: function (req, res) {
     res.view({
       partials: {
-        header: '../partials/site/header_login',
+        header: '../partials/site/header',
         footer: '../partials/site/footer'
       }
     });
@@ -36,7 +36,7 @@ module.exports = {
   login: function (req, res) {
     res.view({
       partials: {
-        header_login: '../partials/site/header_login',
+        header: '../partials/site/header',
         footer: '../partials/site/footer'
       }
     });
@@ -60,7 +60,7 @@ module.exports = {
             var smtpTransport = tool.smtpTransport();
             var key = md5(Math.floor((Math.random() * 100000)));
             // setup e-mail data with unicode symbols
-            var linkConfirm = req.baseurl + "/resetPassword?require=confirm&key=" + key;
+            var linkConfirm = req.baseurl + "/confirmResetPassword?require=confirm&email=" + docs.email + "&keyConfirm=" + key;
             var mailInfo = {
               from: "DMS  <dms@designveloper.com>", // sender address
               to: data.email, // list of receivers
@@ -80,20 +80,24 @@ module.exports = {
                 res.view('user/forgetPassword', {notification: 'Can not send Email'});
               } else {
                 console.log("Message sent: " + response.message);
-                // Set keyConfrim to user that want to reset  password
-                User.update({email: docs.email}, {keyConfrim: key}).done(function (err, docs) {
+                // Set keyConfirm to user that want to reset  password
+                User.update({email: docs.email}, {keyConfirm: key}).done(function (err, docs) {
                   console.log(docs);
                   if (err)
                     console.log(err);
                   else {
                     //start timeout to remove confrimKey if user not reset password within 3 hours
                     setTimeout(function () {
-                      User.update({email: data.email}, {keyConfrim: ''}).done(function (err, docs) {
+                      User.update({email: data.email}, {keyConfirm: ''}).done(function (err, docs) {
                         console.log(docs);
                       });
                     }, 3 * 60 * 60 * 1000);
                     //send notification to user
-                    res.view('user/forgetPassword', {notification: 'Please check your email to reset password!'});
+                    var html = 'Reset password successful!' +
+                      '<div class="link"' +
+                      '<br><a href="/login">Login</a>' +
+                      '</div>';
+                    res.view('main/success', {notification: html});
                   }
                 });
               }
@@ -101,31 +105,92 @@ module.exports = {
               //smtpTransport.close(); // shut down the connection pool, no more messages
             });
           } else {
+
             res.view('user/forgetPassword', {notification: 'Email not exits, Please check your email again!'});
           }
         });
-        break;
-      case 'confirm':
-        return res.send('ok');
         break;
       default:
         return res.redirect('/forgetPassword');
     }
   },
-  abc:function(req,res){
-    console.log(req.method);
-    res.send(req.param('id'));
+  confirmResetPassword: function (req, res) {
+    req.session.user = '';
+    var email = req.param('email');
+    var keyConfirm = req.param('keyConfirm');
+    var require = req.param('require');
+    var view = {
+      partials: {
+        header: '../partials/site/header',
+        footer: '../partials/site/footer'
+      },
+      keyConfirm: keyConfirm,
+      email: email
+    };
+    if (req.method === 'GET') {
+      switch (require) {
+        case 'confirm':
+          res.view(view);
+          break;
+        default:
+          res.redirect('/');
+          break;
+      }
+      return;
+    }
+
+    if (require === 'changePassword') {
+      // Check Password match
+      var password = req.param('password');
+      var confirmPassword = req.param('confirmPassword');
+      if (password !== confirmPassword) {
+        view.notification = 'Password not match! please check again';
+        res.view(view);
+        return;
+      }
+
+      User.findOneByEmail(email).done(function (err, docs) {
+          if (err)
+            console.log(err);
+          else if (docs) {
+            var key = docs.keyConfirm;
+            if (key == keyConfirm) {
+              var dataUpdate = {
+                keyConfirm: '',
+                password: hasher.generate(password)
+              };
+              User.update({email: email}, dataUpdate).done(function (err, docs) {
+                if (err) {
+                  console.log(err);
+                }
+                else {
+                  var html = 'Reset password successful!' +
+                    '<div class="link"' +
+                    '<br><a href="/login">Login</a>' +
+                    '</div>';
+                  res.view('main/success', {notification: html});
+                }
+              });
+              return;
+            }
+            view.notification = 'Can not change because reset time is over 3 hours';
+            res.view(view);
+          }
+        }
+      );
+    }
   },
   forgetPassword: function (req, res) {
 
     console.log('view');
     res.view({
       partials: {
-        header: '../partials/site/header_login',
+        header: '../partials/site/header',
         footer: '../partials/site/footer'
       }
     });
   },
+
   checkUserLogin: function (req, res) {
     var data = {
       email: req.body.email,
@@ -161,7 +226,6 @@ module.exports = {
     });
 
   },
-
   find: function (req, res) {
 
     // Send a JSON response
@@ -203,7 +267,7 @@ module.exports = {
         return;
       }
       // if user not exit --> create a new user
-      var hasher = require("password-hash");
+
       data.password = hasher.generate(data.password);
       User.create(data).done(function (err, user) {
         // Error handling
@@ -248,7 +312,8 @@ module.exports = {
    * Overrides for the settings in `config/controllers.js`
    * (specific to UserController)
    */
-  _config: {}
+  _config: {
+  }
 
-
-};
+}
+;
