@@ -39,6 +39,10 @@ module.exports.routes = {
     controller: 'main',
     action: 'success'
   },
+  'get /manager': {
+    controller: 'main',
+    action: 'find'
+  },
   'post /manager':{
     controller: 'main',
     action: 'manager'

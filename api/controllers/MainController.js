@@ -38,10 +38,10 @@ module.exports = {
   // REVISIONS:
   //            05/30/2014: Phuc Nguyen
   // -------------------------------------------------------------------
-  index: function (req, res) {
+  index: function(req, res) {
     var admin = false;
     if (req.session.user) {
-      if(req.session.user.role === 'admin'){
+      if (req.session.user.role === 'admin') {
         admin = true;
       }
       res.view({
@@ -58,10 +58,41 @@ module.exports = {
       res.redirect('/login');
     }
   },
-  manager: function(req, res){
-    res.send(req.session.user);
+  manager: function(req, res) {
+    var data = {
+      name: 'manager',
+      costs: req.body.cost,
+      lastHour: req.body.lastHour
+
+    }
+    //  res.send(data);
+    ManagerParam.findOrCreate(['name'],data).done(function(err, docs) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(docs.createdAt);
+        if(!docs.createdAt){
+          ManagerParam.update({id:docs.id},data).done(function(err,data){
+              res.send(data);
+          });
+          return;
+        }
+        res.send(data);
+      }
+    })
   },
-  success: function (req, res) {
+  find: function(req, res) {
+    ManagerParam.findOneByName('manager').done(function(err, data) {
+      if (err)
+        console.log(err);
+      else {
+        res.send(data);
+      }
+    })
+    };
+    res.view(view);
+  },
+   success: function (req, res) {
     var view =
     {
       partials: {
