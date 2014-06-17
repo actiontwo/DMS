@@ -215,3 +215,24 @@ div.rg-box-input input {
 .notification{
   color:red;
 }
+ul.user_profile label {
+  width: 249px;
+  display: inline-block;
+  color: #6E6D6D;
+}
+ul.user_profile {
+  font-size: 20px;
+}
+ul.user_profile li {
+  margin-bottom: 20px;
+}
+span.edit {
+  font-size: 15px;
+  float: right;
+  color: blue;
+  cursor: pointer;
+}
+.editing{
+  border:1px solid red;
+  padding:0 20px;
+}

@@ -1,0 +1,39 @@
+<div class="header">
+    <span>User Profile</span>
+</div>
+<div class="content">
+    <ul class="user_profile">
+        <li>
+            <label>First name :</label>
+            <span class='content_info firstname'
+                  contenteditable="false">{{firstname
+                }}</span>
+            <span class="edit">Edit</span>
+        </li>
+        <li>
+            <label>Last Name :</label>
+            <span class='content_info lastname'
+                  contenteditable="false">{{lastname
+                }}</span>
+            <span class="edit">Edit</span>
+        </li>
+        <li>
+            <label>Password :</label>
+            <input type="password" name="password" id="password"/>
+        </li>
+        <li>
+            <label>Confirm Password :</label>
+            <input type="password" name="confirmPassword" id="confirmPassword"/>
+        </li>
+        <li><label>Email :</label>{{email}}</li>
+        <li><label>Role</label>{{role}}</li>
+        <!--<li><label>Set Default Registel Meal</label>-->
+            <!--<input type="checkbox" class="defaultRegisterMeal"-->
+            <!--{{defaultRegisterMeal}}/>-->
+        <!--</li>-->
+    </ul>
+    <p class="error"></p>
+    <div class="groupbtn">
+        <a class="btn-black saveProfile">Save</a>
+    </div>
+</div>

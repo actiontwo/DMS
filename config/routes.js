@@ -80,7 +80,14 @@ module.exports.routes = {
     controller: 'user',
     action: 'create'
   },
-
+  '/userProfile':{
+    controller:'user',
+    action:'userProfile'
+  },
+  'put /userProfile/:id':{
+    controller:'user',
+    action:'userProfile'
+  },
   // Register Meal Conttroler
   'get /registermealAd': {
     controller: 'registermeal',
@@ -102,7 +109,6 @@ module.exports.routes = {
     controller: 'registermeal',
     action: 'destroy'
   },
-
   // Menu Controller
   'get /menu/:id': {
     controller: 'menu',
