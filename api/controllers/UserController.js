@@ -272,6 +272,48 @@ module.exports = {
       });
     });
   },
+  userProfile: function (req, res) {
+    if (!req.session.user) {
+      res.redirect('/login');
+      return;
+    }
+    console.log(req.method);
+    if (req.method === 'PUT') {
+      var data = req.body;
+      delete data.role;
+      if (data.defaultRegisterMeal === 'checked')
+        data.defaultRegisterMeal = true;
+      else
+        data.defaultRegisterMeal = false;
+      if (data.password) {
+        data.password = hasher.generate(data.password);
+      }
+      console.log(data);
+      User.update({id: req.body.id}, data).done(function (err, docs) {
+        if (err) {
+          console.log(err);
+          res.send(err);
+          return;
+        }
+        if (docs.defaultRegisterMeal) {
+          docs.defaultRegisterMeal = 'checked';
+        }
+        res.send('Done');
+      });
+      return;
+    }
+    User.findOne(req.session.user.id).done(function (err, docs) {
+      if (err) {
+        res.send(err);
+        console.log(err);
+        return;
+      }
+      if (docs.defaultRegisterMeal) {
+        docs.defaultRegisterMeal = 'checked';
+      }
+      res.send(docs);
+    })
+  },
   find: function (req, res) {
 
     // Send a JSON response

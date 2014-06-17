@@ -222,4 +222,17 @@ div.rg-box-input input {
   display: inline-block;
   width: 170px;
 }
+
+ul.user_profile li {
+  margin-bottom: 20px;
+}
+span.edit {
+  font-size: 15px;
+  float: right;
+  color: blue;
+  cursor: pointer;
+}
+.editing{
+  border:1px solid red;
+  padding:0 20px;
 }
