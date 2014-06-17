@@ -49,7 +49,6 @@ module.exports = {
     var data = {
       email: req.param('email')
     };
-    console.log(req.param('require'));
     switch (req.param('require')) {
       case 'reset':
         User.findOneByEmail(data.email).done(function (err, docs) {
@@ -147,36 +146,39 @@ module.exports = {
         res.view(view);
         return;
       }
-
       User.findOneByEmail(email).done(function (err, docs) {
-          if (err)
-            console.log(err);
-          else if (docs) {
-            var key = docs.keyConfirm;
-            if (key == keyConfirm) {
-              var dataUpdate = {
-                keyConfirm: '',
-                password: hasher.generate(password)
-              };
-              User.update({email: email}, dataUpdate).done(function (err, docs) {
-                if (err) {
-                  console.log(err);
-                }
-                else {
-                  var html = 'Reset password successful!' +
-                    '<div class="link"' +
-                    '<br><a href="/login">Login</a>' +
-                    '</div>';
-                  res.view('main/success', {notification: html});
-                }
-              });
-              return;
-            }
-            view.notification = 'Can not change because reset time is over 3 hours';
-            res.view(view);
-          }
+        if (err) {
+          console.log(err);
+          res.view('main/success', {notification: err});
+          return;
         }
-      );
+        if (!docs) {
+          res.view('main/success', {notification: 'Email not exist'});
+          return;
+        }
+        var key = docs.keyConfirm;
+        if (key !== keyConfirm) {
+          res.view('main/success', {notification: 'Cannot confirm email'});
+          return;
+        }
+        var dataUpdate = {
+          keyConfirm: '',
+          password: hasher.generate(password)
+        };
+        User.update({email: email}, dataUpdate).done(function (err, docs) {
+          if (err) {
+            console.log(err);
+            res.view('main/success', {notification: err});
+            return;
+          }
+
+          var html = 'Reset password successful!' +
+            '<div class="link"' +
+            '<br><a href="/login">Login</a>' +
+            '</div>';
+          res.view('main/success', {notification: html});
+        });
+      });
     }
   },
   forgetPassword: function (req, res) {
@@ -213,19 +215,19 @@ module.exports = {
         res.view('user/login', {error: 'Your account not active , please check your email to active account'});
         return;
       }
-      if (hasher.verify(data.password, user.password)) {
-        req.session.user = user;
-        //  if user click remmeber
-        if (data.remember)
-          req.session.user.remember = "yes";
-        else
-          req.session.user.remember = "no";
-        res.redirect("/");
-      } else {
+      if (!hasher.verify(data.password, user.password)) {
         console.log('Wrong password');
         res.view('user/login', {error: "Wrong Password"});
         return;
       }
+      req.session.user = user;
+      //  if user click remmeber
+      if (data.remember)
+        req.session.user.remember = "yes";
+      else
+        req.session.user.remember = "no";
+      res.redirect("/");
+
     });
   },
   activeAccount: function (req, res) {
@@ -245,7 +247,6 @@ module.exports = {
         res.view('main/success', {notification: err});
         return;
       }
-
       if (!docs) {
         res.view('main/success', {notification: 'Email active not exits'});
         return;
@@ -261,7 +262,7 @@ module.exports = {
       data.keyConfirm = '';
       delete data.require;
       console.log(data);
-      User.update({email:data.email},data).done(function (err, docs) {
+      User.update({email: data.email}, data).done(function (err, docs) {
         if (err) {
           res.view('main/success', {notification: err});
           console.log(err);
