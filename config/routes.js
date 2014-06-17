@@ -35,7 +35,7 @@ module.exports.routes = {
     //view: 'site/index'
     controller: 'main'
   },
-'/success': {
+  '/success': {
     controller: 'main',
     action: 'success'
   },
@@ -43,7 +43,7 @@ module.exports.routes = {
     controller: 'main',
     action: 'find'
   },
-  'post /manager':{
+  'put /manager/:id': {
     controller: 'main',
     action: 'manager'
   },
@@ -80,9 +80,9 @@ module.exports.routes = {
     controller: 'user',
     action: 'checkUserLogin'
   },
-  '/activeAccount/?':{
-    controller:'user',
-    action:'activeAccount'
+  '/activeAccount/?': {
+    controller: 'user',
+    action: 'activeAccount'
   },
   'post /user': {
     controller: 'user',
@@ -281,8 +281,7 @@ module.exports.routes = {
    'get /*(^.*)': 'UserController.profile'
 
    */
-}
-;
+};
 
 /**
  * (3) Action blueprints
@@ -350,4 +349,3 @@ module.exports.routes = {
  * Finally, if nothing else matched, the default 404 handler is triggered.
  * See `config/404.js` to adjust your app's 404 logic.
  */
- 

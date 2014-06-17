@@ -51,7 +51,7 @@ module.exports = {
         },
         menu: true,
         status: "Logout",
-        welcomeUser: "Welcome : " + req.session.user.lastname
+        welcomeUser: "Welcome : " + req.session.user.lastname,
         admin: admin
       });
     } else {
@@ -59,21 +59,17 @@ module.exports = {
     }
   },
   manager: function(req, res) {
-    var data = {
-      name: 'manager',
-      costs: req.body.cost,
-      lastHour: req.body.lastHour
-
-    }
-    //  res.send(data);
-    ManagerParam.findOrCreate(['name'],data).done(function(err, docs) {
+    var data = req.body;
+    ManagerParam.findOrCreate(['name'], data).done(function(err, docs) {
       if (err) {
         console.log(err);
       } else {
         console.log(docs.createdAt);
-        if(!docs.createdAt){
-          ManagerParam.update({id:docs.id},data).done(function(err,data){
-              res.send(data);
+        if (!docs.createdAt) {
+          ManagerParam.update({
+            id: docs.id
+          }, data).done(function(err, data) {
+            res.send(data);
           });
           return;
         }
@@ -88,13 +84,10 @@ module.exports = {
       else {
         res.send(data);
       }
-    })
-    };
-    res.view(view);
+    });
   },
-   success: function (req, res) {
-    var view =
-    {
+  success: function(req, res) {
+    var view = {
       partials: {
         header: '../partials/site/header',
         footer: '../partials/site/footer'
