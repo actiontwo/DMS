@@ -37,7 +37,7 @@ module.exports.routes = {
   },
   '/success': {
     controller: 'main',
-    action:'success'
+    action: 'success'
   },
   '/roleCheck': {
     controller: 'user',
@@ -52,7 +52,7 @@ module.exports.routes = {
     controller: 'user',
     action: 'resetPassword'
   },
-  '/confirmResetPassword':{
+  '/confirmResetPassword': {
     controller: 'user',
     action: 'confirmResetPassword'
   },
@@ -72,23 +72,14 @@ module.exports.routes = {
     controller: 'user',
     action: 'checkUserLogin'
   },
-
-  //  'get /user/:id?': {
-  //    controller: 'user',
-  //    action: 'find'
-  //  },
-  //  'post /user': {
-  //    controller: 'user',
-  //    action: 'create'
-  //  },
-  //  'put /user/:id': {
-  //    controller: 'user',
-  //    action: 'update'
-  //  },
-  //  'delete /user/:id': {
-  //    controller: 'user',
-  //    action: 'destroy'
-  //  },
+  '/activeAccount/?':{
+    controller:'user',
+    action:'activeAccount'
+  },
+  'post /user': {
+    controller: 'user',
+    action: 'create'
+  },
 
   // Register Meal Conttroler
   'get /registermealAd': {

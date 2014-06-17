@@ -15,7 +15,7 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 var tool = require('../tool');
-var md5 = require('md5');
+var md5 = require('MD5');
 var hasher = require("password-hash");
 module.exports = {
 
@@ -105,7 +105,6 @@ module.exports = {
               //smtpTransport.close(); // shut down the connection pool, no more messages
             });
           } else {
-
             res.view('user/forgetPassword', {notification: 'Email not exits, Please check your email again!'});
           }
         });
@@ -210,6 +209,10 @@ module.exports = {
         res.view('user/login', { error: "Email not found!" });
         return;
       }
+      if (!user.active) {
+        res.view('user/login', {error: 'Your account not active , please check your email to active account'});
+        return;
+      }
       if (hasher.verify(data.password, user.password)) {
         req.session.user = user;
         //  if user click remmeber
@@ -224,7 +227,49 @@ module.exports = {
         return;
       }
     });
+  },
+  activeAccount: function (req, res) {
+    req.session.user = '';
+    var data = {
+      require: req.param('require'),
+      email: req.param('email'),
+      keyConfirm: req.param('keyConfirm')
+    };
+    console.log(data);
+    if (data.require !== 'active') {
+      res.redirect('/');
+      return;
+    }
+    User.findOneByEmail(data.email).done(function (err, docs) {
+      if (err) {
+        res.view('main/success', {notification: err});
+        return;
+      }
 
+      if (!docs) {
+        res.view('main/success', {notification: 'Email active not exits'});
+        return;
+      }
+      if (docs.active) {
+        res.view('main/success', {notification: 'Your email have been active'});
+        return;
+      }
+      if (docs.keyConfirm !== data.keyConfirm) {
+        res.view('main/success', {noitificaion: 'Active fail, Please contact with us to support'})
+      }
+      data.active = true;
+      data.keyConfirm = '';
+      delete data.require;
+      console.log(data);
+      User.update({email:data.email},data).done(function (err, docs) {
+        if (err) {
+          res.view('main/success', {notification: err});
+          console.log(err);
+          return;
+        }
+        res.view('main/success', {notification: 'Your account have been active <a href="/login" class="link">Login</a>'});
+      });
+    });
   },
   find: function (req, res) {
 
@@ -267,20 +312,43 @@ module.exports = {
         return;
       }
       // if user not exit --> create a new user
-
+      data.active = false;
+      data.keyConfirm = md5(Math.floor((Math.random() * 100000)));
       data.password = hasher.generate(data.password);
-      User.create(data).done(function (err, user) {
-        // Error handling
-        if (err) {
-          return console.log(err);
 
-        } else {
-          // The User was created successfully!
-          req.session.user = user;
-          req.session.user.remeber = "yes";
-          res.redirect('/');
+      var smtpTransport = tool.smtpTransport();
+      // setup e-mail data with unicode symbols
+      var linkConfirm = req.baseurl + "/activeAccount?require=active&email=" + data.email + "&keyConfirm=" + data.keyConfirm;
+      // declaration mail form
+      var mailInfo = {
+        from: "DMS  <dms@designveloper.com>", // sender address
+        to: data.email, // list of receivers
+        subject: "Active account", // Subject line
+        html: '<h3>Dear ' + data.firstname + ' ' + data.lastname + ',</h3>' +
+          '<p>Thanks for signing up to use DMS Online!</p>' +
+          '<p> Please click the link below to activate your account:</p>' +
+          '<p> <a href="' + linkConfirm + '">Verify Your Account</a></p>' +
+          '<p>The DMS Team</p>' +
+          '<p> <a href="https://www.dms.designveloper.com">Dining Management System</a></p>'
+      };
+      // send mail with defined transport object
+      smtpTransport.sendMail(mailInfo, function (error, response) {
+        if (error) {
+          console.log(error);
+          res.view('main/success', {notification: 'Can not send email'});
+          return;
         }
+        User.create(data).done(function (err, user) {
+          // Error handling
+          if (err) {
+            return console.log(err);
+          } else {
+            // The User was created successfully!
+            res.view('main/success', {notification: 'Please check your email to active account'});
+          }
+        });
       });
+
     });
   },
 
