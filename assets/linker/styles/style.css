@@ -1,4 +1,4 @@
-ul, p {
+ul, p,figure {
   padding: 0;
   margin: 0;
 }
@@ -29,7 +29,7 @@ a {
 }
 
 body {
-  font-size: 16px;
+  font-size: 18px;
   background: #f1f1f1;
 }
 
@@ -154,7 +154,7 @@ ul.searchForm li {
   vertical-align: middle;
 }
 
-ul.searchForm img {
+.ui-datepicker-trigger {
   position: relative;
   top: 4px;
 }
@@ -175,6 +175,7 @@ ul.searchForm img {
   margin-top: 10px;
   color: #fff;
   border: none;
+  cursor: pointer;
 }
 
 .btn-black:hover {
@@ -226,7 +227,7 @@ div.rg-box-input input {
 ul.user_profile li {
   margin-bottom: 20px;
 }
-span.edit {
+span.edit,span.save {
   font-size: 15px;
   float: right;
   color: blue;
@@ -235,4 +236,84 @@ span.edit {
 .editing{
   border:1px solid red;
   padding:0 20px;
+}
+.popup_area {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: block;
+}
+.mask_popup {
+  background: rgba(0,0,0,0.5);
+  height: 100%;
+  width: 100%;
+}
+.content_popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height:100%;
+  width: 100%;
+}
+.wrapper_content_popup {
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+.content_detail_popup {
+  display: table-cell;
+  vertical-align: middle;
+}
+[class*='style_popup']{
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  background: #fff;
+  margin: 0 auto;
+  position: relative;
+  padding: 10px;
+}
+[class*='-940px']{
+  width: 940px;
+}
+.close_popup{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.create_form_popup label {
+  display: block;
+  margin: 5px;
+}
+.create_form_popup input {
+  width: 100%;
+}
+.create_form_popup textarea {
+  width: 100%;
+  height: 200px;
+  border-radius: 2px;
+  border: 1px solid #bbb;
+}
+.create_form_popup .datepicker{
+  width:inherit;
+}
+.close_popup {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+ul.detailPopup {
+  padding: 20px;
+  font-size: 20px;
+}
+ul.detailPopup li {
+  margin: 10px 0;
+}
+.detailPopup label {
+  width: 80px;
+  display: inline-block;
 }

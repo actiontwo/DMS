@@ -34,6 +34,7 @@ var AppRouter = Backbone.Router.extend({
       this.managerView = new ManagerView();
       this.userManagerView = new UserManagerView();
       this.optionsView = new OptionsView();
+      this.depositManagerView = new DepositManagerView();
       this.registerMealAdView = new RegisterMealAdView({
         collection: new RegisterMealAdCollection
       })
@@ -71,9 +72,11 @@ var AppRouter = Backbone.Router.extend({
   managerRender: function () {
     this.optionsView.model.fetch();
     this.userManagerView.collection.fetch({reset:true});
+    this.depositManagerView.collection.fetch({reset:true});
     $('#main').html(this.managerView.render().el);
     $('#options').html(this.optionsView.el);
     $('#userManager').html(this.userManagerView.el);
+    $('#depositManager').html(this.depositManagerView.el);
     $('#subMain').html("");
     $("#tabsAdmin").tabs();
   },

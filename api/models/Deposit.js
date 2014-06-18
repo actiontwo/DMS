@@ -9,6 +9,15 @@
 module.exports = {
 
   attributes: {
+    userId:{
+      type:'string'
+    },
+    email:{
+      type:'string'
+    },
+    name:{
+      type:'string'
+    },
     date:{
       type:'date'
     },

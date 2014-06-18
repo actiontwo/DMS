@@ -1,0 +1,48 @@
+<table>
+    <thead>
+    <tr>
+        <th>No</th>
+        <th>Email</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Edit</th>
+    </tr>
+    </thead>
+    <tbody id="depositTable">
+    {{#each models}}
+    {{#with attributes}}
+    {{#if edit}}
+    <tr data-id="{{id}}">
+        <td>{{@index}}</td>
+        <td><input class='inputEmail' type="email" value="{{email}}"/></td>
+        <td><input class='inputName' type="text" value="{{name}}"/></td>
+        <td><input class='inputDate datepicker' type="text"
+                   value="{{date}}"/></td>
+        <td><input class="inputAmount" type="text" value="{{amount}}"/></td>
+        <td class="link">
+            <span class="save">Save</span>
+            <span class="delete">Delete</span>
+        </td>
+    </tr>
+    {{else}}
+    <tr data-id="{{id}}">
+        <td>{{@index}}</td>
+        <td>{{email}}</td>
+        <td>{{name}}</td>
+        <td>{{date}}</td>
+        <td>{{amount}}</td>
+        <td class="link">
+            <span class="edit">Edit</span>
+            <span class="delete">Delete</span>
+        </td>
+    </tr>
+    {{/if}}
+    {{/with}}
+    {{/each}}
+    </tbody>
+</table>
+<div class="groupbtn">
+    <a class="btn-black" id="addDeposit">Add</a>
+</div>
+<p class="notification"></p>

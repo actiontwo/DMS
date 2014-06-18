@@ -30,3 +30,8 @@ function initDatePicker(el) {
     buttonImageOnly: true
   });
 }
+function autoComplete(el, source) {
+  el.autocomplete({
+    source: source
+  })
+}
