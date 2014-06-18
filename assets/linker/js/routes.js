@@ -7,7 +7,7 @@ var AppRouter = Backbone.Router.extend({
     'deposit': 'depositRender',
     'report': 'reportRender',
     'userProfile': 'userProfile',
-    'manager': 'managerRender'
+      'manager': 'managerRender'
   },
   initialize: function () {
 
@@ -37,6 +37,9 @@ var AppRouter = Backbone.Router.extend({
       this.depositManagerView = new DepositManagerView();
       this.registerMealAdView = new RegisterMealAdView({
         collection: new RegisterMealAdCollection
+        });
+        this.menuAdView = new MenuAdView({
+          collection: new MenuAdCollection
       })
     }
   },
@@ -49,9 +52,11 @@ var AppRouter = Backbone.Router.extend({
     }
   },
   menuRender: function () {
-    this.menuView.collection.fetch({reset: true});
+  this.menuView.collection.fetch({reset: true});
     $('#subMain').html("");
     $('#main').html(this.menuView.el);
+   
+    
   },
   expenseRender: function () {
     this.expenseView.collection.fetch({reset: true});

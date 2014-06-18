@@ -31,6 +31,27 @@ module.exports = {
       }
     })
   },
+  indexAd: function(req, res){
+    if (!req.session.user) {
+      res.send('You are not login');
+      return;
+    }
+    if (req.session.user.role !== 'admin') {
+      res.send('You are not admin');
+      return;
+    }
+    if (req.param('id')) {
+      res.send('find ID');
+      return;
+    }
+    Menu.find().done(function (err, data) {
+      if (err)
+        console.log(err);
+      else {
+        res.send(data);
+      }
+    })
+  },
   /**
    * Action blueprints:
    *    `/menu/find`
