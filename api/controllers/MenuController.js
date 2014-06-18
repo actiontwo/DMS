@@ -52,6 +52,54 @@ module.exports = {
       }
     })
   },
+  getDish: function(req, res){
+    if (!req.session.user) {
+      res.send('You are not login');
+      return;
+    }
+    if (req.session.user.role !== 'admin') {
+      res.send('You are not admin');
+      return;
+    }
+    if (req.param('id')) {
+      res.send('find ID');
+      return;
+    }
+    Dish.find().done(function(err, data){
+      if(err)
+        res.send(err);
+      else {
+       res.send(data);
+      
+      }
+    })
+  },
+  createDish: function(req, res){
+    if (!req.session.user) {
+      res.send('You are not login');
+      return;
+    }
+    if (req.session.user.role !== 'admin') {
+      res.send('You are not admin');
+      return;
+    }
+    if (req.param('id')) {
+      res.send('find ID');
+      return;
+    }
+    var data = {
+      dish: req.body.dish,
+      note: req.body.note
+    }
+    Dish.create(data).done(function(err, data){
+      if(err)
+        res.send(err);
+      else {
+        res.send(data);
+      }
+    })
+
+  },
   /**
    * Action blueprints:
    *    `/menu/find`

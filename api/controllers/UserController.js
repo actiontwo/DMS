@@ -314,14 +314,6 @@ module.exports = {
       res.send(docs);
     })
   },
-  find: function (req, res) {
-
-    // Send a JSON response
-    return res.json({
-      hello: 'Find'
-    });
-  },
-
   /**
    * Action blueprints:
    *    `/user/create`
@@ -395,15 +387,38 @@ module.exports = {
     });
   },
 
+  find: function (req, res) {
+    if (req.session.user.role !== 'admin') {
+      res.send('Your are not admin');
+      return;
+    }
+    User.find().done(function (err, docs) {
+      if (err) {
+        res.send(err);
+        return;
+      }
+      res.send(docs);
+    });
+  },
   /**
    * Action blueprints:
    *    `/user/update`
    */
   update: function (req, res) {
-
-    // Send a JSON response
-    return res.json({
-      hello: 'update'
+    if (req.session.user.role !== 'admin') {
+      res.send('Your are not admin');
+      return;
+    }
+    var data = req.body;
+    console.log('_----------------');
+    User.update({id: data.id}, data).done(function (err, docs) {
+      if (err) {
+        console.log(err);
+        res.send(err);
+        return;
+      }
+      console.log('Update');
+      res.send('update Success');
     });
   },
 

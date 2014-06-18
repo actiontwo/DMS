@@ -304,6 +304,36 @@ figure {
   margin-left: 10px;
   text-align: center;
 }
-.content-create-dish{ display: none; width: 600px;  margin: 0 auto;}
+.content-create-dish{margin: 0 auto;}
 .label-dish{display: inline-block; width: 100px}
 .txt-dish{width: 400px; padding: 3px !important; margin: 5px !important; border-radius: 0px !important}
+.black_overlay {
+  display: none;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index:1001;
+  -moz-opacity: 0.8;
+  opacity:.80;
+  filter: alpha(opacity=80);
+}
+.white_content, .white_content_createMenu {
+  display: none;
+  position: absolute;
+  top: 10%;
+  left: 25%;
+  width: 50%;
+  height: 60%;
+  padding: 16px;
+  border: 16px solid orange;
+  background-color: white;
+  z-index:1002;
+  overflow: auto;
+}
+.white_content_createMenu{left: 12%; width: 70%}
+.close-pop{
+  float: right
+}
