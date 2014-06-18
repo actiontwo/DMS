@@ -237,77 +237,77 @@ span.edit,span.save {
   border:1px solid red;
   padding:0 20px;
 }
-.popup_area {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  display: block;
-}
-.mask_popup {
-  background: rgba(0,0,0,0.5);
-  height: 100%;
-  width: 100%;
-}
-.content_popup {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height:100%;
-  width: 100%;
-}
-.wrapper_content_popup {
-  display: table;
-  height: 100%;
-  width: 100%;
-}
-.content_detail_popup {
-  display: table-cell;
-  vertical-align: middle;
-}
-[class*='style_popup']{
-  border: 1px solid #d0d0d0;
-  border-radius: 4px;
-  background: #fff;
-  margin: 0 auto;
-  position: relative;
-  padding: 10px;
-}
-[class*='-940px']{
-  width: 940px;
-}
-.close_popup{
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-}
 
-.create_form_popup label {
-  display: block;
-  margin: 5px;
+figure {
+  margin: 0px;
 }
-.create_form_popup input {
-  width: 100%;
+[class*="iconsp"] {
+  background: url(img/iconsp.png) no-repeat;
+  display: inline-block;
 }
-.create_form_popup textarea {
-  width: 100%;
-  height: 200px;
-  border-radius: 2px;
-  border: 1px solid #bbb;
+[class*="25px"] {
+  height: 20px;
+  width: 25px;
+  border: 1px solid transparent;
 }
-.create_form_popup .datepicker{
-  width:inherit;
+[class*="15px"] {
+  height: 15px;
+  width: 15px;
+  border: 1px solid transparent;
 }
-.close_popup {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+.iconsp-remove-25px {
+  background-position: -97px 3px;
   cursor: pointer;
 }
-ul.detailPopup {
-  padding: 20px;
+.menus .iconsp-remove-25px {
+  cursor: pointer;
+}
+.iconsp-remove-red-25px {
+  background-position: -96px -23px;
+  cursor: pointer;
+}
+.iconsp-edit-25px {
+  background-position: -73px 2px;
+  cursor: pointer;
+}
+.iconsp-edit-red-25px {
+  background-position: -73px -21px;
+  cursor: pointer;
+}
+.menus .iconsp-edit-red-25px{
+  cursor: pointer;
+}
+.iconsp-save-25px {
+  background-position: -25px -21px;
+  cursor: pointer;
+}
+.btn-end a, .confirm {
+  background: #7a7a7a;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #7a7a7a 52%, #5e5e5e 52%, #7a7a7a 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(52%, #7a7a7a), color-stop(52%, #5e5e5e), color-stop(100%, #7a7a7a));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #7a7a7a 52%, #5e5e5e 52%, #7a7a7a 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #7a7a7a 52%, #5e5e5e 52%, #7a7a7a 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #7a7a7a 52%, #5e5e5e 52%, #7a7a7a 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #7a7a7a 52%, #5e5e5e 52%, #7a7a7a 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7a7a7a', endColorstr='#7a7a7a', GradientType=0);
+  /* IE6-9 */
+  padding: 5px 10px;
+  display: inline-block;
+  border-radius: 2px;
+  margin-top: 24px;
+  margin-left: 10px;
+  text-align: center;
+}
+.content-create-dish{ display: none; width: 600px;  margin: 0 auto;}
+.label-dish{display: inline-block; width: 100px}
+.txt-dish{width: 400px; padding: 3px !important; margin: 5px !important; border-radius: 0px !important}
   font-size: 20px;
 }
 ul.detailPopup li {
