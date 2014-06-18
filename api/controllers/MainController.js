@@ -38,7 +38,7 @@ module.exports = {
   // REVISIONS:
   //            05/30/2014: Phuc Nguyen
   // -------------------------------------------------------------------
-  index: function(req, res) {
+  index: function (req, res) {
     var admin = false;
     if (req.session.user) {
       if (req.session.user.role === 'admin') {
@@ -58,9 +58,9 @@ module.exports = {
       res.redirect('/login');
     }
   },
-  manager: function(req, res) {
+  manager: function (req, res) {
     var data = req.body;
-    ManagerParam.findOrCreate(['name'], data).done(function(err, docs) {
+    ManagerParam.findOrCreate(['name'], data).done(function (err, docs) {
       if (err) {
         console.log(err);
       } else {
@@ -68,7 +68,7 @@ module.exports = {
         if (!docs.createdAt) {
           ManagerParam.update({
             id: docs.id
-          }, data).done(function(err, data) {
+          }, data).done(function (err, data) {
             res.send(data);
           });
           return;
@@ -77,8 +77,8 @@ module.exports = {
       }
     })
   },
-  find: function(req, res) {
-    ManagerParam.findOneByName('manager').done(function(err, data) {
+  find: function (req, res) {
+    ManagerParam.findOneByName('manager').done(function (err, data) {
       if (err)
         console.log(err);
       else {
@@ -86,7 +86,7 @@ module.exports = {
       }
     });
   },
-  success: function(req, res) {
+  success: function (req, res) {
     var view = {
       partials: {
         header: '../partials/site/header',
@@ -96,4 +96,4 @@ module.exports = {
     };
     res.view(view);
   }
-}
+};

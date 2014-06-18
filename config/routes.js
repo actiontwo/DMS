@@ -39,7 +39,7 @@ module.exports.routes = {
     controller: 'main',
     action: 'success'
   },
-  'get /manager': {
+  'get /manager/:id?': {
     controller: 'main',
     action: 'find'
   },
@@ -87,6 +87,14 @@ module.exports.routes = {
   'post /user': {
     controller: 'user',
     action: 'create'
+  },
+  'put /user': {
+    controller: 'user',
+    action: 'update'
+  },
+  'delete /user': {
+    controller: 'user',
+    action: 'destroy'
   },
   '/userProfile':{
     controller:'user',
@@ -189,47 +197,7 @@ module.exports.routes = {
   'post /search': {
     controller: 'search',
     action: 'index'
-  },
-  //  'dish':{
-  //    controller:'main',
-  //    action:'dish'
-  //  },
-  //  'get /dish/:id?':{
-  //    controller:'main',
-  //    action:'dish'
-  //  }
-
-  //get all menu from database
-  // '/menu':{
-  //   controller:'menu',
-  //   action:'getall'
-  // },
-  // //create new menu and save into database
-  // '/menu/create':{
-  //   controller:'menu',
-  //   action:'create'
-  // },
-  // //get all suggestion from database
-  // '/suggestion':{
-  //   controller:'suggestion',
-  //   action:'getall'
-  // },
-  // //get all list dish from database
-  // '/listdish':{
-  //   controller:'listdish',
-  //   action:'getall'
-  // },
-  // //create new dish and save into database
-  // '/listdish/create':{
-  //   controller:'listdish',
-  //   action:'create'
-  // }
-
-  // '/menu/site/partials':{
-  //   controller:'menu',
-  //   action:'index'
-  // }
-
+  }
   /*
    // But what if you want your home page to display
    // a signup form located at `views/user/signup.ejs`?
