@@ -51,7 +51,7 @@ module.exports = {
         },
         menu: true,
         status: "Logout",
-        welcomeUser: "Welcome : " + req.session.user.lastname,
+        user: req.session.user.lastname,
         admin: admin
       });
     } else {

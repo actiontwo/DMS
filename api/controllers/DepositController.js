@@ -23,18 +23,34 @@ module.exports = {
    *    `/deposit/find`
    */
   find: function (req, res) {
-    if (req.param('id')) {
-      res.send('find ID');
+
+    //check user login
+    if (!req.session.user) {
+      res.send('Your are not login');
+      return;
     }
-    else {
-      Deposit.find().sort('date').done(function (err, data) {
+    var userId = req.session.user.id;
+    var userRole = req.session.user.role;
+    //check user role
+    if (userRole === "user" || req.param('id')) {
+      console.log(userId);
+      Deposit.findByUserId(userId).sort('date').done(function (err, data) {
         if (err)
           console.log(err);
         else {
           res.send(data);
         }
-      })
+      });
+      return;
     }
+
+    Deposit.find().sort('date').done(function (err, data) {
+      if (err)
+        console.log(err);
+      else {
+        res.send(data);
+      }
+    })
   },
   /**
    * Action blueprints:
@@ -69,15 +85,14 @@ module.exports = {
    */
   destroy: function (req, res) {
     var id = req.param('id');
-    Deposit.destroy({id:id}).done(function(err,docs){
-      if(err){
+    Deposit.destroy({id: id}).done(function (err, docs) {
+      if (err) {
         console.log(err);
         res.send(err);
         return
       }
       console.log(docs);
       res.send('Done');
-
     });
   },
 
@@ -86,7 +101,10 @@ module.exports = {
    *    `/deposit/update`
    */
   update: function (req, res) {
-
+    if(!req.session.user){
+      res.send('Please Login!');
+      return;
+    }
     var data = req.body;
     console.log(data);
     User.findOneByEmail(data.email).done(function (err, docs) {

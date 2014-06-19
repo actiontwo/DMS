@@ -24,11 +24,7 @@
 //
 //
 function initDatePicker(el) {
-  el.datepicker({
-    showOn: "button",
-    buttonImage: "images/calendar.png",
-    buttonImageOnly: true
-  });
+  el.datepicker();
 }
 function autoComplete(el, source) {
   el.autocomplete({

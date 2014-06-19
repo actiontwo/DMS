@@ -34,15 +34,14 @@ DepositManagerView = Backbone.View.extend({
       'click #addDeposit': 'addDeposit',
       'click .save': 'saveValue',
       'click .edit': 'editDeposit',
-      'click .delete':'deleteDeposit'
+      'click .delete': 'deleteDeposit'
     });
     return this;
   },
-  deleteDeposit:function(el){
+  deleteDeposit: function (el) {
     var ev = $(el.currentTarget);
     var id = ev.parents('tr').data('id');
     this.collection.get(id).destroy();
-   // this.model.destroy({id:id});
   },
   editDeposit: function (el) {
     var ev = $(el.currentTarget);
@@ -57,9 +56,14 @@ DepositManagerView = Backbone.View.extend({
       amount: ev.parents('tr').find('.inputAmount').val(),
       date: ev.parents('tr').find('.inputDate').val()
     };
-    console.log(data);
+    forEach(key in data)
+    {
+      if (data[key])
+      alert('Data not empty');
+        return;
+    }
     var model = this.collection.get(ev.parents('tr').data('id')).set(data);
-    if(model.attributes.new){
+    if (model.attributes.new) {
       delete model.attributes.id;
     }
     model.save();
@@ -72,7 +76,7 @@ DepositManagerView = Backbone.View.extend({
       name: '',
       amount: '',
       date: '',
-      new :true
+      new: true
     };
     this.collection.add(data);
   }
