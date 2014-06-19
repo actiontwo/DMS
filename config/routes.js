@@ -126,9 +126,9 @@ module.exports.routes = {
     action: 'destroy'
   },
   // Menu Controller
-  'get /menuAd': {
+  'get /menu': {
     controller: 'menu',
-    action: 'indexAd'
+    action: 'index'
   },
   'get /menu/:id': {
     controller: 'menu',
