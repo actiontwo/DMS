@@ -50,21 +50,22 @@ DepositManagerView = Backbone.View.extend({
   saveValue: function (el) {
     var ev = $(el.currentTarget);
     var data = {
-      edit: false,
       email: ev.parents('tr').find('.inputEmail').val(),
       name: ev.parents('tr').find('.inputName').val(),
       amount: ev.parents('tr').find('.inputAmount').val(),
       date: ev.parents('tr').find('.inputDate').val()
     };
-    forEach(key in data)
-    {
-      if (data[key])
-      alert('Data not empty');
+    for (key in data) {
+      if (!data[key]) {
+        alert('Data not empty');
         return;
+      }
     }
+    data.edit = false;
     var model = this.collection.get(ev.parents('tr').data('id')).set(data);
     if (model.attributes.new) {
       delete model.attributes.id;
+      delete model.attributes.new;
     }
     model.save();
   },
@@ -80,5 +81,4 @@ DepositManagerView = Backbone.View.extend({
     };
     this.collection.add(data);
   }
-})
-;
+});

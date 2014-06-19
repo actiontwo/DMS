@@ -21,7 +21,7 @@ var UserView = Backbone.View.extend({
   changeViewToEdit: function (el) {
     var ev = $(el.currentTarget);
     $('.content_info').removeClass('editing').attr('contenteditable', false);
-    ev.parents('li').find('.content_info').attr('contenteditable', true).addClass('editing');
+    ev.parents('tr').find('.content_info').attr('contenteditable', true).addClass('editing');
   },
   updateProfile: function () {
     var checked = '';
@@ -35,6 +35,7 @@ var UserView = Backbone.View.extend({
     };
     if ($('input[name = "password"]').val() !== "") {
       if ($('input[name = "password"]').val() !== $('input[name = "confirmPassword"]').val()) {
+        $('.alert').show();
         $('.error').html('Password not match');
         return;
       }

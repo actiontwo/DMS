@@ -25,20 +25,32 @@ module.exports = {
     lastname: {
       type: 'string'
     },
+    numberOfMeal: {
+      type: 'integer',
+      defaultsTo: 0
+    },
+    deposit: {
+      type: 'integer',
+      defaultsTo: 0
+    },
+    balance: {
+      type: 'integer',
+      defaultsTo: 0
+    },
     role: {
       type: 'string'
     },
     join_date: {
       type: 'date'
     },
-    active:{
-      type:'boolean'
+    active: {
+      type: 'boolean'
     },
-    keyConfirm:{
-      type:'string'
+    keyConfirm: {
+      type: 'string'
     },
-    defaultRegisterMeal:{
-      type:'boolean'
+    defaultRegisterMeal: {
+      type: 'boolean'
     },
     toJSON: function () {
       var obj = this.toObject();
@@ -46,5 +58,4 @@ module.exports = {
       return obj;
     }
   }
-
 };

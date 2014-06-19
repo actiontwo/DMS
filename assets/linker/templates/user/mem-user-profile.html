@@ -1,39 +1,76 @@
-<div class="header">
-    <span>User Profile</span>
+<div class="page-header">
+    <h1>User Profile</h1>
 </div>
-<div class="content">
-    <ul class="user_profile">
-        <li>
-            <label>First name :</label>
-            <span class='content_info firstname'
-                  contenteditable="false">{{firstname
-                }}</span>
-            <span class="edit">Edit</span>
-        </li>
-        <li>
-            <label>Last Name :</label>
-            <span class='content_info lastname'
-                  contenteditable="false">{{lastname
-                }}</span>
-            <span class="edit">Edit</span>
-        </li>
-        <li>
-            <label>Password :</label>
-            <input type="password" name="password" id="password"/>
-        </li>
-        <li>
-            <label>Confirm Password :</label>
-            <input type="password" name="confirmPassword" id="confirmPassword"/>
-        </li>
-        <li><label>Email :</label>{{email}}</li>
-        <li><label>Role</label>{{role}}</li>
-        <!--<li><label>Set Default Registel Meal</label>-->
-            <!--<input type="checkbox" class="defaultRegisterMeal"-->
-            <!--{{defaultRegisterMeal}}/>-->
-        <!--</li>-->
-    </ul>
-    <p class="error"></p>
-    <div class="groupbtn">
-        <a class="btn-black saveProfile">Save</a>
+<div class="col-md-6">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>Field</th>
+            <th>Info</th>
+            <th>Edit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>First Name</td>
+            <td><span class='content_info firstname' contenteditable="false">{{firstname}}</span></td>
+            <td><span class="edit glyphicon glyphicon-pencil cursor"></span></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>First Name</td>
+            <td><span class='content_info lastname' contenteditable="false">{{lastname}}</span></td>
+            <td><span class="edit glyphicon glyphicon-pencil cursor"></span></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Email</td>
+            <td><span class='email'>{{email}}</span></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Password</td>
+            <td><input class="form-control" type="password" name="password" id="password"/></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Confirm Password</td>
+            <td><input class='form-control' type="password" name="confirmPassword" id="confirmPassword"/></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Role</td>
+            <td><span>{{role}}</span></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>Deposit</td>
+            <td><span>{{deposit}}</span></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>Balance</td>
+            <td><span>{{balance}}</span></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td>Numbers of Meal</td>
+            <td><span>{{numberOfMeal}}</span></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-dismissable alert-danger" style="display: none">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+       <span class="error"></span>
     </div>
+    <a class="btn-primary btn saveProfile">Save</a>
 </div>

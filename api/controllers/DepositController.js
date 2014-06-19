@@ -36,8 +36,7 @@ module.exports = {
       console.log(userId);
       Deposit.findByUserId(userId).sort('date').done(function (err, data) {
         if (err)
-          console.log(err);
-        else {
+          console.log(err); else {
           res.send(data);
         }
       });
@@ -46,8 +45,7 @@ module.exports = {
 
     Deposit.find().sort('date').done(function (err, data) {
       if (err)
-        console.log(err);
-      else {
+        console.log(err); else {
         res.send(data);
       }
     })
@@ -58,24 +56,33 @@ module.exports = {
    */
   create: function (req, res) {
     var data = req.body;
-    console.log(data);
     User.findOneByEmail(data.email).done(function (err, docs) {
       if (err) {
         console.log(err);
         res.send(err);
         return;
       }
+      var deposit = parseInt(data.amount);
+      if (docs.deposit) {
+        deposit += docs.deposit;
+      }
       data.userId = docs.id;
       data.email = docs.email;
       data.name = docs.lastname + " " + docs.firstname;
-
-      console.log(data);
       Deposit.create(data).done(function (err, data) {
         if (err)
-          res.send(err);
-        else
-          res.send('Save Successfull!')
-      })
+          res.send(err); else {
+          console.log(docs.id);
+          console.log(deposit);
+          User.update({id: docs.id}, {deposit: deposit}).done(function (err, userData) {
+            if (err)
+              res.send(err); else
+              console.log(userData);
+          });
+          res.send(data);
+        }
+      });
+
     });
   },
 
@@ -84,49 +91,85 @@ module.exports = {
    *    `/deposit/destroy`
    */
   destroy: function (req, res) {
+    if (req.session.user.role !== "admin") {
+      res.send('Your are not admin');
+      return;
+    }
     var id = req.param('id');
-    Deposit.destroy({id: id}).done(function (err, docs) {
+    //check user deposit exits
+    Deposit.findOne({id: id}).done(function (err, depositData) {
       if (err) {
         console.log(err);
         res.send(err);
-        return
+        return;
       }
-      console.log(docs);
-      res.send('Done');
+      if (!depositData) {
+        return;
+      }
+      User.findOne({id: depositData.userId}).done(function (err, userData) {
+        if (err) {
+          console.log(err);
+          req.send(err);
+          return;
+        }
+        var deposit = userData.deposit - depositData.amount;
+        User.update({id: userData.id}, {deposit: deposit}).done(function (err, userDataupdate) {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          Deposit.destroy({id: id}).done(function (err, dataDelete) {
+            res.send(dataDelete);
+          });
+        });
+      });
     });
   },
-
   /**
    * Action blueprints:
    *    `/deposit/update`
    */
   update: function (req, res) {
-    if(!req.session.user){
+    if (!req.session.user) {
       res.send('Please Login!');
       return;
     }
     var data = req.body;
-    console.log(data);
     User.findOneByEmail(data.email).done(function (err, docs) {
       if (err) {
         console.log(err);
         res.send(err);
         return;
       }
-      if (docs) {
-        data.userId = docs.id;
-        data.email = docs.email;
-        data.name = docs.lastname + " " + docs.firstname;
-        console.log(data);
-        Deposit.update({id: data.id}, data).done(function (err, data) {
-          if (err)
-            res.send(err);
-          else
-            res.send('Save Successfull!')
-        });
+      if (!docs) {
+        res.send(docs);
         return;
       }
-      res.send('can not update');
+      data.userId = docs.id;
+      data.email = docs.email;
+      data.name = docs.lastname + " " + docs.firstname;
+      Deposit.findOneById(data.id).done(function (err, dataDeposit) {
+        if (err) {
+          console.log(err);
+          res.send(err);
+          return;
+        }
+        if (!dataDeposit) {
+          res.send('Not Exit!');
+          return;
+        }
+        var deposit = data.amount - dataDeposit.amount + docs.deposit;
+        User.update({id: docs.id}, {deposit: deposit}).done(function (err, dataUserUpdate) {
+          Deposit.update({id: data.id}, data).done(function (err, data) {
+            if (err) {
+              res.send(err);
+              console.log(err);
+              return;
+            }
+            res.send(data);
+          });
+        });
+      });
     });
   },
 
@@ -135,6 +178,4 @@ module.exports = {
    * (specific to DepositController)
    */
   _config: {}
-
-
 };

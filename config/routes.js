@@ -96,7 +96,7 @@ module.exports.routes = {
     controller: 'user',
     action: 'destroy'
   },
-  '/userProfile':{
+  '/userProfile/:id?':{
     controller:'user',
     action:'userProfile'
   },

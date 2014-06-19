@@ -298,7 +298,8 @@ module.exports = {
         if (docs.defaultRegisterMeal) {
           docs.defaultRegisterMeal = 'checked';
         }
-        res.send('Done');
+        delete docs.password;
+        res.send(docs);
       });
       return;
     }

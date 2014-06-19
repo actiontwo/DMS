@@ -36,9 +36,9 @@ var AppRouter = Backbone.Router.extend({
       this.optionsView = new OptionsView();
       this.depositManagerView = new DepositManagerView();
       this.menuManagerView = new MenuManagerView();
-//      this.registerMealAdView = new RegisterMealAdView({
-//        collection: new RegisterMealAdCollection
-//      });
+      this.registerMealAdView = new RegisterMealAdView({
+        collection: new RegisterMealAdCollection
+      });
     }
   },
   registerMealRender: function () {
