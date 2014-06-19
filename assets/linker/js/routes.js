@@ -7,7 +7,7 @@ var AppRouter = Backbone.Router.extend({
     'deposit': 'depositRender',
     'report': 'reportRender',
     'userProfile': 'userProfile',
-      'manager': 'managerRender'
+    'manager': 'managerRender'
   },
   initialize: function () {
 
@@ -31,15 +31,15 @@ var AppRouter = Backbone.Router.extend({
       model: new UserModel()
     });
     if (role === "admin") {
- this.userManagerView = new UserManagerView();      
+      this.managerView = new ManagerView();
+      this.userManagerView = new UserManagerView();
       this.optionsView = new OptionsView();
       this.depositManagerView = new DepositManagerView();
       this.menuManagerView = new MenuManagerView();
-      this.registerMealAdView = new RegisterMealAdView({
-        collection: new RegisterMealAdCollection
-      });
-
-       
+//      this.registerMealAdView = new RegisterMealAdView({
+//        collection: new RegisterMealAdCollection
+//      });
+    }
   },
   registerMealRender: function () {
     this.registerMealView.collection.fetch({reset: true});
@@ -50,11 +50,10 @@ var AppRouter = Backbone.Router.extend({
     }
   },
   menuRender: function () {
-  this.menuView.collection.fetch({reset: true});
+    this.menuView.collection.fetch({reset: true});
     $('#subMain').html("");
-    $('#main').html(this.menuView.el);     
-   
-    
+    $('#main').html(this.menuView.el);
+
   },
   expenseRender: function () {
     this.expenseView.collection.fetch({reset: true});
@@ -74,9 +73,9 @@ var AppRouter = Backbone.Router.extend({
   },
   managerRender: function () {
     this.optionsView.model.fetch();
-    this.userManagerView.collection.fetch({reset:true});
-    this.depositManagerView.collection.fetch({reset:true});
-    this.menuManagerView.collection.fetch({reset:true});
+    this.userManagerView.collection.fetch({reset: true});
+    this.depositManagerView.collection.fetch({reset: true});
+    this.menuManagerView.collection.fetch({reset: true});
     $('#main').html(this.managerView.render().el);
     $('#options').html(this.optionsView.el);
     $('#userManager').html(this.userManagerView.el);
