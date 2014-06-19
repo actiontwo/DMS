@@ -146,6 +146,15 @@ module.exports.routes = {
     controller: 'menu',
     action: 'destroy'
   },
+  // Dish Controller
+  'get /dish':{
+    controller: 'menu',
+    action: 'getDish'
+  },
+  'post /dish':{
+    controller: 'menu',
+    action: 'createDish'
+  },
   // Expense Controller
   'get /expense/:id?': {
     controller: 'expense',
