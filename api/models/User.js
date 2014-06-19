@@ -52,6 +52,9 @@ module.exports = {
     defaultRegisterMeal: {
       type: 'boolean'
     },
+    defaultRegisterMeal:{
+      type:'boolean'
+    },
     toJSON: function () {
       var obj = this.toObject();
       delete obj.password;
