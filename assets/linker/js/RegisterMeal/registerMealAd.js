@@ -9,6 +9,7 @@ var RegisterMealAdCollection = Backbone.Collection.extend({
 });
 //Declare View
 var RegisterMealAdView = Backbone.View.extend({
+
   tagName: 'div',
   className: 'menus',
   id: 'register_meal_ad',

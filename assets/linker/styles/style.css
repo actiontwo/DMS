@@ -37,8 +37,8 @@ div.ui-datepicker-header.ui-widget-header.ui-helper-clearfix.ui-corner-all {
   text-align: center;
 }
 
-table.ui-datepicker-calendar tr span {
-  padding: 5px;
+table.ui-datepicker-calendar tr a {
+  text-align: center;
 }
 
 div#ui-datepicker-div {

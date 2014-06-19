@@ -53,7 +53,6 @@ var AppRouter = Backbone.Router.extend({
     this.menuView.collection.fetch({reset: true});
     $('#subMain').html("");
     $('#main').html(this.menuView.el);
-
   },
   expenseRender: function () {
     this.expenseView.collection.fetch({reset: true});

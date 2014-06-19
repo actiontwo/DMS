@@ -31,3 +31,9 @@ function autoComplete(el, source) {
     source: source
   })
 }
+Handlebars.registerHelper('role', function (role) {
+  return (role == 'admin')
+    ? 'selected'
+    : '';
+});
+

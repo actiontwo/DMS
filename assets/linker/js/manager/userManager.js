@@ -5,11 +5,6 @@ var UserManagerCollection = Backbone.Collection.extend({
   url: '/user',
   model: UserManagerModel
 });
-Handlebars.registerHelper('role', function (role) {
-  return (role == 'admin')
-    ? 'selected'
-    : '';
-});
 var UserManagerView = Backbone.View.extend({
   collection: new UserManagerCollection(),
   model: new UserManagerModel(),
