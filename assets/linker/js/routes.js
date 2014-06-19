@@ -80,9 +80,7 @@ var AppRouter = Backbone.Router.extend({
     $('#userManager').html(this.userManagerView.el);
     $('#depositManager').html(this.depositManagerView.el);
     $('#menuManager').html(this.menuManagerView.el);
-
     $('#subMain').html("");
-    $("#tabsAdmin").tabs();
   },
   userProfile: function () {
     this.userView.model.fetch();
