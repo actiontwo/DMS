@@ -17,7 +17,7 @@
   <div class="groupBtn">
     <a class="btn-black">Search</a>
   </div>
-  <table>
+  <table class="tb-menu">
     <thead>
       <tr>
         <th>No</th>
@@ -30,8 +30,35 @@
       </tr>
     </thead>
     <tbody>
-      {{#each models}} {{#with attributes}}
-      <tr>
+      {{#each models}} {{#with attributes}} {{#if edit}}
+      <tr data-id="{{id}}" class="tr-menu-edit">
+        <td>{{@index}}</td>
+        <td>
+          <input class="txt-date datepicker txt-menu" type="text" value="{{date}}" />
+        </td>
+        <td>
+          <select class="sel-brunch">
+            <option>Lunch</option>
+            <option>Dinner</option>
+          </select>
+        </td>
+        {{#each dish}}
+        <td>
+          <input class='txt-dish-{{@index}} txt-menu dish-loop' type="text" value="{{this}}" />
+        </td>
+        {{/each}}
+        <td>
+          <input class='txt-note txt-menu' type="text" value="{{note}}" />
+        </td>
+        <td>
+          <figure class="iconsp-save-25px save-menu" id="button-save-menu" data-id="{{id}}"></figure>
+        </td>
+        <td>
+          <figure class="iconsp-remove-25px delete-menu" id="button-remove-menu" data-id="{{id}}"></figure>
+        </td>
+      </tr>
+      {{else}}
+      <tr data-id="{{id}}">
         <td>{{@index}}</td>
         <td>{{date}}</td>
         <td>{{brunch}}</td>
@@ -40,26 +67,20 @@
         {{/each}}
         <td>{{note}}</td>
         <td>
-          {{#unless editor}}
-          <figure class="iconsp-edit-25px" id="button-edit-menu" data-id="{{id}}"></figure>
-          {{else}}
-          <figure class="iconsp-save-25px" id="button-save-menu" data-id="{{id}}"></figure>
-          {{/unless}}
+          <figure class="iconsp-edit-25px edit-menu" id="button-edit-menu" data-id="{{id}}"></figure>
         </td>
         <td>
-          <figure class="iconsp-remove-25px" id="button-remove-menu" data-id="{{id}}">
-          </figure>
+          <figure class="iconsp-remove-25px delete-menu" id="button-remove-menu" data-id="{{id}}"></figure>
         </td>
       </tr>
-      {{/with}} {{/each}}
+      {{/if}} {{/with}} {{/each}}
     </tbody>
   </table>
   <div class="btn-end">
     <a href="#">Print</a>
     <a href="javascript:void(0)" onclick="document.getElementById('light').style.display='block';
         document.getElementById('fade').style.display='block'">Create Dish</a>
-    <a href="javascript:void(1)" onclick="document.getElementById('light_createMenu').style.display='block';
-        document.getElementById('fade').style.display='block'">Create Menu</a>
+    <a class="add-menu">Add Menu</a>
   </div>
   <div class="clear-fix"></div>
 </div>
@@ -72,7 +93,7 @@
     <div class="header">
       <span>Create Dish</span>
     </div>
-    <div id="create-dish" class="create_form_popup">
+    <div >
       <p>
         <label class='label-dish'>Dish Name</label>
         <input type="text" name="dishname" class="dishname txt-dish" id="dishname">
@@ -86,7 +107,8 @@
           <a class="saveDish">Save</a>
         </div>
         <div class="confirm">
-          <a href="#manager">Back</a>
+          <a href="javascript:void(0)" onclick="document.getElementById('light').style.display='none';
+          document.getElementById('fade').style.display='none'">Back</a>
         </div>
       </p>
     </div>
@@ -95,73 +117,3 @@
 <div id="fade" class="black_overlay"></div>
 
 <!-- Create Menu -->
-
-<div id="light_createMenu" class="white_content_createMenu">
-  <a href="javascript:void(1)" class="close-pop" onclick="document.getElementById('light_createMenu').style.display='none';
-    document.getElementById('fade').style.display='none'">Close</a>
-  <div class="content">
-    <div class="header">
-      <span>Create Menu</span>
-    </div>
-    <div class="clear-fix"></div>
-    <div class="table">
-      <table class="reference">
-        <thead>
-          <tr>
-            <th>Date(dd/mm/yy)</th>
-            <th>Brunch</th>
-            <th colspan="5">Menu</th>
-            <th>Note</th>
-          </tr>
-        </thead>
-        <tbody id="create-menu">
-
-          <tr data-cid={{cid}}>
-            <td>
-              <input type="text" id="" class="" name="">
-            </td>
-            <td>
-              <select>
-                <option>Lunch</option>
-                <option>Dinner</option>
-              </select>
-            </td>
-            <td>
-              <input type="text" id="" class="" name="">
-            </td>
-            <td>
-              <input type="text" id="" class="" name="">
-            </td>
-            <td>
-              <input type="text" id="" class="" name="">
-            </td>
-            <td>
-              <input type="text" id="" class="" name="">
-            </td>
-            <td>
-              <input type="text" id="" class="" name="">
-            </td>
-            <td>
-              <input type="text" id="" class="" name="">
-            </td>
-          </tr>
-
-        </tbody>
-      </table>
-    </div>
-    <div class="confirm">
-      <a href="#menu/create_menu" id="btn-add">Add</a>
-    </div>
-    <div class="confirm">
-      <a id="btn-save">Save</a>
-    </div>
-    <div class="confirm">
-      <a href="#menu">Back</a>
-    </div>
-    <ul id="list_dish_menu" style="display: none">
-      {{#list}}
-      <li>{{dish}}</li>
-      {{/list}}
-    </ul>
-  </div>
-</div>

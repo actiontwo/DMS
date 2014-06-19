@@ -401,7 +401,7 @@ figure {
   opacity:.80;
   filter: alpha(opacity=80);
 }
-.white_content, .white_content_createMenu {
+.white_content {
   display: none;
   position: absolute;
   top: 10%;
@@ -414,7 +414,6 @@ figure {
   z-index:1002;
   overflow: auto;
 }
-.white_content_createMenu{left: 12%; width: 70%}
-.close-pop{
-  float: right
-}
+.close-pop{ float: right}
+.tb-menu tbody tr.tr-menu-edit td{ padding: 0px} 
+input.txt-menu{width: 60px}
