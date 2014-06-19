@@ -22,10 +22,10 @@
 //         
 // ============================================================================
 var DepositModel = Backbone.Model.extend({
-  urlRoot: '/deposit'
+  urlRoot: '/deposit/1'
 });
 var DepositCollection = Backbone.Collection.extend({
-  url: "/deposit",
+  url: "/deposit/1",
   model: DepositModel
 });
 var DepositView = Backbone.View.extend({

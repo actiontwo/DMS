@@ -1,48 +1,51 @@
-<div class="header">
-    <span>View Menu</span>
+<div class="page-header">
+    <h1 id="type">View Menu</h1>
 </div>
-<div class="content">
-    <ul class="searchForm">
-        <li class="find-from">
-            <p>From: <input class="datepicker" type="text"
-                            placeholder="11/11/2013"></p>
-        </li>
-        <li class="find-to">
-            <p>To: <input class="datepicker" type="text"
-                          placeholder="19/11/2013"></p>
-        </li>
-    </ul>
-    <div class="groupBtn">
-        <a class="btn-black">Search</a>
-    </div>
-    <table>
-        <thead>
-        <tr>
-            <th>No</th>
-            <th>Date(dd/mm/yy)</th>
-            <th>Brunch</th>
-            <th colspan="5">Menu</th>
-            <th>Note</th>
-        </tr>
-        </thead>
-        <tbody>
-        {{#each models}}
-        {{#with attributes}}
-        <tr>
-            <td>{{@index}}</td>
-            <td>{{date}}</td>
-            <td>{{brunch}}</td>
-            {{#each dish}}
-            <td>{{this}}</td>
-            {{/each}}
-            <td>{{note}}</td>
-        </tr>
-        {{/with}}
-        {{/each}}
-        </tbody>
-    </table>
 
+<div class="col-md-12">
+    <div class="form-group col-md-4">
+        <label  class="col-lg-2 control-label">From</label>
+        <div class="col-lg-10">
+            <input type="text" class="form-control datepicker"  placeholder="mm/dd/yyyy">
+        </div>
+    </div>
+    <div class="form-group col-md-4">
+        <label  class="col-lg-2 control-label">To</label>
+        <div class="col-lg-10">
+            <input type="text" class="form-control datepicker"  placeholder="mm/dd/yyyy">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <a class="btn btn-primary">Search</a>
+    </div>
 </div>
+
+<table class="table table-striped table-hover">
+    <thead>
+    <tr>
+        <th>No</th>
+        <th>Date(dd/mm/yy)</th>
+        <th>Brunch</th>
+        <th colspan="5">Menu</th>
+        <th>Note</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each models}}
+    {{#with attributes}}
+    <tr>
+        <td>{{@index}}</td>
+        <td>{{date}}</td>
+        <td>{{brunch}}</td>
+        {{#each dish}}
+        <td>{{this}}</td>
+        {{/each}}
+        <td>{{note}}</td>
+    </tr>
+    {{/with}}
+    {{/each}}
+    </tbody>
+</table>
 <div class="sg-menu">
     <a href="mem-suggest-menu.html">Suggest Menu</a>
 </div>
