@@ -126,6 +126,10 @@ module.exports.routes = {
     action: 'destroy'
   },
   // Menu Controller
+  'get /menuAd': {
+    controller: 'menu',
+    action: 'indexAd'
+  },
   'get /menu/:id': {
     controller: 'menu',
     action: 'find'
@@ -141,6 +145,15 @@ module.exports.routes = {
   'delete /menu/:id': {
     controller: 'menu',
     action: 'destroy'
+  },
+  // Dish Controller
+  'get /dish':{
+    controller: 'menu',
+    action: 'getDish'
+  },
+  'post /dish':{
+    controller: 'menu',
+    action: 'createDish'
   },
   // Expense Controller
   'get /expense/:id?': {
