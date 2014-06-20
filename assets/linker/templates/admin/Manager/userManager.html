@@ -2,7 +2,7 @@
     <thead>
     <tr>
         <th>No</th>
-        <th><input type="checkbox" id="checkAllUser"/></th>
+        <th><input type="checkbox" id="checkAllUser" /></th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Email</th>
@@ -18,14 +18,15 @@
     {{#with attributes}}
     <tr data-id="{{id}}">
         <td>{{@index}}</td>
-        <td><input type="checkbox"/></td>
+        <td><input type="checkbox" class="checkUser" /></td>
         <td>{{firstname}}</td>
         <td>{{lastname}}</td>
-        <td>{{email}}</td>
-        <td><input class="userActiveField" type="checkbox" {{#if active}}
+        <td class="emailUser">{{email}}</td>
+        <td>
+            <input class="userActiveField" type="checkbox"
+            {{#if active}}
             checked
-            {{/if}}
-            />
+            {{/if}} />
         </td>
         <td>{{join_date}}</td>
         <td>{{phone}}</td>
@@ -44,4 +45,40 @@
     {{/each}}
     </tbody>
 </table>
-<div class="groupbtn"><a class="btn btn-primary" id="saveUser">Save</a></div>
+<div class="btn-group">
+    <a class="btn btn-primary" id="saveUser">Save</a>
+    <a class="btn btn-primary"
+       href="#model-container-sendEmail"
+       role="button"
+       data-toggle="modal">Send email</a>
+</div>
+<div class="modal fade" id="model-container-sendEmail" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Mail</h4>
+            </div>
+            <div class="modal-body">
+                <fieldset>
+                    <textarea class="form-control" name="contentEmailNotification"
+                              id="contentEmailNotification" cols="30" rows="10"></textarea>
+                </fieldset>
+                <br />
+
+                <div class="alert alert-dismissable alert-success alert-sendEmail"
+                     style="display:none">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>Well done!</strong> <span
+                        class="content-alert"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary"
+                        id="sendEmaiNotiBalance">Send
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

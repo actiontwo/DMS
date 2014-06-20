@@ -16,12 +16,33 @@ var UserManagerView = Backbone.View.extend({
   },
   render: function () {
     this.$el.html(Templates['admin/Manager/userManager'](this.collection));
+    this.delegateEvents({
+      'change .userActiveField': 'updateStatus',
+      'click #saveUser': 'saveUser',
+      'change .userRoleField': 'updateRole',
+      'click #checkAllUser': 'checkAllUser',
+      'click #sendEmaiNotiBalance': 'sendMail'
+    });
     return this;
   },
-  events: {
-    'change .userActiveField': 'updateStatus',
-    'click #saveUser': 'saveUser',
-    'change .userRoleField': 'updateRole'
+  sendMail: function () {
+    var data = {content: $('#contentEmailNotification').val()};
+    var listEmail = [];
+    $('.checkUser').each(function () {
+      if (!$(this).prop('checked')) {
+        return;
+      }
+      listEmail.push($(this).parents('tr').find('.emailUser').html());
+    });
+    data.listEmail = listEmail;
+    $.post('/mail', data,
+      function (result) {
+        $('.alert-sendEmail').show().find('.content-alert').html(result.data);
+      }, 'json');
+  },
+  checkAllUser: function (el) {
+    var ev = $(el.currentTarget);
+    $('.checkUser').prop('checked', ev.prop('checked'));
   },
   updateRole: function (el) {
     var ev = $(el.currentTarget);

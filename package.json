@@ -26,7 +26,7 @@
   "license": "",
   "devDependencies": {
     "grunt-contrib-compass": "^0.7.2",
-    "md5": "^1.0.0",
+    "MD5": "^1.0.0",
     "nodemailer": "^0.6.5"
   }
 }
