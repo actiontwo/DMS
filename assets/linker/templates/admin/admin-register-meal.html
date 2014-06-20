@@ -1,14 +1,23 @@
 <ul class="searchForm">
-    <li class="find-from">
-        <p>From: <input class="datepicker" type="text"></p>
+    <li class="admin-find-day">
+        <p>View By Day: <input class="datepicker" type="text"></p>
     </li>
-    <li class="find-to">
+    <!-- <li class="find-to">
         <p>To: <input class="datepicker" type="text"></p>
+    </li> -->
+    <li>
+        <p>
+        View By User:
+        <select id="selectUser">
+        </select>
+        </p>
     </li>
 </ul>
+
 <div class="clearfix"></div>
 <div class="groupBtn">
-    <a id="btnViewByDay" class="btn-black">Search</a>
+    <a id="btnAdminViewByDay" class="btn-black">Search by Day</a>
+    <a id="btnAdminViewByUser" class="btn-black">Search by User</a>
 </div>
 <div class="clear-fix"></div>
 
@@ -19,7 +28,6 @@
         <th data-attribute="date">Date(mm/dd/yyyy)</th>
         <th data-attribute="name">Name</th>
         <th data-attribute="lunch">Lunch</th>
-        <th data-attribute="dinner">Dinner</th>
     </tr>
     </thead>
     <tbody>
@@ -29,7 +37,6 @@
         <td>{{attributes.date}}</td>
         <td>{{attributes.name}}</td>
         <td><input type="checkbox" {{attributes.lunch}}/></td>
-        <td><input type="checkbox" {{attributes.dinner}}/></td>
     </tr>
     {{/each}}
     </tbody>
