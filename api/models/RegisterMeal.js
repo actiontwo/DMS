@@ -20,6 +20,16 @@ module.exports = {
     },
     status: {
       type: 'boolean'
+    },
+    numOfMeals: {
+      type: 'integer'
+    },
+    month: {
+      type: 'integer'
+    },
+    year: {
+      type: 'integer'
     }
+
   }
 };

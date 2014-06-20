@@ -19,11 +19,24 @@ module.exports = {
       ? '0' + number
       : number;
   },
-  search: function (date, meal, myArray) {
+  search: function (dateText, meal, myArray) {
     var result = 'checked';
     for (j = 0; j < myArray.length; j++) {
-      if ((myArray[j].date == date) && (myArray[j].meal == meal)) {
+      if ((myArray[j].date == dateText) && (myArray[j].meal == meal)) {
         result = '';
+      }
+    }
+            console.log("result: " + result);
+    return result;
+  },
+  searchNumOfMeals: function(dateText, myArray)
+  {
+    var result = 0;
+    for (j = 0; j < myArray.length; j++) {
+
+      if (myArray[j].date == dateText) {
+        if(myArray[j].numOfMeals == undefined) result = 0;
+        else result = myArray[j].numOfMeals;
       }
     }
     return result;
