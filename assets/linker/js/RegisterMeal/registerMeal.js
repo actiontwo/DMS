@@ -35,7 +35,8 @@ var RegisterMealView = Backbone.View.extend({
       'change .lunchCheckbox': 'changeStatus',
       'change #checkOrUncheckAll': 'checkOrUncheckAll',
       'click #btnViewByDay': 'viewByDay',
-      'mousedown .lunchCheckbox': 'updateCheckboxPreValue'
+      'mousedown .lunchCheckbox': 'updateCheckboxPreValue',
+      'click .edit': 'editMeal'
       // 'focusout .inputnumberOfMeals': 'numberOfMealsChanged',
       // 'focusin .inputnumberOfMeals': 'updateMealsPreValue',
     });
@@ -209,5 +210,10 @@ var RegisterMealView = Backbone.View.extend({
     var ev = $(el.currentTarget);
     ev.data('preValue', ev.prop('checked'));
     console.log("Previous Checkbox Value: " + ev.data('preValue'));
+  },
+  editMeal: function(el){
+    var ev = $(el.currentTarget);
+    //console.log('clicked date: '+ ev.parent().parent().find('.date').html());
+
   }
 });

@@ -48,8 +48,10 @@
             {{#with lunch}}{{disabled}} {{check}}{{/with}}
             data-date="{{date}}" data-preValue="0"/>
         </td>
-        <td class="numberOfMeals">
-            {{numberOfMeals}}
+        <td>
+            <span class="numberOfMeals">{{numberOfMeals}}</span>
+            <span class="cursor edit glyphicon glyphicon-pencil"></span>
+            <span class="cursor delete glyphicon glyphicon-trash"></span>
         </td>
     </tr>
     {{/with}}
