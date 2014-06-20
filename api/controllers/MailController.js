@@ -15,8 +15,16 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 var tool = require('../tool');
-module.exports = {
+var CronTab = require('../crontab');
+var rule = {
+  dayOfWeek: [1, 2, 3, 4, 5],
+  hour: 17,
+  minute: 5,
+  second: 0
+};
+var notiBalanceLow = CronTab.notiBalanceLow(rule);
 
+module.exports = {
   sendMail: function (req, res) {
     var data = req.body;
     var smtpTransport = tool.smtpTransport();
@@ -30,11 +38,10 @@ module.exports = {
     smtpTransport.sendMail(mailInfo, function (error, response) {
       if (error)
         console.log(error);
-      
+
       console.log(response);
       res.send({data: 'Send Succsess'});
     });
-
   },
 
   /**
