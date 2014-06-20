@@ -14,128 +14,102 @@ var MenuManagerView = Backbone.View.extend({
   tagName: 'div',
   className: 'menus',
   id: 'dish_menu',
-  initialize: function(){
+  initialize: function () {
     this.listenTo(this.collection, 'reset change add remove', this.render);
-    $.get('/dish', function(data){
-        dish = [];
-        for(var i = 0; i<data.length; i++){
-          dish.push(data[i].dish)
-        }        
+    $.get('/dish', function (data) {
+      dish = [];
+      for (var i = 0; i < data.length; i++) {
+        dish.push(data[i].dish)
+      }
     });
   },
-  render: function(){
-    console.log(dish);
+  render: function () {
     this.$el.html(Templates['admin/Manager/menuManager'](this.collection));
     autoComplete($('.txt-dish-create'), dish);
-    initDatePicker($('.datepicker'));    
+    initDatePicker($('.datepicker'));
     this.delegateEvents({
       'click .saveDish': 'saveDish',
       'click .edit-menu': 'editMenu',
-      'click .save-menu': 'saveMenu',
-      'click .add-menu': 'addMenu',
+      'click #saveMenu': 'saveMenu',
       'click .delete-menu': 'deleteMenu',
-    })
-    return this;  
+      'click #addNewMenu': 'addNewMenu'
+    });
+    return this;
   },
-  saveDish: function(){
-    var dish = $('.dishname').val();
-    var note = $('.dishnote').val();
-    console.log(dish);
+  addNewMenu: function () {
+    var data = {date: '', dish: '', note: '', id: ''};
+    this.setValuePopup(data);
+  },
+  saveDish: function () {
+    var dish = $('.dishname');
+    var note = $('.dishnote');
     var data = {
-      dish: dish,
-      note: note
+      dish: dish.val(),
+      note: note.val()
     };
-    console.log(data);
     this.model.urlRoot = '/dish';
     this.model.save(data, {
-      success: function(model, res){
+      success: function (model, res) {
         console.log(res);
       },
-      error: function(model, err){
+      error: function (model, err) {
         console.log(err);
       }
     });
     this.model.urlRoot = '/menu';
-    $('.dishname').val('');
-    $('.dishnote').val('')
+    dish.val('');
+    note.val('')
   },
-  editMenu: function(el){
+  editMenu: function (el) {
     var ev = $(el.currentTarget);
     var id = ev.parents('tr').data('id');
-    console.log(id);
-    this.collection.get(ev.parents('tr').data('id')).set({edit: true, update: true });
-
-    // var dishEdit = [];
-    //   $('.dishEdit').find('input.txt-dish-create').each(function(){
-    //     dishEdit.push($(this).val());
-    //   })
-    // var data = {
-    //   edit: true,
-    //   update: true,
-    //   date: $('.input-date-create').val(),
-    //   brunch: $('.select-brunch').val(),
-    //   dish: dishEdit,
-    //   note: $('.txt-note-create').val()
-    // }
-    // console.log(data);
+    var dataModel = this.collection.get(id);
+    var data = {
+      date: dataModel.attributes.date,
+      dish: dataModel.attributes.dish,
+      note: dataModel.attributes.note,
+      id: id
+    };
+    this.setValuePopup(data);
   },
-  saveMenu: function(el){
-    // var ev = $(el.currentTarget);
-    // var dishs = [];
-    // ev.parents('tr').find('.dish-loop').each(function(){
-    //   dishs.push($(this).val());
-    // })
-    // var data = {
-    //   edit: false,
-    //   date: ev.parents('tr').find('.txt-date').val(),
-    //   brunch: ev.parents('tr').find('.sel-brunch').val(),
-    //   dish:dishs,
-    //   note: ev.parents('tr').find('.txt-note').val()
-    // }
-    // console.log(data);
-    // var model = this.collection.get(ev.parents('tr').data('id')).set(data);
-    // if(model.attributes.new){
-    //   delete model.attributes.id;
-    // }
-    // model.save();
-
+  saveMenu: function (el) {
+    $('.modal-backdrop').hide();
+    $('body').removeClass('modal-open');
     var ev = $(el.currentTarget);
     var dishEdit = [];
-      $('.dishEdit').find('input.txt-dish-create').each(function(){
-        dishEdit.push($(this).val());
-      })
-    var data = {
-      date: $('.input-date-create').val(),
-      brunch: $('.select-brunch').val(),
-      dish: dishEdit,
-      note: $('.txt-note-create').val()
-    }
-    console.log(data);
-    var model = this.collection.get(ev.parents('tr').data('id')).set(data);
-    if(model.attributes.new){
-      delete model.attributes.id;
-    }
-    model.save();
-  },
-  addMenu: function(){ 
-    var dishGroup = [];
-    $('.txt-dish-create').each(function(){
-      dishGroup.push($(this).val());
+    $('.modalDish').each(function () {
+      dishEdit.push($(this).val());
     });
     var data = {
-      date: $('.input-date-create').val(),
-      brunch: $('.select-brunch').val(),
-      dish: dishGroup,
-      note: $('.txt-note-create').val(),
+      date: $('.modalDate').val(),
+      brunch: $('.modalBrunch').val(),
+      dish: dishEdit,
+      note: $('.modalNote').val()
     };
     console.log(data);
-     var model =  this.collection.add(data);
-     model.save();
+    var id = ev.parents('#modal-container-menu').data('id');
+    var model;
+    if (id)
+      model = this.collection.get(id).set(data);
+    else
+      model = this.collection.add(data);
+
+    //    if (model.attributes.new) {
+    //      delete model.attributes.id;
+    //    }
+    model.save();
   },
-  deleteMenu: function(el){
+  deleteMenu: function (el) {
     var ev = $(el.currentTarget);
     var id = ev.parents('tr').data('id');
-    console.log(id);
     this.collection.get(id).destroy();
+  },
+  setValuePopup: function (data) {
+    $('#modal-container-menu').attr('data-id', data.id);
+    $('.modalDate').val(data.date);
+    $('.modalDish').each(function () {
+      $(this).val(data.dish[$(this).data('index')]);
+    });
+    $('.modalNote').val(data.note);
   }
-})
+});
