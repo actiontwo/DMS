@@ -1,178 +1,251 @@
 <div class="col-md-12">
-    <div class="form-group col-md-4">
-        <label class="col-lg-2 control-label">From</label>
+  <div class="form-group col-md-4">
+    <label class="col-lg-2 control-label">From</label>
 
-        <div class="col-lg-10">
-            <input type="text" class="form-control datepicker" placeholder="mm/dd/yyyy">
-        </div>
+    <div class="col-lg-10">
+      <input type="text" class="form-control datepicker" placeholder="mm/dd/yyyy">
     </div>
-    <div class="form-group col-md-4">
-        <label class="col-lg-2 control-label">To</label>
+  </div>
+  <div class="form-group col-md-4">
+    <label class="col-lg-2 control-label">To</label>
 
-        <div class="col-lg-10">
-            <input type="text" class="form-control datepicker" placeholder="mm/dd/yyyy">
-        </div>
+    <div class="col-lg-10">
+      <input type="text" class="form-control datepicker" placeholder="mm/dd/yyyy">
     </div>
-    <div class="col-md-4">
-        <a class="btn btn-primary">Search</a>
-    </div>
+  </div>
+  <div class="col-md-4">
+    <a class="btn btn-primary">Search</a>
+  </div>
 </div>
 
 <div class="col-md-12">
-    <table class="tb-menu table table-striped table-hover">
-        <thead>
-        <tr>
-            <th>No</th>
-            <th>Date(dd/mm/yy)</th>
-            <th>Brunch</th>
-            <th colspan="5">Menu</th>
-            <th>Note</th>
-            <th></th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        {{#each models}} {{#with attributes}} {{#if edit}}
-        <tr data-id="{{id}}" class="tr-menu-edit">
-            <td>{{@index}}</td>
-            <td>
-                <input class="txt-date datepicker txt-menu" type="text" value="{{date}}"/>
-            </td>
-            <td>
-                <select class="sel-brunch">
-                    <option>Lunch</option>
-                    <option>Dinner</option>
-                </select>
-            </td>
-            {{#each dish}}
-            <td>
-                <input class='txt-dish-{{@index}} txt-menu dish-loop' type="text" value="{{this}}"/>
-            </td>
-            {{/each}}
-            <td>
-                <input class='txt-note txt-menu' type="text" value="{{note}}"/>
-            </td>
-            <td>
-                <figure class="iconsp-save-25px save-menu" id="button-save-menu" data-id="{{id}}"></figure>
-            </td>
-            <td>
-                <figure class="iconsp-remove-25px delete-menu" id="button-remove-menu" data-id="{{id}}"></figure>
-            </td>
-        </tr>
-        {{else}}
-        <tr data-id="{{id}}">
-            <td>{{@index}}</td>
-            <td>{{date}}</td>
-            <td>{{brunch}}</td>
-            {{#each dish}}
-            <td>{{this}}</td>
-            {{/each}}
-            <td>{{note}}</td>
-            <td>
-                <figure class="iconsp-edit-25px edit-menu" id="button-edit-menu" data-id="{{id}}"></figure>
-            </td>
-            <td>
-                <figure class="iconsp-remove-25px delete-menu" id="button-remove-menu" data-id="{{id}}"></figure>
-            </td>
-        </tr>
-        {{/if}} {{/with}} {{/each}}
-        </tbody>
-    </table>
-    <div class="btn-end btn-group">
-        <a class="btn btn-primary">Print</a>
-        <a id="modal-dish" href="#modal-container-dish" role="button" class="btn btn-primary"
-           data-toggle="modal">Add Dish</a>
-        <a class="add-menu btn btn-primary" href="#modal-container-menu" role="button" data-toggle="modal">Add Menu</a>
-    </div>
+  <table class="tb-menu table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Date(dd/mm/yy)</th>
+        <th>Brunch</th>
+        <th colspan="5">Menu</th>
+        <th>Note</th>
+        <th>Edit</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {{#each models}} {{#with attributes}} {{#if edit}}
+      <tr data-id="{{id}}" class="tr-menu-edit" id="{{id}}">
+        <td>{{@index}}</td>
+        <td>
+          <input class="txt-date datepicker txt-menu" type="text" value="{{date}}" />
+        </td>
+        <td>
+          <select class="sel-brunch">
+            <option>Lunch</option>
+            <option>Dinner</option>
+          </select>
+        </td>
+        {{#each dish}}
+        <td>
+          <input class='txt-dish-{{@index}} txt-menu dish-loop' type="text" value="{{this}}" />
+        </td>
+        {{/each}}
+        <td>
+          <input class='txt-note txt-menu' type="text" value="{{note}}" />
+        </td>
+        <td>
+          <span class="cursor save-menu glyphicon glyphicon-floppy-disk"></span>
+          <span class="cursor delete-menu glyphicon glyphicon-trash"></span>
+        </td>
+      </tr>
+      {{else}}
+      <tr data-id="{{id}}" id="{{id}}">
+        <td>{{@index}}</td>
+        <td>{{date}}</td>
+        <td>{{brunch}}</td>
+        {{#each dish}}
+        <td>{{this}}</td>
+        {{/each}}
+        <td>{{note}}</td>
+        <td class="link">
+          <span class="cursor edit-menu glyphicon glyphicon-pencil" data-toggle="modal" data-target="#editMenu"></span>
+          <span class="cursor delete-menu glyphicon glyphicon-trash"></span>
+        </td>
+      </tr>
+      {{/if}} {{/with}} {{/each}}
+    </tbody>
+  </table>
+  <div class="btn-end btn-group">
+    <a class="btn btn-primary">Print</a>
+    <a id="modal-dish" href="#modal-container-dish" role="button" class="btn btn-primary" data-toggle="modal">Add Dish</a>
+    <a class="btn btn-primary" href="#modal-container-menu" role="button" data-toggle="modal">Add Menu</a>
+  </div>
 </div>
 
 <!-- Create Dish -->
 <div class="modal fade" id="modal-container-dish" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Create Dish</h4>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Create Dish</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" action="">
+          <fieldset>
+            <div class="form-group">
+              <lable for='dishname' class="control-label col-lg-3">Dish Name</lable>
+              <div class="col-lg-9">
+                <input type="text" name="dishname" class="form-control dishname txt-dish" id="dishname">
+              </div>
             </div>
-            <div class="modal-body">
-                <form class="form-horizontal" action="">
-                    <fieldset>
-                        <div class="form-group">
-                            <lable for='dishname' class="control-label col-lg-3">Dish Name</lable>
-                            <div class="col-lg-9">
-                                <input type="text" name="dishname" class="form-control dishname txt-dish" id="dishname">
-                            </div>
-                        </div>
-                        <br/>
+            <br/>
 
-                        <div class="form-group">
-                            <label for="textArea" class="col-lg-3 control-label">Note</label>
+            <div class="form-group">
+              <label for="textArea" class="col-lg-3 control-label">Note</label>
 
-                            <div class="col-lg-9">
-                                <textarea class="form-control dishnote txt-dish" name="note" rows="3" id="textArea"></textarea>
-                                <span class="help-block">Write note</span>
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
+              <div class="col-lg-9">
+                <textarea class="form-control dishnote txt-dish" name="note" rows="3" id="textArea"></textarea>
+                <span class="help-block">Write note</span>
+              </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary saveDish">Save changes</button>
-            </div>
+          </fieldset>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary saveDish">Save changes</button>
+      </div>
 
-        </div>
     </div>
+  </div>
 </div>
 <!--Create Menu-->
 <div class="modal fade" id="modal-container-menu" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Create Menu</h4>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Create Menu</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" action="">
+          <fieldset>
+            <div class="form-group">
+              <lable class="control-label col-lg-3">Date</lable>
+              <div class="col-lg-9">
+                <input type="text" name="" class="form-control input-date-create datepicker">
+              </div>
             </div>
-            <div class="modal-body">
-                <form class="form-horizontal" action="">
-                    <fieldset>
-                        <div class="form-group">
-                            <lable  class="control-label col-lg-3 datepicker">Date</lable>
-                            <div class="col-lg-9">
-                                <input type="text" name="dishname" class="form-control dishname txt-dish">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <lable class="control-label col-lg-3">Brunch</lable>
-                            <div class="col-lg-9">
-                                <select class="form-control" >
-                                    <option>lunch</option>
-                                    <option>dinner</option>
-                                </select>
-                            </div>
-                        </div>
-                        {{#each '5'}}
-                        <div class="form-group">
-                            <lable for='dishname' class="control-label col-lg-3">Dish Name</lable>
-                            <div class="col-lg-9">
-                                <input type="text"  class="form-control" >
-                            </div>
-                        </div>
-                        {{/each}}
-                        <div class="form-group">
-                            <label for="textArea" class="col-lg-3 control-label">Note</label>
-                            <div class="col-lg-9">
-                                <textarea class="form-control dishnote txt-dish" name="note" rows="3" id="textArea"></textarea>
-                                <span class="help-block">Write note</span>
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary saveMenu">Save changes</button>
+            <div class="form-group">
+              <lable class="control-label col-lg-3">Brunch</lable>
+              <div class="col-lg-9">
+                <select class="form-control select-brunch">
+                  <option>lunch</option>
+                  <option>dinner</option>
+                </select>
+              </div>
             </div>
 
-        </div>
+            <div class="form-group">
+              <lable for="dishname" class="control-label col-lg-3">Dish Name</lable>
+              <div class="col-lg-4">
+                <input type="text" class="form-control txt-dish-create" placeholder="dish 1">
+              </div>
+              <div class="col-lg-4">
+                <input type="text" class="form-control txt-dish-create" placeholder="dish 2">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-offset-3 col-lg-4">
+                <input type="text" class="form-control txt-dish-create" placeholder="dish 3">
+              </div>
+              <div class="col-lg-4">
+                <input type="text" class="form-control txt-dish-create" placeholder="dish 4">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-lg-offset-3 col-lg-4">
+                <input type="text" class="form-control txt-dish-create" placeholder="dish 5">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="textArea" class="col-lg-3 control-label">Note</label>
+              <div class="col-lg-9">
+                <textarea class="form-control dishnote txt-note-create" name="note" rows="3" id="textArea"></textarea>
+                <span class="help-block">Write note</span>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary add-menu">Add Menu</button>
+      </div>
+
     </div>
+  </div>
 </div>
+
+<!-- Edit menu -->
+{{#each models}} {{#with attributes}} {{#if edit}}
+<div class="modal fade" data-id="{{id}}" id="editMenu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Edit Menu</h4>
+      </div>
+      <div class="modal-body">
+        
+        <form class="form-horizontal" action="">
+          <fieldset>
+            <div class="form-group">
+              <lable class="control-label col-lg-3">Date</lable>
+              <div class="col-lg-9">
+                <input type="text" name="" class="form-control input-date-create datepicker" value="{{date}}">
+              </div>
+            </div>
+            <div class="form-group">
+              <lable class="control-label col-lg-3">Brunch</lable>
+              <div class="col-lg-9">
+                <select class="form-control select-brunch">
+                  <option>lunch</option>
+                  <option>dinner</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-3">
+                <lable for="dishname" class="control-label col-lg-offset-4">Dish Name</lable>
+              </div>
+              <div class="col-lg-9 dishEdit">
+                {{#each dish}}
+                <div class="col-lg-6" style="padding: 0px 10px 10px 1px !important">
+                  <input type="text"  value="{{this}}" class="form-control txt-dish-create" placeholder="dish 1">
+                </div>
+                {{/each}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="textArea" class="col-lg-3 control-label">Note</label>
+              <div class="col-lg-9">
+                <textarea class="form-control dishnote txt-note-create" name="note" rows="3" id="textArea">{{note}}</textarea>
+                <span class="help-block">Write note</span>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary save-menu">Save Menu</button>
+      </div>
+    </div>
+  </div>
+</div>
+ {{/if}} {{/with}} {{/each}}
