@@ -25,7 +25,7 @@ module.exports = {
     lastname: {
       type: 'string'
     },
-    numberOfMeal: {
+    numberOfMeals: {
       type: 'integer',
       defaultsTo: 0
     },
@@ -51,9 +51,6 @@ module.exports = {
     },
     defaultRegisterMeal: {
       type: 'boolean'
-    },
-    defaultRegisterMeal:{
-      type:'boolean'
     },
     toJSON: function () {
       var obj = this.toObject();

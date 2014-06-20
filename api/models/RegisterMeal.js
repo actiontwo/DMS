@@ -21,7 +21,7 @@ module.exports = {
     status: {
       type: 'boolean'
     },
-    numOfMeals: {
+    numberOfMeals: {
       type: 'integer'
     },
     month: {
