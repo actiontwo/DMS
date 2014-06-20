@@ -36,7 +36,8 @@ var RegisterMealView = Backbone.View.extend({
       'change #checkOrUncheckAll': 'checkOrUncheckAll',
       'click #btnViewByDay': 'viewByDay',
       'mousedown .lunchCheckbox': 'updateCheckboxPreValue',
-      'click .edit': 'editMeal'
+      'click .edit': 'editMeal',
+      'click .save': 'saveMeal'
       // 'focusout .inputnumberOfMeals': 'numberOfMealsChanged',
       // 'focusin .inputnumberOfMeals': 'updateMealsPreValue',
     });
@@ -87,12 +88,12 @@ var RegisterMealView = Backbone.View.extend({
         dateNew = $(this).parent().parent().find('.lunchCheckbox').data('date');
         mealNew = $(this).parent().parent().find('.lunchCheckbox').data('meal');
         statusNew = $(this).parent().parent().find('.lunchCheckbox').prop('checked');
-        numberOfMealsNew = $(this).val();
+        numberOfMealsNew = parseInt($(this).html());
         data.mealStatus.push({
           date: dateNew,
           meal: mealNew,
-          status: statusNew
-          //numberOfMeals: numberOfMealsNew
+          status: statusNew,
+          numberOfMeals: numberOfMealsNew
         })
       }
     }).removeClass('changeStatus').removeClass('changeMeals');
@@ -153,12 +154,12 @@ var RegisterMealView = Backbone.View.extend({
     });
     $('.TotalMeals').html(numberOfMeals);
   },
-  numberOfMealsChanged: function(el)
-  {
-    var ev = $(el.currentTarget);
-    if(ev.val() != ev.data('preValue'))
-      ev.toggleClass('changeMeals');
-  },
+  // numberOfMealsChanged: function(el)
+  // {
+  //   var ev = $(el.currentTarget);
+  //   if(ev.val() != ev.data('preValue'))
+  //     ev.toggleClass('changeMeals');
+  // },
   viewByDay: function()
   {
     var thisCollection = this.collection;
@@ -213,7 +214,23 @@ var RegisterMealView = Backbone.View.extend({
   },
   editMeal: function(el){
     var ev = $(el.currentTarget);
-    //console.log('clicked date: '+ ev.parent().parent().find('.date').html());
+    ev.toggleClass('glyphicon-floppy-disk').removeClass('glyphicon-pencil');
+    ev.toggleClass('save').removeClass('edit');
+    var numberOfMeals = ev.parent().parent().find('.numberOfMeals');
+    numberOfMeals.data('preValue', parseInt(numberOfMeals.html()));
+    numberOfMeals.html('<input type="number" value="'+numberOfMeals.data('preValue')+'">'+'</input>');
 
+  },
+  saveMeal: function(el){
+    var ev = $(el.currentTarget);
+    var numberOfMeals = ev.parent().parent().find('.numberOfMeals');
+    ev.toggleClass('glyphicon-pencil').removeClass('glyphicon-floppy-disk');
+    ev.toggleClass('edit').removeClass('save');
+    var currentValue = parseInt(ev.parent().parent().find('.numberOfMeals input').val());
+    numberOfMeals.html(currentValue);
+    if ( numberOfMeals.data('preValue') != currentValue)
+    {
+      numberOfMeals.addClass('changeMeals');
+    }
   }
 });

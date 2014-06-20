@@ -40,7 +40,6 @@ module.exports = {
           disabled = 'disabled';
         var dateText = tool.formatTwoNumber(time.month) + "/" + tool.formatTwoNumber(i) + "/" + time.year;
         numberOfMealsValue = tool.searchNumOfMeals(dateText, docs);
-        console.log('numOfMeals: '+numberOfMealsValue);
         if (numberOfMealsValue == 0) checkValue = '';
         else checkValue = 'checked';
         
