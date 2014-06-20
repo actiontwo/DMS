@@ -1,3 +1,4 @@
+
 /**
  * UserController
  *
@@ -14,6 +15,7 @@
  *
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
+
 var tool = require('../tool');
 var md5 = require('MD5');
 var hasher = require("password-hash");
@@ -260,6 +262,8 @@ module.exports = {
       }
       data.active = true;
       data.keyConfirm = '';
+      var time = tool.getCurrentDay();
+      data.join_date = time.currentDay;
       delete data.require;
       console.log(data);
       User.update({email: data.email}, data).done(function (err, docs) {
@@ -384,7 +388,6 @@ module.exports = {
           }
         });
       });
-
     });
   },
 
