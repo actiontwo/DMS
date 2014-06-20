@@ -23,21 +23,21 @@ var RegisterMealView = Backbone.View.extend({
 
     $('.numberLunchCheck').html($('.lunchCheckbox:checked').length);
 
-    var numOfMeals = 0;
-    $('.numOfMeals').each(function(){
-      numOfMeals += parseInt($(this).find('input').val());
+    var numberOfMeals = 0;
+    $('.numberOfMeals').each(function(){
+      numberOfMeals += parseInt($(this).html());
     });
-    $('.TotalMeals').html(numOfMeals);
+    $('.TotalMeals').html(numberOfMeals);
 
     //declare events for views
     this.delegateEvents({
       'click #saveRegister': 'updateData',
       'change .lunchCheckbox': 'changeStatus',
       'change #checkOrUncheckAll': 'checkOrUncheckAll',
-      'focusout .inputNumOfMeals': 'numOfMealsChanged',
       'click #btnViewByDay': 'viewByDay',
-      'focusin .inputNumOfMeals': 'updateMealsPreValue',
       'mousedown .lunchCheckbox': 'updateCheckboxPreValue'
+      // 'focusout .inputnumberOfMeals': 'numberOfMealsChanged',
+      // 'focusin .inputnumberOfMeals': 'updateMealsPreValue',
     });
     return this;
   },
@@ -45,18 +45,18 @@ var RegisterMealView = Backbone.View.extend({
     var ev = $(el.currentTarget);
 
     if (ev.prop('checked')==false)
-      ev.parent().parent().find('.inputNumOfMeals').val(0);
-    else ev.parent().parent().find('.inputNumOfMeals').val(1);
+      ev.parent().parent().find('.numberOfMeals').html(0);
+    else ev.parent().parent().find('.numberOfMeals').html(1);
 
     if (ev.prop('checked')!=ev.data('preValue')) ev.toggleClass('changeStatus');
 
     $('.numberLunchCheck').html($('.lunchCheckbox:checked').length);
 
-    var numOfMeals = 0;
-    $('.numOfMeals').each(function(){
-      numOfMeals += parseInt($(this).find('input').val());
+    var numberOfMeals = 0;
+    $('.numberOfMeals').each(function(){
+      if($(this).html().trim()) numberOfMeals += parseInt($(this).html().trim());
     });
-    $('.TotalMeals').html(numOfMeals);
+    $('.TotalMeals').html(numberOfMeals);
   },
   // when user check
   updateData: function (el) {
@@ -65,20 +65,20 @@ var RegisterMealView = Backbone.View.extend({
     var data = {
       mealStatus: []
     };
-    var dateNew, mealNew, statusNew, numOfMealsNew;
+    var dateNew, mealNew, statusNew, numberOfMealsNew;
     $('.changeStatus, .changeMeals').each(function () {
       if ($(this).hasClass('changeStatus'))
       {
         dateNew = $(this).data('date');
         mealNew = $(this).data('meal');
         statusNew = $(this).prop('checked');
-        numOfMealsNew = $(this).parent().parent().find('.inputNumOfMeals').val();
+        numberOfMealsNew = parseInt($(this).parent().parent().find('.numberOfMeals').html());
 
         data.mealStatus.push({
           date: dateNew,
           meal: mealNew,
           status: statusNew,
-          numOfMeals: numOfMealsNew
+          numberOfMeals: numberOfMealsNew
         });
       }
       else
@@ -86,36 +86,24 @@ var RegisterMealView = Backbone.View.extend({
         dateNew = $(this).parent().parent().find('.lunchCheckbox').data('date');
         mealNew = $(this).parent().parent().find('.lunchCheckbox').data('meal');
         statusNew = $(this).parent().parent().find('.lunchCheckbox').prop('checked');
-        numOfMealsNew = $(this).val();
+        numberOfMealsNew = $(this).val();
         data.mealStatus.push({
           date: dateNew,
           meal: mealNew,
-          status: statusNew,
-          numOfMeals: numOfMealsNew
+          status: statusNew
+          //numberOfMeals: numberOfMealsNew
         })
       }
-
-      // thisCollection.each(function(model){
-      //   if(model.attributes.date = dateNew)
-      //   {
-      //     model.set({
-      //       date: dateNew,
-      //       meal: mealNew,
-      //       status: statusNew,
-      //       numOfMeals: numOfMealsNew
-      //     })
-      //     model.save(this.model.attributes);
-      //   }
-      // })
-
     }).removeClass('changeStatus').removeClass('changeMeals');
 
     this.model.save(data, {
       success: function (model, response) {
+        console.log('success saving data');
         console.log(model);
         console.log(response);
       },
       error: function (model, error) {
+        console.log('error saving data');
         console.log(model.toJSON());
         console.log(error);
     }});
@@ -138,7 +126,7 @@ var RegisterMealView = Backbone.View.extend({
       if (thisDateObject >= today){
           if (thisOldCheckState != true) $(this).toggleClass('changeStatus');
           $(this).prop('checked', true);
-          $(this).parent().parent().find('.inputNumOfMeals').val(1);
+          $(this).parent().parent().find('.numberOfMeals').html(1);
           $('.numberLunchCheck').html($('.lunchCheckbox:checked').length);
         } 
       });
@@ -152,19 +140,19 @@ var RegisterMealView = Backbone.View.extend({
         if (thisDateObject >= today){
           if (thisOldCheckState != false) $(this).toggleClass('changeStatus');
           $(this).prop('checked',false);
-          $(this).parent().parent().find('.inputNumOfMeals').val(0);
+          $(this).parent().parent().find('.numberOfMeals').html(0);
           $('.numberLunchCheck').html($('.lunchCheckbox:checked').length);
         }
       });
     }
 
-    var numOfMeals = 0;
-    $('.numOfMeals').each(function(){
-      numOfMeals += parseInt($(this).html().trim());
+    var numberOfMeals = 0;
+    $('.numberOfMeals').each(function(){
+      if($(this).html().trim()) numberOfMeals += parseInt($(this).html().trim());
     });
-    $('.TotalMeals').html(numOfMeals);
+    $('.TotalMeals').html(numberOfMeals);
   },
-  numOfMealsChanged: function(el)
+  numberOfMealsChanged: function(el)
   {
     var ev = $(el.currentTarget);
     if(ev.val() != ev.data('preValue'))
@@ -173,9 +161,9 @@ var RegisterMealView = Backbone.View.extend({
   viewByDay: function()
   {
     var thisCollection = this.collection;
-    var dayFrom = new Date($('.find-from-user').find('input').val());
+    var dayFrom = new Date($('#find-from-user').val());
     //console.log(dayFrom);
-    var dayTo = new Date($('.find-to-user').find('input').val());
+    var dayTo = new Date($('#find-to-user').val());
     //console.log(dayTo);
     var tempCollection = new RegisterMealCollection();
     thisCollection.each(function(model){
@@ -195,19 +183,21 @@ var RegisterMealView = Backbone.View.extend({
 
     $('.numberLunchCheck').html($('.lunchCheckbox:checked').length);
 
-    var numOfMeals = 0;
-    $('.numOfMeals').each(function(){
-      numOfMeals += parseInt($(this).find('input').val());
+    var numberOfMeals = 0;
+    $('.numberOfMeals').each(function(){
+      if($(this).html().trim()) numberOfMeals += parseInt($(this).html().trim());
     });
-    $('.TotalMeals').html(numOfMeals);
+    $('.TotalMeals').html(numberOfMeals);
 
     //declare events for views
     this.delegateEvents({
       'click #saveRegister': 'updateData',
-      'change .lunchCheckbox, .dinnerCheckbox': 'changeStatus',
+      'change .lunchCheckbox': 'changeStatus',
       'change #checkOrUncheckAll': 'checkOrUncheckAll',
-      'focusout .inputNumOfMeals': 'numOfMealsChanged',
-      'click #btnViewByDay': 'viewByDay'
+      'click #btnViewByDay': 'viewByDay',
+      'mousedown .lunchCheckbox': 'updateCheckboxPreValue'
+      // 'focusout .inputnumberOfMeals': 'numberOfMealsChanged',
+      // 'focusin .inputnumberOfMeals': 'updateMealsPreValue',
     });
   },
   updatePreValue: function(el){

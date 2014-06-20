@@ -12,8 +12,8 @@ var AppRouter = Backbone.Router.extend({
   initialize: function () {
 
     this.registerMealView = new RegisterMealView({
-      collection: new RegisterMealCollection,
-      model: new RegisterMealModel
+      collection: new RegisterMealCollection(),
+      model: new RegisterMealModel()
     });
     this.menuView = new MenuView({
       collection: new MenuCollection
@@ -36,18 +36,12 @@ var AppRouter = Backbone.Router.extend({
       this.optionsView = new OptionsView();
       this.depositManagerView = new DepositManagerView();
       this.menuManagerView = new MenuManagerView();
-      this.registerMealAdView = new RegisterMealAdView({
-        collection: new RegisterMealAdCollection
-      });
+      this.registerMealManagerView = new RegisterMealManagerView();
     }
   },
   registerMealRender: function () {
     this.registerMealView.collection.fetch({reset: true});
     $('#main').html(this.registerMealView.el);
-    if (role === 'admin') {
-      this.registerMealAdView.collection.fetch({reset: true});
-      $('#subMain').html(this.registerMealAdView.el);
-    }
   },
   menuRender: function () {
     this.menuView.collection.fetch({reset: true});
@@ -75,11 +69,14 @@ var AppRouter = Backbone.Router.extend({
     this.userManagerView.collection.fetch({reset: true});
     this.depositManagerView.collection.fetch({reset: true});
     this.menuManagerView.collection.fetch({reset: true});
+    this.registerMealManagerView.collection.fetch({reset: true});
+
     $('#main').html(this.managerView.render().el);
     $('#options').html(this.optionsView.el);
     $('#userManager').html(this.userManagerView.el);
     $('#depositManager').html(this.depositManagerView.el);
     $('#menuManager').html(this.menuManagerView.el);
+    $('#registerMealManager').html(this.registerMealManagerView.el);
     $('#subMain').html("");
   },
   userProfile: function () {

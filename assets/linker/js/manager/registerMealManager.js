@@ -1,23 +1,24 @@
 //Declare Model
-var RegisterMealAdModel = Backbone.Model.extend({
+var RegisterMealManagerModel = Backbone.Model.extend({
   urlRoot: "/registermealAd"
 });
 //Declare Collection
-var RegisterMealAdCollection = Backbone.Collection.extend({
+var RegisterMealManagerCollection = Backbone.Collection.extend({
   url: "/registermealAd",
-  model: RegisterMealAdModel
+  model: RegisterMealManagerModel
 });
 //Declare View
-var RegisterMealAdView = Backbone.View.extend({
-
+var RegisterMealManagerView = Backbone.View.extend({
+  model: new RegisterMealManagerModel(),
+  collection: new RegisterMealManagerCollection(),
   tagName: 'div',
   className: 'menus',
-  id: 'register_meal_ad',
+  id: 'RegisterMeal_Manager',
   initialize: function () {
     this.listenTo(this.collection, 'reset sort', this.render);
   },
   render: function () {
-    this.$el.html(Templates['admin/admin-register-meal'](this.collection));
+    this.$el.html(Templates['admin/Manager/registerMealManager'](this.collection));
     //inint animation and count regiters meal
     initDatePicker($('.datepicker'));
 
@@ -37,14 +38,14 @@ var RegisterMealAdView = Backbone.View.extend({
   viewByDay: function()
   { 
     var thisCollection = this.collection;
-    var tempCollection = new RegisterMealAdCollection();
+    var tempCollection = new RegisterMealManagerCollection();
     var selectedDay = $('.admin-find-day').find('input').val();
     this.collection.each(function(model){
       if (model.attributes.date == selectedDay) tempCollection.add(model);
     });
 
     //re-render
-    this.$el.html(Templates['admin/admin-register-meal'](tempCollection));
+    this.$el.html(Templates['admin/Manager/registerMealManager'](tempCollection));
     //inint animation and count regiters meal
     initDatePicker($('.datepicker'));
 
@@ -63,14 +64,14 @@ var RegisterMealAdView = Backbone.View.extend({
   viewByUser: function()
   {
     var thisCollection = this.collection;
-    var tempCollection = new RegisterMealAdCollection();
+    var tempCollection = new RegisterMealManagerCollection();
     var username = $('#selectUser').val();
     this.collection.each(function(model){
       if (model.attributes.name == username) tempCollection.add(model);
     });
 
     //re-render
-    this.$el.html(Templates['admin/admin-register-meal'](tempCollection));
+    this.$el.html(Templates['admin/Manager/registerMealManager'](tempCollection));
     //inint animation and count regiters meal
     initDatePicker($('.datepicker'));
 

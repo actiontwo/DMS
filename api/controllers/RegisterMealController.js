@@ -30,7 +30,7 @@ module.exports = {
     var time = tool.getCurrentDay();
     var data = [];
     var checkValue;
-    var numOfMealsValue;
+    var numberOfMealsValue;
     // 'docs' means the returning data
     RegisterMeal.find({userId: user.id}).done(function (err, docs) {
       for (i = 1; i <= time.numberDayOfThisMonth; i++) {
@@ -39,18 +39,17 @@ module.exports = {
         if (i < time.date)
           disabled = 'disabled';
         var dateText = tool.formatTwoNumber(time.month) + "/" + tool.formatTwoNumber(i) + "/" + time.year;
-        //checkValue = tool.search(dateText, 'lunch', docs);
-        //if (checkValue != 'checked') numOfMealsValue = 3;
-        //else 
-        numOfMealsValue = tool.searchNumOfMeals(dateText, docs);
-        if (numOfMealsValue == 0) checkValue = '';
+        numberOfMealsValue = tool.searchNumOfMeals(dateText, docs);
+        console.log('numOfMeals: '+numberOfMealsValue);
+        if (numberOfMealsValue == 0) checkValue = '';
         else checkValue = 'checked';
+        
         data.push({
           number: i,
           date: dateText,
           day: new Date(time.year, time.month - 1, i).toString().split(" ")[0],
           lunch: {disabled: disabled, check: checkValue},
-          numOfMeals: {disabled: disabled, value: numOfMealsValue}
+          numberOfMeals: numberOfMealsValue
         });
       }
       res.send(data);
@@ -71,7 +70,7 @@ module.exports = {
       return;
     }
     var time = tool.getCurrentDay();
-    var numOfMealsValue;
+    var numberOfMealsValue;
     RegisterMeal.find({date: time.currentDay}).done(function (err, meal) {
       if (err) {
         res.send(err);
@@ -94,14 +93,14 @@ module.exports = {
                 check[meal[j].meal] = '';
               }
             }
-            if (check.lunch == 'checked') numOfMealsValue = 1;
-            else numOfMealsValue = 0;
+            if (check.lunch == 'checked') numberOfMealsValue = 1;
+            else numberOfMealsValue = 0;
             result.push({
               number: i + 1,
               date: time.currentDay,
               name: user[i].firstname + " " + user[i].lastname,
               lunch: check.lunch,
-              numOfMeals: numOfMealsValue
+              numberOfMeals: numberOfMealsValue
             })
           }
           res.send(result);
@@ -140,9 +139,12 @@ module.exports = {
       var data = {
         date: mealStatus[i].date,
         meal: mealStatus[i].meal,
-        numOfMeals: mealStatus[i].numOfMeals,
+        numberOfMeals: mealStatus[i].numberOfMeals,
         userId: req.session.user.id,
       };
+      console.log('--- DATE: '+data.date+' ---');
+      console.log(data.meal);
+      console.log(data.userId);
       // check user registed this day or not
       updateStatus(data, mealStatus[i].status);
     }

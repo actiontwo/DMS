@@ -35,8 +35,8 @@ module.exports = {
     for (j = 0; j < myArray.length; j++) {
 
       if (myArray[j].date == dateText) {
-        if(myArray[j].numOfMeals == undefined) result = 0;
-        else result = myArray[j].numOfMeals;
+        if(myArray[j].numberOfMeals == undefined) result = 0;
+        else result = myArray[j].numberOfMeals;
       }
     }
     return result;

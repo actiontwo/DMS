@@ -6,17 +6,17 @@
     <div class="form-group col-md-4">
         <label  class="col-lg-2 control-label">From</label>
         <div class="col-lg-10">
-            <input type="text" class="form-control datepicker"  placeholder="mm/dd/yyyy">
+            <input id="find-from-user" type="text" class="form-control datepicker"  placeholder="mm/dd/yyyy">
         </div>
     </div>
     <div class="form-group col-md-4">
         <label  class="col-lg-2 control-label">To</label>
         <div class="col-lg-10">
-            <input type="text" class="form-control datepicker"  placeholder="mm/dd/yyyy">
+            <input id="find-to-user" type="text" class="form-control datepicker"  placeholder="mm/dd/yyyy">
         </div>
     </div>
     <div class="col-md-4">
-        <a class="btn btn-primary">Search</a>
+        <a class="btn btn-primary" id="btnViewByDay">Search</a>
     </div>
 </div>
 
@@ -26,8 +26,10 @@
         <th>No</th>
         <th>Date(dd/mm/yy)</th>
         <th>Day</th>
-        <th>Lunch</th>
-        <th>Dinner</th>
+        <th>Meals
+            <input id="checkOrUncheckAll" type="checkbox">(Check or Uncheck all)
+        </th>
+        <th>Number of Meal(s)</th>
     </tr>
     </thead>
     <tbody>
@@ -44,12 +46,10 @@
         <td><input class='lunchCheckbox' type="checkbox"
                    data-meal="lunch"
             {{#with lunch}}{{disabled}} {{check}}{{/with}}
-            data-date="{{date}}" />
+            data-date="{{date}}" data-preValue="0"/>
         </td>
-        <td><input class='dinnerCheckbox' type="checkbox"
-                   data-meal="dinner"
-            {{#with dinner}}{{disabled}} {{check}}{{/with}}
-            data-date="{{date}}">
+        <td class="numberOfMeals">
+            {{numberOfMeals}}
         </td>
     </tr>
     {{/with}}
@@ -57,7 +57,7 @@
     <tr>
         <td class="total" colspan="3"><span>Total:</span></td>
         <td class="numberLunchCheck">15</td>
-        <td class="numberDinnerCheck">0</td>
+        <td class="TotalMeals">15</td>
     </tr>
     </tbody>
 </table>
