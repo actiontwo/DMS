@@ -1,0 +1,69 @@
+<div class="page-header">
+    <h1 id="type">Register Meal</h1>
+</div>
+
+<div class="col-md-12">
+    <div class="form-group col-md-4">
+        <label  class="col-lg-2 control-label">From</label>
+        <div class="col-lg-10">
+            <input id="find-from-user" type="text" class="form-control datepicker"  placeholder="mm/dd/yyyy">
+        </div>
+    </div>
+    <div class="form-group col-md-4">
+        <label  class="col-lg-2 control-label">To</label>
+        <div class="col-lg-10">
+            <input id="find-to-user" type="text" class="form-control datepicker"  placeholder="mm/dd/yyyy">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <a class="btn btn-primary" id="btnViewByDay">Search</a>
+    </div>
+</div>
+
+<table class="table table-striped table-hover">
+    <thead>
+    <tr>
+        <th>No</th>
+        <th>Date(dd/mm/yy)</th>
+        <th>Day</th>
+        <th>Meals
+            <input id="checkOrUncheckAll" type="checkbox">(Check or Uncheck all)
+        </th>
+        <th>Number of Meal(s)</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each models}}
+    {{#with attributes}}
+    <tr>
+        <td>{{number}}</td>
+        <td class="date">
+            {{date}}
+        </td>
+        <td>
+            {{day}}
+        </td>
+        <td><input class='lunchCheckbox' type="checkbox"
+                   data-meal="lunch"
+            {{#with lunch}}{{disabled}} {{check}}{{/with}}
+            data-date="{{date}}" data-preValue="0"/>
+        </td>
+        <td>
+            <span class="numberOfMeals">{{numberOfMeals}}</span>
+            <span class="cursor edit glyphicon glyphicon-pencil"></span>
+            <span class="cursor delete glyphicon glyphicon-trash"></span>
+        </td>
+    </tr>
+    {{/with}}
+    {{/each}}
+    <tr>
+        <td class="total" colspan="3"><span>Total:</span></td>
+        <td class="numberLunchCheck">15</td>
+        <td class="TotalMeals">15</td>
+    </tr>
+    </tbody>
+</table>
+<div class="groupBtn">
+    <button type="button" class="btn btn-primary" id="saveRegister">Save</button>
+</div>
+
