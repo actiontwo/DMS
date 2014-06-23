@@ -17,10 +17,7 @@
 var tool = require('../tool');
 
 module.exports = {
-  /**
-   * Action blueprints:
-   *    `/registermealAd/find`
-   */
+
   index: function (req, res) {
     if (!req.session.user) {
       res.send('You are not login');
@@ -29,29 +26,50 @@ module.exports = {
     var user = req.session.user;
     var time = tool.getCurrentDay();
     var data = [];
-    var checkValue;
-    var numberOfMealsValue;
+    var checkValue = false;
+    var numberOfMealsValue = 1;
+    var dateBegin = 1;
+    //check user register meal deault
+    if (user.defaultRegisterMeal) {
+      checkValue = true;
+    }
     // 'docs' means the returning data
-    RegisterMeal.find({userId: user.id}).done(function (err, docs) {
-      for (i = 1; i <= time.numberDayOfThisMonth; i++) {
-        var disabled = '';
+    RegisterMeal.find({userId: user.id, month: time.month, year: time.year}).done(function (err, docs) {
+
+      var join_date = user.join_date;
+      join_date = join_date.split('/');
+      // check date user join to DMS and set date begin register meal
+      if (Math.ceil((new Date(join_date[2], join_date[0], 0) - new Date(time.year, time.month, 0)) / 86400000) === 0) {
+        console.log('this month');
+        dateBegin = join_date[1];
+      }
+
+      var lengthDocs = docs.length;
+      for (i = dateBegin; i <= time.numberDayOfThisMonth; i++) {
+        var disabled = false;
+        var set = true;
         // if i < current day, disable this checkbox
         if (i < time.date)
-          disabled = 'disabled';
+          disabled = true;
         var dateText = tool.formatTwoNumber(time.month) + "/" + tool.formatTwoNumber(i) + "/" + time.year;
-        numberOfMealsValue = tool.searchNumOfMeals(dateText, docs);
-        if (numberOfMealsValue == 0) checkValue = '';
-        else checkValue = 'checked';
-        
-        data.push({
-          number: i,
-          date: dateText,
-          day: new Date(time.year, time.month - 1, i).toString().split(" ")[0],
-          lunch: {disabled: disabled, check: checkValue},
-          numberOfMeals: numberOfMealsValue
-        });
+        for (j = 0; j < lengthDocs; j++) {
+          if (dateText === docs[j].date) {
+            set = false;
+          }
+        }
+        if (set) {
+          docs.push({
+            date: dateText,
+            day: new Date(time.year, time.month - 1, i).toString().split(" ")[0],
+            month: time.month,
+            year: time.year,
+            disabled: disabled,
+            status: checkValue,
+            numberOfMeals: numberOfMealsValue
+          });
+        }
       }
-      res.send(data);
+      res.send(docs);
     });
   },// End Index
 
@@ -108,64 +126,40 @@ module.exports = {
     });
 
   },
-  /**
-   * Action blueprints:
-   *    `/registermeal/find`
-   */
-  find: function (req, res) {
-    if (!req.session.user) {
-      res.send('Not Working');
-      return;
-    }
-    res.send({abc: 121});
-
-  },
-
-  /**
-   * Action blueprints:
-   *    `/registermeal/create`
-   */
 
   create: function (req, res) {
-
-    console.log(req.session.user);
-    if (!req.session.user || !req.body.mealStatus) {
+    if (!req.session.user) {
       res.send('Bye Bye');
       return;
     }
-    var mealStatus = req.body.mealStatus;
-    for (i = 0; i < mealStatus.length; i++) {
-      var data = {
-        date: mealStatus[i].date,
-        meal: mealStatus[i].meal,
-        //numberOfMeals: mealStatus[i].numberOfMeals,
-        //status: mealStatus[i].status,
-        userId: req.session.user.id
-      };
-      // check user registed this day or not
-      console.log("Ham CREATE: (mealStatus[i].status = )" + mealStatus[i].status);
-      updateData(data, mealStatus[i].status, mealStatus[i].numberOfMeals);
-    }
-    res.send([
-      {data: 'update Success'},
-      {data: 'ok'}
-    ]);
+    var data = req.body;
+    data.userId = req.session.user.id;
+    console.log(data);
+    RegisterMeal.create(data).done(function (err, docs) {
+      if (err) {
+        console.log(err);
+        res.send(err);
+        return;
+      }
+      res.send(docs);
+    });
   },
-
-  /**
-   * Action blueprints:
-   *    `/registermeal/detroy`
-   */
-  destroy: function (req, res) {
-    res.send('detroy');
-  },
-
-  /**
-   * Action blueprints:
-   *    `/registermeal/update`
-   */
   update: function (req, res) {
-    res.send('update');
+    if (!req.session.user) {
+      res.send('Bye Bye');
+      return;
+    }
+    var data = req.body;
+    data.userId = req.session.user.id;
+    console.log(data);
+    RegisterMeal.update({id: data.id}, data).done(function (err, docs) {
+      if (err) {
+        console.log(err);
+        res.send(err);
+        return;
+      }
+      res.send(docs);
+    });
   },
 
   /**
@@ -174,33 +168,4 @@ module.exports = {
    */
   _config: {
   }
-};
-function updateData(data, _status, _numberOfMeals) {
-  collection = RegisterMeal;
-  collection.find(data).done(function (err, array) {
-    if (err) 
-    {
-      console.log(err);
-    }
-    else 
-    {
-      if (array.length > 0) 
-      {
-        // day registered --> update status
-        collection.update(data, {status: _status, numberOfMeals: _numberOfMeals}).done(function (err, meal) {
-          // console.log("date: " + data.date);
-          // console.log("status: " + _status);
-          // console.log("numberOfMeals: " + _numberOfMeals);
-        });
-      }
-      else 
-      {
-        // create new register meal if day register meal not exits
-        data.status = _status;
-        data.numberOfMeals = _numberOfMeals;
-        collection.create(data).done(function (err, meal) {
-        });
-      }
-    }
-  });
 };

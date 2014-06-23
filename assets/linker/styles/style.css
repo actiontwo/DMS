@@ -67,3 +67,6 @@ td.ui-datepicker-today a {
   border:1px solid #bbb;
   padding : 1px 10px;
 }
+table td, table th{
+  text-align: center;
+}

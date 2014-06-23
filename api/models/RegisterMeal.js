@@ -29,6 +29,9 @@ module.exports = {
     },
     year: {
       type: 'integer'
+    },
+    day:{
+      type:'string'
     }
 
   }

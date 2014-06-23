@@ -4,15 +4,17 @@
 
 <div class="col-md-12">
     <div class="form-group col-md-4">
-        <label  class="col-lg-2 control-label">From</label>
+        <label class="col-lg-2 control-label">From</label>
+
         <div class="col-lg-10">
-            <input id="find-from-user" type="text" class="form-control datepicker"  placeholder="mm/dd/yyyy">
+            <input id="find-from-user" type="text" class="form-control datepicker" placeholder="mm/dd/yyyy">
         </div>
     </div>
     <div class="form-group col-md-4">
-        <label  class="col-lg-2 control-label">To</label>
+        <label class="col-lg-2 control-label">To</label>
+
         <div class="col-lg-10">
-            <input id="find-to-user" type="text" class="form-control datepicker"  placeholder="mm/dd/yyyy">
+            <input id="find-to-user" type="text" class="form-control datepicker" placeholder="mm/dd/yyyy">
         </div>
     </div>
     <div class="col-md-4">
@@ -27,17 +29,16 @@
         <th>Date(dd/mm/yy)</th>
         <th>Day</th>
         <th>Meals
-            <input id="checkOrUncheckAll" type="checkbox">(Check or Uncheck all)
+            <input id="checkOrUncheckAll" type="checkbox">(Check all)
         </th>
         <th>Number of Meal(s)</th>
-        <th>Edit</th>
     </tr>
     </thead>
     <tbody>
     {{#each models}}
     {{#with attributes}}
-    <tr>
-        <td>{{number}}</td>
+    <tr data-id="{{id}}">
+        <td>{{@index}}</td>
         <td class="date">
             {{date}}
         </td>
@@ -45,15 +46,21 @@
             {{day}}
         </td>
         <td><input class='lunchCheckbox' type="checkbox"
-                   data-meal="lunch"
-            {{#with lunch}}{{disabled}} {{check}}{{/with}}
+                   data-meal="lunch" data-date="{{date}}"
+
+                   data-value="{{check}}"
+            {{#if disabled}} disabled {{/if}}
+            {{#if status}}checked{{/if}}
+
             data-date="{{date}}" data-preValue="0"/>
         </td>
         <td>
-            <span class="numberOfMeals" data-preValue="0">{{numberOfMeals}}</span>
-        </td>
-        <td>
-            <span class="cursor edit glyphicon glyphicon-pencil"></span>
+            <input type='text'
+                   class="col-md-2 col-md-offset-5 numberOfMeals"
+                   data-value={{numberOfMeals}}
+                   value="{{numberOfMeals}}"
+                   data-date="{{date}}"
+            {{#if disabled}} readonly {{/if}}/>
         </td>
     </tr>
     {{/with}}
@@ -62,6 +69,7 @@
         <td class="total" colspan="3"><span>Total:</span></td>
         <td class="numberLunchCheck">15</td>
         <td class="TotalMeals">15</td>
+        <td></td>
     </tr>
     </tbody>
 </table>
