@@ -18,7 +18,7 @@ var tool = require('../tool');
 
 module.exports = {
 
-  index: function (req, res) {
+  index: function(req, res) {
     if (!req.session.user) {
       res.send('You are not login');
       return;
@@ -40,16 +40,21 @@ module.exports = {
       checkValue = true;
     }
     // 'docs' means the returning data
-    RegisterMeal.find({userId: user.id, month: time.month, year: time.year}).done(function (err, docs) {
+    RegisterMeal.find({
+      userId: user.id,
+      month: time.month,
+      year: time.year
+    }).done(function(err, docs) {
 
       var join_date = user.join_date;
-      join_date = join_date.split('/');
-      // check date user join to DMS and set date begin register meal
-      if (Math.ceil((new Date(join_date[2], join_date[0], 0) - new Date(time.year, time.month, 0)) / 86400000) === 0) {
-        console.log('this month');
-        dateBegin = join_date[1];
+      if (join_date) {
+        join_date = join_date.split('/');
+        // check date user join to DMS and set date begin register meal
+        if (Math.ceil((new Date(join_date[2], join_date[0], 0) - new Date(time.year, time.month, 0)) / 86400000) === 0) {
+          console.log('this month');
+          dateBegin = join_date[1];
+        }
       }
-
       var lengthDocs = docs.length;
       for (i = dateBegin; i <= time.numberDayOfThisMonth; i++) {
         var disabled = false;
@@ -63,7 +68,7 @@ module.exports = {
         for (j = 0; j < lengthDocs; j++) {
           if (dateText === docs[j].date) {
             checkRegisterExist = true;
-            var checkDate =  (docs[j].date).split('/');
+            var checkDate = (docs[j].date).split('/');
             if (checkDate[1] <= checkTime)
               docs[j].disabled = true;
           }
@@ -82,9 +87,9 @@ module.exports = {
       }
       res.send(docs);
     });
-  },// End Index
+  }, // End Index
 
-  indexAdmin: function (req, res) {
+  indexAdmin: function(req, res) {
     if (!req.session.user) {
       res.send('You are not login');
       return;
@@ -99,13 +104,14 @@ module.exports = {
     }
     var time = tool.getCurrentDay();
     var numberOfMealsValue;
-    RegisterMeal.find({date: time.currentDay}).done(function (err, meal) {
+    RegisterMeal.find({
+      date: time.currentDay
+    }).done(function(err, meal) {
       if (err) {
         res.send(err);
-      }
-      else {
+      } else {
         var data = [];
-        User.find().done(function (err, user) {
+        User.find().done(function(err, user) {
           if (err) {
             res.send(err)
           }
@@ -138,7 +144,7 @@ module.exports = {
 
   },
 
-  create: function (req, res) {
+  create: function(req, res) {
     if (!req.session.user) {
       res.send('Bye Bye');
       return;
@@ -146,7 +152,7 @@ module.exports = {
     var data = req.body;
     data.userId = req.session.user.id;
     console.log(data);
-    RegisterMeal.create(data).done(function (err, docs) {
+    RegisterMeal.create(data).done(function(err, docs) {
       if (err) {
         console.log(err);
         res.send(err);
@@ -155,7 +161,7 @@ module.exports = {
       res.send(docs);
     });
   },
-  update: function (req, res) {
+  update: function(req, res) {
     if (!req.session.user) {
       res.send('Bye Bye');
       return;
@@ -163,7 +169,9 @@ module.exports = {
     var data = req.body;
     data.userId = req.session.user.id;
     console.log(data);
-    RegisterMeal.update({id: data.id}, data).done(function (err, docs) {
+    RegisterMeal.update({
+      id: data.id
+    }, data).done(function(err, docs) {
       if (err) {
         console.log(err);
         res.send(err);
@@ -177,6 +185,5 @@ module.exports = {
    * Overrides for the settings in `config/controllers.js`
    * (specific to RegisterMealController)
    */
-  _config: {
-  }
+  _config: {}
 };
