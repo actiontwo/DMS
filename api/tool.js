@@ -12,7 +12,8 @@ module.exports = {
       year: year,
       month: month,
       numberDayOfThisMonth: new Date(year, month, 0).getDate(),
-      currentDay: this.formatTwoNumber(month) + "/" + this.formatTwoNumber(date) + "/" + year};
+      currentDay: this.formatTwoNumber(month) + "/" + this.formatTwoNumber(date) + "/" + year,
+      hour: time.getHours()};
   },
   formatTwoNumber: function (number) {
     return number < 10
@@ -28,12 +29,11 @@ module.exports = {
     }
     return result;
   },
-  searchNumOfMeals: function(dateText, myArray)
-  {
+  searchNumOfMeals: function (dateText, myArray) {
     var result = 0;
     for (j = 0; j < myArray.length; j++) {
       if (myArray[j].date == dateText) {
-        if(myArray[j].numberOfMeals == undefined) result = 0;
+        if (myArray[j].numberOfMeals == undefined) result = 0;
         else result = myArray[j].numberOfMeals;
       }
     }

@@ -29,6 +29,12 @@ module.exports = {
     var checkValue = false;
     var numberOfMealsValue = 1;
     var dateBegin = 1;
+    var lastTime = 13;
+    var checkTime = time.date;
+
+    if (time.hour > lastTime) {
+      checkTime = time.date + 1;
+    }
     //check user register meal deault
     if (user.defaultRegisterMeal) {
       checkValue = true;
@@ -47,17 +53,22 @@ module.exports = {
       var lengthDocs = docs.length;
       for (i = dateBegin; i <= time.numberDayOfThisMonth; i++) {
         var disabled = false;
-        var set = true;
+        var checkRegisterExist = false;
         // if i < current day, disable this checkbox
-        if (i < time.date)
+
+        if (i <= checkTime)
           disabled = true;
+
         var dateText = tool.formatTwoNumber(time.month) + "/" + tool.formatTwoNumber(i) + "/" + time.year;
         for (j = 0; j < lengthDocs; j++) {
           if (dateText === docs[j].date) {
-            set = false;
+            checkRegisterExist = true;
+            var checkDate =  (docs[j].date).split('/');
+            if (checkDate[1] <= checkTime)
+              docs[j].disabled = true;
           }
         }
-        if (set) {
+        if (!checkRegisterExist) {
           docs.push({
             date: dateText,
             day: new Date(time.year, time.month - 1, i).toString().split(" ")[0],

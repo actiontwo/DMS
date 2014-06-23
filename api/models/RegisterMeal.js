@@ -24,6 +24,9 @@ module.exports = {
     numberOfMeals: {
       type: 'integer'
     },
+    disabled :{
+      type:'boolean'
+    },
     month: {
       type: 'integer'
     },
