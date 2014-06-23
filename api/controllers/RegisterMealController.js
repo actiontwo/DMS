@@ -40,7 +40,6 @@ module.exports = {
           disabled = 'disabled';
         var dateText = tool.formatTwoNumber(time.month) + "/" + tool.formatTwoNumber(i) + "/" + time.year;
         numberOfMealsValue = tool.searchNumOfMeals(dateText, docs);
-        console.log('numOfMeals: '+numberOfMealsValue);
         if (numberOfMealsValue == 0) checkValue = '';
         else checkValue = 'checked';
         
@@ -139,14 +138,13 @@ module.exports = {
       var data = {
         date: mealStatus[i].date,
         meal: mealStatus[i].meal,
-        numberOfMeals: mealStatus[i].numberOfMeals,
-        userId: req.session.user.id,
+        //numberOfMeals: mealStatus[i].numberOfMeals,
+        //status: mealStatus[i].status,
+        userId: req.session.user.id
       };
-      console.log('--- DATE: '+data.date+' ---');
-      console.log(data.meal);
-      console.log(data.userId);
       // check user registed this day or not
-      updateStatus(data, mealStatus[i].status);
+      console.log("Ham CREATE: (mealStatus[i].status = )" + mealStatus[i].status);
+      updateData(data, mealStatus[i].status, mealStatus[i].numberOfMeals);
     }
     res.send([
       {data: 'update Success'},
@@ -177,22 +175,29 @@ module.exports = {
   _config: {
   }
 };
-function updateStatus(data, status) {
+function updateData(data, _status, _numberOfMeals) {
   collection = RegisterMeal;
   collection.find(data).done(function (err, array) {
-    if (err) {
+    if (err) 
+    {
       console.log(err);
     }
-    else {
-      if (array.length > 0) {
+    else 
+    {
+      if (array.length > 0) 
+      {
         // day registered --> update status
-        collection.update(data, {status: status}).done(function (err, meal) {
-
+        collection.update(data, {status: _status, numberOfMeals: _numberOfMeals}).done(function (err, meal) {
+          // console.log("date: " + data.date);
+          // console.log("status: " + _status);
+          // console.log("numberOfMeals: " + _numberOfMeals);
         });
       }
-      else {
+      else 
+      {
         // create new register meal if day register meal not exits
-        data.status = status;
+        data.status = _status;
+        data.numberOfMeals = _numberOfMeals;
         collection.create(data).done(function (err, meal) {
         });
       }

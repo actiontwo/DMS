@@ -26,7 +26,6 @@ module.exports = {
         result = '';
       }
     }
-    //console.log("result: " + result);
     return result;
   },
   searchNumOfMeals: function(dateText, myArray)
