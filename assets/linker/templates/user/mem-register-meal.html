@@ -30,6 +30,7 @@
             <input id="checkOrUncheckAll" type="checkbox">(Check or Uncheck all)
         </th>
         <th>Number of Meal(s)</th>
+        <th>Edit</th>
     </tr>
     </thead>
     <tbody>
@@ -49,9 +50,10 @@
             data-date="{{date}}" data-preValue="0"/>
         </td>
         <td>
-            <span class="numberOfMeals">{{numberOfMeals}}</span>
+            <span class="numberOfMeals" data-preValue="0">{{numberOfMeals}}</span>
+        </td>
+        <td>
             <span class="cursor edit glyphicon glyphicon-pencil"></span>
-            <span class="cursor delete glyphicon glyphicon-trash"></span>
         </td>
     </tr>
     {{/with}}

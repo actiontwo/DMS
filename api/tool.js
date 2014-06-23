@@ -26,14 +26,13 @@ module.exports = {
         result = '';
       }
     }
-            console.log("result: " + result);
+    //console.log("result: " + result);
     return result;
   },
   searchNumOfMeals: function(dateText, myArray)
   {
     var result = 0;
     for (j = 0; j < myArray.length; j++) {
-
       if (myArray[j].date == dateText) {
         if(myArray[j].numberOfMeals == undefined) result = 0;
         else result = myArray[j].numberOfMeals;
