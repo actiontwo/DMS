@@ -151,6 +151,19 @@ module.exports.routes = {
     controller: 'menu',
     action: 'createDish'
   },
+   // Suggest Controller
+  'get /suggest': {
+    controller: 'menu',
+    action: 'getSuggest'
+  },
+  'post /suggest': {
+    controller: 'menu',
+    action: 'createSuggest'
+  },
+  'delete /suggest/:id': {
+    controller: 'menu',
+    action: 'deleteSuggest'
+  },
   // Expense Controller
   'get /expense/:id?': {
     controller: 'expense',

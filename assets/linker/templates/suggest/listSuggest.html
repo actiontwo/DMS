@@ -1,0 +1,25 @@
+<div class="page-header">
+  <h1 id="type">View Suggest</h1>
+</div>
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Date</th>
+      <th>Suggest Meal</th>
+      <th>Name</th>
+      <th>Note</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each models}} {{#with attributes}}
+    <tr>
+      <td>{{@index}}</td>
+      <td>{{date}}</td>
+      <td>{{suggestMeal}}</td>
+      <td>{{name}}</td>
+      <td>{{note}}</td>
+    </tr>
+    {{/with}} {{/each}}
+  </tbody>
+</table>
