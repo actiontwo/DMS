@@ -80,6 +80,7 @@ var RegisterMealManagerView = Backbone.View.extend({
       $('#selectUser').val("");
       $this.updateTotalRow();
     });
+    
   },
   viewByUser: function()
   {
@@ -118,5 +119,4 @@ var RegisterMealManagerView = Backbone.View.extend({
     });
     $('.totalMeals').html(totalMeals);
   }
-
 });
