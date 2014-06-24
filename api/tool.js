@@ -13,7 +13,25 @@ module.exports = {
       month: month,
       numberDayOfThisMonth: new Date(year, month, 0).getDate(),
       currentDay: this.formatTwoNumber(month) + "/" + this.formatTwoNumber(date) + "/" + year,
-      hour: time.getHours()};
+      hour: time.getHours()
+    };
+  },
+  getNextDay: function (numberDay) {
+    var time = new Date();
+    time.setDate(time.getDate() + numberDay);
+    var year = time.getFullYear(),
+      month = time.getMonth() + 1,
+      date = time.getDate();
+    return {
+      day: new Date(year, month, date).toString().split(" ")[0],
+      date: date,
+      year: year,
+      month: month,
+      numberDayOfThisMonth: new Date(year, month, 0).getDate(),
+      nextDay: this.formatTwoNumber(month) + "/" + this.formatTwoNumber(date) + "/" + year,
+      hour: time.getHours()
+    };
+
   },
   formatTwoNumber: function (number) {
     return number < 10

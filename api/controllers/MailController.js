@@ -17,12 +17,28 @@
 var tool = require('../tool');
 var CronTab = require('../crontab');
 var rule = {
-  dayOfWeek: [1, 2, 3, 4, 5],
-  hour: 17,
-  minute: 5,
-  second: 0
+  notiBalanceLow: {
+    dayOfWeek: [1, 2, 3, 4, 5],
+    hour: 17,
+    minute: 10,
+    second: 0},
+  registerMealJob: {
+    dayOfWeek: [0, 1, 2, 3, 4],
+    hour: 17,
+    minute: 0,
+    second: 0
+  },
+  updateBanlance: {
+    dayOfWeek: [0, 1, 2, 3, 4],
+    hour: 17,
+    minute: 5,
+    second: 0
+  }
 };
-var notiBalanceLow = CronTab.notiBalanceLow(rule);
+
+var notiBalanceLow = CronTab.notiBalanceLow(rule.notiBalanceLow);
+var updateRegisterMelaJob = CronTab.updateRegistelMealJob(rule.registerMealJob, tool);
+var updateBalanceJob = CronTab.updateBalanceJob(rule.updateBanlance, tool);
 
 module.exports = {
   sendMail: function (req, res) {
@@ -38,7 +54,6 @@ module.exports = {
     smtpTransport.sendMail(mailInfo, function (error, response) {
       if (error)
         console.log(error);
-
       console.log(response);
       res.send({data: 'Send Succsess'});
     });
@@ -49,6 +64,4 @@ module.exports = {
    * (specific to MailController)
    */
   _config: {}
-
-
 };

@@ -35,6 +35,12 @@ module.exports = {
     },
     day:{
       type:'string'
+    },
+    costPerMeal:{
+      type:'integer'
+    },
+    payment:{
+      type:'boolean'
     }
 
   }
