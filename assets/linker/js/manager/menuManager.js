@@ -25,7 +25,7 @@ var MenuManagerView = Backbone.View.extend({
   },
   render: function () {
     this.$el.html(Templates['admin/Manager/menuManager'](this.collection));
-    autoComplete($('.txt-dish-create'), dish);
+    autoComplete($('.modalDish'), dish);
     initDatePicker($('.datepicker'));
     this.delegateEvents({
       'click .saveDish': 'saveDish',
@@ -94,9 +94,6 @@ var MenuManagerView = Backbone.View.extend({
     else
       model = this.collection.add(data);
 
-    //    if (model.attributes.new) {
-    //      delete model.attributes.id;
-    //    }
     model.save();
   },
   deleteMenu: function (el) {
