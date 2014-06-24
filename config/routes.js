@@ -121,6 +121,14 @@ module.exports.routes = {
     controller: 'registermeal',
     action: 'destroy'
   },
+  'post /registermealByUser': {
+    controller: 'registermeal',
+    action: 'indexAdminViewByUser'
+  },
+  'post /registermealByDay': {
+    controller: 'registermeal',
+    action: 'indexAdminViewByDay'
+  },
   // Menu Controller
   'get /menu': {
     controller: 'menu',

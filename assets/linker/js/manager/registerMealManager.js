@@ -7,6 +7,23 @@ var RegisterMealManagerCollection = Backbone.Collection.extend({
   url: "/registermealAd",
   model: RegisterMealManagerModel
 });
+// Register Meal By Day
+var RMByDayModel = Backbone.Model.extend({
+  urlRoot: "/registermealByDay"
+});
+var RMByDayCollection = Backbone.Collection.extend({
+  url: "/registermealByDay",
+  model: RMByDayModel
+});
+// Register Meal By User
+var RMByUserModel = Backbone.Model.extend({
+  urlRoot: "/registermealByUser"
+});
+var RMByUserCollection = Backbone.Collection.extend({
+  url: "/registermealByUser",
+  model: RMByUserModel
+});
+
 //Declare View
 var RegisterMealManagerView = Backbone.View.extend({
   model: new RegisterMealManagerModel(),
@@ -33,60 +50,72 @@ var RegisterMealManagerView = Backbone.View.extend({
       'click #btnAdminViewByUser': 'viewByUser'
     });
 
+    this.updateTotalRow();
+
     return this;
   },
   viewByDay: function()
-  { 
-    var thisCollection = this.collection;
-    var tempCollection = new RegisterMealManagerCollection();
-    var selectedDay = $('.admin-find-day').find('input').val();
-    this.collection.each(function(model){
-      if (model.attributes.date == selectedDay) tempCollection.add(model);
-    });
+  {
+    var $this = this; 
+    var _selectedDay = $('.admin-find-day').find('input').val();
 
-    //re-render
-    this.$el.html(Templates['admin/Manager/registerMealManager'](tempCollection));
-    //inint animation and count regiters meal
-    initDatePicker($('.datepicker'));
+    var rmByDayCollection = new RMByDayCollection();
 
-    this.collection.each(function(model){
-      var name = model.attributes.name;
-      var option = '<option value="'+name+'">'+name+'</option>';
-      $('#selectUser').append(option);
+    $.post('/registermealByDay', {selectedDay: _selectedDay}, function(data){
+      rmByDayCollection.reset(data);
+      //re-render
+      $this.$el.html(Templates['admin/Manager/registerMealManager'](rmByDayCollection));
+      //inint animation and count regiters meal
+      initDatePicker($('.datepicker'));
+      $this.collection.each(function(model){
+        var name = model.attributes.name;
+        var option = '<option value="'+name+'">'+name+'</option>';
+        $('#selectUser').append(option);
+      });
+      $this.delegateEvents({
+        'click #btnAdminViewByDay': 'viewByDay',
+        'click #btnAdminViewByUser': 'viewByUser'
+      });
+      $('.admin-find-day .datepicker').val(_selectedDay);
+      $('#selectUser').val("");
     });
-
-    this.delegateEvents({
-      'click #btnAdminViewByDay': 'viewByDay',
-      'click #btnAdminViewByUser': 'viewByUser'
-    });
-    
   },
   viewByUser: function()
   {
-    var thisCollection = this.collection;
-    var tempCollection = new RegisterMealManagerCollection();
-    var username = $('#selectUser').val();
-    this.collection.each(function(model){
-      if (model.attributes.name == username) tempCollection.add(model);
+    var $this = this; 
+    var _selectedUser = $('#selectUser').val();
+
+    var rmByUserCollection = new RMByUserCollection();
+
+    $.post('/registermealByUser', {selectedUser: _selectedUser}, function(data){
+      rmByUserCollection.reset(data);
+      console.log("Total rmByUserCollection: " + rmByUserCollection.length);
+      //re-render
+      $this.$el.html(Templates['admin/Manager/registerMealManager'](rmByUserCollection));
+      //inint animation and count regiters meal
+      initDatePicker($('.datepicker'));
+      $this.collection.each(function(model){
+        var name = model.attributes.name;
+        var option = '<option value="'+name+'">'+name+'</option>';
+        $('#selectUser').append(option);
+      });
+      $this.delegateEvents({
+        'click #btnAdminViewByDay': 'viewByDay',
+        'click #btnAdminViewByUser': 'viewByUser'
+      });
+      $('.admin-find-day .datepicker').val("");
+      $('#selectUser').val(_selectedUser);
     });
-
-    //re-render
-    this.$el.html(Templates['admin/Manager/registerMealManager'](tempCollection));
-    //inint animation and count regiters meal
-    initDatePicker($('.datepicker'));
-
-    this.collection.each(function(model){
-      var name = model.attributes.name;
-      var option = '<option value="'+name+'">'+name+'</option>';
-      $('#selectUser').append(option);
+  },
+  updateTotalRow: function()
+  {
+    $('.mealsChecked').html($('.mealCheckbox:checked').length);
+    var totalMeals = 0;
+    $('.numberOfMeals').each(function(){
+      totalMeals+= parseInt($(this).html());
     });
-
-    this.delegateEvents({
-      'click #btnAdminViewByDay': 'viewByDay',
-      'click #btnAdminViewByUser': 'viewByUser'
-    });
-
-    $('#selectUser').val(username);
+    $('.totalMeals').html(totalMeals);
   }
+
 
 });

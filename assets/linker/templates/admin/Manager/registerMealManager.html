@@ -16,8 +16,8 @@
 
 <div class="clearfix"></div>
 <div class="groupBtn">
-    <a id="btnAdminViewByDay" class="btn-black">Search by Day</a>
-    <a id="btnAdminViewByUser" class="btn-black">Search by User</a>
+    <a id="btnAdminViewByDay" class="btn btn-primary">Search by Day</a>
+    <a id="btnAdminViewByUser" class="btn btn-primary">Search by User</a>
 </div>
 <div class="clear-fix"></div>
 
@@ -27,17 +27,25 @@
         <th>No</th>
         <th data-attribute="date">Date(mm/dd/yyyy)</th>
         <th data-attribute="name">Name</th>
-        <th data-attribute="lunch">Lunch</th>
+        <th data-attribute="lunch">Meals</th>
+        <th data-attribute="lunch">Number of Meal(s)</th>
     </tr>
     </thead>
     <tbody>
     {{#each models}}
     <tr>
-        <td>{{attributes.number}}</td>
+        <td>{{@index}}</td>
         <td>{{attributes.date}}</td>
         <td>{{attributes.name}}</td>
-        <td><input type="checkbox" {{attributes.lunch}}/></td>
+        <td><input class="mealCheckbox" type="checkbox" {{#if attributes.status}} checked {{/if}}/></td>
+        <td><span class="numberOfMeals">{{attributes.numberOfMeals}}</span></td>
     </tr>
     {{/each}}
+    <tr>
+        <td class="total" colspan="3"><span>Total:</span></td>
+        <td class="mealsChecked">15</td>
+        <td class="totalMeals">15</td>
+        <td></td>
+    </tr>
     </tbody>
 </table>

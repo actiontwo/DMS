@@ -29,7 +29,7 @@ module.exports = {
     var checkValue = false;
     var numberOfMealsValue = 1;
     var dateBegin = 1;
-    var lastTime = 13;
+    var lastTime = 20;
     var checkTime = time.date;
 
     if (time.hour > lastTime) {
@@ -51,7 +51,6 @@ module.exports = {
         join_date = join_date.split('/');
         // check date user join to DMS and set date begin register meal
         if (Math.ceil((new Date(join_date[2], join_date[0], 0) - new Date(time.year, time.month, 0)) / 86400000) === 0) {
-          console.log('this month');
           dateBegin = join_date[1];
         }
       }
@@ -103,47 +102,184 @@ module.exports = {
       return;
     }
     var time = tool.getCurrentDay();
-    var numberOfMealsValue;
+    var theNextDay = new Date(time.year, time.month - 1, time.date + 1);
+    var theNextDayString = tool.formatTwoNumber(theNextDay.getMonth()+1) + "/" + 
+    tool.formatTwoNumber(theNextDay.getDate()) + "/" + theNextDay.getFullYear();
+
     RegisterMeal.find({
-      date: time.currentDay
-    }).done(function(err, meal) {
+      date: theNextDayString
+    }).done(function(err, meals) {
       if (err) {
         res.send(err);
       } else {
-        var data = [];
-        User.find().done(function(err, user) {
+        User.find().done(function(err, users) {
           if (err) {
             res.send(err)
           }
           var result = [];
-          for (i = 0; i < user.length; i++) {
-            var id = user[i].id;
-            var dayNotRegister = 0;
-            var check = {
-              lunch: "checked"
-            };
-            for (j = 0; j < meal.length; j++) {
-              if (id === meal[j].userId && meal[j].status === false) {
-                check[meal[j].meal] = '';
+          // loop all users
+          for (i = 0; i < users.length; i++) {
+            var id = users[i].id;
+            var _firstname = users[i].firstname;
+            var _lastname = users[i].lastname;
+            var checkValue = false;
+            var numberOfMealsValue = 0;
+            // loop to look for the user that has already registered for theNextDay
+            for (j = 0; j < meals.length; j++){
+              if (meals[j].userId == id)
+              {
+                if (meals[j].status == true) checkValue = true;
+                else checkValue = false;
+                numberOfMealsValue = meals[j].numberOfMeals;
+              }
+              else
+              {
               }
             }
-            if (check.lunch == 'checked') numberOfMealsValue = 1;
-            else numberOfMealsValue = 0;
+            // end meals loop
+
+            // push an object to 'result' array
             result.push({
-              number: i + 1,
-              date: time.currentDay,
-              name: user[i].firstname + " " + user[i].lastname,
-              lunch: check.lunch,
+              date: theNextDayString,
+              name: _firstname + " " + _lastname,
+              status: checkValue,
               numberOfMeals: numberOfMealsValue
-            })
+            });
           }
+          // end loop all users
           res.send(result);
         });
       }
     });
+  },
+  indexAdminViewByDay: function(req, res)
+  {
+    if (!req.session.user) {
+      res.send('You are not login');
+      return;
+    }
+    if (req.session.user.role !== 'admin') {
+      res.send('You are not admin');
+      return;
+    }
+
+    console.log("<indexAdminViewByDay> <selectedDay>:" + req.body.selectedDay);
+    var selectedDay = req.body.selectedDay;
+    
+    RegisterMeal.find({date: selectedDay}).done(function(err, meals){
+      if (err) {
+        res.send(err);
+      } 
+      else 
+      {
+        //console.log("meals.length: " + meals.length);
+        User.find().done(function(err, users) {
+          if (err) {
+            res.send(err)
+          }
+          var result = [];
+          // loop all users
+          for (i = 0; i < users.length; i++) {
+            var id = users[i].id;
+            var _firstname = users[i].firstname;
+            var _lastname = users[i].lastname;
+            var checkValue = false;
+            var numberOfMealsValue = 0;
+            // loop to look for the user that has already registered for theNextDay
+            for (j = 0; j < meals.length; j++){
+              if (meals[j].userId == id)
+              {
+                if (meals[j].status == true) checkValue = true;
+                else checkValue = false;
+                numberOfMealsValue = meals[j].numberOfMeals;
+              }
+              else
+              {
+              }
+            }
+            // end meals loop
+
+            // push an object to 'result' array
+            result.push({
+              date: selectedDay,
+              name: _firstname + " " + _lastname,
+              status: checkValue,
+              numberOfMeals: numberOfMealsValue
+            });
+          }
+          // end loop all users
+          res.send(result);
+        });
+      } // end else
+    });
 
   },
+  indexAdminViewByUser: function(req, res)
+  {
+    if (!req.session.user) {
+      res.send('You are not login');
+      return;
+    }
+    if (req.session.user.role !== 'admin') {
+      res.send('You are not admin');
+      return;
+    }
 
+    console.log("<indexAdminViewByUser> selectedUser:" + req.body.selectedUser);
+    var selectedUser = req.body.selectedUser;
+    //split firstname & lastname
+    var names = selectedUser.split(" ");
+    var _firstname = names[0];
+    var _lastname = names[1];
+    console.log("firstname: " + _firstname);
+    console.log("lastname: " + _lastname);
+    var _userId = "";
+    var result = [];
+    User.find({firstname: _firstname, lastname: _lastname}).done(function(err, users){
+      if (err) {
+        res.send(err)
+      }
+      else
+      {
+        for(i=0;i<users.length;i++)
+        {
+          _userId = users[i].id;
+        }  
+      }
+      RegisterMeal.find({userId: _userId}).done(function(err, meals){
+        if (err) {
+          res.send(err)
+        }
+        else
+        {
+          var checkValue = false;
+          var numberOfMealsValue = 0;
+          var _date = "";
+          // begin loop
+          for (j = 0; j < meals.length; j++){
+            if (meals[j].status == true) checkValue = true;
+            else checkValue = false;
+            _date = meals[j].date;
+            numberOfMealsValue = meals[j].numberOfMeals;
+          } // end loop
+          // push an object to 'result' array
+          console.log("date: " + _date);
+          console.log("firstname: " + _firstname);
+          console.log("lastname: " + _lastname);
+          console.log("checkValue: " + checkValue);
+          console.log("numberOfMeals: " + numberOfMealsValue);
+          result.push({
+            date: _date,
+            name: _firstname + " " + _lastname,
+            status: checkValue,
+            numberOfMeals: numberOfMealsValue
+          });
+        }
+      });
+    });
+
+
+  },
   create: function(req, res) {
     if (!req.session.user) {
       res.send('Bye Bye');
