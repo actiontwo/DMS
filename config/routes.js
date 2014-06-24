@@ -224,5 +224,14 @@ module.exports.routes = {
   'post /mail': {
     controller: 'mail',
     action: 'sendMail'
+  },
+   // MealHistory Controller
+  'get /mealhistory/:id?': {
+    controller: 'mealhistory',
+    action: 'find'
+  },
+  'post /mealhistory':{
+    controller: 'mealhistory',
+    action: 'create'
   }
 };

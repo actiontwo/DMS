@@ -1,9 +1,9 @@
 var MealHistoryModel = Backbone.Model.extend({
-  urlRoot: "/registermeal"
+  urlRoot: "/mealHistory"
 });
 
 var MealHistoryCollection = Backbone.Collection.extend({
-  url: "/registermeal",
+  url: "/mealHistory",
   model: MealHistoryModel
 });
 
