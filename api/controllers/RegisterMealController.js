@@ -225,16 +225,15 @@ module.exports = {
       return;
     }
 
-    console.log("<indexAdminViewByUser> selectedUser:" + req.body.selectedUser);
+    console.log("<indexAdminViewByUser> selectedUser: " + req.body.selectedUser);
     var selectedUser = req.body.selectedUser;
     //split firstname & lastname
     var names = selectedUser.split(" ");
     var _firstname = names[0];
     var _lastname = names[1];
-    console.log("firstname: " + _firstname);
-    console.log("lastname: " + _lastname);
     var _userId = "";
     var result = [];
+
     User.find({firstname: _firstname, lastname: _lastname}).done(function(err, users){
       if (err) {
         res.send(err)
@@ -261,19 +260,16 @@ module.exports = {
             else checkValue = false;
             _date = meals[j].date;
             numberOfMealsValue = meals[j].numberOfMeals;
+
+            result.push({
+              date: _date,
+              name: _firstname + " " + _lastname,
+              status: checkValue,
+              numberOfMeals: numberOfMealsValue
+            });
           } // end loop
-          // push an object to 'result' array
-          console.log("date: " + _date);
-          console.log("firstname: " + _firstname);
-          console.log("lastname: " + _lastname);
-          console.log("checkValue: " + checkValue);
-          console.log("numberOfMeals: " + numberOfMealsValue);
-          result.push({
-            date: _date,
-            name: _firstname + " " + _lastname,
-            status: checkValue,
-            numberOfMeals: numberOfMealsValue
-          });
+          // send the result back to the client side
+          res.send(result);
         }
       });
     });

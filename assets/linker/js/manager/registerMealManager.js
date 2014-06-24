@@ -78,7 +78,9 @@ var RegisterMealManagerView = Backbone.View.extend({
       });
       $('.admin-find-day .datepicker').val(_selectedDay);
       $('#selectUser').val("");
+      $this.updateTotalRow();
     });
+    
   },
   viewByUser: function()
   {
@@ -89,7 +91,6 @@ var RegisterMealManagerView = Backbone.View.extend({
 
     $.post('/registermealByUser', {selectedUser: _selectedUser}, function(data){
       rmByUserCollection.reset(data);
-      console.log("Total rmByUserCollection: " + rmByUserCollection.length);
       //re-render
       $this.$el.html(Templates['admin/Manager/registerMealManager'](rmByUserCollection));
       //inint animation and count regiters meal
@@ -105,7 +106,9 @@ var RegisterMealManagerView = Backbone.View.extend({
       });
       $('.admin-find-day .datepicker').val("");
       $('#selectUser').val(_selectedUser);
+      $this.updateTotalRow();
     });
+    
   },
   updateTotalRow: function()
   {
@@ -116,6 +119,4 @@ var RegisterMealManagerView = Backbone.View.extend({
     });
     $('.totalMeals').html(totalMeals);
   }
-
-
 });
