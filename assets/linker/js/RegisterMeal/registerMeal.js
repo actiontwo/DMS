@@ -20,8 +20,8 @@ var RegisterMealView = Backbone.View.extend({
     this.$el.html(Templates['user/mem-register-meal'](this.collection));
     this.delegateEvents({
       'click #saveRegister': 'updateData',
-      'change .lunchCheckbox, .numberOfMeals': 'changeStatus'
-      'click .save': 'saveMeal'
+      'change .lunchCheckbox, .numberOfMeals': 'changeStatus',
+      'click #checkOrUncheckAll': 'checkOrUncheckAll'
     });
 
     initDatePicker($('.datepicker'));
@@ -32,13 +32,27 @@ var RegisterMealView = Backbone.View.extend({
   changeStatus: function (el) {
     var ev = $(el.currentTarget);
     var date = ev.data('date');
-    var status = ev.parents('tr').find('.lunchCheckbox').prop('checked');
-    var numberOfmeal = ev.parents('tr').find('.numberOfMeals').val();
+    var _status = ev.parents('tr').find('.lunchCheckbox').prop('checked');
+    var _numberOfMeals = ev.parents('tr').find('.numberOfMeals').val();
+    //user just edited lunch checkbox value
+    if (ev.hasClass('lunchCheckbox'))
+    {
+      if (_status){
+        if (_numberOfMeals == 0) _numberOfMeals = 1;
+      }
+      else
+        _numberOfMeals = 0;
+    }
+    else
+      //user just edited input number of meals value
+    {
+      if (_numberOfMeals == 0) _status = false;
+      else _status = true;
+    }
+    
     var data = {
-      status: status,
-      numberOfMeals: (status)
-        ? numberOfmeal
-        : 0
+      status: _status,
+      numberOfMeals: _numberOfMeals
     };
     this.collection.findWhere({date: date}).set(data);
     $('.numberLunchCheck').html($('.lunchCheckbox:checked').length);
@@ -56,13 +70,12 @@ var RegisterMealView = Backbone.View.extend({
   countNumberOfMeals: function (el) {
     var total = 0;
     el.each(function () {
-      console.log($(this).val());
       total += parseInt($(this).val());
     });
     return total;
-    ev.toggleClass('save').removeClass('edit');
-    var numberOfMeals = ev.parent().parent().find('.numberOfMeals');
-    numberOfMeals.data('preValue', parseInt(numberOfMeals.html()));
+  },
+  checkOrUncheckAll: function(){
+
     numberOfMeals.html('<input type="number" value="'+numberOfMeals.data('preValue')+'">'+'</input>');
   },
   saveMeal: function(el){
