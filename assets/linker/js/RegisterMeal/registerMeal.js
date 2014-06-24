@@ -74,20 +74,34 @@ var RegisterMealView = Backbone.View.extend({
     });
     return total;
   },
-  checkOrUncheckAll: function(){
-
-    numberOfMeals.html('<input type="number" value="'+numberOfMeals.data('preValue')+'">'+'</input>');
-  },
-  saveMeal: function(el){
+  checkOrUncheckAll: function(el){
+    var $this = this;
     var ev = $(el.currentTarget);
-    var numberOfMeals = ev.parent().parent().find('.numberOfMeals');
-    ev.toggleClass('glyphicon-pencil').removeClass('glyphicon-floppy-disk');
-    ev.toggleClass('edit').removeClass('save');
-    var currentValue = parseInt(ev.parent().parent().find('.numberOfMeals input').val());
-    numberOfMeals.html(currentValue);
-    if ( numberOfMeals.data('preValue') != currentValue)
+    if (ev.prop('checked')==true)
     {
-      numberOfMeals.addClass('changeMeals');
+      $(".lunchCheckbox:not([disabled])").each(function(){
+        $(this).prop('checked',true);
+        $(this).parent().parent().find('.numberOfMeals').val(1);
+      });
     }
+    else
+    {
+      $(".lunchCheckbox:not([disabled])").each(function(){
+        $(this).prop('checked',false);
+        $(this).parent().parent().find('.numberOfMeals').val(0);
+      });
+    }
+
+    $(".lunchCheckbox:not([disabled])").each(function(){
+      var _date = $(this).data('date');
+      var data = {
+        status: $(this).prop('checked'),
+        numberOfMeals: $(this).parent().parent().find('.numberOfMeals').val()
+      };
+      $this.collection.findWhere({date: _date}).set(data);
+    });
+
+    $('.numberLunchCheck').html($('.lunchCheckbox:checked').length);
+    $('.TotalMeals').html(this.countNumberOfMeals($('.numberOfMeals')));
   }
 });
