@@ -276,6 +276,10 @@ module.exports = {
 
 
   },
+    });
+
+
+  },
   create: function(req, res) {
     if (!req.session.user) {
       res.send('Bye Bye');
