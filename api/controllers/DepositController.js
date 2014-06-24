@@ -42,7 +42,6 @@ module.exports = {
       });
       return;
     }
-
     Deposit.find().sort('date').done(function (err, data) {
       if (err)
         console.log(err); else {
@@ -55,6 +54,10 @@ module.exports = {
    *    `/deposit/create`
    */
   create: function (req, res) {
+    if(req.session.user.role !=="admin"){
+      res.send('You are not a admin');
+      return;
+    }
     var data = req.body;
     User.findOneByEmail(data.email).done(function (err, docs) {
       if (err) {
@@ -66,26 +69,29 @@ module.exports = {
       if (docs.deposit) {
         deposit += docs.deposit;
       }
+      var balance = 0;
+      if (docs.balance) {
+        balance = docs.balance + parseInt(data.amount);
+      }
       data.userId = docs.id;
       data.email = docs.email;
       data.name = docs.lastname + " " + docs.firstname;
       Deposit.create(data).done(function (err, data) {
-        if (err)
-          res.send(err); else {
-          console.log(docs.id);
-          console.log(deposit);
-          User.update({id: docs.id}, {deposit: deposit}).done(function (err, userData) {
-            if (err)
-              res.send(err); else
-              console.log(userData);
-          });
-          res.send(data);
+        if (err) {
+          res.send(err);
+          return;
         }
-      });
 
+        User.update({id: docs.id}, {deposit: deposit, balance: balance}).done(function (err, userData) {
+          if (err)
+            res.send(err);
+          else
+            console.log(userData);
+        });
+        res.send(data);
+      });
     });
   },
-
   /**
    * Action blueprints:
    *    `/deposit/destroy`
