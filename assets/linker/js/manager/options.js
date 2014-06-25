@@ -12,10 +12,10 @@ var OptionsView = Backbone.View.extend({
   },
   render: function () {
     this.$el.html(Templates['admin/Manager/options'](this.model.attributes));
+    this.delegateEvents({
+      'click .btn-manager': 'send'
+    });
     return this;
-  },
-  events: {
-    'click .btn-manager': 'send'
   },
   send: function () {
     var cost = $('.manager_form .cost').val();
@@ -25,7 +25,6 @@ var OptionsView = Backbone.View.extend({
       costs: cost,
       lastHour: lastHour
     };
-    this.model.set(data);
     this.model.save(data);
   }
 });

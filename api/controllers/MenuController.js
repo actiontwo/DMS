@@ -80,6 +80,64 @@ module.exports = {
 
   },
   /**
+   * Suggest menu
+   */
+   getSuggest: function(req, res){
+    if (!req.session.user) {
+      res.send('You are not login');
+      return;
+    }
+    if (req.param('id')) {
+      res.send('find ID');
+      return;
+    }
+    Suggest.find().done(function(err, data){
+      if(err){
+        res.send(err)
+      }else{
+        res.send(data)
+      }      
+    })
+   },
+   createSuggest: function(req, res){
+    if (!req.session.user) {
+      res.send('You are not login');
+      return;
+    }
+    if (req.param('id')) {
+      res.send('find ID');
+      return;
+    }
+    var name = req.session.user.firstname + ' ' + req.session.user.lastname;
+    var d = new Date();
+    var currentDay = (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear();
+    var data = {
+      suggestMeal: req.body.suggestMeal,
+      note: req.body.note,
+      name: name,
+      date: currentDay,
+      role: req.session.user.role
+    }
+    Suggest.create(data).done(function(err, data){
+      if(err){
+        res.send(err)
+      }else{
+        res.send(data)
+      }
+    })
+   },
+   deleteSuggest: function(req, res){
+    var id = req.param('id');
+    Suggest.destroy({id: id}).done(function(err){
+      if(err){
+        res.send(err);
+        return;
+      }else{
+        res.send('Delete Ok');
+      }        
+    });
+   },
+  /**
    * Action blueprints:
    *    `/menu/find`
    */

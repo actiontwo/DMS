@@ -24,11 +24,23 @@ module.exports = {
     numberOfMeals: {
       type: 'integer'
     },
+    disabled :{
+      type:'boolean'
+    },
     month: {
       type: 'integer'
     },
     year: {
       type: 'integer'
+    },
+    day:{
+      type:'string'
+    },
+    costPerMeal:{
+      type:'integer'
+    },
+    payment:{
+      type:'boolean'
     }
 
   }

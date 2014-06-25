@@ -7,7 +7,9 @@ var AppRouter = Backbone.Router.extend({
     'deposit': 'depositRender',
     'report': 'reportRender',
     'userProfile': 'userProfile',
-    'manager': 'managerRender'
+    'manager': 'managerRender',
+    'suggest': 'suggest',
+    'mealHistory': 'mealHistory'
   },
   initialize: function () {
 
@@ -29,6 +31,12 @@ var AppRouter = Backbone.Router.extend({
     });
     this.userView = new UserView({
       model: new UserModel()
+    });
+    this.suggestView = new SuggestView({
+      collection: new SuggestCollection
+    });
+    this.mealHistoryView = new MealHistoryView({
+      collection: new MealHistoryCollection
     });
     if (role === "admin") {
       this.managerView = new ManagerView();
@@ -83,7 +91,16 @@ var AppRouter = Backbone.Router.extend({
     this.userView.model.fetch();
     $('#main').html(this.userView.el);
     $('#subMain').html("");
-  }
+  },
+  suggest: function(){
+    this.suggestView.collection.fetch();
+    $('#main').html(this.suggestView.render().el);
+    $('#subMain').html("");
+  },
+  mealHistory: function(){
+    this.mealHistoryView.collection.fetch();
+    $('#main').html(this.mealHistoryView.render().el);
+  },
 });
 var appRouter;
 $.get('/roleCheck', function (data) {

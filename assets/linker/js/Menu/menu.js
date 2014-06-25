@@ -58,12 +58,12 @@ var MenuView = Backbone.View.extend({
     this.$el.html(Templates['user/mem-view-menu'](
       this.collection
     ));
-
     initDatePicker($('.datepicker'));
+    this.delegateEvents({
+      'click .btn-black': 'search',
+      'click .saveSuggest': 'saveSuggest'
+    });
     return this;
-  },
-  events: {
-    'click .btn-black': 'search'
   },
   // Search
   //
@@ -106,6 +106,22 @@ var MenuView = Backbone.View.extend({
       }});
     this.model.urlRoot = '/menu';
 
+  },
+  saveSuggest: function(){
+    var data = {
+      suggestMeal: $('.txt-suggest').val(),
+      note: $('.txt-suggest-note').val()
+    };
+    this.model.urlRoot = '/suggest',
+    this.model.save(data, {
+      success: function (model, res) {
+        console.log(res);
+      },
+      error: function (model, err) {
+        console.log(err);
+      }
+    });
+    this.model.urlRoot = '/menu'
   }
 
 

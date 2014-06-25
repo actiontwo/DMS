@@ -12,7 +12,26 @@ module.exports = {
       year: year,
       month: month,
       numberDayOfThisMonth: new Date(year, month, 0).getDate(),
-      currentDay: this.formatTwoNumber(month) + "/" + this.formatTwoNumber(date) + "/" + year};
+      currentDay: this.formatTwoNumber(month) + "/" + this.formatTwoNumber(date) + "/" + year,
+      hour: time.getHours()
+    };
+  },
+  getNextDay: function (numberDay) {
+    var time = new Date();
+    time.setDate(time.getDate() + numberDay);
+    var year = time.getFullYear(),
+      month = time.getMonth() + 1,
+      date = time.getDate();
+    return {
+      day: new Date(year, month, date).toString().split(" ")[0],
+      date: date,
+      year: year,
+      month: month,
+      numberDayOfThisMonth: new Date(year, month, 0).getDate(),
+      nextDay: this.formatTwoNumber(month) + "/" + this.formatTwoNumber(date) + "/" + year,
+      hour: time.getHours()
+    };
+
   },
   formatTwoNumber: function (number) {
     return number < 10
@@ -26,16 +45,13 @@ module.exports = {
         result = '';
       }
     }
-            console.log("result: " + result);
     return result;
   },
-  searchNumOfMeals: function(dateText, myArray)
-  {
+  searchNumOfMeals: function (dateText, myArray) {
     var result = 0;
     for (j = 0; j < myArray.length; j++) {
-
       if (myArray[j].date == dateText) {
-        if(myArray[j].numberOfMeals == undefined) result = 0;
+        if (myArray[j].numberOfMeals == undefined) result = 0;
         else result = myArray[j].numberOfMeals;
       }
     }

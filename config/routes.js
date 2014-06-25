@@ -151,6 +151,19 @@ module.exports.routes = {
     controller: 'menu',
     action: 'createDish'
   },
+   // Suggest Controller
+  'get /suggest': {
+    controller: 'menu',
+    action: 'getSuggest'
+  },
+  'post /suggest': {
+    controller: 'menu',
+    action: 'createSuggest'
+  },
+  'delete /suggest/:id': {
+    controller: 'menu',
+    action: 'deleteSuggest'
+  },
   // Expense Controller
   'get /expense/:id?': {
     controller: 'expense',
@@ -211,5 +224,14 @@ module.exports.routes = {
   'post /mail': {
     controller: 'mail',
     action: 'sendMail'
+  },
+   // MealHistory Controller
+  'get /mealhistory/:id?': {
+    controller: 'mealhistory',
+    action: 'find'
+  },
+  'post /mealhistory':{
+    controller: 'mealhistory',
+    action: 'create'
   }
 };

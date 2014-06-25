@@ -17,11 +17,8 @@
 var tool = require('../tool');
 
 module.exports = {
-  /**
-   * Action blueprints:
-   *    `/registermealAd/find`
-   */
-  index: function (req, res) {
+
+  index: function(req, res) {
     if (!req.session.user) {
       res.send('You are not login');
       return;
@@ -29,33 +26,70 @@ module.exports = {
     var user = req.session.user;
     var time = tool.getCurrentDay();
     var data = [];
-    var checkValue;
-    var numberOfMealsValue;
-    // 'docs' means the returning data
-    RegisterMeal.find({userId: user.id}).done(function (err, docs) {
-      for (i = 1; i <= time.numberDayOfThisMonth; i++) {
-        var disabled = '';
-        // if i < current day, disable this checkbox
-        if (i < time.date)
-          disabled = 'disabled';
-        var dateText = tool.formatTwoNumber(time.month) + "/" + tool.formatTwoNumber(i) + "/" + time.year;
-        numberOfMealsValue = tool.searchNumOfMeals(dateText, docs);
-        if (numberOfMealsValue == 0) checkValue = '';
-        else checkValue = 'checked';
-        
-        data.push({
-          number: i,
-          date: dateText,
-          day: new Date(time.year, time.month - 1, i).toString().split(" ")[0],
-          lunch: {disabled: disabled, check: checkValue},
-          numberOfMeals: numberOfMealsValue
-        });
-      }
-      res.send(data);
-    });
-  },// End Index
+    var checkValue = false;
+    var numberOfMealsValue = 1;
+    var dateBegin = 1;
+    var lastTime = 13;
+    var checkTime = time.date;
 
-  indexAdmin: function (req, res) {
+    if (time.hour > lastTime) {
+      checkTime = time.date + 1;
+    }
+    //check user register meal deault
+    if (user.defaultRegisterMeal) {
+      checkValue = true;
+    }
+    // 'docs' means the returning data
+    RegisterMeal.find({
+      userId: user.id,
+      month: time.month,
+      year: time.year
+    }).done(function(err, docs) {
+
+      var join_date = user.join_date;
+      if (join_date) {
+        join_date = join_date.split('/');
+        // check date user join to DMS and set date begin register meal
+        if (Math.ceil((new Date(join_date[2], join_date[0], 0) - new Date(time.year, time.month, 0)) / 86400000) === 0) {
+          console.log('this month');
+          dateBegin = join_date[1];
+        }
+      }
+      var lengthDocs = docs.length;
+      for (i = dateBegin; i <= time.numberDayOfThisMonth; i++) {
+        var disabled = false;
+        var checkRegisterExist = false;
+        // if i < current day, disable this checkbox
+
+        if (i <= checkTime)
+          disabled = true;
+
+        var dateText = tool.formatTwoNumber(time.month) + "/" + tool.formatTwoNumber(i) + "/" + time.year;
+        for (j = 0; j < lengthDocs; j++) {
+          if (dateText === docs[j].date) {
+            checkRegisterExist = true;
+            var checkDate = (docs[j].date).split('/');
+            if (checkDate[1] <= checkTime)
+              docs[j].disabled = true;
+          }
+        }
+        if (!checkRegisterExist) {
+          docs.push({
+            date: dateText,
+            day: new Date(time.year, time.month - 1, i).toString().split(" ")[0],
+            month: time.month,
+            year: time.year,
+            disabled: disabled,
+            status: checkValue,
+            numberOfMeals: numberOfMealsValue
+          });
+        }
+      }
+      res.send(docs);
+    });
+  }, // End Index
+
+  indexAdmin: function(req, res) {
     if (!req.session.user) {
       res.send('You are not login');
       return;
@@ -70,13 +104,14 @@ module.exports = {
     }
     var time = tool.getCurrentDay();
     var numberOfMealsValue;
-    RegisterMeal.find({date: time.currentDay}).done(function (err, meal) {
+    RegisterMeal.find({
+      date: time.currentDay
+    }).done(function(err, meal) {
       if (err) {
         res.send(err);
-      }
-      else {
+      } else {
         var data = [];
-        User.find().done(function (err, user) {
+        User.find().done(function(err, user) {
           if (err) {
             res.send(err)
           }
@@ -108,93 +143,47 @@ module.exports = {
     });
 
   },
-  /**
-   * Action blueprints:
-   *    `/registermeal/find`
-   */
-  find: function (req, res) {
+
+  create: function(req, res) {
     if (!req.session.user) {
-      res.send('Not Working');
-      return;
-    }
-    res.send({abc: 121});
-
-  },
-
-  /**
-   * Action blueprints:
-   *    `/registermeal/create`
-   */
-
-  create: function (req, res) {
-
-    console.log(req.session.user);
-    if (!req.session.user || !req.body.mealStatus) {
       res.send('Bye Bye');
       return;
     }
-    var mealStatus = req.body.mealStatus;
-    for (i = 0; i < mealStatus.length; i++) {
-      var data = {
-        date: mealStatus[i].date,
-        meal: mealStatus[i].meal,
-        numberOfMeals: mealStatus[i].numberOfMeals,
-        userId: req.session.user.id,
-      };
-      console.log('--- DATE: '+data.date+' ---');
-      console.log(data.meal);
-      console.log(data.userId);
-      // check user registed this day or not
-      updateStatus(data, mealStatus[i].status);
+    var data = req.body;
+    data.userId = req.session.user.id;
+    console.log(data);
+    RegisterMeal.create(data).done(function(err, docs) {
+      if (err) {
+        console.log(err);
+        res.send(err);
+        return;
+      }
+      res.send(docs);
+    });
+  },
+  update: function(req, res) {
+    if (!req.session.user) {
+      res.send('Bye Bye');
+      return;
     }
-    res.send([
-      {data: 'update Success'},
-      {data: 'ok'}
-    ]);
-  },
-
-  /**
-   * Action blueprints:
-   *    `/registermeal/detroy`
-   */
-  destroy: function (req, res) {
-    res.send('detroy');
-  },
-
-  /**
-   * Action blueprints:
-   *    `/registermeal/update`
-   */
-  update: function (req, res) {
-    res.send('update');
+    var data = req.body;
+    data.userId = req.session.user.id;
+    console.log(data);
+    RegisterMeal.update({
+      id: data.id
+    }, data).done(function(err, docs) {
+      if (err) {
+        console.log(err);
+        res.send(err);
+        return;
+      }
+      res.send(docs);
+    });
   },
 
   /**
    * Overrides for the settings in `config/controllers.js`
    * (specific to RegisterMealController)
    */
-  _config: {
-  }
-};
-function updateStatus(data, status) {
-  collection = RegisterMeal;
-  collection.find(data).done(function (err, array) {
-    if (err) {
-      console.log(err);
-    }
-    else {
-      if (array.length > 0) {
-        // day registered --> update status
-        collection.update(data, {status: status}).done(function (err, meal) {
-
-        });
-      }
-      else {
-        // create new register meal if day register meal not exits
-        data.status = status;
-        collection.create(data).done(function (err, meal) {
-        });
-      }
-    }
-  });
+  _config: {}
 };

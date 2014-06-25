@@ -61,8 +61,5 @@ module.exports = {
     })
 
   },
-
   _config: {}
-
-
 };

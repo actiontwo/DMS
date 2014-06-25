@@ -20,11 +20,13 @@
 }
 
 .logo {
-  margin: 40px 0;
+  margin: 0;
   vertical-align: middle;
   width: 100%;
 }
-
+.userInfo {
+  float: right;
+}
 a.ui-datepicker-prev.ui-corner-all {
   float: left;
 }
@@ -66,4 +68,7 @@ td.ui-datepicker-today a {
 .editing{
   border:1px solid #bbb;
   padding : 1px 10px;
+}
+table td, table th{
+  text-align: center;
 }
