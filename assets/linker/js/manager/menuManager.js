@@ -32,7 +32,8 @@ var MenuManagerView = Backbone.View.extend({
       'click .edit-menu': 'editMenu',
       'click #saveMenu': 'saveMenu',
       'click .delete-menu': 'deleteMenu',
-      'click #addNewMenu': 'addNewMenu'
+      'click #addNewMenu': 'addNewMenu',
+      'click #searchByDay': 'searchByDay'
     });
     return this;
   },
@@ -108,5 +109,40 @@ var MenuManagerView = Backbone.View.extend({
       $(this).val(data.dish[$(this).data('index')]);
     });
     $('.modalNote').val(data.note);
+  },
+  searchByDay: function(){
+    var dateFromString = $('.dateFrom').val();
+    var dateToString = $('.dateTo').val();
+    var dateFrom = new Date(dateFromString);
+    var dateTo = new Date(dateToString);
+    if (dateFrom > dateTo){
+      alert('Input invalid. dateFrom must be less than dateTo');
+      return;
+    }
+    var tempMenuCollection = new MenuManagerCollection();
+
+    this.collection.each(function(model){
+      var thisModelDate = new Date(model.attributes.date);
+      if (thisModelDate >= dateFrom && thisModelDate <= dateTo)
+      {
+        tempMenuCollection.add(model);
+      }
+    });
+
+    this.$el.html(Templates['admin/Manager/menuManager'](tempMenuCollection));
+    autoComplete($('.modalDish'), dish);
+    initDatePicker($('.datepicker'));
+    this.delegateEvents({
+      'click .saveDish': 'saveDish',
+      'click .edit-menu': 'editMenu',
+      'click #saveMenu': 'saveMenu',
+      'click .delete-menu': 'deleteMenu',
+      'click #addNewMenu': 'addNewMenu',
+      'click #searchByDay': 'searchByDay'
+    });
+
+    //update dateFrom input & dateTo input
+    $('.dateFrom').val(dateFromString);
+    $('.dateTo').val(dateToString);
   }
 });

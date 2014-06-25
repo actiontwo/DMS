@@ -82,30 +82,36 @@ var MenuView = Backbone.View.extend({
   //            06/13/14 - Hien Lam
   // -------------------------------------------------------------------
   search: function (events) {
-    var from = $('li.find-from input').val();
-    var to = $('li.find-to input').val();
-    if (from > to || from == '' || to == '') {
-      alert('Input invalid. From must be less To');
+    var dateFromString = $('.dateFrom').val();
+    var dateToString = $('.dateTo').val();
+    var dateFrom = new Date(dateFromString);
+    var dateTo = new Date(dateToString);
+    if (dateFrom > dateTo){
+      alert('Input invalid. dateFrom must be less than dateTo');
       return;
     }
-    events.preventDefault();
-    var data = {
-        dateFrom: from,
-        dateTo: to,
-        model: 'Menu'
-      };
-    var collection = this.collection;
-    this.model.urlRoot = '/search';
-    this.model.save(data, {
-      success: function (model, response) {
-        collection.reset(response);
-      },
-      error: function (model, error) {
-        console.log(model.toJSON());
-        console.log(error);
-      }});
-    this.model.urlRoot = '/menu';
+    var tempMenuCollection = new MenuCollection();
 
+    this.collection.each(function(model){
+      var thisModelDate = new Date(model.attributes.date);
+      if (thisModelDate >= dateFrom && thisModelDate <= dateTo)
+      {
+        tempMenuCollection.add(model);
+      }
+    });
+    //console.log(tempMenuCollection.length);
+
+    this.$el.html(Templates['user/mem-view-menu'](
+      tempMenuCollection
+    ));
+    initDatePicker($('.datepicker'));
+    this.delegateEvents({
+      'click .btn-black': 'search',
+      'click .saveSuggest': 'saveSuggest'
+    });
+    //update dateFrom input & dateTo input
+    $('.dateFrom').val(dateFromString);
+    $('.dateTo').val(dateToString);
   },
   saveSuggest: function(){
     var data = {
@@ -126,3 +132,4 @@ var MenuView = Backbone.View.extend({
 
 
 });
+
