@@ -31,20 +31,21 @@ module.exports = {
     var dateBegin = 1;
     var lastTime = 20;
     var checkTime = time.date;
-
+    var userDefaultRegisterMeal = 0;
     if (time.hour > lastTime) {
       checkTime = time.date + 1;
     }
     //check user register meal deault
     if (user.defaultRegisterMeal) {
-      checkValue = true;
+      //checkValue = true;
+      userDefaultRegisterMeal = 1;
     }
-    // 'docs' means the returning data
+    // 'meals' means the returning data
     RegisterMeal.find({
       userId: user.id,
       month: time.month,
       year: time.year
-    }).done(function(err, docs) {
+    }).done(function(err, meals) {
 
       var join_date = user.join_date;
       if (join_date) {
@@ -54,26 +55,42 @@ module.exports = {
           dateBegin = join_date[1];
         }
       }
-      var lengthDocs = docs.length;
+      var mealsLength = meals.length;
       for (i = dateBegin; i <= time.numberDayOfThisMonth; i++) {
         var disabled = false;
         var checkRegisterExist = false;
         // if i < current day, disable this checkbox
-
         if (i <= checkTime)
           disabled = true;
-
+        // get date string (mm/dd/yyyy) form the first day to the last day of this month
         var dateText = tool.formatTwoNumber(time.month) + "/" + tool.formatTwoNumber(i) + "/" + time.year;
-        for (j = 0; j < lengthDocs; j++) {
-          if (dateText === docs[j].date) {
+        //console.log("dateText: " + dateText);
+        for (j = 0; j < mealsLength; j++) {
+          if (dateText === meals[j].date) {
+            // user has already registered meal for this day
             checkRegisterExist = true;
-            var checkDate = (docs[j].date).split('/');
+            var checkDate = (meals[j].date).split('/');
             if (checkDate[1] <= checkTime)
-              docs[j].disabled = true;
+              meals[j].disabled = true;
           }
         }
+
         if (!checkRegisterExist) {
-          docs.push({
+          if (userDefaultRegisterMeal)
+          {
+            checkValue = true;
+            numberOfMeals = 1;
+          }
+          else
+          {
+            checkValue = false;
+            numberOfMealsValue = 0;
+          }
+          // console.log("date: " + dateText);
+          // console.log("disabled: " + disabled);
+          // console.log("status: " + checkValue);
+          // console.log("numberOfMeals: " + numberOfMealsValue);
+          meals.push({
             date: dateText,
             day: new Date(time.year, time.month - 1, i).toString().split(" ")[0],
             month: time.month,
@@ -84,7 +101,7 @@ module.exports = {
           });
         }
       }
-      res.send(docs);
+      res.send(meals);
     });
   }, // End Index
 
