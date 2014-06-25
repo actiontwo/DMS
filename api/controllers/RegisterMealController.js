@@ -124,10 +124,15 @@ module.exports = {
             var _lastname = users[i].lastname;
             var checkValue = false;
             var numberOfMealsValue = 0;
+            var found = 0;
+            var userDefaultRegisterMeal = 0;
+            if (users[i].defaultRegisterMeal) userDefaultRegisterMeal = 1;
             // loop to look for the user that has already registered for theNextDay
             for (j = 0; j < meals.length; j++){
               if (meals[j].userId == id)
               {
+                found = 1;
+                console.log("user: " + _firstname + " " + _lastname + " has set the meal by himselft");
                 if (meals[j].status == true) checkValue = true;
                 else checkValue = false;
                 numberOfMealsValue = meals[j].numberOfMeals;
@@ -138,6 +143,20 @@ module.exports = {
             }
             // end meals loop
 
+            if (found == 0)
+            {
+              if (userDefaultRegisterMeal == 1)
+              {
+                console.log("user: " + _firstname + " " + _lastname + " has setDefaultRegisterMeal = 1");
+                checkValue = true;
+                numberOfMealsValue = 1;
+              }
+              else
+              {
+                checkValue = false;
+                numberOfMealsValue = 0;
+              }
+            }
             // push an object to 'result' array
             result.push({
               date: theNextDayString,
@@ -185,10 +204,15 @@ module.exports = {
             var _lastname = users[i].lastname;
             var checkValue = false;
             var numberOfMealsValue = 0;
+            var found = 0;
+            var userDefaultRegisterMeal = 0;
+            if (users[i].defaultRegisterMeal) userDefaultRegisterMeal = 1;
             // loop to look for the user that has already registered for theNextDay
             for (j = 0; j < meals.length; j++){
               if (meals[j].userId == id)
               {
+                found = 1;
+                console.log("user: " + _firstname + " " + _lastname + " has set the meal by himselft");
                 if (meals[j].status == true) checkValue = true;
                 else checkValue = false;
                 numberOfMealsValue = meals[j].numberOfMeals;
@@ -198,6 +222,21 @@ module.exports = {
               }
             }
             // end meals loop
+
+            if (found == 0)
+            {
+              if (userDefaultRegisterMeal == 1)
+              {
+                console.log("user: " + _firstname + " " + _lastname + " has setDefaultRegisterMeal = 1");
+                checkValue = true;
+                numberOfMealsValue = 1;
+              }
+              else
+              {
+                checkValue = false;
+                numberOfMealsValue = 0;
+              }
+            }
 
             // push an object to 'result' array
             result.push({
