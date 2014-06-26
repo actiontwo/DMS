@@ -16,6 +16,22 @@ var MealHistoryView = Backbone.View.extend({
   },
   render:function (){
     this.$el.html(Templates['mealHistory/mealHistory'](this.collection));
+    initDatePicker($('.datepicker'));
+    this.delegateEvents({
+      'click .searchbyday': 'searchByDay'
+    });
     return this;
+  },
+  searchByDay: function() {
+    var collection = new MealHistoryCollection();
+    var viewbyday = $('.viewbyday').val();
+    this.collection.each(function(model) {
+      if (model.attributes.date == viewbyday) collection.add(model)
+    });
+    this.$el.html(Templates['mealHistory/mealHistory'](collection));
+    initDatePicker($('.datepicker'));
+    this.delegateEvents({
+      'click .searchbyday': 'searchByDay'
+    });
   }
 });
