@@ -9,7 +9,8 @@ var AppRouter = Backbone.Router.extend({
     'userProfile': 'userProfile',
     'manager': 'managerRender',
     'suggest': 'suggest',
-    'mealHistory': 'mealHistory'
+    'mealHistory': 'mealHistory',
+    'mealHistoryManager': 'mealHistoryManagerView'
   },
   initialize: function () {
 
@@ -37,14 +38,15 @@ var AppRouter = Backbone.Router.extend({
     });
     this.mealHistoryView = new MealHistoryView({
       collection: new MealHistoryCollection
-    });
+    });    
     if (role === "admin") {
       this.managerView = new ManagerView();
       this.userManagerView = new UserManagerView();
       this.optionsView = new OptionsView();
       this.depositManagerView = new DepositManagerView();
-      this.menuManagerView = new MenuManagerView();
+      this.menuManagerView = new MenuManagerView();      
       this.registerMealManagerView = new RegisterMealManagerView();
+      this.mealHistoryManagerView = new MealHistoryManagerView();
     }
   },
   registerMealRender: function () {
@@ -78,6 +80,7 @@ var AppRouter = Backbone.Router.extend({
     this.depositManagerView.collection.fetch({reset: true});
     this.menuManagerView.collection.fetch({reset: true});
     this.registerMealManagerView.collection.fetch({reset: true});
+    this.mealHistoryManagerView.collection.fetch();
 
     $('#main').html(this.managerView.render().el);
     $('#options').html(this.optionsView.el);
@@ -85,6 +88,7 @@ var AppRouter = Backbone.Router.extend({
     $('#depositManager').html(this.depositManagerView.el);
     $('#menuManager').html(this.menuManagerView.el);
     $('#registerMealManager').html(this.registerMealManagerView.el);
+    $('#mealHistoryManager').html(this.mealHistoryManagerView.el);
     $('#subMain').html("");
   },
   userProfile: function () {
@@ -100,7 +104,7 @@ var AppRouter = Backbone.Router.extend({
   mealHistory: function(){
     this.mealHistoryView.collection.fetch();
     $('#main').html(this.mealHistoryView.render().el);
-  },
+  }
 });
 var appRouter;
 $.get('/roleCheck', function (data) {

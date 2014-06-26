@@ -238,6 +238,10 @@ module.exports.routes = {
     controller: 'mealhistory',
     action: 'find'
   },
+  'get /mealhistoryadmin': {
+    controller: 'mealhistory',
+    action: 'indexAdmin'
+  },
   'post /mealhistory':{
     controller: 'mealhistory',
     action: 'create'
