@@ -11,7 +11,7 @@ g
 ```sh
 Clone project : git clone…
 Open project : cd dinning-management
-Install sails : sudo install -g sails
+Install sails : sudo npm install -g sails
 Install node-modules : npm install
 Connect Mongo Database : config file /config/local.js (line 74 : host: '192.168.11.10’)
 Run project : sails lift
