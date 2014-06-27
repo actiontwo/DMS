@@ -33,7 +33,8 @@ var MenuManagerView = Backbone.View.extend({
       'click #saveMenu': 'saveMenu',
       'click .delete-menu': 'deleteMenu',
       'click #addNewMenu': 'addNewMenu',
-      'click #searchByDay': 'searchByDay'
+      'click #searchByDay': 'searchByDay',
+      'click #printMenu': 'printMenu'
     });
     return this;
   },
@@ -138,11 +139,15 @@ var MenuManagerView = Backbone.View.extend({
       'click #saveMenu': 'saveMenu',
       'click .delete-menu': 'deleteMenu',
       'click #addNewMenu': 'addNewMenu',
-      'click #searchByDay': 'searchByDay'
+      'click #searchByDay': 'searchByDay',
+      'click #printMenu': 'printMenu'
     });
 
     //update dateFrom input & dateTo input
     $('.dateFrom').val(dateFromString);
     $('.dateTo').val(dateToString);
+  },
+  printMenu: function(){
+    window.print();
   }
 });

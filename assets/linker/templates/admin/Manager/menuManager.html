@@ -1,4 +1,4 @@
-<div class="col-md-12">
+<div class="col-md-12" id="searchByDayArea">
     <div class="form-group col-md-4">
         <label class="col-lg-2 control-label">From</label>
 
@@ -26,8 +26,8 @@
             <th>Date(dd/mm/yy)</th>
             <th>Brunch</th>
             <th colspan="5">Menu</th>
-            <th>Note</th>
-            <th>Edit</th>
+            <th class="noteMenu">Note</th>
+            <th class="editMenu">Edit</th>
 
         </tr>
         </thead>
@@ -40,8 +40,8 @@
             {{#each dish}}
             <td>{{this}}</td>
             {{/each}}
-            <td>{{note}}</td>
-            <td>
+            <td class="noteMenu">{{note}}</td>
+            <td class="editMenu">
                 <a class="cursor edit-menu glyphicon glyphicon-pencil"
                    href="#modal-container-menu" role="button"
                    data-toggle="modal"></a>
@@ -51,8 +51,8 @@
         {{/with}} {{/each}}
         </tbody>
     </table>
-    <div class="btn-end btn-group">
-        <a class="btn btn-primary">Print</a>
+    <div id="btnGroupArea">
+        <a id="printMenu" class="btn btn-primary">Print</a>
         <a id="modal-dish" href="#modal-container-dish" role="button" class="btn btn-primary" data-toggle="modal">Add Dish</a>
         <a class="btn btn-primary" id='addNewMenu' href="#modal-container-menu" role="button" data-toggle="modal">Add Menu</a>
     </div>

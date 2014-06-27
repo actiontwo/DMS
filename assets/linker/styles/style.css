@@ -72,3 +72,38 @@ td.ui-datepicker-today a {
 table td, table th{
   text-align: center;
 }
+@media print {
+  header>.navbar {
+    display: none;
+  }
+  .userInfo{
+    display: none;
+  }
+  .editMenu{
+    display: none;
+  }
+  .noteMenu{
+    display: none;
+  }
+  #manager_view>.page-header{
+    display: none;
+  }
+  #manager_view>#tabsAdmin {
+    display: none;
+  }
+/*  #manager_view>#myTabContent {
+    display: none;
+  }*/
+  #searchByDayArea{
+    display: none;
+  }
+  #btnGroupArea{
+    display: none;
+  }
+/*  .tb-menu th{
+    border: 1px solid grey;
+  }
+  .tb-menu td{
+    border: 1px solid grey;
+  }*/
+}
