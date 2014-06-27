@@ -74,7 +74,7 @@ module.exports = {
       host: '192.168.11.10',
       user: '',
       password: '',
-      database: 'foods',
+      database: 'DMS',
       schema: true
     }
   }
