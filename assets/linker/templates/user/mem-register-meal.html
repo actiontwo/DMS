@@ -55,11 +55,12 @@
             data-date="{{date}}" data-preValue="0"/>
         </td>
         <td>
-            <input type='text'
-                   class="col-md-2 col-md-offset-5 numberOfMeals"
+            <input type='number'
+                   class="col-md-3 col-md-offset-5 numberOfMeals"
                    data-value={{numberOfMeals}}
                    value="{{numberOfMeals}}"
-                   data-date="{{date}}"
+                   data-date="{{date}}" data-prevalue="{{numberOfMeals}}"
+                   min="0" max="10"
             {{#if disabled}} readonly {{/if}}/>
         </td>
     </tr>

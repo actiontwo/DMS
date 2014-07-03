@@ -33,7 +33,25 @@ var RegisterMealView = Backbone.View.extend({
     var ev = $(el.currentTarget);
     var date = ev.data('date');
     var _status = ev.parents('tr').find('.lunchCheckbox').prop('checked');
-    var _numberOfMeals = ev.parents('tr').find('.numberOfMeals').val();
+    var _numberOfMeals = parseInt(ev.parents('tr').find('.numberOfMeals').val());
+    var prevalue = ev.parents('tr').find('.numberOfMeals').data('prevalue');
+
+    if(isNaN(_numberOfMeals))
+    {
+      //console.log("preValue: " + ev.parents('tr').find('.numberOfMeals').data('prevalue'));
+      ev.parents('tr').find('.numberOfMeals').val(prevalue);
+      alert('You must enter a number !');
+      return;
+    }
+    else if(_numberOfMeals<0 || _numberOfMeals>10)
+    {
+      ev.parents('tr').find('.numberOfMeals').val(prevalue);
+      alert('The value for number of meal(s) is limited from 0 to 10.');
+      return;
+    }
+    // assign new value of data-prevalue
+    ev.parents('tr').find('.numberOfMeals').data('prevalue', _numberOfMeals);
+
     //user just edited lunch checkbox value
     if (ev.hasClass('lunchCheckbox'))
     {
