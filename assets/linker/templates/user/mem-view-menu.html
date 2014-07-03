@@ -33,7 +33,7 @@
   <tbody>
     {{#each models}} {{#with attributes}}
     <tr>
-      <td>{{@index}}</td>
+      <td>{{math @index "+" 1}}</td>
       <td>{{date}}</td>
       <td>{{brunch}}</td>
       {{#each dish}}

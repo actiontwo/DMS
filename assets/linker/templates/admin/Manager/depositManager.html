@@ -14,7 +14,7 @@
     {{#with attributes}}
     {{#if edit}}
     <tr data-id="{{id}}">
-        <td>{{@index}}</td>
+        <td>{{math @index "+" 1}}</td>
         <td><input class='inputEmail' type="email" value="{{email}}"/></td>
         <td><input class='inputName' type="text" value="{{name}}"/></td>
         <td><input class='inputDate datepicker' type="text"
@@ -27,7 +27,7 @@
     </tr>
     {{else}}
     <tr data-id="{{id}}">
-        <td>{{@index}}</td>
+        <td>{{math @index "+" 1}}</td>
         <td>{{email}}</td>
         <td>{{name}}</td>
         <td>{{date}}</td>

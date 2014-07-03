@@ -41,7 +41,7 @@
     <tbody>
     {{#each models}}
     <tr>
-        <td>{{@index}}</td>
+        <td>{{math @index "+" 1}}</td>
         <td>{{attributes.date}}</td>
         <td>{{attributes.name}}</td>
         <td><input class="mealCheckbox" type="checkbox" {{#if attributes.status}} checked {{/if}}/></td>

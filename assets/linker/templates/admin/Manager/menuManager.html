@@ -34,7 +34,7 @@
         <tbody>
         {{#each models}} {{#with attributes}}
         <tr data-id="{{id}}" id="{{id}}">
-            <td>{{@index}}</td>
+            <td>{{math @index "+" 1}}</td>
             <td>{{date}}</td>
             <td>{{brunch}}</td>
             {{#each dish}}

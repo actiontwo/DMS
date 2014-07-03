@@ -14,7 +14,7 @@
   <tbody>
     {{#each models}} {{#with attributes}}
     <tr>
-      <td>{{@index}}</td>
+      <td>{{math @index "+" 1}}</td>
       <td>{{date}}</td>
       <td>{{suggestMeal}}</td>
       <td>{{name}}</td>

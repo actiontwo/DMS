@@ -17,7 +17,7 @@
     {{#each models}}
     {{#with attributes}}
     <tr data-id="{{id}}">
-        <td>{{@index}}</td>
+        <td>{{math @index "+" 1}}</td>
         <td><input type="checkbox" class="checkUser" /></td>
         <td>{{firstname}}</td>
         <td>{{lastname}}</td>
