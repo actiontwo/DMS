@@ -299,10 +299,12 @@ module.exports = {
           res.send(err);
           return;
         }
+        req.session.user.defaultRegisterMeal = docs.defaultRegisterMeal;
         if (docs.defaultRegisterMeal) {
           docs.defaultRegisterMeal = 'checked';
         }
         delete docs.password;
+
         res.send(docs);
       });
       return;

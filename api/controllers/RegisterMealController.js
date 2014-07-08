@@ -69,7 +69,6 @@ module.exports = {
                     meals[j].disabled = true;
                 }
               }
-
               if (!checkRegisterExist) {
                 if (userDefaultRegisterMeal)
                 {
@@ -98,8 +97,6 @@ module.exports = {
       }
     ], function (err, result) {
       // result now equals 'done'
-        console.log('join_date: ' + user.join_date);
-        console.log('dateBegin: ' + dateBegin);
       res.send(result);
     });
   }, // End Index
@@ -341,8 +338,14 @@ module.exports = {
       return;
     }
     var data = req.body;
+    var costPerMeal = 25000;
     data.userId = req.session.user.id;
     console.log(data);
+//    ManagerParam.find().done(function(err, managerParams){
+//      for (var i =0; i<managerParams.length;i++){
+//        costPerMeal = managerParams[0].
+//      }
+//    });
     RegisterMeal.create(data).done(function(err, docs) {
       if (err) {
         console.log(err);
@@ -442,8 +445,6 @@ module.exports = {
           numberOfMeals: _numberOfMeals
         });
       } // end for() loop
-      console.log('--- RESULT (searchByDay) ---');
-      console.log(result);
       res.send(result);
     }); // end Register Meal find() function
 
