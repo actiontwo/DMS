@@ -11,11 +11,11 @@ module.exports = {
     name: {
       type: 'string'
     },
-    costs: {
-      type: "float"
+    costPerMeal: {
+      type: 'integer'
     },
     lastHour: {
-      type: "date"
+      type: 'integer'
     }
   }
 };

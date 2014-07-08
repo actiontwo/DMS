@@ -35,13 +35,13 @@ module.exports.routes = {
     controller: 'main',
     action: 'success'
   },
-  'get /manager/:id?': {
+  'get /managerParam':{
     controller: 'main',
-    action: 'find'
+    action: 'indexOptions'
   },
-  'put /manager/:id': {
+  'post /managerParam': {
     controller: 'main',
-    action: 'manager'
+    action: 'updateManagerParam'
   },
   '/roleCheck': {
     controller: 'user',

@@ -58,32 +58,11 @@ module.exports = {
       res.redirect('/login');
     }
   },
-  manager: function (req, res) {
+  updateManagerParam: function (req, res) {
     var data = req.body;
-    ManagerParam.findOrCreate(['name'], data).done(function (err, docs) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(docs.createdAt);
-        if (!docs.createdAt) {
-          ManagerParam.update({
-            id: docs.id
-          }, data).done(function (err, data) {
-            res.send(data);
-          });
-          return;
-        }
-        res.send(data);
-      }
-    })
-  },
-  find: function (req, res) {
-    ManagerParam.findOneByName('manager').done(function (err, data) {
-      if (err)
-        console.log(err);
-      else {
-        res.send(data);
-      }
+    console.log('data: ' + data);
+    ManagerParam.update({name: 'manager'}, data).done(function(err, data){
+      res.send(data);
     });
   },
   success: function (req, res) {
@@ -95,5 +74,37 @@ module.exports = {
       notification: ""
     };
     res.view(view);
+  },
+  indexOptions: function(req, res){
+    var managerParamsResult = [];
+    ManagerParam.find().done(function (err, managerParams) {
+      if (err) {
+        console.log('err when find ManagerParam' + err);
+      }
+      else {
+        if (managerParams.length){
+          managerParamsResult.push({
+            name: 'manager',
+            costPerMeal: managerParams[0].costPerMeal,
+            lastHour: managerParams[0].lastHour
+          });
+        }
+        else {
+          // if managerParams didn't existed before
+          managerParamsResult.push({
+            //default values for managerParam
+            name: 'manager',
+            costPerMeal: 25000,
+            lastHour: 17
+          });
+          ManagerParam.create(managerParamsResult).done(function(err, result){
+            if(err){
+              console.log(err);
+            }
+          });
+        }
+        res.send(managerParamsResult[0]);
+      }
+    })
   }
 };

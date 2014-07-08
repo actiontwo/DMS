@@ -1,5 +1,5 @@
 var OptionsModel = Backbone.Model.extend({
-  urlRoot: '/manager'
+  urlRoot: '/managerParam'
 });
 
 var OptionsView = Backbone.View.extend({
@@ -8,7 +8,7 @@ var OptionsView = Backbone.View.extend({
   id: 'manager_options',
   className: 'menus',
   initialize: function () {
-    this.listenTo(this.model, 'change', this.render);
+    this.listenTo(this.model, 'change reset', this.render);
   },
   render: function () {
     this.$el.html(Templates['admin/Manager/options'](this.model.attributes));
@@ -18,12 +18,12 @@ var OptionsView = Backbone.View.extend({
     return this;
   },
   send: function () {
-    var cost = $('.manager_form .cost').val();
-    var lastHour = $('.manager_form .hour').val();
+    var _costPerMeal = $('.manager_form .cost').val();
+    var _lastHour = $('.manager_form .hour').val();
     var data = {
       name: 'manager',
-      costs: cost,
-      lastHour: lastHour
+      costPerMeal: _costPerMeal,
+      lastHour: _lastHour
     };
     this.model.save(data);
   }
