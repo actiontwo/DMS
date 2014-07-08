@@ -46,7 +46,7 @@ module.exports = {
   // (for instance you will receive more descriptive error and debugging output)
   //
   // In production, Sails configures itself (and its dependencies) to optimize performance.
-  // You should always put your app in production mode before you deploy it to a server-
+  // You should always put your app in production mode before you deploy it to a server-request
   // This helps ensure that your Sails app remains stable, performant, and scalable.
   // 
   // By default, Sails sets its environment using the `NODE_ENV` environment variable.

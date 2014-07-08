@@ -14,7 +14,8 @@
     "handlebars": "*",
     "helpers": "*",
     "grunt-contrib-handlebars": "^0.8.0",
-    "password-hash": "1.2.2"
+    "password-hash": "1.2.2",
+    "async": "~0.9.0"
   },
   "scripts": {
     "start": "node app.js",

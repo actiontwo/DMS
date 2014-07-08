@@ -7,12 +7,13 @@ module.exports = {
       month = time.getMonth() + 1,
       date = time.getDate();
     return {
-      day: new Date(year, month, date).toString().split(" ")[0],
-      date: date,
+      day: new Date(year, month, date).toString().split(" ")[0], // get the first 3 digits from currentDay
+      // like Mon, Tue, Wed etc...
+      date: date, // get the number of this day in a month
       year: year,
       month: month,
-      numberDayOfThisMonth: new Date(year, month, 0).getDate(),
-      currentDay: this.formatTwoNumber(month) + "/" + this.formatTwoNumber(date) + "/" + year,
+      numberDayOfThisMonth: new Date(year, month, 0).getDate(), // get the total days of this month
+      currentDay: this.formatTwoNumber(month) + "/" + this.formatTwoNumber(date) + "/" + year, // get
       hour: time.getHours()
     };
   },
@@ -37,25 +38,6 @@ module.exports = {
     return number < 10
       ? '0' + number
       : number;
-  },
-  search: function (dateText, meal, myArray) {
-    var result = 'checked';
-    for (j = 0; j < myArray.length; j++) {
-      if ((myArray[j].date == dateText) && (myArray[j].meal == meal)) {
-        result = '';
-      }
-    }
-    return result;
-  },
-  searchNumOfMeals: function (dateText, myArray) {
-    var result = 0;
-    for (j = 0; j < myArray.length; j++) {
-      if (myArray[j].date == dateText) {
-        if (myArray[j].numberOfMeals == undefined) result = 0;
-        else result = myArray[j].numberOfMeals;
-      }
-    }
-    return result;
   },
   smtpTransport: function () {
     return nodemailer.createTransport("SMTP", {

@@ -8,20 +8,25 @@ var RegisterMealCollection = Backbone.Collection.extend({
   model: RegisterMealModel,
   comparator: 'date'
 });
+
+var currentRMCollection = new RegisterMealCollection();
+
 //Declare View
 var RegisterMealView = Backbone.View.extend({
   tagName: 'div',
   className: 'menus',
   id: 'register_meal',
   initialize: function () {
-    this.listenTo(this.collection, 'reset sort change', this.render);
+    currentRMCollection.fetch({reset: true});
+    this.listenTo(currentRMCollection, 'reset sort change', this.render);
   },
   render: function () {
-    this.$el.html(Templates['user/mem-register-meal'](this.collection));
+    this.$el.html(Templates['user/mem-register-meal'](currentRMCollection));
     this.delegateEvents({
       'click #saveRegister': 'updateData',
       'change .lunchCheckbox, .numberOfMeals': 'changeStatus',
-      'click #checkOrUncheckAll': 'checkOrUncheckAll'
+      'click #checkOrUncheckAll': 'checkOrUncheckAll',
+      'click #btnViewByDay': 'viewByDay'
     });
 
     initDatePicker($('.datepicker'));
@@ -38,7 +43,6 @@ var RegisterMealView = Backbone.View.extend({
 
     if(isNaN(_numberOfMeals))
     {
-      //console.log("preValue: " + ev.parents('tr').find('.numberOfMeals').data('prevalue'));
       ev.parents('tr').find('.numberOfMeals').val(prevalue);
       alert('You must enter a number !');
       return;
@@ -72,13 +76,13 @@ var RegisterMealView = Backbone.View.extend({
       status: _status,
       numberOfMeals: _numberOfMeals
     };
-    this.collection.findWhere({date: date}).set(data);
+    currentRMCollection.findWhere({date: date}).set(data);
     $('.numberLunchCheck').html($('.lunchCheckbox:checked').length);
     $('.TotalMeals').html(this.countNumberOfMeals($('.numberOfMeals')));
   },
   updateData: function () {
-    for (i = 0; i < this.collection.length; i++) {
-      var model = this.collection.models[i];
+    for (i = 0; i < currentRMCollection.length; i++) {
+      var model = currentRMCollection.models[i];
       if (model.hasChanged()) {
         model.save();
         model.changed = false;
@@ -116,10 +120,40 @@ var RegisterMealView = Backbone.View.extend({
         status: $(this).prop('checked'),
         numberOfMeals: $(this).parent().parent().find('.numberOfMeals').val()
       };
-      $this.collection.findWhere({date: _date}).set(data);
+      currentRMCollection.findWhere({date: _date}).set(data);
     });
 
     $('.numberLunchCheck').html($('.lunchCheckbox:checked').length);
     $('.TotalMeals').html(this.countNumberOfMeals($('.numberOfMeals')));
+  },
+  viewByDay: function(el){
+    var dayFromString = $('#find-from-user').val().toString().trim();
+    var dayToString = $('#find-to-user').val().toString().trim();
+    //var searchByDayCollection = new RegisterMealCollection();
+    var $this = this;
+    $.post('/registermeal/searchByDay', 
+      {
+        "dayFrom": dayFromString, 
+        "dayTo": dayToString
+      }, function(data){
+        currentRMCollection.reset(data);
+        //re-render
+        $this.$el.html(Templates['user/mem-register-meal'](currentRMCollection));
+        $this.delegateEvents({
+          'click #saveRegister': 'updateData',
+          'change .lunchCheckbox, .numberOfMeals': 'changeStatus',
+          'click #checkOrUncheckAll': 'checkOrUncheckAll',
+          'click #btnViewByDay': 'viewByDay'
+        });
+
+        initDatePicker($('.datepicker'));
+        $('.numberLunchCheck').html($('.lunchCheckbox:checked').length);
+        $('.TotalMeals').html($this.countNumberOfMeals($('.numberOfMeals')));
+
+        $('#find-from-user').val(dayFromString);
+        $('#find-to-user').val(dayToString);
+
+    });
+
   }
 });

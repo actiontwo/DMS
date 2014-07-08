@@ -15,6 +15,7 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 var tool = require('../tool');
+var async = require('async');
 
 module.exports = {
 
@@ -23,85 +24,83 @@ module.exports = {
       res.send('You are not login');
       return;
     }
-    var user = req.session.user;
-    var time = tool.getCurrentDay();
-    var data = [];
-    var checkValue = false;
-    var numberOfMealsValue = 1;
-    var dateBegin = 1;
-    var lastTime = 20;
-    var checkTime = time.date;
-    var userDefaultRegisterMeal = 0;
-    if (time.hour > lastTime) {
-      checkTime = time.date + 1;
-    }
-    //check user register meal deault
-    if (user.defaultRegisterMeal) {
-      //checkValue = true;
-      userDefaultRegisterMeal = 1;
-    }
-    // 'meals' means the returning data
-    RegisterMeal.find({
-      userId: user.id,
-      month: time.month,
-      year: time.year
-    }).done(function(err, meals) {
-
-      var join_date = user.join_date;
-      if (join_date) {
-        join_date = join_date.split('/');
-        // check date user join to DMS and set date begin register meal
-        if (Math.ceil((new Date(join_date[2], join_date[0], 0) - new Date(time.year, time.month, 0)) / 86400000) === 0) {
-          dateBegin = join_date[1];
-        }
+      var user = req.session.user;
+      var checkValue = false;
+      var numberOfMealsValue = 1; // why ?
+      var dateBegin = 1;
+      var userDefaultRegisterMeal = 0;
+      var lastTime = 17;
+      var time = tool.getCurrentDay();
+      var checkTime = time.date; // get the number of the current day in this month
+      if (time.hour > lastTime) {
+        checkTime = time.date + 1;
       }
-      var mealsLength = meals.length;
-      for (i = dateBegin; i <= time.numberDayOfThisMonth; i++) {
-        var disabled = false;
-        var checkRegisterExist = false;
-        // if i < current day, disable this checkbox
-        if (i <= checkTime)
-          disabled = true;
-        // get date string (mm/dd/yyyy) form the first day to the last day of this month
-        var dateText = tool.formatTwoNumber(time.month) + "/" + tool.formatTwoNumber(i) + "/" + time.year;
-        //console.log("dateText: " + dateText);
-        for (j = 0; j < mealsLength; j++) {
-          if (dateText === meals[j].date) {
-            // user has already registered meal for this day
-            checkRegisterExist = true;
-            var checkDate = (meals[j].date).split('/');
-            if (checkDate[1] <= checkTime)
-              meals[j].disabled = true;
-          }
-        }
+      //check user register meal default
+      if (user.defaultRegisterMeal) {
+        //checkValue = true;
+        userDefaultRegisterMeal = 1;
+      }
+      async.waterfall([
+        function(callback){
+          RegisterMeal.find({userId: user.id}).done(function(err, meals) {
+            var join_date = user.join_date;
+            if (join_date) {
+              join_date = join_date.split('/');
+              // check date user join to DMS and set date begin register meal
+              if (Math.ceil((new Date(join_date[2], join_date[0], 0) - new Date(time.year, time.month, 0)) / 86400000) === 0) {
+                dateBegin = join_date[1];
+              }
+            }
+            var mealsLength = meals.length;
+            for (i = parseInt(dateBegin); i <= time.numberDayOfThisMonth; i++) {
+              var disabled = false;
+              var checkRegisterExist = false;
+              // if i < current day, disable this checkbox
+              if (i <= checkTime)
+                disabled = true;
+              // get date string (mm/dd/yyyy) form the first day to the last day of this month
+              var dateText = tool.formatTwoNumber(time.month) + "/" + tool.formatTwoNumber(i) + "/" + time.year;
+              for (j = 0; j < mealsLength; j++) {
+                if (dateText === meals[j].date) {
+                  // user has already registered meal for this day
+                  checkRegisterExist = true;
+                  var checkDate = (meals[j].date).split('/');
+                  if (checkDate[1] <= checkTime)
+                    meals[j].disabled = true;
+                }
+              }
 
-        if (!checkRegisterExist) {
-          if (userDefaultRegisterMeal)
-          {
-            checkValue = true;
-            numberOfMeals = 1;
-          }
-          else
-          {
-            checkValue = false;
-            numberOfMealsValue = 0;
-          }
-          // console.log("date: " + dateText);
-          // console.log("disabled: " + disabled);
-          // console.log("status: " + checkValue);
-          // console.log("numberOfMeals: " + numberOfMealsValue);
-          meals.push({
-            date: dateText,
-            day: new Date(time.year, time.month - 1, i).toString().split(" ")[0],
-            month: time.month,
-            year: time.year,
-            disabled: disabled,
-            status: checkValue,
-            numberOfMeals: numberOfMealsValue
+              if (!checkRegisterExist) {
+                if (userDefaultRegisterMeal)
+                {
+                  checkValue = true;
+                  numberOfMeals = 1;
+                }
+                else
+                {
+                  checkValue = false;
+                  numberOfMealsValue = 0;
+                }
+                meals.push({
+                  date: dateText,
+                  day: new Date(time.year, time.month - 1, i).toString().split(" ")[0],
+                  month: time.month,
+                  year: time.year,
+                  disabled: disabled,
+                  status: checkValue,
+                  numberOfMeals: numberOfMealsValue
+                });
+              }
+            }
+            callback(null, meals);
           });
-        }
+
       }
-      res.send(meals);
+    ], function (err, result) {
+      // result now equals 'done'
+        console.log('join_date: ' + user.join_date);
+        console.log('dateBegin: ' + dateBegin);
+      res.send(result);
     });
   }, // End Index
 
@@ -118,14 +117,18 @@ module.exports = {
       res.send('find ID');
       return;
     }
+    // get the current day in Date Object
     var time = tool.getCurrentDay();
+    // get the next day
     var theNextDay = new Date(time.year, time.month - 1, time.date + 1);
+    // get a string with the following format 'mm/dd/yyyy'
     var theNextDayString = tool.formatTwoNumber(theNextDay.getMonth()+1) + "/" + 
     tool.formatTwoNumber(theNextDay.getDate()) + "/" + theNextDay.getFullYear();
 
     RegisterMeal.find({
       date: theNextDayString
     }).done(function(err, meals) {
+      // find in database how many person have registered for the next day's meal
       if (err) {
         res.send(err);
       } else {
@@ -367,6 +370,83 @@ module.exports = {
       }
       res.send(docs);
     });
+  },
+  searchByDay: function(req,res){
+    if (!req.session.user) {
+      res.send('You are not logged in');
+      return;
+    }
+    console.log("dayFrom: " + req.body.dayFrom);
+    console.log("dayTo: " + req.body.dayTo);
+    var dayFromObj = new Date(req.body.dayFrom);
+    var dayToObj = new Date(req.body.dayTo);
+    var todayObj = new Date();
+    var _userId = req.session.user.id;
+    var result = [];
+
+    var _status = true, _disabled = false, _numberOfMeals = 0, _date = '', _defaultRegisterMeal = 0;
+    var found = 0;
+
+    if (req.session.user.defaultRegisterMeal) {
+      _defaultRegisterMeal = 1;
+    }
+    else _defaultRegisterMeal = 0;
+    // the day the user join Dining Management System
+    var joinDayObj = new Date(req.session.user.join_date);
+
+    if (dayFromObj <= joinDayObj) dayFromObj = joinDayObj;
+
+    RegisterMeal.find({userId: _userId}).done(function(err, meals) {
+      for (var d = dayFromObj; d <= dayToObj; d.setDate(d.getDate() + 1)) {
+        _date = tool.formatTwoNumber(d.getMonth() + 1) + "/" + tool.formatTwoNumber(d.getDate()) + "/" + d.getFullYear();
+
+        if (d < todayObj || (d == todayObj && lastTime < todayObj.getHours())) _disabled = true;
+        else _disabled = false;
+
+        for (var i = 0; i < meals.length; i++) {
+          if (meals[i].date == _date) {
+            // found registermeal according to '_date' in the database
+            _status = meals[i].status;
+            _numberOfMeals = meals[i].numberOfMeals;
+            found = 1;
+          }
+        }
+        if (found != 1)
+        {
+          if (_disabled){
+            _status = false;
+            _numberOfMeals = 0;
+          }
+          else
+          {
+            if (_defaultRegisterMeal)
+            {
+              _status = true;
+              _numberOfMeals = 1;
+            }
+            else
+            {
+              _status = false;
+              _numberOfMeals = 0;
+            }
+          }
+        }
+        found = 0;
+        result.push({
+          date: _date,
+          day: new Date(_date).toString().split(" ")[0],
+          month: new Date(_date).getMonth() + 1,
+          year: new Date(_date).getFullYear(),
+          disabled: _disabled,
+          status: _status,
+          numberOfMeals: _numberOfMeals
+        });
+      } // end for() loop
+      console.log('--- RESULT (searchByDay) ---');
+      console.log(result);
+      res.send(result);
+    }); // end Register Meal find() function
+
   },
 
   /**

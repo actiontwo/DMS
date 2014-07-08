@@ -101,6 +101,10 @@ module.exports.routes = {
     action: 'userProfile'
   },
   // Register Meal Conttroler
+  'get /registermeal': {
+    controller: 'registermeal',
+    action: 'index'
+  },
   'get /registermealAd': {
     controller: 'registermeal',
     action: 'indexAdmin'
@@ -112,6 +116,10 @@ module.exports.routes = {
   'post /registermeal': {
     controller: 'registermeal',
     action: 'create'
+  },
+  'post /registermeal/searchByDay': {
+    controller: 'registermeal',
+    action: 'searchByDay'
   },
   'put /registermeal/:id': {
     controller: 'registermeal',
