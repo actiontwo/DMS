@@ -21,9 +21,13 @@ var RegisterMealView = Backbone.View.extend({
     this.listenTo(currentRMCollection, 'reset sort change', this.render);
   },
   render: function () {
+
+    var dayFromString = $('#find-from-user').val();
+    var dayToString = $('#find-to-user').val();
+
     this.$el.html(Templates['user/mem-register-meal'](currentRMCollection));
     this.delegateEvents({
-      'click #saveRegister': 'updateData',
+      'click #saveMealRegistrations': 'updateData',
       'change .lunchCheckbox, .numberOfMeals': 'changeStatus',
       'click #checkOrUncheckAll': 'checkOrUncheckAll',
       'click #btnViewByDay': 'viewByDay'
@@ -32,6 +36,10 @@ var RegisterMealView = Backbone.View.extend({
     initDatePicker($('.datepicker'));
     $('.numberLunchCheck').html($('.lunchCheckbox:checked').length);
     $('.TotalMeals').html(this.countNumberOfMeals($('.numberOfMeals')));
+    // update current days query for search area
+//    if (dayFromString!=="") $('#find-from-user').val(dayFromString);
+//    if (dayToString!=="") $('#find-to-user').val(dayToString);
+
     return this;
   },
   changeStatus: function (el) {
@@ -77,10 +85,16 @@ var RegisterMealView = Backbone.View.extend({
       numberOfMeals: _numberOfMeals
     };
     currentRMCollection.findWhere({date: date}).set(data);
+
     $('.numberLunchCheck').html($('.lunchCheckbox:checked').length);
     $('.TotalMeals').html(this.countNumberOfMeals($('.numberOfMeals')));
+
+
   },
   updateData: function () {
+    //$('.modal-dialog').hide();
+    $('.modal-backdrop').hide();
+    $('body').removeClass('modal-open');
     for (i = 0; i < currentRMCollection.length; i++) {
       var model = currentRMCollection.models[i];
       if (model.hasChanged()) {
@@ -140,7 +154,7 @@ var RegisterMealView = Backbone.View.extend({
         //re-render
         $this.$el.html(Templates['user/mem-register-meal'](currentRMCollection));
         $this.delegateEvents({
-          'click #saveRegister': 'updateData',
+          'click #saveMealRegistrations': 'updateData',
           'change .lunchCheckbox, .numberOfMeals': 'changeStatus',
           'click #checkOrUncheckAll': 'checkOrUncheckAll',
           'click #btnViewByDay': 'viewByDay'
