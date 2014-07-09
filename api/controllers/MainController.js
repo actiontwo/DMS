@@ -63,7 +63,6 @@ module.exports = {
   },
   updateManagerParam: function (req, res) {
     var data = req.body;
-    console.log('data: ' + data);
     ManagerParam.update({name: 'manager'}, data).done(function(err, data){
       res.send({'successMsg' :'Saved successfully!'});
     });

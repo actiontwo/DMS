@@ -20,10 +20,6 @@ var async = require('async');
 module.exports = {
 
   index: function(req, res) {
-    if (!req.session.user) {
-      res.send('You are not login');
-      return;
-    }
     var user = req.session.user;
     var checkValue = false;
     var numberOfMealsValue = 1; // why ?
@@ -113,10 +109,7 @@ module.exports = {
   }, // End Index
 
   indexAdmin: function(req, res) {
-    if (!req.session.user) {
-      res.send('You are not login');
-      return;
-    }
+
     if (req.session.user.role !== 'admin') {
       res.send('You are not admin');
       return;
@@ -201,10 +194,7 @@ module.exports = {
   },
   indexAdminViewByDay: function(req, res)
   {
-    if (!req.session.user) {
-      res.send('You are not login');
-      return;
-    }
+
     if (req.session.user.role !== 'admin') {
       res.send('You are not admin');
       return;
@@ -283,10 +273,6 @@ module.exports = {
   },
   indexAdminViewByUser: function(req, res)
   {
-    if (!req.session.user) {
-      res.send('You are not login');
-      return;
-    }
     if (req.session.user.role !== 'admin') {
       res.send('You are not admin');
       return;
@@ -344,10 +330,7 @@ module.exports = {
 
   },
   create: function(req, res) {
-    if (!req.session.user) {
-      res.send('Bye Bye');
-      return;
-    }
+
     var data = req.body;
     var costPerMeal = 25000;
     data.userId = req.session.user.id;
@@ -367,10 +350,6 @@ module.exports = {
     });
   },
   update: function(req, res) {
-    if (!req.session.user) {
-      res.send('Bye Bye');
-      return;
-    }
     var data = req.body;
     data.userId = req.session.user.id;
     console.log(data);
@@ -386,10 +365,7 @@ module.exports = {
     });
   },
   searchByDay: function(req,res){
-    if (!req.session.user) {
-      res.send('You are not logged in');
-      return;
-    }
+
     console.log("dayFrom: " + req.body.dayFrom);
     console.log("dayTo: " + req.body.dayTo);
     var dayFromObj = new Date(req.body.dayFrom);
