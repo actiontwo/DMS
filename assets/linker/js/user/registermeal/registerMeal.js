@@ -128,15 +128,6 @@ var RegisterMealView = Backbone.View.extend({
       });
     }
 
-    $(".lunchCheckbox:not([disabled])").each(function(){
-      var _date = $(this).data('date');
-      var data = {
-        status: $(this).prop('checked'),
-        numberOfMeals: $(this).parent().parent().find('.numberOfMeals').val()
-      };
-      currentRMCollection.findWhere({date: _date}).set(data);
-    });
-
     $('.numberLunchCheck').html($('.lunchCheckbox:checked').length);
     $('.TotalMeals').html(this.countNumberOfMeals($('.numberOfMeals')));
   },
