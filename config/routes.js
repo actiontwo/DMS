@@ -47,7 +47,7 @@ module.exports.routes = {
     controller: 'user',
     action: 'roleCheck'
   },
-  // User Controller
+  // Account Controller
   '/forgetPassword': {
     controller: 'user',
     action: 'forgetPassword'

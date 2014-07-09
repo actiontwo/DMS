@@ -41,7 +41,7 @@ module.exports = {
       return;
     }
     if (req.session.user.role !== 'admin') {
-      res.send('You are not admin');
+      res.send('You are not Admin');
       return;
     }
     if (req.param('id')) {

@@ -177,7 +177,7 @@ $.widget("ui.draggable", $.ui.mouse, {
 
 		this._mouseDrag(event, true); //Execute the drag once - this causes the helper not to be visible before getting its correct position
 
-		//If the ddmanager is used for droppables, inform the manager that dragging has started (see #5003)
+		//If the ddmanager is used for droppables, inform the Admin that dragging has started (see #5003)
 		if ( $.ui.ddmanager ) {
 			$.ui.ddmanager.dragStart(this, event);
 		}
@@ -220,7 +220,7 @@ $.widget("ui.draggable", $.ui.mouse, {
 
 	_mouseStop: function(event) {
 
-		//If we are using droppables, inform the manager about the drop
+		//If we are using droppables, inform the Admin about the drop
 		var that = this,
 			dropped = false;
 		if ($.ui.ddmanager && !this.options.dropBehaviour) {
@@ -259,7 +259,7 @@ $.widget("ui.draggable", $.ui.mouse, {
 			this.parentNode.removeChild(this);
 		});
 
-		//If the ddmanager is used for droppables, inform the manager that dragging has stopped (see #5003)
+		//If the ddmanager is used for droppables, inform the Admin that dragging has stopped (see #5003)
 		if( $.ui.ddmanager ) {
 			$.ui.ddmanager.dragStop(this, event);
 		}

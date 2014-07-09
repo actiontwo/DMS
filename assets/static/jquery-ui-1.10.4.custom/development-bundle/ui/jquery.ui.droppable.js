@@ -67,7 +67,7 @@ $.widget("ui.droppable", {
 			}
 		};
 
-		// Add the reference and positions to the manager
+		// Add the reference and positions to the Admin
 		$.ui.ddmanager.droppables[o.scope] = $.ui.ddmanager.droppables[o.scope] || [];
 		$.ui.ddmanager.droppables[o.scope].push(this);
 
@@ -249,7 +249,7 @@ $.ui.intersect = function(draggable, droppable, toleranceMode) {
 };
 
 /*
-	This manager tracks offsets of draggables and droppables
+	This Admin tracks offsets of draggables and droppables
 */
 $.ui.ddmanager = {
 	current: null,

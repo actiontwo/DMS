@@ -1,13 +1,13 @@
 /**
  * Gruntfile
  *
- * If you created your Sails app with `sails new foo --linker`, 
+ * If you created your Sails app with `sails new foo --linker`,
  * the following files will be automatically injected (in order)
  * into the EJS and HTML files in your `views` and `assets` folders.
  *
  * At the top part of this file, you'll find a few of the most commonly
  * configured options, but Sails' integration with Grunt is also fully
- * customizable.  If you'd like to work with your assets differently 
+ * customizable.  If you'd like to work with your assets differently
  * you can change this file to do anything you like!
  *
  * More information on using Grunt to work with static assets:
@@ -16,15 +16,13 @@
 
 module.exports = function (grunt) {
 
-
-
   /**
    * CSS files to inject in order
    * (uses Grunt-style wildcard/glob/splat expressions)
    *
    * By default, Sails also supports LESS in development and production.
-   * To use SASS/SCSS, Stylus, etc., edit the `sails-linker:devStyles` task 
-   * below for more options.  For this to work, you may need to install new 
+   * To use SASS/SCSS, Stylus, etc., edit the `sails-linker:devStyles` task
+   * below for more options.  For this to work, you may need to install new
    * dependencies, e.g. `npm install grunt-contrib-sass`
    */
 
@@ -33,57 +31,57 @@ module.exports = function (grunt) {
     'linker/**/*.css'
   ];
 
-
   /**
    * Javascript files to inject in order
    * (uses Grunt-style wildcard/glob/splat expressions)
    *
-   * To use client-side CoffeeScript, TypeScript, etc., edit the 
+   * To use client-side CoffeeScript, TypeScript, etc., edit the
    * `sails-linker:devJs` task below for more options.
    */
-
-  var jsFilesToInject = [
-
-    // Below, as a demonstration, you'll see the built-in dependencies 
+  var jsCommon = [
+    // Below, as a demonstration, you'll see the built-in dependencies
     // linked in the proper order order
 
     // Bring in the socket.io client
-    'linker/js/socket.io.js',
+    'linker/js/Dependencies/socket.io.js',
 
     // then beef it up with some convenience logic for talking to Sails.js
-    'linker/js/sails.io.js',
+    'linker/js/Dependencies/sails.io.js',
 
     // A simpler boilerplate library for getting you up and running w/ an
     // automatic listener for incoming messages from Socket.io.
-    'linker/js/app.js',
+    'linker/js/Dependencies/app.js',
 
-    'linker/**/jquery*.js',
+    'linker/js/Dependencies/lib/jquery*.js',
     // Add underscore before others
-    'linker/**/underscore*.js',
-    // Add external libraries before any other files    
-    'linker/lib/**/*.js',
+    'linker/js/Dependencies/lib/underscore*.js',
+    // Add external libraries before any other files
+    'linker/js/Dependencies/lib/*.js',
 
-    // Backbone 
-    'linker/js/models/**/*.js',    
-    'linker/js/collections/**/*.js',
-    'linker/js/views/**/*.js',
-
-    // *->    put other dependencies here   <-*
-
-    // All of the rest of your app scripts imported here
-    'linker/**/*.js',
-
-    // except handlebars, this will be included in template section
-    '!linker/**/handlebars*.js',
+    'linker/js/Dependencies/*.js'
   ];
-
+  var jsFilesToInject = [
+    // Backbone  User
+    'linker/js/User/**/*.js',
+    'linker/js/User/routes.js',
+    // except handlebars, this will be included in template section
+    '!linker/js/Dependencies/**/handlebars*.js'
+  ];
+  var jsFilesToInjectAdmin = [
+    // Backbone  Admin
+    'linker/js/Admin/**/*.js',
+    'linker/js/Admin/routes.js',
+    '!linker/js/Dependencies/**/handlebars*.js'
+  ];
+  jsFilesToInject = jsCommon.concat(jsFilesToInject);
+  jsFilesToInjectAdmin = jsCommon.concat(jsFilesToInjectAdmin);
 
   /**
    * Client-side HTML templates are injected using the sources below
    * The ordering of these templates shouldn't matter.
    * (uses Grunt-style wildcard/glob/splat expressions)
-   * 
-   * By default, Sails uses JST templates and precompiles them into 
+   *
+   * By default, Sails uses JST templates and precompiles them into
    * functions for you.  If you want to use jade, handlebars, dust, etc.,
    * edit the relevant sections below.
    */
@@ -91,7 +89,7 @@ module.exports = function (grunt) {
   var templateFilesToCompile = [
     'linker/**/*.html',
     'linker/**/*.hbs',
-    'linker/**/*forgetpassword.handlebars'
+    'linker/**/*.handlebars'
   ];
 
   /////////////////////////////////////////////////////////////////
@@ -132,17 +130,20 @@ module.exports = function (grunt) {
     else
       return '.tmp/public/' + path;
   });
-  
+  jsFilesToInjectAdmin = jsFilesToInjectAdmin.map(function (path) {
+    if (path.match(/^!/))
+      return '!.tmp/public/' + path.substring(1);
+    else
+      return '.tmp/public/' + path;
+  });
+
   productionJsFilesToInject = jsFilesToInject;
-  productionJsFilesToInject.unshift('.tmp/public/linker/**/handlebars*.js','.tmp/public/templates.js');
+  productionJsFilesToInject.unshift('.tmp/public/linker/**/handlebars*.js', '.tmp/public/templates.js');
   //remove handlebars ignorance
   productionJsFilesToInject.pop();
-  console.log(productionJsFilesToInject);
-
   templateFilesToCompile = templateFilesToCompile.map(function (path) {
     return '.tmp/public/' + path;
   });
-
 
   // Get path to core grunt dependencies from Sails
   var depsPath = grunt.option('gdsrc') || 'node_modules/sails/node_modules';
@@ -150,7 +151,7 @@ module.exports = function (grunt) {
   grunt.loadTasks(depsPath + '/grunt-contrib-copy/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-concat/tasks');
   grunt.loadTasks(depsPath + '/grunt-sails-linker/tasks');
-  grunt.loadTasks( './node_modules/grunt-contrib-handlebars/tasks');
+  grunt.loadTasks('./node_modules/grunt-contrib-handlebars/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-watch/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-uglify/tasks');
   grunt.loadTasks(depsPath + '/grunt-contrib-cssmin/tasks');
@@ -165,11 +166,11 @@ module.exports = function (grunt) {
       dev: {
         files: [
           {
-          expand: true,
-          cwd: './assets',
-          src: ['**/*.!(coffee)'],
-          dest: '.tmp/public'
-        }
+            expand: true,
+            cwd: './assets',
+            src: ['**/*.!(coffee)'],
+            dest: '.tmp/public'
+          }
         ]
       },
       prod: {
@@ -191,11 +192,11 @@ module.exports = function (grunt) {
       build: {
         files: [
           {
-          expand: true,
-          cwd: '.tmp/public',
-          src: ['**/*'],
-          dest: 'www'
-        }
+            expand: true,
+            cwd: '.tmp/public',
+            src: ['**/*'],
+            dest: 'www'
+          }
         ]
       }
     },
@@ -208,13 +209,13 @@ module.exports = function (grunt) {
     handlebars: {
       options: {
         namespace: 'Templates',
-        processName: function(filePath) {
-            return filePath.replace(/^\.tmp\/public\/linker\/templates\//, '').replace(/(\.html$|\.hbs$|\.handlebars$)/, '');
+        processName: function (filePath) {
+          return filePath.replace(/^\.tmp\/public\/linker\/templates\//, '').replace(/(\.html$|\.hbs$|\.handlebars$)/, '');
         }
       },
       dev: {
         files: {
-            ".tmp/public/templates.js": templateFilesToCompile
+          ".tmp/public/templates.js": templateFilesToCompile
         }
       }
     },
@@ -223,26 +224,27 @@ module.exports = function (grunt) {
       dev: {
         files: [
           {
-          expand: true,
-          cwd: 'assets/styles/',
-          src: ['*.less'],
-          dest: '.tmp/public/styles/',
-          ext: '.css'
-        }, {
-          expand: true,
-          cwd: 'assets/linker/styles/',
-          src: ['*.less'],
-          dest: '.tmp/public/linker/styles/',
-          ext: '.css'
-        }
+            expand: true,
+            cwd: 'assets/styles/',
+            src: ['*.less'],
+            dest: '.tmp/public/styles/',
+            ext: '.css'
+          },
+          {
+            expand: true,
+            cwd: 'assets/linker/styles/',
+            src: ['*.less'],
+            dest: '.tmp/public/linker/styles/',
+            ext: '.css'
+          }
         ]
       }
     },
-    
+
     coffee: {
       dev: {
-        options:{
-          bare:true
+        options: {
+          bare: true
         },
         files: [
           {
@@ -251,7 +253,8 @@ module.exports = function (grunt) {
             src: ['**/*.coffee'],
             dest: '.tmp/public/js/',
             ext: '.js'
-          }, {
+          },
+          {
             expand: true,
             cwd: 'assets/linker/js/',
             src: ['**/*.coffee'],
@@ -299,7 +302,8 @@ module.exports = function (grunt) {
         files: {
           '.tmp/public/**/*.html': jsFilesToInject,
           'views/**/*.html': jsFilesToInject,
-          'views/**/*.handlebars': jsFilesToInject,
+          'views/**/User/*.handlebars': jsFilesToInject,
+          'views/**/Admin/*.handlebars': jsFilesToInjectAdmin,
           'views/**/*.hbs': jsFilesToInject
         }
       },
@@ -360,10 +364,10 @@ module.exports = function (grunt) {
           appRoot: '.tmp/public'
         },
         files: {
-          '.tmp/public/index.html': ['.tmp/public/linker/**/handlebars*.js','.tmp/public/templates.js'],
-          'views/**/*.html': ['.tmp/public/linker/**/handlebars*.js','.tmp/public/templates.js'],
-          'views/**/*.handlebars': ['.tmp/public/linker/**/handlebars*.js','.tmp/public/templates.js'],
-          'views/**/*.hbs': ['.tmp/public/linker/**/handlebars*.js','.tmp/public/templates.js']
+          '.tmp/public/index.html': ['.tmp/public/linker/**/handlebars*.js', '.tmp/public/templates.js'],
+          'views/**/*.html': ['.tmp/public/linker/**/handlebars*.js', '.tmp/public/templates.js'],
+          'views/**/*.handlebars': ['.tmp/public/linker/**/handlebars*.js', '.tmp/public/templates.js'],
+          'views/**/*.hbs': ['.tmp/public/linker/**/handlebars*.js', '.tmp/public/templates.js']
         }
       }
     },
@@ -395,7 +399,7 @@ module.exports = function (grunt) {
   grunt.registerTask('compileAssets', [
     'clean:dev',
     'less:dev',
-    'copy:dev',    
+    'copy:dev',
     'coffee:dev',
     'handlebars:dev'
   ]);
@@ -408,7 +412,6 @@ module.exports = function (grunt) {
     'sails-linker:devTpl'
   ]);
 
-
   // Build the assets into a web accessible folder.
   // (handy for phone gap apps, chrome extensions, etc.)
   grunt.registerTask('build', [
@@ -420,7 +423,7 @@ module.exports = function (grunt) {
 
   // When sails is lifted in production
   grunt.registerTask('prod', [
-    'clean:dev',    
+    'clean:dev',
     'less:dev',
     'copy:prod',
     'handlebars:dev',
@@ -431,20 +434,4 @@ module.exports = function (grunt) {
     'sails-linker:prodJs',
     'sails-linker:prodStyles',
   ]);
-
-  // When API files are changed:
-  // grunt.event.on('watch', function(action, filepath) {
-  //   grunt.log.writeln(filepath + ' has ' + action);
-
-  //   // Send a request to a development-only endpoint on the server
-  //   // which will reuptake the file that was changed.
-  //   var baseurl = grunt.option('baseurl');
-  //   var gruntSignalRoute = grunt.option('signalpath');
-  //   var url = baseurl + gruntSignalRoute + '?action=' + action + '&filepath=' + filepath;
-
-  //   require('http').get(url)
-  //   .on('error', function(e) {
-  //     console.error(filepath + ' has ' + action + ', but could not signal the Sails.js server: ' + e.message);
-  //   });
-  // });
 };

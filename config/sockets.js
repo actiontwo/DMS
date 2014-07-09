@@ -57,7 +57,7 @@ module.exports.sockets = {
   //
   // One of the big challenges of scaling an application is that these sorts of clustered 
   // deployments cannot share memory, since they are on physically different machines.
-  // On top of that, there is no guarantee that a user will "stick" with the same server between
+  // On top of that, there is no guarantee that a User will "stick" with the same server between
   // requests (whether HTTP or sockets), since the load balancer will route each request to the 
   // Sails server with the most available resources. However that means that all room/pubsub/socket
   // processing and shared memory has to be offloaded to a shared, remote messaging queue (usually Redis)
@@ -82,11 +82,11 @@ module.exports.sockets = {
   // 
   // By default (`authorization: true`), when a socket tries to connect, Sails verifies
   // that a valid cookie was sent with the upgrade request.  If the cookie doesn't match
-  // any known user session, a new user session is created for it.
+  // any known User session, a new User session is created for it.
   //
   // However, in the case of cross-domain requests, it is possible to receive a connection
   // upgrade request WITHOUT A COOKIE (for certain transports)
-  // In this case, there is no way to keep track of the requesting user between requests,
+  // In this case, there is no way to keep track of the requesting User between requests,
   // since there is no identifying information to link him/her with a session.
   //
   // If you don't care about keeping track of your socket users between requests,
@@ -94,13 +94,13 @@ module.exports.sockets = {
   // which will disable the session for socket requests (req.session is still accessible 
   // in each request, but it will be empty, and any changes to it will not be persisted)
   //
-  // On the other hand, if you DO need to keep track of user sessions, 
+  // On the other hand, if you DO need to keep track of User sessions,
   // you can pass along a ?cookie query parameter to the upgrade url, 
   // which Sails will use in the absense of a proper cookie
   // e.g. (when connection from the client):
   // io.connect('http://localhost:1337?cookie=smokeybear')
   //
-  // (Un)fortunately, the user's cookie is (should!) not accessible in client-side js.
+  // (Un)fortunately, the User's cookie is (should!) not accessible in client-side js.
   // Using HTTP-only cookies is crucial for your app's security.
   // Primarily because of this situation, as well as a handful of other advanced
   // use cases, Sails allows you to override the authorization behavior 

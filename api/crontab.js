@@ -60,14 +60,14 @@ function sendEmail(email, balance) {
   });
 }
 // -------------------------------------------------------------------
-// updateRegisterMeal ( user ; time )
+// updateRegisterMeal ( User ; time )
 // PARAMETERS:
-//            @user (text) Input JSON
+//            @User (text) Input JSON
 //            @time (num)  Input JSON
 // RETURNS:
 //            (bool) True or False based on proper
 // PURPOSE:
-//            Save Regsiter meal for each user after default time
+//            Save Regsiter meal for each User after default time
 // REVISIONS:
 //            6/23/14 - actiontwo - Initial revision
 // -------------------------------------------------------------------
@@ -75,7 +75,7 @@ function sendEmail(email, balance) {
 function updateRegisterMeal(user, time, cost) {
   RegisterMeal.findOne({userId: user.id, date: time.nextDay}).done(function (err, dataRegister) {
     if (dataRegister) {
-      console.log('User have  been registed');
+      console.log('Account have  been registed');
       return;
     }
     var data = {
@@ -98,9 +98,9 @@ function updateRegisterMeal(user, time, cost) {
   });
 }
 // -------------------------------------------------------------------
-// updateBalance ( user,time)
+// updateBalance ( User,time)
 // PARAMETERS:
-//            @user (JSON) Input JSON, content include variable about user ( id, name. ...)
+//            @User (JSON) Input JSON, content include variable about User ( id, name. ...)
 //            @time (JSOn) Input JSON, content include variable about time (hour ,month, year, day...)
 // RETURNS:
 //            (bool) Not return
@@ -127,7 +127,7 @@ function updateBalance(user, time) {
 
     User.update({id: user.id}, user).done(function (err, dataUser) {
       if (err) {
-        console.log('Cannot update user payment : id:' + user.id);
+        console.log('Cannot update User payment : id:' + user.id);
         console.log(err);
         return;
       }

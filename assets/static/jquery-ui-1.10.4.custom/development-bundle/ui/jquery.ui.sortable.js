@@ -419,7 +419,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 			return;
 		}
 
-		//If we are using droppables, inform the manager about the drop
+		//If we are using droppables, inform the Admin about the drop
 		if ($.ui.ddmanager && !this.options.dropBehaviour) {
 			$.ui.ddmanager.drop(this, event);
 		}
@@ -694,7 +694,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 			for (j=0, queriesLength = _queries.length; j < queriesLength; j++) {
 				item = $(_queries[j]);
 
-				item.data(this.widgetName + "-item", targetData); // Data for target checking (mouse manager)
+				item.data(this.widgetName + "-item", targetData); // Data for target checking (mouse Admin)
 
 				items.push({
 					item: item,
@@ -1164,7 +1164,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 			delayedTriggers = [];
 
 		// We first have to update the dom position of the actual currentItem
-		// Note: don't do it if the current item is already removed (by a user), or it gets reappended (see #4088)
+		// Note: don't do it if the current item is already removed (by a User), or it gets reappended (see #4088)
 		if(!this._noFinalSort && this.currentItem.parent().length) {
 			this.placeholder.before(this.currentItem);
 		}

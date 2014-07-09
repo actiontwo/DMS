@@ -1,4 +1,3 @@
-
 /**
  * UserController
  *
@@ -28,24 +27,27 @@ module.exports = {
     res.send(req.session.user.role);
   },
   register: function (req, res) {
+    var config = sails.config.config;
     res.view({
       partials: {
-        header: '../partials/site/header',
-        footer: '../partials/site/footer'
+        header: config.user.header,
+        footer: config.user.footer
       }
     });
   },
   login: function (req, res) {
+    var config = sails.config.config;
     res.view({
       partials: {
-        header: '../partials/site/header',
-        footer: '../partials/site/footer'
+        header: config.user.header,
+        footer: config.user.footer
       }
     });
   },
   logout: function (req, res) {
     req.session.user = '';
     res.redirect('/');
+    req.session.authenticated = false;
   },
   resetPassword: function (req, res) {
     var data = {
@@ -71,29 +73,29 @@ module.exports = {
                 '<p>You recently initiated a password reset for your DMS ID. To complete the process, click the link below.</p>' +
                 '<a href="' + linkConfirm + '"> Reset now ></a>' +
                 '<p>This link will expire three hours after this email was sent.</p>' +
-                '<p>If you didn’t make this request, it\'s likely that another user   has entered your email address by mistake and your account is still secure. If you believe an unauthorized person has accessed your account, you can reset your password at DMS ID.</p>' +
+                '<p>If you didn’t make this request, it\'s likely that another User   has entered your email address by mistake and your account is still secure. If you believe an unauthorized person has accessed your account, you can reset your password at DMS ID.</p>' +
                 '<p>Dining Managerment System Support </p>'
             };
             // send mail with defined transport object
             smtpTransport.sendMail(mailInfo, function (error, response) {
               if (error) {
                 console.log(error);
-                res.view('user/forgetPassword', {notification: 'Can not send Email'});
+                res.view('User/forgetPassword', {notification: 'Can not send Email'});
               } else {
                 console.log("Message sent: " + response.message);
-                // Set keyConfirm to user that want to reset  password
+                // Set keyConfirm to User that want to reset  password
                 User.update({email: docs.email}, {keyConfirm: key}).done(function (err, docs) {
                   console.log(docs);
                   if (err)
                     console.log(err);
                   else {
-                    //start timeout to remove confrimKey if user not reset password within 3 hours
+                    //start timeout to remove confrimKey if User not reset password within 3 hours
                     setTimeout(function () {
                       User.update({email: data.email}, {keyConfirm: ''}).done(function (err, docs) {
                         console.log(docs);
                       });
                     }, 3 * 60 * 60 * 1000);
-                    //send notification to user
+                    //send notification to User
                     var html = 'Reset password successful!' +
                       '<div class="link"' +
                       '<br><a href="/login">Login</a>' +
@@ -106,7 +108,7 @@ module.exports = {
               //smtpTransport.close(); // shut down the connection pool, no more messages
             });
           } else {
-            res.view('user/forgetPassword', {notification: 'Email not exits, Please check your email again!'});
+            res.view('User/forgetPassword', {notification: 'Email not exits, Please check your email again!'});
           }
         });
         break;
@@ -115,14 +117,15 @@ module.exports = {
     }
   },
   confirmResetPassword: function (req, res) {
+    var config = sails.config.config;
     req.session.user = '';
     var email = req.param('email');
     var keyConfirm = req.param('keyConfirm');
     var require = req.param('require');
     var view = {
       partials: {
-        header: '../partials/site/header',
-        footer: '../partials/site/footer'
+        header: config.user.header,
+        footer: config.user.footer
       },
       keyConfirm: keyConfirm,
       email: email
@@ -184,12 +187,11 @@ module.exports = {
     }
   },
   forgetPassword: function (req, res) {
-
-    console.log('view');
+    var config = sails.config.config;
     res.view({
       partials: {
-        header: '../partials/site/header',
-        footer: '../partials/site/footer'
+        header: config.user.header,
+        footer: config.user.footer
       }
     });
   },
@@ -203,27 +205,28 @@ module.exports = {
 
     if (!data.email || !data.password) {
       console.log('You must enter both a email and password');
-      res.view('user/login', {error: "You must enter both a email and password"});
+      res.view('User/login', {error: "You must enter both a email and password"});
       return;
     }
     User.findOneByEmail(data.email, function (err, user) {
       if (err) next(err);
       if (!user) {
         console.log('Email not found!');
-        res.view('user/login', { error: "Email not found!" });
+        res.view('User/login', { error: "Email not found!" });
         return;
       }
       if (!user.active) {
-        res.view('user/login', {error: 'Your account not active , please check your email to active account'});
+        res.view('User/login', {error: 'Your account not active , please check your email to active account'});
         return;
       }
       if (!hasher.verify(data.password, user.password)) {
         console.log('Wrong password');
-        res.view('user/login', {error: "Wrong Password"});
+        res.view('User/login', {error: "Wrong Password"});
         return;
       }
       req.session.user = user;
-      //  if user click remmeber
+      req.session.authenticated = true;
+      //  if User click remmeber
       if (data.remember)
         req.session.user.remember = "yes";
       else
@@ -277,11 +280,7 @@ module.exports = {
     });
   },
   userProfile: function (req, res) {
-    if (!req.session.user) {
-      res.redirect('/login');
-      return;
-    }
-    console.log(req.method);
+
     if (req.method === 'PUT') {
       var data = req.body;
       delete data.role;
@@ -310,9 +309,9 @@ module.exports = {
       return;
     }
     User.findOne(req.session.user.id).done(function (err, docs) {
+      console.log('av');
       if (err) {
         res.send(err);
-        console.log(err);
         return;
       }
       if (docs.defaultRegisterMeal) {
@@ -323,7 +322,7 @@ module.exports = {
   },
   /**
    * Action blueprints:
-   *    `/user/create`
+   *    `/User/create`
    */
   create: function (req, res) {
     var data = {
@@ -337,23 +336,23 @@ module.exports = {
     //check information empty
     for (key in data) {
       if (!data[key]) {
-        res.view('user/register', {error: 'Please fill your information'});
+        res.view('User/register', {error: 'Please fill your information'});
         return;
       }
     }
     //check password confirm
     if (data.password !== data.confirmPassword) {
-      res.view('user/register', {error: 'Please make sure your password'});
+      res.view('User/register', {error: 'Please make sure your password'});
       return;
     }
-    //check user exits!
+    //check User exits!
     User.findOneByEmail(data.email).exec(function (err, user) {
       if (user) {
-        //if user exit --> render page register and alert user exit
-        res.view('user/register', {error: 'Email exit!, please choose another email'});
+        //if User exit --> render page register and alert User exit
+        res.view('User/register', {error: 'Email exit!, please choose another email'});
         return;
       }
-      // if user not exit --> create a new user
+      // if User not exit --> create a new User
       data.active = false;
       data.keyConfirm = md5(Math.floor((Math.random() * 100000)));
       data.password = hasher.generate(data.password);
@@ -385,7 +384,7 @@ module.exports = {
           if (err) {
             return console.log(err);
           } else {
-            // The User was created successfully!
+            // The Account was created successfully!
             res.view('main/success', {notification: 'Please check your email to active account'});
           }
         });
@@ -395,7 +394,7 @@ module.exports = {
 
   find: function (req, res) {
     if (req.session.user.role !== 'admin') {
-      res.send('Your are not admin');
+      res.send('Your are not Admin');
       return;
     }
     User.find().done(function (err, docs) {
@@ -408,11 +407,11 @@ module.exports = {
   },
   /**
    * Action blueprints:
-   *    `/user/update`
+   *    `/User/update`
    */
   update: function (req, res) {
     if (req.session.user.role !== 'admin') {
-      res.send('Your are not admin');
+      res.send('Your are not Admin');
       return;
     }
     var data = req.body;
@@ -430,7 +429,7 @@ module.exports = {
 
   /**
    * Action blueprints:
-   *    `/user/destroy`
+   *    `/User/destroy`
    */
   destroy: function (req, res) {
 

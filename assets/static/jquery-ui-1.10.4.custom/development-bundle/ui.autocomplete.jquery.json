@@ -1,14 +1,14 @@
 {
 	"name": "ui.autocomplete",
 	"title": "jQuery UI Autocomplete",
-	"description": "Lists suggested words as the user is typing.",
+	"description": "Lists suggested words as the User is typing.",
 	"keywords": [
 		"ui",
 		"autocomplete",
 		"form",
 		"word",
 		"predict",
-		"suggest"
+		"Suggest"
 	],
 	"version": "1.10.4",
 	"author": {

@@ -24,14 +24,14 @@ module.exports = {
    */
   find: function (req, res) {
 
-    //check user login
+    //check User login
     if (!req.session.user) {
       res.send('Your are not login');
       return;
     }
     var userId = req.session.user.id;
     var userRole = req.session.user.role;
-    //check user role
+    //check User role
     if (userRole === "user" || req.param('id')) {
       console.log(userId);
       Deposit.findByUserId(userId).sort('date').done(function (err, data) {
@@ -55,7 +55,7 @@ module.exports = {
    */
   create: function (req, res) {
     if(req.session.user.role !=="admin"){
-      res.send('You are not a admin');
+      res.send('You are not a Admin');
       return;
     }
     var data = req.body;
@@ -98,11 +98,11 @@ module.exports = {
    */
   destroy: function (req, res) {
     if (req.session.user.role !== "admin") {
-      res.send('Your are not admin');
+      res.send('Your are not Admin');
       return;
     }
     var id = req.param('id');
-    //check user deposit exits
+    //check User deposit exits
     Deposit.findOne({id: id}).done(function (err, depositData) {
       if (err) {
         console.log(err);

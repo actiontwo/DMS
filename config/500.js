@@ -55,7 +55,7 @@ module.exports[500] = function serverErrorOccurred(errors, req, res) {
     result.errors = errorsToDisplay;
   }
 
-  // If the user-agent wants JSON, respond with JSON
+  // If the User-agent wants JSON, respond with JSON
   if (req.wantsJSON) {
     return res.json(result, result.status);
   }

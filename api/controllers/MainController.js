@@ -20,7 +20,9 @@ module.exports = {
    * Overrides for the settings in `config/controllers.js`
    * (specific to MainController)
    */
-  _config: {},
+  _config: {
+
+  },
   // -------------------------------------------------------------------
   // index ( req,res )
   //
@@ -39,6 +41,7 @@ module.exports = {
   //            05/30/2014: Phuc Nguyen
   // -------------------------------------------------------------------
   index: function (req, res) {
+    var config=sails.config.config;
     var admin = false;
     if (req.session.user) {
       if (req.session.user.role === 'admin') {
@@ -46,8 +49,8 @@ module.exports = {
       }
       res.view({
         partials: {
-          header: '../partials/site/header',
-          footer: '../partials/site/footer'
+          header: config.user.header,
+          footer: config.user.footer
         },
         menu: true,
         status: "Logout",
@@ -66,10 +69,11 @@ module.exports = {
     });
   },
   success: function (req, res) {
+    var config=sails.config.config;
     var view = {
       partials: {
-        header: '../partials/site/header',
-        footer: '../partials/site/footer'
+        header: config.user.header,
+        footer: config.user.footer
       },
       notification: ""
     };

@@ -1,0 +1,68 @@
+<br>
+</div> <!-- container -->
+<!--
+Client-side Templates
+========================
+
+HTML templates are important prerequisites of modern, rich client applications.
+To work their magic, frameworks like Backbone, Angular, Ember, and Knockout require
+that you load these templates client-side.
+
+By default, your Gruntfile is configured to automatically load and precompile
+client-side JST templates in your `assets/linker/templates` folder, then
+include them here automatically (between TEMPLATES and TEMPLATES END).
+
+To customize this behavior to fit your needs, just edit your Gruntfile.
+For example, here are a few things you could do:
+
++ Import templates from other directories
++ Use a different template engine (handlebars, jade, dust, etc.)
++ Internationalize your client-side templates using a server-side
+stringfile before they're served.
+-->
+
+<!--TEMPLATES-->
+<script type="text/javascript" src="/linker/js/Dependencies/lib/handlebars.runtime-v1.3.0.js"></script>
+<script type="text/javascript" src="/templates.js"></script>
+<!--TEMPLATES END-->
+
+<!--
+
+Client-side Javascript
+========================
+
+You can always bring in JS files manually with `script` tags, or asynchronously
+on the client using a solution like AMD (RequireJS).  Or, if you like, you can
+take advantage of Sails' conventional asset pipeline (boilerplate Gruntfile).
+
+By default, filesin your `assets/linker/js` folder are included here
+automatically (between SCRIPTS and SCRIPTS END).  Both JavaScript (.js) and
+CoffeeScript (.coffee) are supported. In production, your scripts will be minified
+and concatenated into a single file.
+
+
+<!--SCRIPTS-->
+<script src="/linker/js/Dependencies/socket.io.js"></script>
+<script src="/linker/js/Dependencies/sails.io.js"></script>
+<script src="/linker/js/Dependencies/app.js"></script>
+<script src="/linker/js/Dependencies/lib/jquery-2.1.0.min.js"></script>
+<script src="/linker/js/Dependencies/lib/jquery-ui-1.10.4.custom.js"></script>
+<script src="/linker/js/Dependencies/lib/underscore-min.js"></script>
+<script src="/linker/js/Dependencies/lib/backbone-min.js"></script>
+<script src="/linker/js/Dependencies/lib/bootstrap.min.js"></script>
+<script src="/linker/js/Dependencies/bak.js"></script>
+<script src="/linker/js/Admin/Config/config.js"></script>
+<script src="/linker/js/Admin/Deposit/deposit.js"></script>
+<script src="/linker/js/Admin/MealHistory/mealHistory.js"></script>
+<script src="/linker/js/Admin/Menu/menu.js"></script>
+<script src="/linker/js/Admin/RegisterMeal/registerMeal.js"></script>
+<script src="/linker/js/Admin/Users/users.js"></script>
+<script src="/linker/js/Admin/manager.js"></script>
+<script src="/linker/js/Admin/routes.js"></script>
+<!--SCRIPTS END-->
+</body>
+</html>
+</html>
+
+
+

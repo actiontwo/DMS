@@ -18,7 +18,7 @@ $.extend($.ui, { datepicker: { version: "1.10.4" } });
 var PROP_NAME = "datepicker",
 	instActive;
 
-/* Date picker manager.
+/* Date picker Admin.
    Use the singleton instance of this class, $.datepicker, to interact with the date picker.
    Settings for (groups of) date pickers are maintained in an instance object,
    allowing multiple different settings on the same page. */
@@ -125,7 +125,7 @@ $.extend(Datepicker.prototype, {
 
 	/* Override the default settings for all instances of the date picker.
 	 * @param  settings  object - the new settings to use as defaults (anonymous object)
-	 * @return the manager object
+	 * @return the Admin object
 	 */
 	setDefaults: function(settings) {
 		extendRemove(this._defaults, settings || {});
@@ -287,7 +287,7 @@ $.extend(Datepicker.prototype, {
 	 * @param  pos int[2] - coordinates for the dialog's position within the screen or
 	 *					event - with x/y coordinates or
 	 *					leave empty for default (screen centre)
-	 * @return the manager object
+	 * @return the Admin object
 	 */
 	_dialogDatepicker: function(input, date, onSelect, settings, pos) {
 		var id, browserWidth, browserHeight, scrollX, scrollY,
@@ -1725,7 +1725,7 @@ $.extend(Datepicker.prototype, {
 						tbody += "<td class='" +
 							((dow + firstDay + 6) % 7 >= 5 ? " ui-datepicker-week-end" : "") + // highlight weekends
 							(otherMonth ? " ui-datepicker-other-month" : "") + // highlight days from other months
-							((printDate.getTime() === selectedDate.getTime() && drawMonth === inst.selectedMonth && inst._keyEvent) || // user pressed key
+							((printDate.getTime() === selectedDate.getTime() && drawMonth === inst.selectedMonth && inst._keyEvent) || // User pressed key
 							(defaultDate.getTime() === printDate.getTime() && defaultDate.getTime() === selectedDate.getTime()) ?
 							// or defaultDate is current printedDate and defaultDate is selectedDate
 							" " + this._dayOverClass : "") + // highlight selected day

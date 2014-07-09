@@ -46,10 +46,10 @@ module.exports[400] = function badRequest(validationErrors, redirectTo, req, res
   }
 
   // For traditional (not-AJAX) web forms, this middleware follows best-practices
-  // for when a user submits invalid form data:
+  // for when a User submits invalid form data:
   // i.   First, a one-time-use flash variable is populated, probably a string message or an array
   //      of semantic validation error objects.
-  // ii.  Then the  user is redirected back to `redirectTo`, i.e. the URL where the bad request originated.
+  // ii.  Then the  User is redirected back to `redirectTo`, i.e. the URL where the bad request originated.
   // iii. There, the controller and/or view might use the flash `errors` to either display a message or highlight
   //      the invalid HTML form fields.
   if (redirectTo) {

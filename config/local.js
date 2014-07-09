@@ -57,21 +57,9 @@ module.exports = {
   adapters: {
     'default': 'mongo',
 
-    // mysql: {
-    //   module   : 'sails-mysql',
-    //   host     : 'localhost',
-    //   port     : 3306,
-    //   user     : 'food',
-    //   password : '12345',
-    //   database : 'food'
-
-    //   // module   : 'sails-mysql',
-    //   // url      : 'mysql2://food:12345@localhost:3306/food'
-    // }
-
     mongo : {
       module: 'sails-mongo',
-      host: '192.168.11.10',
+      host: 'localhost',
       user: '',
       password: '',
       database: 'DMS',
