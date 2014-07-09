@@ -65,7 +65,7 @@ module.exports = {
     var data = req.body;
     console.log('data: ' + data);
     ManagerParam.update({name: 'manager'}, data).done(function(err, data){
-      res.send(data);
+      res.send({'successMsg' :'Saved successfully!'});
     });
   },
   success: function (req, res) {
@@ -90,7 +90,8 @@ module.exports = {
           managerParamsResult.push({
             name: 'manager',
             costPerMeal: managerParams[0].costPerMeal,
-            lastHour: managerParams[0].lastHour
+            lastHour: managerParams[0].lastHour,
+            excludeSatSun: managerParams[0].excludeSatSun
           });
         }
         else {
@@ -99,7 +100,8 @@ module.exports = {
             //default values for managerParam
             name: 'manager',
             costPerMeal: 25000,
-            lastHour: 17
+            lastHour: 17,
+            excludeSatSun: true
           });
           ManagerParam.create(managerParamsResult).done(function(err, result){
             if(err){

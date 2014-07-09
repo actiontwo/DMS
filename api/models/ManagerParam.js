@@ -16,6 +16,9 @@ module.exports = {
     },
     lastHour: {
       type: 'integer'
+    },
+    excludeSatSun:{
+      type: 'boolean'
     }
   }
 };
