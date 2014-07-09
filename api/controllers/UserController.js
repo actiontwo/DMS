@@ -96,11 +96,12 @@ module.exports = {
                       });
                     }, 3 * 60 * 60 * 1000);
                     //send notification to user
-                    var html = 'Reset password successful!' +
-                      '<div class="link"' +
-                      '<br><a href="/login">Login</a>' +
-                      '</div>';
-                    res.view('main/success', {notification: html});
+                   // var html = 'Reset password successful! Please see email to change new password!' +
+                   //   '<div class="link"' +
+                   //   '<br><a href="/login">Login</a>' +
+                   //   '</div>';
+                   // res.view('main/success', {notification: html});
+                    res.view('user/login', {error: 'Reset password successful! Please read email to change new password!'});
                   }
                 });
               }
