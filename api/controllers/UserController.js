@@ -336,20 +336,28 @@ module.exports = {
     //check information empty
     for (key in data) {
       if (!data[key]) {
-        res.view('user/register', {error: 'Please fill your information'});
+        res.view('user/register', {error: 'Please fill your information'
+                                  ,email_input:data.email
+                                  ,firstName_input:data.firstname
+                                  ,lastName_input:data.lastname});
         return;
       }
     }
     //check password confirm
     if (data.password !== data.confirmPassword) {
-      res.view('user/register', {error: 'Please make sure your password'});
+      res.view('user/register', {error: 'Please make sure your password'
+                                ,email_input:data.email
+                                ,firstName_input:data.firstname
+                                ,lastName_input:data.lastname});
       return;
     }
     //check user exits!
     User.findOneByEmail(data.email).exec(function (err, user) {
       if (user) {
         //if user exit --> render page register and alert user exit
-        res.view('user/register', {error: 'Email exit!, please choose another email'});
+        res.view('user/register', {error: 'Email exit!, please choose another email'
+                                  ,firstName_input:data.firstname
+                                  ,lastName_input:data.lastname});
         return;
       }
       // if user not exit --> create a new user
