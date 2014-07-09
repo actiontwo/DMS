@@ -23,10 +23,7 @@ module.exports = {
    *    `/mealhistory/find`
    */
   find: function(req, res) {
-    if (!req.session.user) {
-      res.send('You are not login');
-      return;
-    }
+
     RegisterMeal.find({
       userId: req.session.user.id,
       payment: true
@@ -36,10 +33,7 @@ module.exports = {
     })
   },
   indexAdmin: function(req, res) {
-    if (!req.session.user) {
-      res.send('You are not login');
-      return;
-    }
+
     if (req.session.user.role !== 'admin') {
       res.send('You are not admin');
       return;
