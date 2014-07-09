@@ -20,11 +20,21 @@ var ConfigView = Backbone.View.extend({
   send: function () {
     var _costPerMeal = $('.manager_form .cost').val();
     var _lastHour = $('.manager_form .hour').val();
+    var _excludeSatSun = $('#excludeSatSunCbox').prop('checked')
     var data = {
       name: 'manager',
       costPerMeal: _costPerMeal,
-      lastHour: _lastHour
+      lastHour: _lastHour,
+      excludeSatSun: _excludeSatSun
     };
-    this.model.save(data);
+    this.model.save(data,{
+      success: function(model, response) {
+        console.log('success! ' + response);
+        alert(response.successMsg);
+      },
+      error: function(model, response) {
+        console.log('error! ' + response);
+      }
+    });
   }
 });
