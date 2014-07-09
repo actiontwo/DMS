@@ -275,7 +275,8 @@ module.exports = {
           console.log(err);
           return;
         }
-        res.view('main/success', {notification: 'Your account have been active <a href="/login" class="link">Login</a>'});
+        res.view('user/login', {error: 'Your account have been active. Please login!'});
+        //res.view('main/success', {notification: 'Your account have been active <a href="/login" class="link">Login</a>'});
       });
     });
   },
