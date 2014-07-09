@@ -24,11 +24,6 @@ module.exports = {
    */
   find: function (req, res) {
 
-    //check user login
-    if (!req.session.user) {
-      res.send('Your are not login');
-      return;
-    }
     var userId = req.session.user.id;
     var userRole = req.session.user.role;
     //check user role
@@ -136,10 +131,7 @@ module.exports = {
    *    `/deposit/update`
    */
   update: function (req, res) {
-    if (!req.session.user) {
-      res.send('Please Login!');
-      return;
-    }
+
     var data = req.body;
     User.findOneByEmail(data.email).done(function (err, docs) {
       if (err) {

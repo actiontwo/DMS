@@ -18,10 +18,7 @@
 module.exports = {
 
   index: function (req, res) {
-    if (!req.session.user) {
-      res.send('Please login');
-      return;
-    }
+
     var user = req.session.user;
     Menu.find().done(function (err, data) {
       if (err)
@@ -32,10 +29,7 @@ module.exports = {
     })
   },  
   getDish: function(req, res){
-    if (!req.session.user) {
-      res.send('You are not login');
-      return;
-    }
+
     if (req.session.user.role !== 'admin') {
       res.send('You are not admin');
       return;
@@ -54,10 +48,7 @@ module.exports = {
     })
   },
   createDish: function(req, res){
-    if (!req.session.user) {
-      res.send('You are not login');
-      return;
-    }
+
     if (req.session.user.role !== 'admin') {
       res.send('You are not admin');
       return;
@@ -83,10 +74,7 @@ module.exports = {
    * Suggest menu
    */
    getSuggest: function(req, res){
-    if (!req.session.user) {
-      res.send('You are not login');
-      return;
-    }
+
     if (req.param('id')) {
       res.send('find ID');
       return;
@@ -100,10 +88,7 @@ module.exports = {
     })
    },
    createSuggest: function(req, res){
-    if (!req.session.user) {
-      res.send('You are not login');
-      return;
-    }
+
     if (req.param('id')) {
       res.send('find ID');
       return;
@@ -117,7 +102,7 @@ module.exports = {
       name: name,
       date: currentDay,
       role: req.session.user.role
-    }
+    };
     Suggest.create(data).done(function(err, data){
       if(err){
         res.send(err)
@@ -142,10 +127,7 @@ module.exports = {
    *    `/menu/find`
    */
   find: function (req, res) {
-    if (!req.session.user) {
-      res.send('You are not login');
-      return;
-    }
+
     if (req.session.user.role !== 'admin') {
       res.send('You are not admin');
       return;
@@ -169,10 +151,7 @@ module.exports = {
    *    `/menu/create`
    */
   create: function (req, res) {    
-    if (!req.session.user) {
-      res.send('You are not login');
-      return;
-    }
+
     if (req.session.user.role !== 'admin') {
       res.send('You are not admin');
       return;
@@ -198,7 +177,6 @@ module.exports = {
    */
   destroy: function (req, res) {
     var id = req.param('id');
-    console.log(id);
     Menu.destroy({id: id}).done(function(err, data){
       if(err){
         res.send(err);
