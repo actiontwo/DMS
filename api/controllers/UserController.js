@@ -370,7 +370,7 @@ module.exports = {
       return;
     }
     //Check firstname and lastname
-    if ((data.firstname.trim() !='')||(data.lastname.trim() !='')){
+    if ((data.firstname.trim() =='')||(data.lastname.trim() =='')){
       res.view('user/register', {error: 'Please fill both first name and last name'
                                 ,email_input:data.email
                                 ,firstName_input:data.firstname
