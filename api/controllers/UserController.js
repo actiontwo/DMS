@@ -288,6 +288,8 @@ module.exports = {
         data.defaultRegisterMeal = true;
       else
         data.defaultRegisterMeal = false;
+      req.session.user.defaultRegisterMeal = data.defaultRegisterMeal;
+      console.log(req.session.user.defaultRegisterMeal);
       if (data.password) {
         data.password = hasher.generate(data.password);
       }
@@ -298,7 +300,6 @@ module.exports = {
           res.send(err);
           return;
         }
-        req.session.user.defaultRegisterMeal = docs.defaultRegisterMeal;
         if (docs.defaultRegisterMeal) {
           docs.defaultRegisterMeal = 'checked';
         }

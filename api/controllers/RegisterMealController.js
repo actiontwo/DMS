@@ -31,6 +31,7 @@ module.exports = {
       if (time.hour > lastTime) {
         checkTime = time.date + 1;
       }
+      console.log(user);
       //check user register meal default
       if (user.defaultRegisterMeal) {
         //checkValue = true;
