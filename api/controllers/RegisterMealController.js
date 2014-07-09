@@ -35,7 +35,7 @@ module.exports = {
       if (time.hour > lastTime) {
         checkTime = time.date + 1;
       }
-      //check User register meal default
+      //check user register meal default
       if (user.defaultRegisterMeal) {
         //checkValue = true;
         userDefaultRegisterMeal = 1;
@@ -46,7 +46,7 @@ module.exports = {
             var join_date = user.join_date;
             if (join_date) {
               join_date = join_date.split('/');
-              // check date User join to DMS and set date begin register meal
+              // check date user join to DMS and set date begin register meal
               if (Math.ceil((new Date(join_date[2], join_date[0], 0) - new Date(time.year, time.month, 0)) / 86400000) === 0) {
                 dateBegin = join_date[1];
               }
@@ -62,7 +62,7 @@ module.exports = {
               var dateText = tool.formatTwoNumber(time.month) + "/" + tool.formatTwoNumber(i) + "/" + time.year;
               for (j = 0; j < mealsLength; j++) {
                 if (dateText === meals[j].date) {
-                  // User has already registered meal for this day
+                  // user has already registered meal for this day
                   checkRegisterExist = true;
                   var checkDate = (meals[j].date).split('/');
                   if (checkDate[1] <= checkTime)
@@ -107,7 +107,7 @@ module.exports = {
       return;
     }
     if (req.session.user.role !== 'admin') {
-      res.send('You are not Admin');
+      res.send('You are not admin');
       return;
     }
     if (req.param('id')) {
@@ -144,7 +144,7 @@ module.exports = {
             var found = 0;
             var userDefaultRegisterMeal = 0;
             if (users[i].defaultRegisterMeal) userDefaultRegisterMeal = 1;
-            // loop to look for the User that has already registered for theNextDay
+            // loop to look for the user that has already registered for theNextDay
             for (j = 0; j < meals.length; j++){
               if (meals[j].userId == id)
               {
@@ -195,7 +195,7 @@ module.exports = {
       return;
     }
     if (req.session.user.role !== 'admin') {
-      res.send('You are not Admin');
+      res.send('You are not admin');
       return;
     }
 
@@ -224,7 +224,7 @@ module.exports = {
             var found = 0;
             var userDefaultRegisterMeal = 0;
             if (users[i].defaultRegisterMeal) userDefaultRegisterMeal = 1;
-            // loop to look for the User that has already registered for theNextDay
+            // loop to look for the user that has already registered for theNextDay
             for (j = 0; j < meals.length; j++){
               if (meals[j].userId == id)
               {
@@ -277,7 +277,7 @@ module.exports = {
       return;
     }
     if (req.session.user.role !== 'admin') {
-      res.send('You are not Admin');
+      res.send('You are not admin');
       return;
     }
 
@@ -394,7 +394,7 @@ module.exports = {
       _defaultRegisterMeal = 1;
     }
     else _defaultRegisterMeal = 0;
-    // the day the User join Dining Management System
+    // the day the user join Dining Management System
     var joinDayObj = new Date(req.session.user.join_date);
 
     if (dayFromObj <= joinDayObj) dayFromObj = joinDayObj;

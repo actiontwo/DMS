@@ -387,7 +387,7 @@ header {
 }
 
 /*------------------------------------ MANGER ------------------------------------ */
-/*--- Deposit ---*/
+/*--- deposit ---*/
 
 .ds-popup .iconsp-cancer-15px {
     position: relative;
@@ -476,7 +476,7 @@ header {
 
 
 
-/*--- Expense ---*/
+/*--- expense ---*/
 .expense .table .invoice-img {
     width: 100px;
 }
@@ -769,7 +769,7 @@ header {
     margin-left: 10px;
 }
 
-/*--- Report ---*/
+/*--- report ---*/
 
 .report .content {
     padding: 40px 60px;
@@ -884,7 +884,7 @@ header {
     padding: 10px 53px;
 }
 
-/*--- Mem-Deposit ---*/
+/*--- Mem-deposit ---*/
 .mem-deposit .content {
     padding: 40px 236px 90px 236px;
 }
@@ -902,7 +902,7 @@ header {
     padding: 10px;
 }
 
-/*--- Mem-View-Menu ---*/
+/*--- Mem-View-menu ---*/
 .mem-view-menu .content {
     padding: 40px 90px 40px 90px;
 }
@@ -969,7 +969,7 @@ header {
     right: 25%;
 }
 
-/*--- Mem-View-Report---*/
+/*--- Mem-View-report---*/
 .mem-view-report .rp-expense tr:first-child th {
     width: 19%;
 }

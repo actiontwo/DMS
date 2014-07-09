@@ -21,19 +21,19 @@ module.exports = {
     var model = req.body.model;
 
     switch (model) {
-      case 'RegisterMeal':
+      case 'registermeal':
         model = RegisterMeal;
         break;
-      case 'Menu':
+      case 'menu':
         model = Menu;
         break;
-      case 'Expense':
+      case 'expense':
         model = Expense;
         break;
-      case 'Deposit':
+      case 'deposit':
         model = Deposit;
         break;
-      case 'Report':
+      case 'report':
         model = Report;
         break;
     }

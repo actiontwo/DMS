@@ -1,10 +1,10 @@
 module.exports.config={
   user:{
-    header:'../partials/site/User/header',
-    footer:'../partials/site/User/footer'
+    header:'../partials/site/user/header',
+    footer:'../partials/site/user/footer'
   },
   admin:{
-    header:'../partials/site/Admin/header',
-    footer:'../partials/site/Admin/footer'
+    header:'../partials/site/admin/header',
+    footer:'../partials/site/admin/footer'
   }
 };

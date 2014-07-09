@@ -558,7 +558,7 @@
     }
   };
 
-  // Export the escaping function so that the User may override it.
+  // Export the escaping function so that the user may override it.
   // See https://github.com/janl/mustache.js/issues/244
   mustache.escape = escapeHtml;
 

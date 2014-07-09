@@ -48,7 +48,7 @@ module.exports = {
       from: "DMS  <dms@designveloper.com>", // sender address
       replyTo: req.session.user.email,
       bcc: data.listEmail, // list of receivers
-      subject: "Deposit notification", // Subject line
+      subject: "deposit notification", // Subject line
       html: data.content
     };
     smtpTransport.sendMail(mailInfo, function (error, response) {

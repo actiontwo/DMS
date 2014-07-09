@@ -1,7 +1,7 @@
 {
 	"name": "ui.autocomplete",
 	"title": "jQuery UI Autocomplete",
-	"description": "Lists suggested words as the User is typing.",
+	"description": "Lists suggested words as the user is typing.",
 	"keywords": [
 		"ui",
 		"autocomplete",

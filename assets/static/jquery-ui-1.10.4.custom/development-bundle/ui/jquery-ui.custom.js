@@ -290,7 +290,7 @@ $.extend( $.ui, {
 	// only used by resizable
 	hasScroll: function( el, a ) {
 
-		//If overflow is hidden, the element might have extra content, but the User wants to hide it
+		//If overflow is hidden, the element might have extra content, but the user wants to hide it
 		if ( $( el ).css( "overflow" ) === "hidden") {
 			return false;
 		}
@@ -1635,7 +1635,7 @@ $.widget("ui.draggable", $.ui.mouse, {
 
 		this._mouseDrag(event, true); //Execute the drag once - this causes the helper not to be visible before getting its correct position
 
-		//If the ddmanager is used for droppables, inform the Admin that dragging has started (see #5003)
+		//If the ddmanager is used for droppables, inform the admin that dragging has started (see #5003)
 		if ( $.ui.ddmanager ) {
 			$.ui.ddmanager.dragStart(this, event);
 		}
@@ -1678,7 +1678,7 @@ $.widget("ui.draggable", $.ui.mouse, {
 
 	_mouseStop: function(event) {
 
-		//If we are using droppables, inform the Admin about the drop
+		//If we are using droppables, inform the admin about the drop
 		var that = this,
 			dropped = false;
 		if ($.ui.ddmanager && !this.options.dropBehaviour) {
@@ -1717,7 +1717,7 @@ $.widget("ui.draggable", $.ui.mouse, {
 			this.parentNode.removeChild(this);
 		});
 
-		//If the ddmanager is used for droppables, inform the Admin that dragging has stopped (see #5003)
+		//If the ddmanager is used for droppables, inform the admin that dragging has stopped (see #5003)
 		if( $.ui.ddmanager ) {
 			$.ui.ddmanager.dragStop(this, event);
 		}
@@ -2467,7 +2467,7 @@ $.widget("ui.droppable", {
 			}
 		};
 
-		// Add the reference and positions to the Admin
+		// Add the reference and positions to the admin
 		$.ui.ddmanager.droppables[o.scope] = $.ui.ddmanager.droppables[o.scope] || [];
 		$.ui.ddmanager.droppables[o.scope].push(this);
 
@@ -2649,7 +2649,7 @@ $.ui.intersect = function(draggable, droppable, toleranceMode) {
 };
 
 /*
-	This Admin tracks offsets of draggables and droppables
+	This admin tracks offsets of draggables and droppables
 */
 $.ui.ddmanager = {
 	current: null,
@@ -3106,7 +3106,7 @@ $.widget("ui.resizable", $.ui.mouse, {
 		// Calculate the attrs that will be change
 		data = trigger.apply(this, [event, dx, dy]);
 
-		// Put this in the mouseDrag handler since the User can start pressing shift while resizing
+		// Put this in the mouseDrag handler since the user can start pressing shift while resizing
 		this._updateVirtualBoundaries(event.shiftKey);
 		if (this._aspectRatio || event.shiftKey) {
 			data = this._updateRatio(data, event);
@@ -3137,7 +3137,7 @@ $.widget("ui.resizable", $.ui.mouse, {
 			this._proportionallyResize();
 		}
 
-		// Call the User callback if the element was resized
+		// Call the user callback if the element was resized
 		if ( ! $.isEmptyObject(props) ) {
 			this._trigger("resize", event, this.ui());
 		}
@@ -4418,7 +4418,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 			return;
 		}
 
-		//If we are using droppables, inform the Admin about the drop
+		//If we are using droppables, inform the admin about the drop
 		if ($.ui.ddmanager && !this.options.dropBehaviour) {
 			$.ui.ddmanager.drop(this, event);
 		}
@@ -4693,7 +4693,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 			for (j=0, queriesLength = _queries.length; j < queriesLength; j++) {
 				item = $(_queries[j]);
 
-				item.data(this.widgetName + "-item", targetData); // Data for target checking (mouse Admin)
+				item.data(this.widgetName + "-item", targetData); // Data for target checking (mouse admin)
 
 				items.push({
 					item: item,
@@ -5163,7 +5163,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 			delayedTriggers = [];
 
 		// We first have to update the dom position of the actual currentItem
-		// Note: don't do it if the current item is already removed (by a User), or it gets reappended (see #4088)
+		// Note: don't do it if the current item is already removed (by a user), or it gets reappended (see #4088)
 		if(!this._noFinalSort && this.currentItem.parent().length) {
 			this.placeholder.before(this.currentItem);
 		}
@@ -6043,7 +6043,7 @@ $.widget( "ui.autocomplete", {
 				// clicking on the scrollbar causes focus to shift to the body
 				// but we can't detect a mouseup or a click immediately afterward
 				// so we have to track the next mousedown and close the menu if
-				// the User clicks somewhere outside of the autocomplete
+				// the user clicks somewhere outside of the autocomplete
 				var menuElement = this.menu.element[ 0 ];
 				if ( !$( event.target ).closest( ".ui-menu-item" ).length ) {
 					this._delay(function() {
@@ -6820,7 +6820,7 @@ $.extend($.ui, { datepicker: { version: "1.10.4" } });
 var PROP_NAME = "datepicker",
 	instActive;
 
-/* Date picker Admin.
+/* Date picker admin.
    Use the singleton instance of this class, $.datepicker, to interact with the date picker.
    Settings for (groups of) date pickers are maintained in an instance object,
    allowing multiple different settings on the same page. */
@@ -6927,7 +6927,7 @@ $.extend(Datepicker.prototype, {
 
 	/* Override the default settings for all instances of the date picker.
 	 * @param  settings  object - the new settings to use as defaults (anonymous object)
-	 * @return the Admin object
+	 * @return the admin object
 	 */
 	setDefaults: function(settings) {
 		extendRemove(this._defaults, settings || {});
@@ -7089,7 +7089,7 @@ $.extend(Datepicker.prototype, {
 	 * @param  pos int[2] - coordinates for the dialog's position within the screen or
 	 *					event - with x/y coordinates or
 	 *					leave empty for default (screen centre)
-	 * @return the Admin object
+	 * @return the admin object
 	 */
 	_dialogDatepicker: function(input, date, onSelect, settings, pos) {
 		var id, browserWidth, browserHeight, scrollX, scrollY,
@@ -8527,7 +8527,7 @@ $.extend(Datepicker.prototype, {
 						tbody += "<td class='" +
 							((dow + firstDay + 6) % 7 >= 5 ? " ui-datepicker-week-end" : "") + // highlight weekends
 							(otherMonth ? " ui-datepicker-other-month" : "") + // highlight days from other months
-							((printDate.getTime() === selectedDate.getTime() && drawMonth === inst.selectedMonth && inst._keyEvent) || // User pressed key
+							((printDate.getTime() === selectedDate.getTime() && drawMonth === inst.selectedMonth && inst._keyEvent) || // user pressed key
 							(defaultDate.getTime() === printDate.getTime() && defaultDate.getTime() === selectedDate.getTime()) ?
 							// or defaultDate is current printedDate and defaultDate is selectedDate
 							" " + this._dayOverClass : "") + // highlight selected day
@@ -9462,7 +9462,7 @@ $.widget( "ui.dialog", {
 	},
 
 	_size: function() {
-		// If the User has resized the dialog, the .ui-dialog and .ui-dialog-content
+		// If the user has resized the dialog, the .ui-dialog and .ui-dialog-content
 		// divs will both have width and height set, so we need to reset them
 		var nonContentHeight, minContentHeight, maxContentHeight,
 			options = this.options;
@@ -11165,7 +11165,7 @@ $.widget( "ui.spinner", {
 		"mousedown .ui-spinner-button": function( event ) {
 			var previous;
 
-			// We never want the buttons to have focus; whenever the User is
+			// We never want the buttons to have focus; whenever the user is
 			// interacting with the spinner, the focus should be on the input.
 			// If the input is focused then this.previous is properly set from
 			// when the input first received focus. If the input is not focused
@@ -11179,7 +11179,7 @@ $.widget( "ui.spinner", {
 					this.previous = previous;
 					// support: IE
 					// IE sets focus asynchronously, so we need to check if focus
-					// moved off of the input because the User clicked on the button.
+					// moved off of the input because the user clicked on the button.
 					this._delay(function() {
 						this.previous = previous;
 					});
@@ -11719,7 +11719,7 @@ $.widget( "ui.tabs", {
 		// Navigating with control key will prevent automatic activation
 		if ( !event.ctrlKey ) {
 			// Update aria-selected immediately so that AT think the tab is already selected.
-			// Otherwise AT may confuse the User by stating that they need to activate the tab,
+			// Otherwise AT may confuse the user by stating that they need to activate the tab,
 			// but the tab will already be activated by the time the announcement finishes.
 			focusedTab.attr( "aria-selected", "false" );
 			this.tabs.eq( selectedIndex ).attr( "aria-selected", "true" );

@@ -203,7 +203,7 @@ $.widget( "ui.tabs", {
 		// Navigating with control key will prevent automatic activation
 		if ( !event.ctrlKey ) {
 			// Update aria-selected immediately so that AT think the tab is already selected.
-			// Otherwise AT may confuse the User by stating that they need to activate the tab,
+			// Otherwise AT may confuse the user by stating that they need to activate the tab,
 			// but the tab will already be activated by the time the announcement finishes.
 			focusedTab.attr( "aria-selected", "false" );
 			this.tabs.eq( selectedIndex ).attr( "aria-selected", "true" );

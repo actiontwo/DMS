@@ -43,35 +43,36 @@ module.exports = function (grunt) {
     // linked in the proper order order
 
     // Bring in the socket.io client
-    'linker/js/Dependencies/socket.io.js',
+    'linker/js/dependencies/socket.io.js',
 
     // then beef it up with some convenience logic for talking to Sails.js
-    'linker/js/Dependencies/sails.io.js',
+    'linker/js/dependencies/sails.io.js',
 
     // A simpler boilerplate library for getting you up and running w/ an
     // automatic listener for incoming messages from Socket.io.
-    'linker/js/Dependencies/app.js',
+    'linker/js/dependencies/app.js',
 
-    'linker/js/Dependencies/lib/jquery*.js',
+    'linker/js/dependencies/lib/jquery*.js',
     // Add underscore before others
-    'linker/js/Dependencies/lib/underscore*.js',
+    'linker/js/dependencies/lib/underscore*.js',
     // Add external libraries before any other files
-    'linker/js/Dependencies/lib/*.js',
+    'linker/js/dependencies/lib/*.js',
 
-    'linker/js/Dependencies/*.js'
+    'linker/js/dependencies/*.js'
   ];
   var jsFilesToInject = [
-    // Backbone  User
-    'linker/js/User/**/*.js',
-    'linker/js/User/routes.js',
+    // Backbone  user
+    'linker/js/user/**/*.js',
+
+    'linker/js/routes/user/routes.js',
     // except handlebars, this will be included in template section
-    '!linker/js/Dependencies/**/handlebars*.js'
+    '!linker/js/dependencies/**/handlebars*.js'
   ];
   var jsFilesToInjectAdmin = [
-    // Backbone  Admin
-    'linker/js/Admin/**/*.js',
-    'linker/js/Admin/routes.js',
-    '!linker/js/Dependencies/**/handlebars*.js'
+    // Backbone  admin
+    'linker/js/admin/**/*.js',
+    'linker/js/routes/admin/routes.js',
+    '!linker/js/dependencies/**/handlebars*.js'
   ];
   jsFilesToInject = jsCommon.concat(jsFilesToInject);
   jsFilesToInjectAdmin = jsCommon.concat(jsFilesToInjectAdmin);
@@ -302,8 +303,8 @@ module.exports = function (grunt) {
         files: {
           '.tmp/public/**/*.html': jsFilesToInject,
           'views/**/*.html': jsFilesToInject,
-          'views/**/User/*.handlebars': jsFilesToInject,
-          'views/**/Admin/*.handlebars': jsFilesToInjectAdmin,
+          'views/**/user/*.handlebars': jsFilesToInject,
+          'views/**/admin/*.handlebars': jsFilesToInjectAdmin,
           'views/**/*.hbs': jsFilesToInject
         }
       },

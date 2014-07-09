@@ -47,7 +47,7 @@ module.exports.routes = {
     controller: 'user',
     action: 'roleCheck'
   },
-  // Account Controller
+  // account Controller
   '/forgetPassword': {
     controller: 'user',
     action: 'forgetPassword'
@@ -137,7 +137,7 @@ module.exports.routes = {
     controller: 'registermeal',
     action: 'indexAdminViewByDay'
   },
-  // Menu Controller
+  // menu Controller
   'get /menu': {
     controller: 'menu',
     action: 'index'
@@ -180,7 +180,7 @@ module.exports.routes = {
     controller: 'menu',
     action: 'deleteSuggest'
   },
-  // Expense Controller
+  // expense Controller
   'get /expense/:id?': {
     controller: 'expense',
     action: 'find'
@@ -197,7 +197,7 @@ module.exports.routes = {
     controller: 'expense',
     action: 'destroy'
   },
-  // Deposit Controller
+  // deposit Controller
   'get /deposit/:id?': {
     controller: 'deposit',
     action: 'find'
@@ -214,7 +214,7 @@ module.exports.routes = {
     controller: 'deposit',
     action: 'destroy'
   },
-  // Report Controller
+  // report Controller
   'get /report/:id?': {
     controller: 'report',
     action: 'find'
@@ -241,7 +241,7 @@ module.exports.routes = {
     controller: 'mail',
     action: 'sendMail'
   },
-   // MealHistory Controller
+   // mealhistory Controller
   'get /mealhistory/:id?': {
     controller: 'mealhistory',
     action: 'find'

@@ -45,7 +45,7 @@ module.exports.session = {
   // Optional Values:
   //
   // # Note: url will override other connection settings
-  // url: 'mongodb://User:pass@host:port/database/collection',
+  // url: 'mongodb://user:pass@host:port/database/collection',
   //
   // username: '',
   // password: '',
