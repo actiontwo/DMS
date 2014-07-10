@@ -125,18 +125,20 @@ var RegisterMealView = Backbone.View.extend({
       });
     }
     currentRMCollection.each(function(model, data){
-      if (!model.attributes.disabled)
-      {
-        if (ev.prop('checked')==true)
-        {
-          model.set({status: true, numberOfMeals: 1},{silent: true});
-        }
-        else
-        {
-          model.set({status: false, numberOfMeals: 0},{silent: true});
-        }
-      }
-    });
+    // add all changes to collection - WE NEED TO FIX THIS
+//    currentRMCollection.each(function(model, data){
+//      if (!model.attributes.disabled) //console.log(model.attributes.date);
+//      {
+//        if (ev.prop('checked')==true)
+//        {
+//          model.set({status: true, numberOfMeals: 1});
+//        }
+//        else
+//        {
+//          model.set({status: false, numberOfMeals: 0});
+//        }
+//      }
+//    });
     $('.numberLunchCheck').html($('.lunchCheckbox:checked').length);
     $('.TotalMeals').html(this.countNumberOfMeals($('.numberOfMeals')));
   },

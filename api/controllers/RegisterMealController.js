@@ -217,8 +217,6 @@ module.exports = {
         res.send(err);
       }
       else {
-        User.find({active: true}).done(function(err, users) {
-          // find all actived users
           if (err) {
             res.send(err)
           }
@@ -293,19 +291,19 @@ module.exports = {
     }
     var _firstname = selectedUser.slice(0, i);
     var _lastname = selectedUser.slice(i+1, selectedUser.length);
-
-    var _userId = '';
-    var result = []; // this array will contains all the returned models
     User.find({firstname: _firstname, lastname: _lastname, active: true}).done(function(err, users){
       // get users model according to their firstname & lastname from the database
-      // notice: only get actived users
+    // WE NEED TO FIX THIS LATER
+    var _userId = '';
+    var result = []; // this array will contains all the returned models
+      // get users model according to their firstname & lastname from the database
       if (err) {
 
         res.send(err);
       }
       else
       {
-        if (users.length==0){
+        // this loop is used for getting the userId of the selectedUser
           console.log('error searching firstname: ' + _firstname + ' and lastname: ' + _lastname);
         }
         // this loop is used for getting the userId of the selectedUser
@@ -357,7 +355,7 @@ module.exports = {
     });
     // set costPerMeal attributes for the current Register Meal model
     data.costPerMeal = _costPerMeal;
-    RegisterMeal.find({userId: req.session.user.id, date: data.date}).done(function(err, outerMeals){
+    RegisterMeal.create(data).done(function(err, meals) {
       if (outerMeals.length==0)
       {
         RegisterMeal.create(data).done(function(err, meals) {
@@ -366,7 +364,7 @@ module.exports = {
             res.send(err);
             return;
           }
-          res.send(meals);
+      res.send(meals);
         });
       }
       else {
