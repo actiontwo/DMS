@@ -357,13 +357,28 @@ module.exports = {
     });
     // set costPerMeal attributes for the current Register Meal model
     data.costPerMeal = _costPerMeal;
-    RegisterMeal.create(data).done(function(err, meals) {
-      if (err) {
-        console.log(err);
-        res.send(err);
-        return;
+    RegisterMeal.find({userId: req.session.user.id, date: data.date}).done(function(err, outerMeals){
+      if (outerMeals.length==0)
+      {
+        RegisterMeal.create(data).done(function(err, meals) {
+          if (err) {
+            console.log(err);
+            res.send(err);
+            return;
+          }
+          res.send(meals);
+        });
       }
-      res.send(meals);
+      else {
+        RegisterMeal.update({userId: req.session.user.id, date: data.date}, data).done(function (err, meals) {
+          if (err) {
+            console.log(err);
+            res.send(err);
+            return;
+          }
+          res.send(meals);
+        });
+      }
     });
   },
   update: function(req, res) {
