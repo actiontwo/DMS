@@ -23,6 +23,12 @@ module.exports = {
     },
     amount: {
       type: 'integer'
+    },
+    deleteflg: {
+      type: 'boolean'
+    },
+    userDelete: {
+      type: 'string'
     }
   }
 };

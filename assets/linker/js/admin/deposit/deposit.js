@@ -55,7 +55,7 @@ var DepositView = Backbone.View.extend({
       amount: ev.parents('tr').find('.inputAmount').val(),
       date: ev.parents('tr').find('.inputDate').val()
     };
-    for (key in data) {
+    for (var key in data) {
       if (!data[key]) {
         alert('Data not empty');
         return;

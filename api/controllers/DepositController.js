@@ -29,7 +29,7 @@ module.exports = {
     //check user role
     if (userRole === "user" || req.param('id')) {
       console.log(userId);
-      Deposit.findByUserId(userId).sort('date').done(function (err, data) {
+      Deposit.find({userId:userId}).sort('date').done(function (err, data) {
         if (err)
           console.log(err); else {
           res.send(data);
@@ -37,7 +37,7 @@ module.exports = {
       });
       return;
     }
-    Deposit.find().sort('date').done(function (err, data) {
+    Deposit.find({deleteflg:{$ne:true}}).sort('date').done(function (err, data) {
       if (err)
         console.log(err); else {
         res.send(data);
@@ -119,7 +119,7 @@ module.exports = {
             console.log(err);
             return;
           }
-          Deposit.destroy({id: id}).done(function (err, dataDelete) {
+          Deposit.update({id: id},{deleteflg:true,userDelete:req.session.user.firstname +' '+req.session.user.lastname}).done(function (err, dataDelete) {
             res.send(dataDelete);
           });
         });
