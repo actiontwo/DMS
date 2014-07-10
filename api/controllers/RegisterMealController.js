@@ -361,7 +361,10 @@ module.exports = {
     });
     // set costPerMeal attributes for the current Register Meal model
     data.costPerMeal = _costPerMeal;
-    RegisterMeal.create(data).done(function(err, meals) {
+    RegisterMeal.find({userId: req.session.user.id, date: data.date}).done(function(err, outerMeals){
+      if (outerMeals.length==0)
+      {
+        RegisterMeal.create(data).done(function(err, meals) {
       if (outerMeals.length==0)
       {
         RegisterMeal.create(data).done(function(err, meals) {
@@ -370,7 +373,7 @@ module.exports = {
             res.send(err);
             return;
           }
-      res.send(meals);
+          res.send(meals);
         });
       }
       else {
