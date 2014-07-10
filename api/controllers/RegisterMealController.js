@@ -18,98 +18,106 @@ var tool = require('../tool');
 var async = require('async');
 
 module.exports = {
-
   index: function(req, res) {
     var user = req.session.user;
-    var checkValue = false;
-    var numberOfMealsValue = 1; // why ?
-    var dateBegin = 1;
-    var userDefaultRegisterMeal = 0;
-    var lastTime = 17; // default [ManagerParam] lastHour value
+    var _status = false;
+    var _numberOfMeals = 1;
+    var dateBegin = 1; // by default, this is the first day (of each month) to be rendered to the Register Meal view
+    var userDefaultRegisterMeal = 0; // default [User Profile] defaultRegisterMeal value
+    var _lastHour = 17; // default [ManagerParam] lastHour value
     var _excludeSatSun = true; // default [ManagerParam] excludeSatSun value
-    var time = tool.getCurrentDay();
-    var checkTime = time.date; // get the number of the current day in this month
+    var time = tool.getCurrentDay(); // get the day at the present
+    var checkTime = time.date; // user can only adjust meal registrations from this checkTime point.
+    // At first, checkTime is assigned as the current day of this month
 
-    //check user register meal default
+    //get [User Profile] defaultRegisterMeal value from database
     if (user.defaultRegisterMeal) userDefaultRegisterMeal = 1;
-    var array = [];
+    var array = []; // this array will contains the response Meal Registrations
 
     ManagerParam.find({name: 'manager'}).done(function(err, managerParams){
+      // get [ManagerParam] lastHour & excludeSatSun value from database
       if (managerParams.length)
       {
-        lastTime = managerParams[0].lastHour;
+        _lastHour = managerParams[0].lastHour;
         _excludeSatSun = managerParams[0].excludeSatSun;
       }
-      if (time.hour > lastTime) {
+      // if current time (hour) surpass _lastHour (which means user can't edit
+      // current day's meal registration), increase checkTime by 1 day
+      if (time.hour > _lastHour) {
         checkTime = time.date + 1;
       }
-
-      // old codes
       RegisterMeal.find({userId: user.id}).done(function(err, meals) {
-        var join_date = user.join_date;
+        // get all user's meal registrations from database
+        var join_date = user.join_date; // get user's join_date
         if (join_date) {
           join_date = join_date.split('/');
-          // check date user join to DMS and set date begin register meal
+          // if join_date > dateBegin, set dateBegin to join_date[1] (because we don't have any database before the time
+          // the user had registered his account)
           if (Math.ceil((new Date(join_date[2], join_date[0], 0) - new Date(time.year, time.month, 0)) / 86400000) === 0) {
             dateBegin = join_date[1];
           }
         }
-        var mealsLength = meals.length;
         for (i = parseInt(dateBegin); i <= time.numberDayOfThisMonth; i++) {
-          var _day = new Date(time.year, time.month - 1, i).toString().split(" ")[0];
-          var disabled = false;
-          var checkRegisterExist = false;
-          // if i < current day, disable this checkbox
+          // loop from dateBegin to the end day of the current month
+          var _day = new Date(time.year, time.month - 1, i).toString().split(" ")[0]; // get the shortname for this day,
+          // like 'Mon', 'Tue'...'Sat', 'Sun'
+          var _disabled = false; // indicates whether the current day is disabled or not
+          var checkRegisterExist = false; // check if the current day's meal registration had existed in the database or not
           if (i <= checkTime)
-            disabled = true;
+          // if i < current day, disable this checkbox
+            _disabled = true;
           // get date string (mm/dd/yyyy) form the first day to the last day of this month
           var dateText = tool.formatTwoNumber(time.month) + "/" + tool.formatTwoNumber(i) + "/" + time.year;
-          for (j = 0; j < mealsLength; j++) {
+          for (j = 0; j < meals.length; j++) {
+            // check if dateText has existed among all models from 'meals'
             if (dateText === meals[j].date) {
               // user has already registered meal for this day
+              // now get infos including status & numberOfMeals from database
               checkRegisterExist = true;
-              var checkDate = (meals[j].date).split('/');
-              if (checkDate[1] <= checkTime)
-                meals[j].disabled = true;
-              checkValue = meals[j].status;
-              numberOfMealsValue = meals[j].numberOfMeals;
+              _status = meals[j].status;
+              _numberOfMeals = meals[j].numberOfMeals;
             }
           }
           if (!checkRegisterExist) {
-            if (userDefaultRegisterMeal)
+            // if this dateText has not existed in database yet
+            if (userDefaultRegisterMeal && _disabled==false)
+            // this current day still editable (_disabled==false) and userDefaultRegister==1
             {
-              checkValue = true;
-              numberOfMealsValue = 1;
+              _status = true;
+              _numberOfMeals = 1;
             }
             else
+            // otherwise, if this current day is not editable (_disabled==true)
+            // or userDefaultRegisterMeal==0
             {
-              checkValue = false;
-              numberOfMealsValue = 0;
+              _status = false;
+              _numberOfMeals = 0;
             }
           } // end if !checkRegisterExist
 
           if ((_excludeSatSun && _day!='Sun' && _day!='Sat') || !_excludeSatSun)
+          // if the current day is 'Sat' or 'Sun', it will be rendered if and only excludeSatSun==false
           {
+            // add a model to the returning array
             array.push({
               date: dateText,
               day: _day,
               month: time.month,
               year: time.year,
-              disabled: disabled,
-              status: checkValue,
-              numberOfMeals: numberOfMealsValue
+              disabled: _disabled,
+              status: _status,
+              numberOfMeals: _numberOfMeals
             });
           }
         } // end loop from dateBegin to time.numberDayOfThisMonth
-        res.send(array);
-
+        res.send(array); // send the array back to the client
       });
-      // end old codes
     });
   }, // End Index
 
   indexAdmin: function(req, res) {
-
+    // by default, the Register Meal Manager view will rendered the meal registrations
+    // of all users for the next day
     if (req.session.user.role !== 'admin') {
       res.send('You are not admin');
       return;
@@ -120,70 +128,72 @@ module.exports = {
     }
     // get the current day in Date Object
     var time = tool.getCurrentDay();
-    // get the next day
+    // get the next day in Date Object
     var theNextDay = new Date(time.year, time.month - 1, time.date + 1);
-    // get a string with the following format 'mm/dd/yyyy'
+    // get a string of the next day with the following format 'mm/dd/yyyy'
     var theNextDayString = tool.formatTwoNumber(theNextDay.getMonth()+1) + "/" +
       tool.formatTwoNumber(theNextDay.getDate()) + "/" + theNextDay.getFullYear();
-
+    // look up in database all meal registrations that have date attributes == theNextDayString
     RegisterMeal.find({
       date: theNextDayString
     }).done(function(err, meals) {
-      // find in database how many person have registered for the next day's meal
+      // find in database how many people have registered for the next day's meal
       if (err) {
         res.send(err);
-      } else {
+      }
+      else {
         User.find().done(function(err, users) {
           if (err) {
             res.send(err)
           }
-          var result = [];
+          var result = []; // this array will contains all returning models
           // loop all users
           for (i = 0; i < users.length; i++) {
             var id = users[i].id;
             var _firstname = users[i].firstname;
             var _lastname = users[i].lastname;
-            var checkValue = false;
-            var numberOfMealsValue = 0;
-            var found = 0;
+            var _status = false;
+            var _numberOfMeals = 0;
+            var found = 0; // this indicates whether this user has registered for the next day's meal or not
             var userDefaultRegisterMeal = 0;
             if (users[i].defaultRegisterMeal) userDefaultRegisterMeal = 1;
             // loop to look for the user that has already registered for theNextDay
             for (j = 0; j < meals.length; j++){
               if (meals[j].userId == id)
               {
+                // this user has registered for the next day's meal
+                // now get the existed data including status & numberOfMeals
                 found = 1;
-                console.log("user: " + _firstname + " " + _lastname + " has set the meal by himselft");
-                if (meals[j].status == true) checkValue = true;
-                else checkValue = false;
-                numberOfMealsValue = meals[j].numberOfMeals;
+                if (meals[j].status == true) _status = true;
+                else _status = false;
+                _numberOfMeals = meals[j].numberOfMeals;
               }
               else
               {
               }
             }
             // end meals loop
-
             if (found == 0)
             {
+              // if this user has not registered for the next day's meal
+              // we will render it according to the user's defaultRegisterMeal setting
               if (userDefaultRegisterMeal == 1)
               {
-                console.log("user: " + _firstname + " " + _lastname + " has setDefaultRegisterMeal = 1");
-                checkValue = true;
-                numberOfMealsValue = 1;
+                _status = true;
+                _numberOfMeals = 1;
               }
               else
               {
-                checkValue = false;
-                numberOfMealsValue = 0;
+                _status = false;
+                _numberOfMeals = 0;
               }
             }
             // push an object to 'result' array
             result.push({
               date: theNextDayString,
               name: _firstname + " " + _lastname,
-              status: checkValue,
-              numberOfMeals: numberOfMealsValue
+              status: _status,
+              numberOfMeals: _numberOfMeals
             });
           }
           // end loop all users
@@ -194,74 +204,70 @@ module.exports = {
   },
   indexAdminViewByDay: function(req, res)
   {
-
+    // this function is called when admin search for meal registrations by a specific DAY
     if (req.session.user.role !== 'admin') {
       res.send('You are not admin');
       return;
     }
-
-    console.log("<indexAdminViewByDay> <selectedDay>:" + req.body.selectedDay);
-    var selectedDay = req.body.selectedDay;
-
+    var selectedDay = req.body.selectedDay; // get the selected day from client's request
     RegisterMeal.find({date: selectedDay}).done(function(err, meals){
+      // find all meal registrations according to date==selectedDay from the database
       if (err) {
         res.send(err);
       }
-      else
-      {
-        //console.log("meals.length: " + meals.length);
+      else {
         User.find().done(function(err, users) {
           if (err) {
             res.send(err)
           }
-          var result = [];
+          var result = []; // this array will contains all the meal registrations that will be returned
           // loop all users
           for (i = 0; i < users.length; i++) {
             var id = users[i].id;
             var _firstname = users[i].firstname;
             var _lastname = users[i].lastname;
-            var checkValue = false;
-            var numberOfMealsValue = 0;
+            var _status = false;
+            var _numberOfMeals = 0;
             var found = 0;
             var userDefaultRegisterMeal = 0;
             if (users[i].defaultRegisterMeal) userDefaultRegisterMeal = 1;
-            // loop to look for the user that has already registered for theNextDay
+            // loop to look for the user that has already registered for the selectedDay
             for (j = 0; j < meals.length; j++){
               if (meals[j].userId == id)
               {
+                // this user has registered for the selectedDay's meal
+                // now get the existed data including status & numberOfMeals
                 found = 1;
-                console.log("user: " + _firstname + " " + _lastname + " has set the meal by himselft");
-                if (meals[j].status == true) checkValue = true;
-                else checkValue = false;
-                numberOfMealsValue = meals[j].numberOfMeals;
+                if (meals[j].status == true) _status = true;
+                else _status = false;
+                _numberOfMeals = meals[j].numberOfMeals;
               }
               else
               {
               }
             }
             // end meals loop
-
             if (found == 0)
             {
+              // if this user has not registered for the selectedDay's meal
+              // we will render it according to the user's defaultRegisterMeal setting
               if (userDefaultRegisterMeal == 1)
               {
-                console.log("user: " + _firstname + " " + _lastname + " has setDefaultRegisterMeal = 1");
-                checkValue = true;
-                numberOfMealsValue = 1;
+                _status = true;
+                _numberOfMeals = 1;
               }
               else
               {
-                checkValue = false;
-                numberOfMealsValue = 0;
+                _status = false;
+                _numberOfMeals = 0;
               }
             }
-
             // push an object to 'result' array
             result.push({
               date: selectedDay,
               name: _firstname + " " + _lastname,
-              status: checkValue,
-              numberOfMeals: numberOfMealsValue
+              status: _status,
+              numberOfMeals: _numberOfMeals
             });
           }
           // end loop all users
@@ -277,48 +283,49 @@ module.exports = {
       res.send('You are not admin');
       return;
     }
-
-    console.log("<indexAdminViewByUser> selectedUser: " + req.body.selectedUser);
-    var selectedUser = req.body.selectedUser;
+    var selectedUser = req.body.selectedUser; // get the selectedUser from client's request
     //split firstname & lastname
     var names = selectedUser.split(" ");
+    // WE NEED TO FIX THIS LATER
     var _firstname = names[0];
     var _lastname = names[1];
-    var _userId = "";
-    var result = [];
-
+    var _userId = '';
+    var result = []; // this array will contains all the returned models
     User.find({firstname: _firstname, lastname: _lastname}).done(function(err, users){
+      // get users model according to their firstname & lastname from the database
       if (err) {
         res.send(err)
       }
       else
       {
+        // this loop is used for getting the userId of the selectedUser
         for(i=0;i<users.length;i++)
         {
           _userId = users[i].id;
         }
       }
       RegisterMeal.find({userId: _userId}).done(function(err, meals){
+        // look for all the meal registrations that the selectedUser has made
         if (err) {
           res.send(err)
         }
         else
         {
-          var checkValue = false;
-          var numberOfMealsValue = 0;
-          var _date = "";
-          // begin loop
+          var _status = false;
+          var _numberOfMeals = 0;
+          var _date = '';
+          // begin loop in all the meal registrations found (meals)
           for (j = 0; j < meals.length; j++){
-            if (meals[j].status == true) checkValue = true;
-            else checkValue = false;
+            // for each meal registration, get its information including status, numberOfMeals, date
+            _status = meals[j].status;
             _date = meals[j].date;
-            numberOfMealsValue = meals[j].numberOfMeals;
-
+            _numberOfMeals = meals[j].numberOfMeals;
+            // push all the meal registrations found to the result array
             result.push({
               date: _date,
               name: _firstname + " " + _lastname,
-              status: checkValue,
-              numberOfMeals: numberOfMealsValue
+              status: _status,
+              numberOfMeals: _numberOfMeals
             });
           } // end loop
           // send the result back to the client side
@@ -326,80 +333,81 @@ module.exports = {
         }
       });
     });
-
-
   },
   create: function(req, res) {
-
     var data = req.body;
-    var costPerMeal = 25000;
+    var _costPerMeal = 25000; // default [Manager Param] costPerMeal value
     data.userId = req.session.user.id;
-    console.log(data);
-    //    ManagerParam.find().done(function(err, managerParams){
-    //      for (var i =0; i<managerParams.length;i++){
-    //        costPerMeal = managerParams[0].
-    //      }
-    //    });
-    RegisterMeal.create(data).done(function(err, docs) {
+    ManagerParam.find({name: 'manager'}).done(function(err, managerParams){
+      // get the costPerMeal value from ManagerParam
+      if (managerParams.length)
+      {
+        _costPerMeal = managerParams[0].costPerMeal;
+      }
+    });
+    // set costPerMeal attributes for the current Register Meal model
+    data.costPerMeal = _costPerMeal;
+    RegisterMeal.create(data).done(function(err, meals) {
       if (err) {
         console.log(err);
         res.send(err);
         return;
       }
-      res.send(docs);
+      res.send(meals);
     });
   },
   update: function(req, res) {
     var data = req.body;
     data.userId = req.session.user.id;
-    console.log(data);
     RegisterMeal.update({
       id: data.id
-    }, data).done(function(err, docs) {
+    }, data).done(function(err, meals) {
       if (err) {
         console.log(err);
         res.send(err);
         return;
       }
-      res.send(docs);
+      res.send(meals);
     });
   },
   searchByDay: function(req,res){
-
-    console.log("dayFrom: " + req.body.dayFrom);
-    console.log("dayTo: " + req.body.dayTo);
+    // this function is called when user query their meal registrations by day
     var dayFromObj = new Date(req.body.dayFrom);
     var dayToObj = new Date(req.body.dayTo);
+    if (req.body.dayFrom.length!=10 || req.body.dayTo.length!=10){
+      res.send({error:'Invalid input'});
+    }
     var todayObj = new Date();
     var _userId = req.session.user.id;
-    var result = [];
-
+    var result = []; // this array will contains all the returned models
     var _status = true, _disabled = false, _numberOfMeals = 0, _date = '', _defaultRegisterMeal = 0;
-    var found = 0;
-
+    var found = 0; // indicates whether the meal registrations for a specific day has existed in the database or not
     if (req.session.user.defaultRegisterMeal) _defaultRegisterMeal = 1;
-      else _defaultRegisterMeal = 0;
-    // the day the user join Dining Management System
+    // get the Date object from the day that user joined Dining Management System
     var joinDayObj = new Date(req.session.user.join_date);
-
+    // if the dayFrom is earlier than the joinDay, set dayFromObj to joinDayObj
     if (dayFromObj <= joinDayObj) dayFromObj = joinDayObj;
-
+    // look for all meal registrations of the current user
     RegisterMeal.find({userId: _userId}).done(function(err, meals) {
+      // loop from the dayFromObj to the dayToObj
       for (var d = dayFromObj; d <= dayToObj; d.setDate(d.getDate() + 1)) {
+        // get the date string from the current Date object d
         _date = tool.formatTwoNumber(d.getMonth() + 1) + "/" + tool.formatTwoNumber(d.getDate()) + "/" + d.getFullYear();
-
+        // set disabled attribute (which represents editable or not) according to the current day & time
         if (d < todayObj || (d == todayObj && lastTime < todayObj.getHours())) _disabled = true;
         else _disabled = false;
-
+        // loop through all the found meal registrations
         for (var i = 0; i < meals.length; i++) {
           if (meals[i].date == _date) {
-            // found registermeal according to '_date' in the database
+            // found a meal registration according to '_date' in the database
             _status = meals[i].status;
             _numberOfMeals = meals[i].numberOfMeals;
             found = 1;
           }
         }
         if (found != 1)
+        // if user has not registered for the current day's meal yet
+        // we will stimulate its information according to _disabled & _defaultRegisterMeal values
         {
           if (_disabled){
             _status = false;
@@ -419,7 +427,9 @@ module.exports = {
             }
           }
         }
+        // set found back to 0 before continue the loop
         found = 0;
+        // push the Register Meal models to the result array
         result.push({
           date: _date,
           day: new Date(_date).toString().split(" ")[0],
@@ -432,7 +442,6 @@ module.exports = {
       } // end for() loop
       res.send(result);
     }); // end Register Meal find() function
-
   },
 
   /**
