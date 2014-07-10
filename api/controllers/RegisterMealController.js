@@ -142,7 +142,8 @@ module.exports = {
         res.send(err);
       }
       else {
-        User.find().done(function(err, users) {
+        User.find({active: true}).done(function(err, users) {
+          // find all actived users
           if (err) {
             res.send(err)
           }
@@ -216,7 +217,8 @@ module.exports = {
         res.send(err);
       }
       else {
-        User.find().done(function(err, users) {
+        User.find({active: true}).done(function(err, users) {
+          // find all actived users
           if (err) {
             res.send(err)
           }
@@ -284,20 +286,28 @@ module.exports = {
       return;
     }
     var selectedUser = req.body.selectedUser; // get the selectedUser from client's request
-    //split firstname & lastname
-    var names = selectedUser.split(" ");
-    // WE NEED TO FIX THIS LATER
-    var _firstname = names[0];
-    var _lastname = names[1];
+    // this below lines of code helps split the selectedUser string to get user's firstname & lastname
+    for (var i=0;i<selectedUser.length;i++)
+    {
+      if(selectedUser[i] == ' ') break;
+    }
+    var _firstname = selectedUser.slice(0, i);
+    var _lastname = selectedUser.slice(i+1, selectedUser.length);
+
     var _userId = '';
     var result = []; // this array will contains all the returned models
-    User.find({firstname: _firstname, lastname: _lastname}).done(function(err, users){
+    User.find({firstname: _firstname, lastname: _lastname, active: true}).done(function(err, users){
       // get users model according to their firstname & lastname from the database
+      // notice: only get actived users
       if (err) {
-        res.send(err)
+
+        res.send(err);
       }
       else
       {
+        if (users.length==0){
+          console.log('error searching firstname: ' + _firstname + ' and lastname: ' + _lastname);
+        }
         // this loop is used for getting the userId of the selectedUser
         for(i=0;i<users.length;i++)
         {

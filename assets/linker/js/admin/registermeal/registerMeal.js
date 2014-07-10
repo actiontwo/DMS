@@ -41,6 +41,7 @@ var RegisterMealView = Backbone.View.extend({
     initDatePicker($('.datepicker'));
     //add usernames to the option box
     this.collection.each(function(model){
+      // for only users that has already actived their accounts
       var name = model.attributes.name;
       var option = '<option value="'+name+'">'+name+'</option>';
       $('#selectUser').append(option);
@@ -69,12 +70,13 @@ var RegisterMealView = Backbone.View.extend({
       //initialize datepicker
       initDatePicker($('.datepicker'));
       //add usernames to the option box
-      this.collection.each(function(model){
+      $this.collection.each(function(model){
+        // for only users that has already actived their accounts
         var name = model.attributes.name;
         var option = '<option value="'+name+'">'+name+'</option>';
         $('#selectUser').append(option);
       });
-      this.delegateEvents({
+      $this.delegateEvents({
         'click #btnAdminViewByDay': 'viewByDay',
         'click #btnAdminViewByUser': 'viewByUser'
       });
@@ -83,7 +85,7 @@ var RegisterMealView = Backbone.View.extend({
       $('#selectUser').val('');
       $this.updateTotalRow();
     });
-    
+
   },
   viewByUser: function()
   {
@@ -101,12 +103,13 @@ var RegisterMealView = Backbone.View.extend({
       //initialize datepicker
       initDatePicker($('.datepicker'));
       //add usernames to the option box
-      this.collection.each(function(model){
+      $this.collection.each(function(model){
+        // for only users that has already actived their accounts
         var name = model.attributes.name;
         var option = '<option value="'+name+'">'+name+'</option>';
         $('#selectUser').append(option);
       });
-      this.delegateEvents({
+      $this.delegateEvents({
         'click #btnAdminViewByDay': 'viewByDay',
         'click #btnAdminViewByUser': 'viewByUser'
       });
