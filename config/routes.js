@@ -5,6 +5,7 @@
  * Here they are top-to-bottom, in order of precedence.
  *
  * For more information on routes, check out:
+ * For more information on routes, check out:
  * http://sailsjs.org/#documentation
  */
 

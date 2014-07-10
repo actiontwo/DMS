@@ -31,7 +31,6 @@
             <th colspan="5">Menu</th>
             <th class="noteMenu">Note</th>
             <th class="editMenu">Edit</th>
-
         </tr>
         </thead>
         <tbody>
@@ -48,7 +47,10 @@
                 <a class="cursor edit-menu glyphicon glyphicon-pencil"
                    href="#modal-container-menu" role="button"
                    data-toggle="modal"></a>
-                <span class="cursor delete-menu glyphicon glyphicon-trash"></span>
+                <a
+                        class="cursor delete-menu glyphicon glyphicon-trash"
+                        href="#modal-delete-confirmation" role="button"
+                        data-toggle="modal"></a>
             </td>
         </tr>
         {{/with}} {{/each}}
@@ -125,6 +127,27 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" id="saveMenu">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Delete confirmation-->
+<div class="modal fade" id="modal-delete-confirmation" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Delete Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this menu ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary btnDeleteMenu"
+                        data-dismiss="modal">Yes</button>
             </div>
         </div>
     </div>

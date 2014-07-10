@@ -8,6 +8,7 @@ var MenuCollection = Backbone.Collection.extend({
   model: MenuModel
 });
 var dish;
+var menuIdToBeDeleted = '';
 var MenuView = Backbone.View.extend({
   model: new MenuModel,
   collection: new MenuCollection,
@@ -16,21 +17,16 @@ var MenuView = Backbone.View.extend({
   id: 'dish_menu',
   initialize: function () {
     this.listenTo(this.collection, 'reset change add remove', this.render);
-    $.get('/dish', function (data) {
-      dish = [];
-      for (var i = 0; i < data.length; i++) {
-        dish.push(data[i].dish)
-      }
-    });
   },
   render: function () {
     this.$el.html(Templates['admin/menu/menu'](this.collection));
-    autoComplete($('.modalDish'), dish);
+    //autoComplete($('.modalDish'), dish);
     initDatePicker($('.datepicker'));
     this.delegateEvents({
       'click .edit-menu': 'editMenu',
       'click #saveMenu': 'saveMenu',
-      'click .delete-menu': 'deleteMenu',
+      'click .delete-menu': 'getMenuIdToBeDeletd',
+      'click .btnDeleteMenu': 'deleteMenu',
       'click #addNewMenu': 'addNewMenu',
       'click #searchByDay': 'searchByDay',
       'click #printMenu': 'printMenu'
@@ -67,6 +63,10 @@ var MenuView = Backbone.View.extend({
       dish: dishEdit,
       note: $('.modalNote').val()
     };
+    if (!data.date){
+      alert('Invalid date input !');
+      return;
+    }
     console.log(data);
     var id = ev.parents('#modal-container-menu').data('id');
     var model;
@@ -74,13 +74,24 @@ var MenuView = Backbone.View.extend({
       model = this.collection.get(id).set(data);
     else
       model = this.collection.add(data);
-
-    model.save();
+    model.save(null, {
+      error: function(model, res) {
+        console.log('error: ' + res.id);
+      },
+      success: function (model, res) {
+        console.log('success: ' + res.id);
+      }
+    });
   },
-  deleteMenu: function (el) {
+  getMenuIdToBeDeletd: function (el) {
     var ev = $(el.currentTarget);
-    var id = ev.parents('tr').data('id');
-    this.collection.get(id).destroy();
+    menuIdToBeDeleted = ev.parents('tr').data('id');
+    //this.collection.get(id).destroy();
+  },
+  deleteMenu: function(el){
+    this.collection.get(menuIdToBeDeleted).destroy();
+    $('.modal-backdrop').hide();
+    $('body').removeClass('modal-open');
   },
   setValuePopup: function (data) {
     $('#modal-container-menu').attr('data-id', data.id);
@@ -110,13 +121,14 @@ var MenuView = Backbone.View.extend({
     });
 
     this.$el.html(Templates['admin/admin/menuManager'](tempMenuCollection));
-    autoComplete($('.modalDish'), dish);
+    //autoComplete($('.modalDish'), dish);
     initDatePicker($('.datepicker'));
     this.delegateEvents({
       'click .saveDish': 'saveDish',
       'click .edit-menu': 'editMenu',
       'click #saveMenu': 'saveMenu',
-      'click .delete-menu': 'deleteMenu',
+      'click .delete-menu': 'getMenuIdToBeDeletd',
+      'click .btnDeleteMenu': 'deleteMenu',
       'click #addNewMenu': 'addNewMenu',
       'click #searchByDay': 'searchByDay',
       'click #printMenu': 'printMenu'

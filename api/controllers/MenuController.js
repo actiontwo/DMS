@@ -16,22 +16,20 @@
  */
 
 module.exports = {
-
   index: function (req, res) {
-
     var user = req.session.user;
-    Menu.find().done(function (err, data) {
+    Menu.find().done(function (err, data){
       if (err)
         console.log(err);
       else {
         res.send(data);
       }
-    })
+    });
   },
   /**
    * Suggest menu
    */
-   getSuggest: function(req, res){
+  getSuggest: function(req, res){
     if (req.param('id')) {
       res.send('find ID');
       return;
@@ -41,10 +39,10 @@ module.exports = {
         res.send(err)
       }else{
         res.send(data)
-      }      
+      }
     })
-   },
-   createSuggest: function(req, res){
+  },
+  createSuggest: function(req, res){
     if (req.param('id')) {
       res.send('find ID');
       return;
@@ -66,8 +64,8 @@ module.exports = {
         res.send(data)
       }
     })
-   },
-   deleteSuggest: function(req, res){
+  },
+  deleteSuggest: function(req, res){
     var id = req.param('id');
     Suggest.destroy({id: id}).done(function(err){
       if(err){
@@ -75,15 +73,14 @@ module.exports = {
         return;
       }else{
         res.send('Delete Ok');
-      }        
+      }
     });
-   },
+  },
   /**
    * Action blueprints:
    *    `/menu/find`
    */
   find: function (req, res) {
-
     if (req.session.user.role !== 'admin') {
       res.send('You are not admin');
       return;
@@ -101,12 +98,11 @@ module.exports = {
       }
     })
   },
-
   /**
    * Action blueprints:
    *    `/menu/create`
    */
-  create: function (req, res) {    
+  create: function (req, res) {
     if (req.session.user.role !== 'admin') {
       res.send('You are not admin');
       return;
@@ -121,11 +117,11 @@ module.exports = {
       if (err)
         res.send(err);
       else
-        console.log(data);
-        res.send('Save Successfully!');
-    })   
+      {
+        res.send({id: data.id});
+      }
+    })
   },
-
   /**
    * Action blueprints:
    *    `/menu/destroy`
@@ -137,8 +133,8 @@ module.exports = {
         res.send(err);
         return;
       }
-        res.send('Delete Ok');
-        console.log('OK');
+      res.send('Delete Ok');
+      console.log('delete OK');
     });
   },
 
@@ -146,33 +142,33 @@ module.exports = {
    * Action blueprints:
    *    `/menu/update`
    */
-  update: function (req, res) {    
+  update: function (req, res) {
     var data = req.body;
     console.log(data);
     res.send(data.id);
     Menu.findOneById(data.id).done(function (err, docs) {
       console.log(docs);
-    if (err) {
-      console.log(err);
-      res.send(err);
-      return;
-    }
-    if(docs){
-      docs.id = data.id;
-      docs.date = data.date;
-      docs.dish[data.dish[0], data.dish[1], data.dish[2], data.dish[3], data.dish[5]];
-      docs.note = data.note;      
-      // console.log(docs);
-      Menu.update({id: data.id}, data).done(function (err, docs) {
+      if (err) {
+        console.log(err);
+        res.send(err);
+        return;
+      }
+      if(docs){
+        docs.id = data.id;
+        docs.date = data.date;
+        docs.dish[data.dish[0], data.dish[1], data.dish[2], data.dish[3], data.dish[5]];
+        docs.note = data.note;
+        // console.log(docs);
+        Menu.update({id: data.id}, data).done(function (err, docs) {
           if (err)
             res.send(err);
           else
             res.send('Save Successfull!');
-            console.log('last');
-            console.log(docs);
+          console.log('last');
+          console.log(docs);
         });
         return;
-    }      
+      }
     });
   },
 
