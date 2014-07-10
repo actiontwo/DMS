@@ -217,6 +217,8 @@ module.exports = {
         res.send(err);
       }
       else {
+        User.find({active: true}).done(function(err, users) {
+          // find all actived users
           if (err) {
             res.send(err)
           }
@@ -291,18 +293,22 @@ module.exports = {
     }
     var _firstname = selectedUser.slice(0, i);
     var _lastname = selectedUser.slice(i+1, selectedUser.length);
-    User.find({firstname: _firstname, lastname: _lastname, active: true}).done(function(err, users){
+
       // get users model according to their firstname & lastname from the database
-    // WE NEED TO FIX THIS LATER
     var _userId = '';
     var result = []; // this array will contains all the returned models
+    User.find({firstname: _firstname, lastname: _lastname, active: true}).done(function(err, users){
       // get users model according to their firstname & lastname from the database
+      // notice: only get actived users
       if (err) {
 
         res.send(err);
       }
       else
       {
+        if (users.length==0){
+          console.log('error searching firstname: ' + _firstname + ' and lastname: ' + _lastname);
+        }
         // this loop is used for getting the userId of the selectedUser
           console.log('error searching firstname: ' + _firstname + ' and lastname: ' + _lastname);
         }
