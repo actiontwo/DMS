@@ -310,9 +310,6 @@ module.exports = {
           console.log('error searching firstname: ' + _firstname + ' and lastname: ' + _lastname);
         }
         // this loop is used for getting the userId of the selectedUser
-          console.log('error searching firstname: ' + _firstname + ' and lastname: ' + _lastname);
-        }
-        // this loop is used for getting the userId of the selectedUser
         for(i=0;i<users.length;i++)
         {
           _userId = users[i].id;
@@ -362,9 +359,7 @@ module.exports = {
     // set costPerMeal attributes for the current Register Meal model
     data.costPerMeal = _costPerMeal;
     RegisterMeal.find({userId: req.session.user.id, date: data.date}).done(function(err, outerMeals){
-      if (outerMeals.length==0)
-      {
-        RegisterMeal.create(data).done(function(err, meals) {
+
       if (outerMeals.length==0)
       {
         RegisterMeal.create(data).done(function(err, meals) {
