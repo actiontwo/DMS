@@ -215,22 +215,22 @@ module.exports.routes = {
     action: 'destroy'
   },
   // report Controller
-  'get /report/:id?': {
-    controller: 'report',
-    action: 'find'
-  },
-  'post /report': {
-    controller: 'report',
-    action: 'create'
-  },
-  'put /report/:id': {
-    controller: 'report',
-    action: 'update'
-  },
-  'delete /report/:id': {
-    controller: 'report',
-    action: 'destroy'
-  },
+//  'get /report/:id?': {
+//    controller: 'report',
+//    action: 'find'
+//  },
+//  'post /report': {
+//    controller: 'report',
+//    action: 'create'
+//  },
+//  'put /report/:id': {
+//    controller: 'report',
+//    action: 'update'
+//  },
+//  'delete /report/:id': {
+//    controller: 'report',
+//    action: 'destroy'
+//  },
   // Search Controller
   'post /search': {
     controller: 'search',
