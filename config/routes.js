@@ -158,15 +158,6 @@ module.exports.routes = {
     controller: 'menu',
     action: 'destroy'
   },
-  // Dish Controller
-  'get /dish': {
-    controller: 'menu',
-    action: 'getDish'
-  },
-  'post /dish': {
-    controller: 'menu',
-    action: 'createDish'
-  },
    // Suggest Controller
   'get /suggest': {
     controller: 'menu',
@@ -214,23 +205,6 @@ module.exports.routes = {
     controller: 'deposit',
     action: 'destroy'
   },
-  // report Controller
-//  'get /report/:id?': {
-//    controller: 'report',
-//    action: 'find'
-//  },
-//  'post /report': {
-//    controller: 'report',
-//    action: 'create'
-//  },
-//  'put /report/:id': {
-//    controller: 'report',
-//    action: 'update'
-//  },
-//  'delete /report/:id': {
-//    controller: 'report',
-//    action: 'destroy'
-//  },
   // Search Controller
   'post /search': {
     controller: 'search',

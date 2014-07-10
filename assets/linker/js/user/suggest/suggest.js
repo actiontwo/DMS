@@ -1,9 +1,9 @@
-var SugestModel = Backbone.Model.extend({
-  urlRoot: '/Suggest'
+var SuggestModel = Backbone.Model.extend({
+  urlRoot: '/suggest'
 });
 var SuggestCollection = Backbone.Collection.extend({
-  url: '/Suggest',
-  model: SugestModel
+  url: '/suggest',
+  model: SuggestModel
 });
 var SuggestView = Backbone.View.extend({
   tagName: 'div', 

@@ -114,22 +114,13 @@ var MenuView = Backbone.View.extend({
     $('.dateTo').val(dateToString);
   },
   saveSuggest: function(){
-    var data = {
-      suggestMeal: $('.txt-suggest').val(),
-      note: $('.txt-suggest-note').val()
-    };
-    this.model.urlRoot = '/Suggest',
-    this.model.save(data, {
-      success: function (model, res) {
-        console.log(res);
-      },
-      error: function (model, err) {
-        console.log(err);
-      }
-    });
-    this.model.urlRoot = '/menu'
+    $.post('/suggest',
+      {
+        suggestMeal: $('.txt-suggest').val(),
+        note: $('.txt-suggest-note').val()
+      }, function(data){
+        console.log(data);
+      });
   }
-
-
 });
 

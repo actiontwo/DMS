@@ -27,54 +27,11 @@ module.exports = {
         res.send(data);
       }
     })
-  },  
-  getDish: function(req, res){
-
-    if (req.session.user.role !== 'admin') {
-      res.send('You are not admin');
-      return;
-    }
-    if (req.param('id')) {
-      res.send('find ID');
-      return;
-    }
-    Dish.find().done(function(err, data){
-      if(err)
-        res.send(err);
-      else {
-       res.send(data);
-      
-      }
-    })
-  },
-  createDish: function(req, res){
-
-    if (req.session.user.role !== 'admin') {
-      res.send('You are not admin');
-      return;
-    }
-    if (req.param('id')) {
-      res.send('find ID');
-      return;
-    }
-    var data = {
-      dish: req.body.dish,
-      note: req.body.note
-    }
-    Dish.create(data).done(function(err, data){
-      if(err)
-        res.send(err);
-      else {
-        res.send(data);
-      }
-    })
-
   },
   /**
    * Suggest menu
    */
    getSuggest: function(req, res){
-
     if (req.param('id')) {
       res.send('find ID');
       return;
@@ -88,7 +45,6 @@ module.exports = {
     })
    },
    createSuggest: function(req, res){
-
     if (req.param('id')) {
       res.send('find ID');
       return;
@@ -196,7 +152,6 @@ module.exports = {
     console.log(data);
     res.send(data.id);
     Menu.findOneById(data.id).done(function (err, docs) {
-      console.log('old');
       console.log(docs);
     if (err) {
       console.log(err);
@@ -204,7 +159,6 @@ module.exports = {
       return;
     }
     if(docs){
-    //  console.log(docs);
       docs.id = data.id;
       docs.date = data.date;
       docs.dish[data.dish[0], data.dish[1], data.dish[2], data.dish[3], data.dish[5]];

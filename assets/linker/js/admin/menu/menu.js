@@ -28,7 +28,6 @@ var MenuView = Backbone.View.extend({
     autoComplete($('.modalDish'), dish);
     initDatePicker($('.datepicker'));
     this.delegateEvents({
-      'click .saveDish': 'saveDish',
       'click .edit-menu': 'editMenu',
       'click #saveMenu': 'saveMenu',
       'click .delete-menu': 'deleteMenu',
@@ -41,26 +40,6 @@ var MenuView = Backbone.View.extend({
   addNewMenu: function () {
     var data = {date: '', dish: '', note: '', id: ''};
     this.setValuePopup(data);
-  },
-  saveDish: function () {
-    var dish = $('.dishname');
-    var note = $('.dishnote');
-    var data = {
-      dish: dish.val(),
-      note: note.val()
-    };
-    this.model.urlRoot = '/dish';
-    this.model.save(data, {
-      success: function (model, res) {
-        console.log(res);
-      },
-      error: function (model, err) {
-        console.log(err);
-      }
-    });
-    this.model.urlRoot = '/menu';
-    dish.val('');
-    note.val('')
   },
   editMenu: function (el) {
     var ev = $(el.currentTarget);

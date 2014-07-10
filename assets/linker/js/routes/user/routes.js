@@ -5,7 +5,6 @@ var AppRouter = Backbone.Router.extend({
     'menu': 'menuRender',
     'expense': 'expenseRender',
     'deposit': 'depositRender',
-    'report': 'reportRender',
     'userProfile': 'userProfile',
     'manager': 'managerRender',
     'suggest': 'suggest',
@@ -13,7 +12,6 @@ var AppRouter = Backbone.Router.extend({
     'mealHistoryManager': 'mealHistoryManagerView'
   },
   initialize: function () {
-
     this.registerMealView = new RegisterMealView({
       collection: new RegisterMealCollection(),
       model: new RegisterMealModel()
@@ -26,9 +24,6 @@ var AppRouter = Backbone.Router.extend({
     });
     this.depositView = new DepositView({
       collection: new DepositCollection
-    });
-    this.reportView = new ReportView({
-      collection: new ReportCollection
     });
     this.userView = new UserView({
       model: new UserModel()
@@ -58,10 +53,6 @@ var AppRouter = Backbone.Router.extend({
     this.depositView.collection.fetch();
     $('#main').html(this.depositView.render().el);
     $('#subMain').html("");
-    initDatePicker($('.datepicker'));
-  },
-  reportRender: function () {
-    $('#main').html(this.reportView.render().el);
     initDatePicker($('.datepicker'));
   },
   userProfile: function () {
