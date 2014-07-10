@@ -46,8 +46,10 @@ module.exports = {
   },
   logout: function (req, res) {
     req.session.user = '';
-    res.redirect('/');
+    res.clearCookie('remember');
+    res.clearCookie('user');
     req.session.authenticated = false;
+    res.redirect('/');
   },
   resetPassword: function (req, res) {
     var data = {
@@ -228,10 +230,15 @@ module.exports = {
       req.session.user = user;
       req.session.authenticated = true;
       //  if user click remmeber
-      if (data.remember)
+      if (data.remember) {
         req.session.user.remember = "yes";
-      else
+        res.cookie('remember',true, { maxAge: 360000 });
+        res.cookie('user',user,{maxAge:360000})
+      }
+      else {
         req.session.user.remember = "no";
+        res.cookie('remember',false, { maxAge: 360000 });
+      }
       res.redirect("/");
 
     });
