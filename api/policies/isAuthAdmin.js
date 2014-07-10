@@ -11,7 +11,11 @@ module.exports = function (req, res, next) {
 
   // account is allowed, proceed to the next policy,
   // or if this is the last policy, the controller
-  if (req.session.authenticated) {
+  if (req.cookies.remember){
+    req.session.user =req.cookies.user;
+    req.session.authenticated =true;
+  }
+  if (req.session.authenticated){
     if (req.session.user.role === 'admin') {
       return next();
     }
