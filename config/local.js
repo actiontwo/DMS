@@ -59,7 +59,7 @@ module.exports = {
 
     mongo : {
       module: 'sails-mongo',
-      host: 'localhost',
+      host: '192.168.11.10',
       user: '',
       password: '',
       database: 'DMS',
