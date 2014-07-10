@@ -107,7 +107,6 @@ module.exports = {
    *    `/menu/create`
    */
   create: function (req, res) {    
-
     if (req.session.user.role !== 'admin') {
       res.send('You are not admin');
       return;
@@ -123,7 +122,7 @@ module.exports = {
         res.send(err);
       else
         console.log(data);
-        res.send('Save Successfull!')
+        res.send('Save Successfully!');
     })   
   },
 
