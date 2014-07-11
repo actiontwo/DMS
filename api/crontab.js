@@ -4,22 +4,22 @@ var nodemailer = require("nodemailer");
 module.exports = {
   notiBalanceLow: function (rule) {
     return schedule.scheduleJob(rule, function () {
-      User.find({balance: {'<': 25000}}).done(function (err, items) {
-        console.log(items);
-        var data = [];
+      // loop through all users that have their balance < 25000 VND
+      User.find({active: true, balance: {'<': 25000}}).done(function (err, items) {
+        // ... then send an email to notice them to take deposition
         for (i = 0; i < items.length; i++) {
           sendEmail(items[i].email, items[i].balance);
         }
       });
     });
   },
-  updateRegistelMealJob: function (rule, tool) {
+  updateRegisterMealJob: function (rule, tool) {
     return schedule.scheduleJob(rule, function () {
-      var timeSet = tool.getNextDay(1);
+      var timeSet = tool.getNextDay(1); // getNextDay(1) return tomorrow day
       ManagerParam.findOneByName('manager').done(function (err, dataManParam) {
         User.find({active: true}).done(function (err, userData) {
           for (i = 0; i < userData.length; i++) {
-            updateRegisterMeal(userData[i], timeSet, dataManParam.costs);
+            updateRegisterMeal(userData[i], timeSet, dataManParam.costPerMeal);
           }
         });
       });
@@ -27,7 +27,7 @@ module.exports = {
   },
   updateBalanceJob: function (rule, tool) {
     return schedule.scheduleJob(rule, function () {
-      var timeSet = tool.getNextDay(1);
+      var timeSet = tool.getNextDay(1); // getNextDay(1) return tomorrow day
       User.find({active: true}).done(function (err, userData) {
         for (i = 0; i < userData.length; i++) {
           updateBalance(userData[i], timeSet);
@@ -67,32 +67,34 @@ function sendEmail(email, balance) {
 // RETURNS:
 //            (bool) True or False based on proper
 // PURPOSE:
-//            Save Regsiter meal for each user after default time
+//            Save Register meal for each user after default time
 // REVISIONS:
 //            6/23/14 - actiontwo - Initial revision
 // -------------------------------------------------------------------
 
-function updateRegisterMeal(user, time, cost) {
-  RegisterMeal.findOne({userId: user.id, date: time.nextDay}).done(function (err, dataRegister) {
-    if (dataRegister) {
-      console.log('account have  been registed');
+function updateRegisterMeal(user, _timeset, _costPerMeal) {
+  RegisterMeal.findOne({userId: user.id, date: _timeset.nextDay}).done(function (err, meals) {
+    if (meals) {
+      console.log('This account with userId = ' + user.id + ' has already registered meal for the next day');
       return;
     }
+    // this user hasn't registered meal for the next day yet. Now create new meal registration for him/her
     var data = {
-      date: time.nextDay,
-      day: time.day,
-      month: time.month,
-      year: time.year,
-      disabled: false,
+      date: _timeset.nextDay,
+      day: _timeset.day,
+      month: _timeset.month,
+      year: _timeset.year,
+      disabled: true,
       status: (user.defaultRegisterMeal)
         ? true
         : false,
-      numberOfMeals: 1,
+      numberOfMeals: (user.defaultRegisterMeal) ? 1 : 0,
       userId: user.id,
-      costPerMeal: cost,
+      costPerMeal: _costPerMeal,
       payment: false
     };
     RegisterMeal.create(data).done(function (err, items) {
+      //console.log('Create new meal registration for ' + user.id);
       console.log(items);
     })
   });
@@ -110,30 +112,37 @@ function updateRegisterMeal(user, time, cost) {
 //            6/23/14 - actiontwo - Initial revision
 // -------------------------------------------------------------------
 
-function updateBalance(user, time) {
-
-  RegisterMeal.findOne({userId: user.id, status: true, date: time.nextDay}).done(function (err, dataRegister) {
-
-    if (!dataRegister) return;
-    if (dataRegister.payment) return;
-
+function updateBalance(user, _timeSet) {
+  // find the user that has registered the meal for 'date'
+  RegisterMeal.findOne({userId: user.id, status: true, date: _timeSet.nextDay}).done(function (err, mealsRegistered) {
+    //console.log('userId: ' + user.id);
+    //console.log('date: ' + _timeSet.nextDay);
+    if (!mealsRegistered)
+    {
+      //console.log('this user.id: ' + user.id + ' has not registered for ' + _timeSet.nextDay);
+      return;
+    }
+    if (mealsRegistered.payment)
+    {
+      //console.log('this user.id: ' + user.id + ' has already paid for the meal of ' + _timeSet.nextDay);
+      return;
+    }
     if (!user.numberOfMeals)
       user.numberOfMeals = 0;
     if (!user.balance)
       user.balance = 0;
-
-    user.numberOfMeals = user.numberOfMeals + dataRegister.numberOfMeals;
-    user.balance = user.balance - dataRegister.numberOfMeals * dataRegister.costPerMeal;
-
+    user.numberOfMeals = user.numberOfMeals + mealsRegistered.numberOfMeals;
+    user.balance = user.balance - mealsRegistered.numberOfMeals * mealsRegistered.costPerMeal;
+    //console.log('user Object before updated: ' + user);
     User.update({id: user.id}, user).done(function (err, dataUser) {
       if (err) {
         console.log('Cannot update user payment : id:' + user.id);
         console.log(err);
         return;
       }
-      RegisterMeal.update({id: dataRegister.id}, {payment: true}).done(function (err, data) {
+      RegisterMeal.update({id: mealsRegistered.id}, {payment: true}).done(function (err, data) {
         if (err) {
-          console.log('Cannot update confirm payment : paymentId:' + dataRegister.id);
+          console.log('Cannot update payment : registerMealId:' + mealsRegistered.id);
           console.log(err);
         }
       })

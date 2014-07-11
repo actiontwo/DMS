@@ -319,7 +319,6 @@ module.exports = {
       return;
     }
     User.findOne(req.session.user.id).done(function (err, docs) {
-      console.log('av');
       if (err) {
         res.send(err);
         return;

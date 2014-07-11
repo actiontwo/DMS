@@ -17,9 +17,10 @@ module.exports = {
       hour: time.getHours()
     };
   },
-  getNextDay: function (numberDay) {
+  getNextDay: function (dayGap) {
+    // nextDay = (today) + dayGap
     var time = new Date();
-    time.setDate(time.getDate() + numberDay);
+    time.setDate(time.getDate() + dayGap);
     var year = time.getFullYear(),
       month = time.getMonth() + 1,
       date = time.getDate();
