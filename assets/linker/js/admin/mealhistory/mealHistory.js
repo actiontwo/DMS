@@ -17,11 +17,15 @@ var MealHistoryView = Backbone.View.extend({
   render: function() {
     this.$el.html(Templates['admin/mealhistory/meal-history'](this.collection));
     initDatePicker($('.datepicker'));
+    var arrayName =[];
     this.collection.each(function(model) {
       var name = model.attributes.name;
-      var option = '<option value="' + name + '">' + name + '</option>';
-      $('#selectname').append(option);
-    })
+      if (arrayName.indexOf(name) ==-1) {
+        var option = '<option value="' + name + '">' + name + '</option>';
+        $('#selectname').append(option);
+      }
+      arrayName.push(name);
+    });
     this.delegateEvents({
       'click .searchbyday': 'searchByDay',
       'click .searchbyuser': 'searchByUser'
@@ -36,13 +40,17 @@ var MealHistoryView = Backbone.View.extend({
     this.collection.each(function(model) {
       if (model.attributes.date == viewbyday) collection.add(model)
     });
-    this.$el.html(Templates['admin/admin/meal-history'](collection));
+    this.$el.html(Templates['admin/mealhistory/meal-history'](collection));
     initDatePicker($('.datepicker'));
+    var arrayName =[];
     this.collection.each(function(model) {
       var name = model.attributes.name;
-      var option = '<option value="' + name + '">' + name + '</option>';
-      $('#selectname').append(option);
-    })
+      if (arrayName.indexOf(name) ==-1) {
+        var option = '<option value="' + name + '">' + name + '</option>';
+        $('#selectname').append(option);
+      }
+      arrayName.push(name);
+    });
     this.delegateEvents({
       'click .searchbyday': 'searchByDay',
       'click .searchbyuser': 'searchByUser'
@@ -55,14 +63,18 @@ var MealHistoryView = Backbone.View.extend({
     var viewbyname = $('#selectname').val();
     this.collection.each(function(model) {
       if (model.attributes.name == viewbyname) collection.add(model);
-    })
-    this.$el.html(Templates['admin/admin/meal-history'](collection));
+    });
+    this.$el.html(Templates['admin/mealhistory/meal-history'](collection));
     initDatePicker($('.datepicker'));
+    var arrayName =[];
     this.collection.each(function(model) {
       var name = model.attributes.name;
-      var option = '<option value="' + name + '">' + name + '</option>';
-      $('#selectname').append(option);
-    })
+      if (arrayName.indexOf(name) ==-1) {
+        var option = '<option value="' + name + '">' + name + '</option>';
+        $('#selectname').append(option);
+      }
+      arrayName.push(name);
+    });
     this.delegateEvents({
       'click .searchbyday': 'searchByDay',
       'click .searchbyuser': 'searchByUser'
@@ -76,7 +88,7 @@ var MealHistoryView = Backbone.View.extend({
       if ($.isNumeric(parseInt($(this).html()))) {
         total += parseInt($(this).html());
       }
-    })
+    });
     return total;
   }
 });
