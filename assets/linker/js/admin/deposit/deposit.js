@@ -62,12 +62,24 @@ var DepositView = Backbone.View.extend({
       }
     }
     data.edit = false;
-    var model = this.collection.get(ev.parents('tr').data('id')).set(data);
+    var model = this.collection.get(ev.parents('tr').data('id'));
     if (model.attributes.new) {
       delete model.attributes.id;
       delete model.attributes.new;
     }
-    model.save();
+    //check email
+    $.post('/deposit/validate',{data:data},function(response){
+      switch (response) {
+        case 'email_404':
+          alert('Email input is not found');
+          break;
+        default:
+          if (data.amount.match(/^[1-9][0-9]*000$/) == null){
+            alert('Amount is not money format!');
+          } else model.save(data);
+      }
+    });
+
   },
   addDeposit: function () {
     var data = {

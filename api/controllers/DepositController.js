@@ -60,6 +60,10 @@ module.exports = {
         res.send(err);
         return;
       }
+      if (!docs) {
+        res.send(docs);
+        return;
+      }
       var deposit = parseInt(data.amount);
       if (docs.deposit) {
         deposit += docs.deposit;
@@ -168,6 +172,17 @@ module.exports = {
           });
         });
       });
+    });
+  },
+  validate: function (req,res){
+    data = req.param('data');
+    console.log(data);
+    User.findOneByEmail(data.email).done(function (err, docs) {
+      if (!docs){
+        console.log('aaaa');
+        res.send('email_404');
+      }
+      else res.send('OK')
     });
   },
 
