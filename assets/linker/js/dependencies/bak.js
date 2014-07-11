@@ -74,7 +74,7 @@ function validateDate(el){
     }else checkflg =false;
   } else return;
   if (!checkflg){
-    alert('wrong date format');
+    alert('Please input date with format mm/dd/yy');
     $(el).val('');
     return;
   }
