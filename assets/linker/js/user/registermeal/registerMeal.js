@@ -143,6 +143,12 @@ var RegisterMealView = Backbone.View.extend({
   viewByDay: function(el){
     var dayFromString = $('#find-from-user').val().toString().trim();
     var dayToString = $('#find-to-user').val().toString().trim();
+    var dateFrom = new Date(dayFromString);
+    var dateTo = new Date(dayToString);
+    if (dateFrom > dateTo){
+      alert('Input invalid. dateFrom must be less than dateTo');
+      return;
+    }
     var $this = this;
     $.post('/registermeal/searchByDay',
       {
