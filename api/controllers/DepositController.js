@@ -64,10 +64,8 @@ module.exports = {
       if (docs.deposit) {
         deposit += docs.deposit;
       }
-      var balance = 0;
-      if (docs.balance) {
-        balance = docs.balance + parseInt(data.amount);
-      }
+      var balance = docs.balance + parseInt(data.amount);
+
       data.userId = docs.id;
       data.email = docs.email;
       data.name = docs.lastname + " " + docs.firstname;
@@ -133,19 +131,19 @@ module.exports = {
   update: function (req, res) {
 
     var data = req.body;
-    User.findOneByEmail(data.email).done(function (err, docs) {
+    User.findOneByEmail(data.email).done(function (err, returnedUser) {
       if (err) {
         console.log(err);
         res.send(err);
         return;
       }
-      if (!docs) {
-        res.send(docs);
+      if (!returnedUser) {
+        res.send(returnedUser);
         return;
       }
-      data.userId = docs.id;
-      data.email = docs.email;
-      data.name = docs.lastname + " " + docs.firstname;
+      data.userId = returnedUser.id;
+      data.email = returnedUser.email;
+      data.name = returnedUser.lastname + " " + returnedUser.firstname;
       Deposit.findOneById(data.id).done(function (err, dataDeposit) {
         if (err) {
           console.log(err);
@@ -153,11 +151,12 @@ module.exports = {
           return;
         }
         if (!dataDeposit) {
-          res.send('Not Exit!');
+          res.send('dataDeposit not existed!');
           return;
         }
-        var deposit = data.amount - dataDeposit.amount + docs.deposit;
-        User.update({id: docs.id}, {deposit: deposit}).done(function (err, dataUserUpdate) {
+        var deposit = data.amount - dataDeposit.amount + returnedUser.deposit;
+        var balance = data.amount - dataDeposit.amount + returnedUser.balance;
+        User.update({id: returnedUser.id}, {deposit: deposit, balance: balance}).done(function (err, dataUserUpdate) {
           Deposit.update({id: data.id}, data).done(function (err, data) {
             if (err) {
               res.send(err);
