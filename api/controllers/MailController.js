@@ -21,24 +21,36 @@ var rule = {
     dayOfWeek: [1, 2, 3, 4, 5],
     hour: 17,
     minute: 10,
-    second: 0},
+    second: 0
+  },
   registerMealJob: {
+    // please edit rule settings to
     dayOfWeek: [0, 1, 2, 3, 4],
     hour: 17,
     minute: 0,
     second: 0
+//        dayOfWeek: [0, 1, 2, 3, 4, 5],
+//        hour: 16,
+//        minute: 18,
+//        second: 0
   },
-  updateBanlance: {
+  updateBalance: {
+    // please edit this rule settings to to
     dayOfWeek: [0, 1, 2, 3, 4],
     hour: 17,
     minute: 5,
     second: 0
+    // please edit this to hour: 17 and minute: 5
+//    dayOfWeek: [0, 1, 2, 3, 4, 5],
+//    hour: 16,
+//    minute: 19,
+//    second: 0
   }
 };
 
 var notiBalanceLow = CronTab.notiBalanceLow(rule.notiBalanceLow);
-var updateRegisterMelaJob = CronTab.updateRegistelMealJob(rule.registerMealJob, tool);
-var updateBalanceJob = CronTab.updateBalanceJob(rule.updateBanlance, tool);
+var updateRegisterMealJob = CronTab.updateRegisterMealJob(rule.registerMealJob, tool);
+var updateBalanceJob = CronTab.updateBalanceJob(rule.updateBalance, tool);
 
 module.exports = {
   sendMail: function (req, res) {
@@ -48,7 +60,7 @@ module.exports = {
       from: "DMS  <dms@designveloper.com>", // sender address
       replyTo: req.session.user.email,
       bcc: data.listEmail, // list of receivers
-      subject: "deposit notification", // Subject line
+      subject: "Deposit Notification", // Subject line
       html: data.content
     };
     smtpTransport.sendMail(mailInfo, function (error, response) {
