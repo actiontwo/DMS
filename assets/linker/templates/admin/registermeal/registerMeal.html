@@ -5,7 +5,8 @@
     <div class="form-group col-md-4">
         <label class="col-lg-8 control-label">View by Day</label>
         <div class="col-lg-8 admin-find-day">
-            <input type="text" class="form-control datepicker" placeholder="mm/dd/yyyy">
+            <input type="text" class="form-control datepicker"
+                   placeholder="mm/dd/yyyy" onblur="validateDate(this)">
         </div>
         <div class="col-md-4">
             <a class="btn btn-primary" id="btnAdminViewByDay">Search</a>
