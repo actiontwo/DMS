@@ -407,6 +407,8 @@ module.exports = {
     var todayObj = new Date();
     var _userId = req.session.user.id;
     var result = []; // this array will contains all the returned models
+    var lastTime = 17; // default [ManagerParam] lastHour value
+    var _excludeSatSun = true; // default [ManagerParam] excludeSatSun value
     var _status = true, _disabled = false, _numberOfMeals = 0, _date = '', _defaultRegisterMeal = 0;
     var found = 0; // indicates whether the meal registrations for a specific day has existed in the database or not
     if (req.session.user.defaultRegisterMeal) _defaultRegisterMeal = 1;
@@ -415,60 +417,69 @@ module.exports = {
     // if the dayFrom is earlier than the joinDay, set dayFromObj to joinDayObj
     if (dayFromObj <= joinDayObj) dayFromObj = joinDayObj;
     // look for all meal registrations of the current user
-    RegisterMeal.find({userId: _userId}).done(function(err, meals) {
+    ManagerParam.find({name: 'manager'}).done(function(err, managerParams) {
+      if (managerParams.length) {
+        lastTime = managerParams[0].lastHour;
+        _excludeSatSun = managerParams[0].excludeSatSun;
+      }
+      RegisterMeal.find({userId: _userId}).done(function(err, meals) {
       // loop from the dayFromObj to the dayToObj
-      for (var d = dayFromObj; d <= dayToObj; d.setDate(d.getDate() + 1)) {
+        for (var d = dayFromObj; d <= dayToObj; d.setDate(d.getDate() + 1)) {
         // get the date string from the current Date object d
-        _date = tool.formatTwoNumber(d.getMonth() + 1) + "/" + tool.formatTwoNumber(d.getDate()) + "/" + d.getFullYear();
+          _date = tool.formatTwoNumber(d.getMonth() + 1) + "/" + tool.formatTwoNumber(d.getDate()) + "/" + d.getFullYear();
+          var _day = new Date(_date).toString().split(" ")[0];
         // set disabled attribute (which represents editable or not) according to the current day & time
-        if (d < todayObj || (d == todayObj && lastTime < todayObj.getHours())) _disabled = true;
-        else _disabled = false;
+          if (d < todayObj || (d == todayObj && lastTime < todayObj.getHours())) _disabled = true;
+          else _disabled = false;
         // loop through all the found meal registrations
-        for (var i = 0; i < meals.length; i++) {
-          if (meals[i].date == _date) {
+          for (var i = 0; i < meals.length; i++) {
+            if (meals[i].date == _date) {
             // found a meal registration according to '_date' in the database
-            _status = meals[i].status;
-            _numberOfMeals = meals[i].numberOfMeals;
-            found = 1;
+              _status = meals[i].status;
+              _numberOfMeals = meals[i].numberOfMeals;
+              found = 1;
+            }
           }
-        }
-        if (found != 1)
+          if (found != 1)
         // if user has not registered for the current day's meal yet
         // we will stimulate its information according to _disabled & _defaultRegisterMeal values
-        {
-          if (_disabled){
-            _status = false;
-            _numberOfMeals = 0;
-          }
-          else
           {
-            if (_defaultRegisterMeal)
-            {
-              _status = true;
-              _numberOfMeals = 1;
-            }
-            else
-            {
+            if (_disabled){
               _status = false;
               _numberOfMeals = 0;
             }
+            else
+            {
+              if (_defaultRegisterMeal)
+              {
+                _status = true;
+                _numberOfMeals = 1;
+              }
+              else
+              {
+                _status = false;
+                _numberOfMeals = 0;
+              }
+            }
           }
-        }
         // set found back to 0 before continue the loop
-        found = 0;
+          found = 0;
+          if ((_excludeSatSun && _day!='Sun' && _day!='Sat') || !_excludeSatSun) {
         // push the Register Meal models to the result array
-        result.push({
-          date: _date,
-          day: new Date(_date).toString().split(" ")[0],
-          month: new Date(_date).getMonth() + 1,
-          year: new Date(_date).getFullYear(),
-          disabled: _disabled,
-          status: _status,
-          numberOfMeals: _numberOfMeals
-        });
-      } // end for() loop
-      res.send(result);
-    }); // end Register Meal find() function
+            result.push({
+              date: _date,
+              day: _day,
+              month: new Date(_date).getMonth() + 1,
+              year: new Date(_date).getFullYear(),
+              disabled: _disabled,
+              status: _status,
+              numberOfMeals: _numberOfMeals
+            });
+          }
+        } // end for() loop
+        res.send(result);
+      }); // end Register Meal find() function
+    }); // end Manager Param find() function
   },
 
   /**
