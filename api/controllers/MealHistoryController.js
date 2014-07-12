@@ -14,7 +14,7 @@
  *
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
-
+var tool = require('../tool');
 module.exports = {
 
 
@@ -33,7 +33,10 @@ module.exports = {
     })
   },
   indexAdmin: function(req, res) {
-
+    var now = tool.getCurrentDay();
+    var date_now = new Date(now.year,now.month,now.date);
+    var dateNowString = tool.formatTwoNumber(date_now.getMonth()) + "/" +
+      tool.formatTwoNumber(date_now.getDate()) + "/" + date_now.getFullYear();
     if (req.session.user.role !== 'admin') {
       res.send('You are not admin');
       return;
@@ -42,7 +45,7 @@ module.exports = {
       res.send('find ID');
       return;
     }
-    RegisterMeal.find().done(function(err, doc) {
+    RegisterMeal.find({date:{'<=':dateNowString}}).done(function(err, doc) {
       if (err) {
         res.send(err)
       } else { 
