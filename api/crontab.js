@@ -114,7 +114,7 @@ function updateRegisterMeal(user, _timeset, _costPerMeal) {
 
 function updateBalance(user, _timeSet) {
   // find the user that has registered the meal for 'date'
-  RegisterMeal.findOne({userId: user.id, status: true, date: _timeSet.nextDay}).done(function (err, mealsRegistered) {
+  RegisterMeal.find({userId: user.id, status: true, date:{'<=':_timeSet.nextDay}}).done(function (err, mealsRegistered) {
     //console.log('userId: ' + user.id);
     //console.log('date: ' + _timeSet.nextDay);
     if (!mealsRegistered)
@@ -122,30 +122,35 @@ function updateBalance(user, _timeSet) {
       //console.log('this user.id: ' + user.id + ' has not registered for ' + _timeSet.nextDay);
       return;
     }
-    if (mealsRegistered.payment)
-    {
-      //console.log('this user.id: ' + user.id + ' has already paid for the meal of ' + _timeSet.nextDay);
+    for (var i=0; i<mealsRegistered.length;i++) {
+      var meals = mealsRegistered[i];
+      if (meals.payment) {
+        //console.log('this user.id: ' + user.id + ' has already paid for the meal of ' + _timeSet.nextDay);
+        break;
+      }
+      if (!user.numberOfMeals)
+        user.numberOfMeals = 0;
+      if (!user.balance)
+        user.balance = 0;
+      user.numberOfMeals = user.numberOfMeals + meals.numberOfMeals;
+      user.balance = user.balance - meals.numberOfMeals * meals.costPerMeal;
+      //console.log('user Object before updated: ' + user);
+      setBalance(user,meals);
+    }
+  });
+}
+function setBalance(user,meals){
+  User.update({id: user.id}, {balance: user.balance, numberOfMeals: user.numberOfMeals}).done(function (err, dataUser) {
+    if (err) {
+      console.log('Cannot update user payment : id:' + user.id);
+      console.log(err);
       return;
     }
-    if (!user.numberOfMeals)
-      user.numberOfMeals = 0;
-    if (!user.balance)
-      user.balance = 0;
-    user.numberOfMeals = user.numberOfMeals + mealsRegistered.numberOfMeals;
-    user.balance = user.balance - mealsRegistered.numberOfMeals * mealsRegistered.costPerMeal;
-    //console.log('user Object before updated: ' + user);
-    User.update({id: user.id},{balance:user.balance,numberOfMeals:user.numberOfMeals}).done(function (err, dataUser) {
+    RegisterMeal.update({id: meals.id}, {payment: true}).done(function (err, data) {
       if (err) {
-        console.log('Cannot update user payment : id:' + user.id);
+        console.log('Cannot update payment : registerMealId:' + meals.id);
         console.log(err);
-        return;
       }
-      RegisterMeal.update({id: mealsRegistered.id}, {payment: true}).done(function (err, data) {
-        if (err) {
-          console.log('Cannot update payment : registerMealId:' + mealsRegistered.id);
-          console.log(err);
-        }
-      })
     });
   });
 }
