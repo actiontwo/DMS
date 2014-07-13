@@ -35,8 +35,8 @@ var RegisterMealView = Backbone.View.extend({
     $('.numberLunchCheck').html($('.lunchCheckbox:checked').length);
     $('.TotalMeals').html(this.countNumberOfMeals($('.numberOfMeals')));
     // update current days query for search area
-    if (dayFromString!=="") $('#find-from-user').val(dayFromString);
-    if (dayToString!=="") $('#find-to-user').val(dayToString);
+    if (dayFromString!=='') $('#find-from-user').val(dayFromString);
+    if (dayToString!=='') $('#find-to-user').val(dayToString);
     return this;
   },
   changeStatus: function (el) {
@@ -86,17 +86,24 @@ var RegisterMealView = Backbone.View.extend({
     $('.TotalMeals').html(this.countNumberOfMeals($('.numberOfMeals')));
   },
   updateData: function () {
-    // hide the popup dialog
-    $('.modal-backdrop').hide();
-    $('body').removeClass('modal-open');
-    // save all changed models to the database
-    for (i = 0; i < currentRMCollection.length; i++) {
-      var model = currentRMCollection.models[i];
-      if (model.hasChanged()) {
-        model.save();
-        model.changed = false;
+    function _updateData(currentRMCollection, callback) {
+      for(var i = 0; i < currentRMCollection.length; i++) {
+        // foreach model in currentRMCollection
+        var model = currentRMCollection.models[i];
+        if (model.hasChanged()) {
+          // if this model hasChanged, save it to the database
+          model.save(null, {silent: true});
+          model.changed = false;
+        }
       }
+      callback();
     }
+    // this function will play as a callback function of _updateData(..., ...)
+    function displaySuccessMessage(){
+      // show the success saved message
+      $('#save-rm-success').fadeIn();
+    }
+    _updateData(currentRMCollection,displaySuccessMessage);
   },
   countNumberOfMeals: function (el) {
     var total = 0;
@@ -147,7 +154,7 @@ var RegisterMealView = Backbone.View.extend({
     var dayFromStringObj = new Date(dayFromString);
     var dayToStringObj = new Date(dayToString);
     if (dayFromStringObj > dayToStringObj){
-      alert('Invalid input. dayFrom must be less than dayTo');
+      $('#datepicker-error').fadeIn();
       return;
     }
 
