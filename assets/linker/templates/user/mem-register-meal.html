@@ -76,29 +76,39 @@
     </tr>
     </tbody>
 </table>
-<div class="groupBtn">
-    <button type="button" href="#modal-save-confirmation"
-            class="btn btn-primary" role="button" data-toggle="modal">Save</button>
+
+<!-- Success flash message after saving meal registrations -->
+<div class="alert alert-success" id="save-rm-success" style="display: none">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <strong>Success!</strong> All your meal registrations have been saved.
 </div>
 
-<div class="modal fade" id="modal-save-confirmation" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Save Confirmation</h4>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to save all your meal registration(s) ?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary"
-                        id="saveMealRegistrations" data-dismiss="modal">Yes</button>
-            </div>
-        </div>
-    </div>
+<div class="groupBtn">
+    <button type="button" class="btn btn-primary" id="saveMealRegistrations">Save</button>
 </div>
+
+<!-- Save confirmation dialog-->
+<!--<div class="modal fade" id="modal-save-confirmation" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+    <!--<div class="modal-dialog">-->
+        <!--<div class="modal-content">-->
+            <!--<div class="modal-header">-->
+                <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
+                <!--<h4 class="modal-title">Save Confirmation</h4>-->
+            <!--</div>-->
+            <!--<div class="modal-body">-->
+                <!--Are you sure you want to save all your meal registration(s) ?-->
+            <!--</div>-->
+            <!--<div class="modal-footer">-->
+                <!--<button type="button" class="btn btn-default"-->
+                        <!--data-dismiss="modal">No</button>-->
+                <!--<button type="button" class="btn btn-primary"-->
+                        <!--id="saveMealRegistrations" data-dismiss="modal">Yes</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+
+
 
 

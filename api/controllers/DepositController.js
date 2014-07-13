@@ -54,36 +54,34 @@ module.exports = {
       return;
     }
     var data = req.body;
-    User.findOneByEmail(data.email).done(function (err, docs) {
+    User.findOneByEmail(data.email).done(function (err, user) {
       if (err) {
         console.log(err);
         res.send(err);
         return;
       }
-      if (!docs) {
-        res.send(docs);
+      if (!user) {
+        res.send(user);
         return;
       }
       var deposit = parseInt(data.amount);
-      if (docs.deposit) {
-        deposit += docs.deposit;
+      if (user.deposit) {
+        deposit += user.deposit;
       }
-      var balance = docs.balance + parseInt(data.amount);
-
-      data.userId = docs.id;
-      data.email = docs.email;
-      data.name = docs.lastname + " " + docs.firstname;
+      var _balance = user.balance + parseInt(data.amount);
+      data.userId = user.id;
+      data.email = user.email;
+      data.name = user.lastname + " " + user.firstname;
       Deposit.create(data).done(function (err, data) {
         if (err) {
           res.send(err);
           return;
         }
-
-        User.update({id: docs.id}, {deposit: deposit, balance: balance}).done(function (err, userData) {
+        User.update({id: user.id}, {deposit: deposit, balance: _balance}).done(function (err, userData) {
           if (err)
             res.send(err);
           else
-            console.log(userData);
+          {}
         });
         res.send(data);
       });
@@ -178,7 +176,6 @@ module.exports = {
     console.log(data);
     User.findOneByEmail(data.email).done(function (err, docs) {
       if (!docs){
-        console.log('aaaa');
         res.send('email_404');
       }
       else res.send('OK')

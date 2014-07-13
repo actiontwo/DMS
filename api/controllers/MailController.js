@@ -40,7 +40,6 @@ var rule = {
     hour: 17,
     minute: 5,
     second: 0
-    // please edit this to hour: 17 and minute: 5
 //    dayOfWeek: [0, 1, 2, 3, 4, 5],
 //    hour: 16,
 //    minute: 19,
