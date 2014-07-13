@@ -211,6 +211,10 @@ module.exports = {
       return;
     }
     var selectedDay = req.body.selectedDay; // get the selected day from client's request
+    if (selectedDay.length == 0){
+      res.send({'error': 'The input date is invalid'});
+      return;
+    }
     RegisterMeal.find({date: selectedDay}).done(function(err, meals){
       // find all meal registrations according to date==selectedDay from the database
       if (err) {
@@ -286,6 +290,10 @@ module.exports = {
       return;
     }
     var selectedUser = req.body.selectedUser; // get the selectedUser from client's request
+    if (selectedUser.length == 0){
+      res.send({'error': 'The user search field is invalid'});
+      return;
+    }
     // this below lines of code helps split the selectedUser string to get user's firstname & lastname
     for (var i=0;i<selectedUser.length;i++)
     {

@@ -20,15 +20,34 @@
             <select id="selectUser" class="form-control selectpicker">
             </select>
         </div>
-        
-<!--         <label class="col-lg-8 control-label">Select month</label>
-        <div class="col-lg-8">
-            <select id="selectMonth" class="form-control selectpicker">
-            </select>
-        </div> -->
+        <!-- <label class="col-lg-8 control-label">Select month</label>
+                <div class="col-lg-8">
+                    <select id="selectMonth" class="form-control selectpicker">
+                    </select>
+                </div> -->
         <div class="col-md-4">
             <a class="btn btn-primary" id="btnAdminViewByUser">Search</a>
         </div>
+    </div>
+</div>
+
+<!-- Error flash message after user entering invalid search query -->
+<div class="col-md-12">
+    <div class="alert alert-danger" id="null-datepicker-error" style="display:
+     none">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>Error!</strong> You have to enter a valid date input when
+        Search By Day.
+    </div>
+</div>
+
+<!-- Error flash message after user entering invalid search query -->
+<div class="col-md-12">
+    <div class="alert alert-danger" id="null-user-error" style="display:
+     none">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>Error!</strong> You have to choose at least 1 user when
+        Search By User.
     </div>
 </div>
 

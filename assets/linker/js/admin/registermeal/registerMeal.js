@@ -64,6 +64,11 @@ var RegisterMealView = Backbone.View.extend({
     var rmByDayCollection = new RMByDayCollection();
     // send a post request contains selectedDay information to the server
     $.post('/registermealByDay', {selectedDay: _selectedDay}, function(data){
+      if (data.hasOwnProperty('error')){
+        $('#null-datepicker-error').fadeIn();
+        $('#null-user-error').fadeOut();
+        return;
+      }
       rmByDayCollection.reset(data);
       //re-render
       $this.$el.html(Templates['admin/registermeal/registerMeal'](rmByDayCollection));
@@ -97,6 +102,11 @@ var RegisterMealView = Backbone.View.extend({
     var rmByUserCollection = new RMByUserCollection();
     // send a post request contains selectedUser information to the server
     $.post('/registermealByUser', {selectedUser: _selectedUser}, function(data){
+      if (data.hasOwnProperty('error')){
+        $('#null-user-error').fadeIn();
+        $('#null-datepicker-error').fadeOut();
+        return;
+      }
       rmByUserCollection.reset(data);
       //re-render
       $this.$el.html(Templates['admin/registermeal/registerMeal'](rmByUserCollection));
