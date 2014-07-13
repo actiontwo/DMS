@@ -99,7 +99,6 @@ var MenuView = Backbone.View.extend({
         tempMenuCollection.add(model);
       }
     });
-    //console.log(tempMenuCollection.length);
 
     this.$el.html(Templates['user/mem-view-menu'](
       tempMenuCollection
@@ -119,6 +118,7 @@ var MenuView = Backbone.View.extend({
         suggestMeal: $('.txt-suggest').val(),
         note: $('.txt-suggest-note').val()
       }, function(data){
+        $('#save-suggest-success').fadeIn();
         console.log(data);
       });
   }

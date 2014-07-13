@@ -46,9 +46,18 @@
     {{/with}} {{/each}}
   </tbody>
 </table>
+<!-- Success flash message after saving a new suggest -->
+<div class="alert alert-success" id="save-suggest-success" style="display: none">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <strong>Success!</strong> Your meal suggest has been saved.
+</div>
+
+
+
 <div class="sg-menu">
   <a href="#suggest-menu" role="button" data-toggle="modal">Suggest Menu</a> 
 </div>
+
 <!-- Create Suggest menu -->
 <div class="modal fade" id="suggest-menu" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -67,7 +76,6 @@
               </div>
             </div>
             <br />
-
             <div class="form-group">
               <label for="textArea" class="col-lg-3 control-label">Note</label>
               <div class="col-lg-9">
@@ -82,7 +90,6 @@
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary saveSuggest" data-dismiss="modal">Save</button>
       </div>
-
     </div>
   </div>
 </div>

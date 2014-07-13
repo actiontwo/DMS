@@ -154,7 +154,7 @@ var RegisterMealView = Backbone.View.extend({
     var dayFromStringObj = new Date(dayFromString);
     var dayToStringObj = new Date(dayToString);
     if (dayFromStringObj > dayToStringObj){
-      alert('Invalid input. dayFrom must be less than dayTo');
+      $('#datepicker-error').fadeIn();
       return;
     }
 
