@@ -134,7 +134,7 @@ function updateBalance(user, _timeSet) {
     user.numberOfMeals = user.numberOfMeals + mealsRegistered.numberOfMeals;
     user.balance = user.balance - mealsRegistered.numberOfMeals * mealsRegistered.costPerMeal;
     //console.log('user Object before updated: ' + user);
-    User.update({id: user.id}, user).done(function (err, dataUser) {
+    User.update({id: user.id},{balance:user.balance,numberOfMeals:user.numberOfMeals}).done(function (err, dataUser) {
       if (err) {
         console.log('Cannot update user payment : id:' + user.id);
         console.log(err);
