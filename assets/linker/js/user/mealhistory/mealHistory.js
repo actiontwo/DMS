@@ -20,7 +20,6 @@ var MealHistoryView = Backbone.View.extend({
     this.delegateEvents({
       'click .searchbyday': 'searchByDay'
     });
-    initDatePicker($('.datepicker'));
     return this;
   },
   searchByDay: function() {
