@@ -203,154 +203,96 @@ module.exports = {
       }
     });
   },
-  indexAdminViewByDay: function(req, res)
-  {
+  indexAdminSearch: function(req, res) {
     // this function is called when admin search for meal registrations by a specific DAY
     if (req.session.user.role !== 'admin') {
       res.send('You are not admin');
       return;
     }
-    var selectedDay = req.body.selectedDay; // get the selected day from client's request
-    if (selectedDay.length == 0){
-      res.send({'error': 'The input date is invalid'});
-      return;
+    var data = req.body; // get the selected day from client's request
+    var time = tool.getCurrentDay();
+    // get the next day in Date Object
+    var theNextDay = new Date(time.year, time.month - 1, time.date + 1);
+    // get a string of the next day with the following format 'mm/dd/yyyy'
+    var theNextDayString = tool.formatTwoNumber(theNextDay.getMonth() + 1) + "/" +
+      tool.formatTwoNumber(theNextDay.getDate()) + "/" + theNextDay.getFullYear();
+    var dateSearch1 = theNextDayString;
+    var dateSearch2 = theNextDayString;
+    if (data.dateFrom)
+      dateSearch1 = data.dateFrom;
+    if (data.dateTo)
+      dateSearch2 = data.dateTo;
+    else dateSearch2 =dateSearch1;
+    if (!data.dateFrom)
+      dateSearch1 =dateSearch2;
+    //Define UserID
+    for (var i = 0; i < data.userSearch.length; i++) {
+      if (data.userSearch[i] == ' ') break;
     }
-    RegisterMeal.find({date: selectedDay}).done(function(err, meals){
-      // find all meal registrations according to date==selectedDay from the database
+    var _firstname = data.userSearch.slice(0, i);
+    var _lastname = data.userSearch.slice(i + 1, data.userSearch.length);
+
+    // get users model according to their firstname & lastname from the database
+    var userSearch = {'!': ''};
+    User.findOne({firstname: _firstname, lastname: _lastname, active: true}).done(function (err, users) {
+      // get users model according to their firstname & lastname from the database
+      // notice: only get actived users
       if (err) {
         res.send(err);
       }
       else {
-        User.find({active: true}).done(function(err, users) {
-          // find all actived users
-          if (err) {
-            res.send(err)
-          }
-          var result = []; // this array will contains all the meal registrations that will be returned
-          // loop all users
-          for (i = 0; i < users.length; i++) {
-            var id = users[i].id;
-            var _firstname = users[i].firstname;
-            var _lastname = users[i].lastname;
-            var _status = false;
-            var _numberOfMeals = 0;
-            var found = 0;
-            var userDefaultRegisterMeal = 0;
-            if (users[i].defaultRegisterMeal) userDefaultRegisterMeal = 1;
-            // loop to look for the user that has already registered for the selectedDay
-            for (j = 0; j < meals.length; j++){
-              if (meals[j].userId == id)
-              {
-                // this user has registered for the selectedDay's meal
-                // now get the existed data including status & numberOfMeals
-                found = 1;
-                if (meals[j].status == true) _status = true;
-                else _status = false;
-                _numberOfMeals = meals[j].numberOfMeals;
-              }
-              else
-              {
-              }
-            }
-            // end meals loop
-            if (found == 0)
-            {
-              // if this user has not registered for the selectedDay's meal
-              // we will render it according to the user's defaultRegisterMeal setting
-              if (userDefaultRegisterMeal == 1)
-              {
-                _status = true;
-                _numberOfMeals = 1;
-              }
-              else
-              {
-                _status = false;
-                _numberOfMeals = 0;
-              }
-            }
-            // push an object to 'result' array
-            result.push({
-              date: selectedDay,
-              name: _firstname + " " + _lastname,
-              status: _status,
-              numberOfMeals: _numberOfMeals
-            });
-          }
-          // end loop all users
-          res.send(result);
-        });
-      } // end else
-    });
-
-  },
-  indexAdminViewByUser: function(req, res)
-  {
-    if (req.session.user.role !== 'admin') {
-      res.send('You are not admin');
-      return;
-    }
-    var selectedUser = req.body.selectedUser; // get the selectedUser from client's request
-    if (selectedUser.length == 0){
-      res.send({'error': 'The user search field is invalid'});
-      return;
-    }
-    // this below lines of code helps split the selectedUser string to get user's firstname & lastname
-    for (var i=0;i<selectedUser.length;i++)
-    {
-      if(selectedUser[i] == ' ') break;
-    }
-    var _firstname = selectedUser.slice(0, i);
-    var _lastname = selectedUser.slice(i+1, selectedUser.length);
-
-      // get users model according to their firstname & lastname from the database
-    var _userId = '';
-    var result = []; // this array will contains all the returned models
-    User.find({firstname: _firstname, lastname: _lastname, active: true}).done(function(err, users){
-      // get users model according to their firstname & lastname from the database
-      // notice: only get actived users
-      if (err) {
-
-        res.send(err);
-      }
-      else
-      {
-        if (users.length==0){
-          console.log('error searching firstname: ' + _firstname + ' and lastname: ' + _lastname);
-        }
-        // this loop is used for getting the userId of the selectedUser
-        for(i=0;i<users.length;i++)
-        {
-          _userId = users[i].id;
+        if (users) {
+          userSearch = users.id;
         }
       }
-      RegisterMeal.find({userId: _userId}).done(function(err, meals){
-        // look for all the meal registrations that the selectedUser has made
+      RegisterMeal.find({date: {'>=': dateSearch1, '<=': dateSearch2}, userId: userSearch}).done(function (err, meals) {
+        // find all meal registrations according to date==selectedDay from the database
         if (err) {
-          res.send(err)
+          res.send(err);
         }
-        else
-        {
-          var _status = false;
-          var _numberOfMeals = 0;
-          var _date = '';
-          // begin loop in all the meal registrations found (meals)
-          for (j = 0; j < meals.length; j++){
-            // for each meal registration, get its information including status, numberOfMeals, date
-            _status = meals[j].status;
-            _date = meals[j].date;
-            _numberOfMeals = meals[j].numberOfMeals;
-            // push all the meal registrations found to the result array
-            result.push({
-              date: _date,
-              name: _firstname + " " + _lastname,
-              status: _status,
-              numberOfMeals: _numberOfMeals
-            });
-          } // end loop
-          // send the result back to the client side
-          res.send(result);
-        }
+        else {
+          User.find({active: true,id: userSearch}).done(function (err, users) {
+            // find all actived users
+            if (err) {
+              res.send(err)
+            }
+            var result = []; // this array will contains all the meal registrations that will be returned
+            // loop all users
+            for (i = 0; i < users.length; i++) {
+              var id = users[i].id;
+              var _firstname = users[i].firstname;
+              var _lastname = users[i].lastname;
+              var userDefaultRegisterMeal = 0;
+              var mealsNumberOfMeals;
+              var endDate = new Date(dateSearch2);
+              var d =new Date(dateSearch1);
+              if (users[i].defaultRegisterMeal) userDefaultRegisterMeal = 1;
+              // loop to look for the user that has already registered for the selectedDay
+              for (d; d <= endDate; d.setDate(d.getDate()+1)){
+                var mealsDate = tool.formatTwoNumber(d.getMonth()+1) + "/" +
+                  tool.formatTwoNumber(d.getDate()) + "/" + d.getFullYear();
+                for (j = 0; j < meals.length; j++) {
+                  if ((meals[j].userId == id) && (mealsDate == meals[j].date)){
+                    mealsNumberOfMeals = meals[j].numberOfMeals;
+                  break;
+                  } else
+                    mealsNumberOfMeals = 0;
+                }
+                result.push({
+                  date: mealsDate,
+                  name: _firstname + " " + _lastname,
+                  status: mealsNumberOfMeals > 0,
+                  numberOfMeals: mealsNumberOfMeals
+                });
+              }
+
+            }
+              // end loop all users
+              res.send(result);
+          });
+        } // end else
       });
+
     });
   },
   create: function(req, res) {
