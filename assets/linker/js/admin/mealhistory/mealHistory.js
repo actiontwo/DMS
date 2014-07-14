@@ -18,13 +18,15 @@ var MealHistoryView = Backbone.View.extend({
     this.$el.html(Templates['admin/mealhistory/meal-history'](this.collection));
     initDatePicker($('.datepicker'));
     var arrayName =[];
-    this.collection.each(function(model) {
-      var name = model.attributes.name;
-      if (arrayName.indexOf(name) ==-1) {
-        var option = '<option value="' + name + '">' + name + '</option>';
-        $('#selectname').append(option);
-      }
-      arrayName.push(name);
+    $.get('/user/find',function(response){
+      $.each(response,function(key,value) {
+        var name = value.firstname +' '+value.lastname;
+        if (arrayName.indexOf(name) ==-1) {
+          var option = '<option value="' + name + '">' + name + '</option>';
+          $('#selectname').append(option);
+        }
+        arrayName.push(name);
+      });
     });
     this.delegateEvents({
       'click .searchbyday': 'searchByDay',
@@ -43,13 +45,15 @@ var MealHistoryView = Backbone.View.extend({
     this.$el.html(Templates['admin/mealhistory/meal-history'](collection));
     initDatePicker($('.datepicker'));
     var arrayName =[];
-    this.collection.each(function(model) {
-      var name = model.attributes.name;
-      if (arrayName.indexOf(name) ==-1) {
-        var option = '<option value="' + name + '">' + name + '</option>';
-        $('#selectname').append(option);
-      }
-      arrayName.push(name);
+    $.get('/user/find',function(response){
+      $.each(response,function(key,value) {
+        var name = value.firstname +' '+value.lastname;
+        if (arrayName.indexOf(name) ==-1) {
+          var option = '<option value="' + name + '">' + name + '</option>';
+          $('#selectname').append(option);
+        }
+        arrayName.push(name);
+      });
     });
     this.delegateEvents({
       'click .searchbyday': 'searchByDay',
@@ -67,13 +71,15 @@ var MealHistoryView = Backbone.View.extend({
     this.$el.html(Templates['admin/mealhistory/meal-history'](collection));
     initDatePicker($('.datepicker'));
     var arrayName =[];
-    this.collection.each(function(model) {
-      var name = model.attributes.name;
-      if (arrayName.indexOf(name) ==-1) {
-        var option = '<option value="' + name + '">' + name + '</option>';
-        $('#selectname').append(option);
-      }
-      arrayName.push(name);
+    $.get('/user/find',function(response){
+      $.each(response,function(key,value) {
+        var name = value.firstname +' '+value.lastname;
+        if (arrayName.indexOf(name) ==-1) {
+          var option = '<option value="' + name + '">' + name + '</option>';
+          $('#selectname').append(option);
+        }
+        arrayName.push(name);
+      });
     });
     this.delegateEvents({
       'click .searchbyday': 'searchByDay',
