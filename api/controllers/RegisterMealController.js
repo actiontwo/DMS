@@ -257,26 +257,30 @@ module.exports = {
               res.send(err)
             }
             var result = []; // this array will contains all the meal registrations that will be returned
+            var endDate = new Date(dateSearch2);
+            var today = new Date();
             // loop all users
             for (i = 0; i < users.length; i++) {
               var id = users[i].id;
               var _firstname = users[i].firstname;
               var _lastname = users[i].lastname;
               var userDefaultRegisterMeal = 0;
-              var mealsNumberOfMeals;
-              var endDate = new Date(dateSearch2);
               var d =new Date(dateSearch1);
               if (users[i].defaultRegisterMeal) userDefaultRegisterMeal = 1;
               // loop to look for the user that has already registered for the selectedDay
               for (d; d <= endDate; d.setDate(d.getDate()+1)){
+                var mealsNumberOfMeals = -1;
                 var mealsDate = tool.formatTwoNumber(d.getMonth()+1) + "/" +
                   tool.formatTwoNumber(d.getDate()) + "/" + d.getFullYear();
                 for (j = 0; j < meals.length; j++) {
                   if ((meals[j].userId == id) && (mealsDate == meals[j].date)){
                     mealsNumberOfMeals = meals[j].numberOfMeals;
                   break;
-                  } else
-                    mealsNumberOfMeals = 0;
+                  }
+                }
+                if (mealsNumberOfMeals == -1) {
+                  mealsNumberOfMeals = 0;
+                  if ((userDefaultRegisterMeal) && (d >= today)) mealsNumberOfMeals = 1;
                 }
                 result.push({
                   date: mealsDate,

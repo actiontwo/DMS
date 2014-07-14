@@ -72,7 +72,8 @@
         <td>{{math @index "+" 1}}</td>
         <td>{{attributes.date}}</td>
         <td>{{attributes.name}}</td>
-        <td><input class="mealCheckbox" type="checkbox" {{#if attributes.status}} checked {{/if}}/></td>
+        <td><input class="mealCheckbox" type="checkbox" disabled {{#if
+            attributes.status}} checked {{/if}} /></td>
         <td><span class="numberOfMeals">{{attributes.numberOfMeals}}</span></td>
     </tr>
     {{/each}}

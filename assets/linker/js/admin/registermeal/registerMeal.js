@@ -63,7 +63,7 @@ var RegisterMealView = Backbone.View.extend({
     // get the selectedDay
     var dateFrom = $('.dateFrom').val();
     var dateTo = $('.dateTo').val();
-    if (dateFrom > dateTo){
+    if ((dateFrom > dateTo) && ((dateFrom) &&(dateTo))){
       alert('Input invalid. dateFrom must be less than dateTo');
       return;
     }
