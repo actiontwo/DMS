@@ -40,6 +40,8 @@ var RegisterMealView = Backbone.View.extend({
     //initialize datepicker
     initDatePicker($('.datepicker'));
     //add usernames to the option box
+    var option = '<option value="" selected>All</option>';
+    $('#selectUser').append(option);
     this.collection.each(function(model){
       // for only users that has already actived their accounts
       var name = model.attributes.name;
@@ -47,23 +49,28 @@ var RegisterMealView = Backbone.View.extend({
       $('#selectUser').append(option);
     });
     this.delegateEvents({
-      'click #btnAdminViewByDay': 'viewByDay',
-      'click #btnAdminViewByUser': 'viewByUser'
+      'click #searchRegisterMeal': 'searchRegisterMeal'
     });
     //calculate the mealsChecked, numberOfMeals & totalMeals values
     this.updateTotalRow();
     return this;
   },
-  viewByDay: function()
+  searchRegisterMeal: function()
   {
     // this function is called when admin search the meal registrations by a specific day
     // set this to $this variable, use when we change scope later
     var $this = this;
     // get the selectedDay
-    var _selectedDay = $('.admin-find-day').find('input').val();
+    var dateFrom = $('.dateFrom').val();
+    var dateTo = $('.dateTo').val();
+    if (dateFrom > dateTo){
+      alert('Input invalid. dateFrom must be less than dateTo');
+      return;
+    }
+    var userSearch = $('#selectUser').val();
     var rmByDayCollection = new RMByDayCollection();
     // send a post request contains selectedDay information to the server
-    $.post('/registermealByDay', {selectedDay: _selectedDay}, function(data){
+    $.post('/searchRegisterMeal',{dateFrom: dateFrom,dateTo:dateTo,userSearch:userSearch},function(data){
       if (data.hasOwnProperty('error')){
         $('#null-datepicker-error').fadeIn();
         $('#null-user-error').fadeOut();
@@ -75,6 +82,8 @@ var RegisterMealView = Backbone.View.extend({
       //initialize datepicker
       initDatePicker($('.datepicker'));
       //add usernames to the option box
+      var option = '<option value="" selected>All</option>';
+      $('#selectUser').append(option);
       $this.collection.each(function(model){
         // for only users that has already actived their accounts
         var name = model.attributes.name;
@@ -82,52 +91,15 @@ var RegisterMealView = Backbone.View.extend({
         $('#selectUser').append(option);
       });
       $this.delegateEvents({
-        'click #btnAdminViewByDay': 'viewByDay',
-        'click #btnAdminViewByUser': 'viewByUser'
+        'click #searchRegisterMeal': 'searchRegisterMeal'
       });
       // update the datepicker's content = _seletedDay
-      $('.admin-find-day .datepicker').val(_selectedDay);
-      $('#selectUser').val('');
+      $('.dateFrom').val(dateFrom);
+      $('.dateTo').val(dateTo);
+      $('#selectUser').val(userSearch);
       $this.updateTotalRow();
     });
 
-  },
-  viewByUser: function()
-  {
-    // this function is called when admin search the meal registrations by a specific user
-    // set this to $this variable, use when we change scope later
-    var $this = this;
-    // get the selected User
-    var _selectedUser = $('#selectUser').val();
-    var rmByUserCollection = new RMByUserCollection();
-    // send a post request contains selectedUser information to the server
-    $.post('/registermealByUser', {selectedUser: _selectedUser}, function(data){
-      if (data.hasOwnProperty('error')){
-        $('#null-user-error').fadeIn();
-        $('#null-datepicker-error').fadeOut();
-        return;
-      }
-      rmByUserCollection.reset(data);
-      //re-render
-      $this.$el.html(Templates['admin/registermeal/registerMeal'](rmByUserCollection));
-      //initialize datepicker
-      initDatePicker($('.datepicker'));
-      //add usernames to the option box
-      $this.collection.each(function(model){
-        // for only users that has already actived their accounts
-        var name = model.attributes.name;
-        var option = '<option value="'+name+'">'+name+'</option>';
-        $('#selectUser').append(option);
-      });
-      $this.delegateEvents({
-        'click #btnAdminViewByDay': 'viewByDay',
-        'click #btnAdminViewByUser': 'viewByUser'
-      });
-      $('.admin-find-day .datepicker').val('');
-      // set current value of #selectUser option box to _selectedUser
-      $('#selectUser').val(_selectedUser);
-      $this.updateTotalRow();
-    });
   },
   updateTotalRow: function()
   {

@@ -130,13 +130,9 @@ module.exports.routes = {
     controller: 'registermeal',
     action: 'destroy'
   },
-  'post /registermealByUser': {
+  'post /searchRegisterMeal': {
     controller: 'registermeal',
-    action: 'indexAdminViewByUser'
-  },
-  'post /registermealByDay': {
-    controller: 'registermeal',
-    action: 'indexAdminViewByDay'
+    action: 'indexAdminSearch'
   },
   // menu Controller
   'get /menu': {
