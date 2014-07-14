@@ -44,6 +44,7 @@ var MealHistoryView = Backbone.View.extend({
     });
     this.$el.html(Templates['admin/mealhistory/meal-history'](collection));
     initDatePicker($('.datepicker'));
+    $('.viewbyday').val(viewbyday);
     var arrayName =[];
     $.get('/user/find',function(response){
       $.each(response,function(key,value) {
@@ -75,8 +76,13 @@ var MealHistoryView = Backbone.View.extend({
       $.each(response,function(key,value) {
         var name = value.firstname +' '+value.lastname;
         if (arrayName.indexOf(name) ==-1) {
-          var option = '<option value="' + name + '">' + name + '</option>';
-          $('#selectname').append(option);
+          if (name == viewbyname) {
+            var option = '<option value="' + name + '"selected>' + name + '</option>';
+            $('#selectname').append(option);
+          } else {
+            var option = '<option value="' + name + '">' + name + '</option>';
+            $('#selectname').append(option);
+          }
         }
         arrayName.push(name);
       });
