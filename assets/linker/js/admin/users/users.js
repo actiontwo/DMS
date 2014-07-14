@@ -64,5 +64,6 @@ var UsersView = Backbone.View.extend({
         model.save();
       }
     }
+    $('#save-users-success').fadeIn().delay(2000).fadeOut();
   }
 });
