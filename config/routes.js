@@ -159,6 +159,10 @@ module.exports.routes = {
     controller: 'menu',
     action: 'destroy'
   },
+  'post /menu/searchByDay':{
+    controller: 'menu',
+    action: 'searchByDay'
+  },
    // Suggest Controller
   'get /suggest': {
     controller: 'menu',
@@ -205,6 +209,10 @@ module.exports.routes = {
   'delete /deposit/:id': {
     controller: 'deposit',
     action: 'destroy'
+  },
+  'post /deposit/searchByDay': {
+    controller: 'deposit',
+    action: 'searchByDay'
   },
   // Search Controller
   'post /search': {

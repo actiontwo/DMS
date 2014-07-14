@@ -35,17 +35,20 @@ var DepositView = Backbone.View.extend({
   id: 'expense_menu',
   initialize: function(options) {
     //listen event on collection if collection change then render view
-    this.listenTo(this.collection, 'reset  destroy sort sync remove', this.render);
+    this.listenTo(this.collection, 'reset destroy sort sync remove change', this.render);
     this.listenTo(this.model, 'change', this.collectionChange);
   },
   render:function (){
     this.$el.html(Templates['user/mem-deposit']({
       'deposit': this.collection.toJSON()
     }));
-    var i =1;
-    $('tbody tr').find('td:first-child').each(function(){
-      $(this).html(i);
-      i++
+//    var i =1;
+//    $('tbody tr').find('td:first-child').each(function(){
+//      $(this).html(i);
+//      i++
+//    });
+    this.delegateEvents({
+      'click #searchDeposit': 'search'
     });
     initDatePicker($('.datepicker'));
     return this;
@@ -58,9 +61,6 @@ var DepositView = Backbone.View.extend({
       }  
     }
     this.render();
-  },
-  events : {
-    'click .btn-black' : 'search'
   },
 // Search
 //
@@ -79,30 +79,41 @@ var DepositView = Backbone.View.extend({
 //            06/13/14 - Hien Lam
 // -------------------------------------------------------------------
   search : function(events){
-    var from = $('li.find-from input').val();
-    var to = $('li.find-to input').val();
-    if(from > to || from == '' || to == ''){
-      alert('Input invalid. From must be less To');
+    var dayFromString = $('.dayFrom').val();
+    var dayToString = $('.dayTo').val();
+    if (dayFromString.length==0 || dayToString.length==0)
+    {
+      $('#datepicker-empty-error').fadeIn().delay(2500).fadeOut();
       return;
-    } 
-    events.preventDefault();
-    var data = {
-      dateFrom: from,
-      dateTo: to,
-      model : 'deposit'
+    }
+    var dayFromObj = new Date(dayFromString);
+    var dateToObj = new Date(dayToString);
+    if (dayFromObj > dateToObj){
+      $('#datepicker-invalid-error').fadeIn().delay(2500).fadeOut();
+      return;
     }
 
-   this.model.urlRoot = '/search';
-   this.model.save(data, {
-    success: function (model, response) {
-      console.log(model);
-    },
-    error: function (model, error) {
-      console.log(model.toJSON());
-      console.log(error);
-    }});
+    var tempDepositCollection = new DepositCollection();
+    var $this = this;
 
-    this.model.urlRoot = '/deposit';
-   
+    $.post('/deposit/searchByDay',
+      {
+        "dayFrom": dayFromString,
+        "dayTo": dayToString
+      }, function(data){
+        tempDepositCollection.reset(data);
+        //re-render
+        $this.$el.html(Templates['user/mem-deposit']({
+          'deposit': tempDepositCollection.toJSON()
+        }));
+        // initialize datepicker
+        initDatePicker($('.datepicker'));
+        $this.delegateEvents({
+          'click #searchDeposit': 'search'
+        });
+        // update information for the search query area
+        $('.dayFrom').val(dayFromString);
+        $('.dayTo').val(dayToString);
+      });
   }
 });

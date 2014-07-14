@@ -82,35 +82,40 @@ var MenuView = Backbone.View.extend({
   //            06/13/14 - Hien Lam
   // -------------------------------------------------------------------
   search: function (events) {
-    var dateFromString = $('.dateFrom').val();
-    var dateToString = $('.dateTo').val();
-    var dateFrom = new Date(dateFromString);
-    var dateTo = new Date(dateToString);
-    if (dateFrom > dateTo){
-      alert('Input invalid. dateFrom must be less than dateTo');
+    var dayFromString = $('.dateFrom').val();
+    var dayToString = $('.dateTo').val();
+    if (dayFromString.length==0 || dayToString.length==0)
+    {
+      $('#datepicker-empty-error').fadeIn().delay(2500).fadeOut();
+      return;
+    }
+    var dayFromObj = new Date(dayFromString);
+    var dateToObj = new Date(dayToString);
+    if (dayFromObj > dateToObj){
+      $('#datepicker-invalid-error').fadeIn().delay(2500).fadeOut();
       return;
     }
     var tempMenuCollection = new MenuCollection();
+    var $this = this;
 
-    this.collection.each(function(model){
-      var thisModelDate = new Date(model.attributes.date);
-      if (thisModelDate >= dateFrom && thisModelDate <= dateTo)
+    $.post('/menu/searchByDay',
       {
-        tempMenuCollection.add(model);
-      }
-    });
-
-    this.$el.html(Templates['user/mem-view-menu'](
-      tempMenuCollection
-    ));
-    initDatePicker($('.datepicker'));
-    this.delegateEvents({
-      'click .btn-black': 'search',
-      'click .saveSuggest': 'saveSuggest'
-    });
-    //update dateFrom input & dateTo input
-    $('.dateFrom').val(dateFromString);
-    $('.dateTo').val(dateToString);
+        "dayFrom": dayFromString,
+        "dayTo": dayToString
+      }, function(data){
+        tempMenuCollection.reset(data);
+        //re-render
+        $this.$el.html(Templates['user/mem-view-menu'](tempMenuCollection));
+        $this.delegateEvents({
+          'click .btn-black': 'search',
+          'click .saveSuggest': 'saveSuggest'
+        });
+        // initialize datepicker
+        initDatePicker($('.datepicker'));
+        // update information for the search query area
+        $('.dateFrom').val(dayFromString);
+        $('.dateTo').val(dayToString);
+      });
   },
   saveSuggest: function(){
     $.post('/suggest',

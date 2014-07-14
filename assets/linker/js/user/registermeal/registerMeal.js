@@ -150,14 +150,17 @@ var RegisterMealView = Backbone.View.extend({
   viewByDay: function(el){
     var dayFromString = $('#find-from-user').val().toString().trim();
     var dayToString = $('#find-to-user').val().toString().trim();
-
+    if (dayFromString.length==0 || dayToString.length==0)
+    {
+      $('#datepicker-empty-error').fadeIn().delay(2500).fadeOut();
+      return;
+    }
     var dayFromStringObj = new Date(dayFromString);
     var dayToStringObj = new Date(dayToString);
     if (dayFromStringObj > dayToStringObj){
-      $('#datepicker-error').fadeIn();
+      $('#datepicker-error').fadeIn().delay(2500).fadeOut();
       return;
     }
-
     var $this = this;
     $.post('/registermeal/searchByDay',
       {
