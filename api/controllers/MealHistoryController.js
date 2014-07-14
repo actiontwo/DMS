@@ -63,6 +63,9 @@ module.exports = {
                 }else{
                   payment = 'NO'
                 }
+                if (doc[j].numberOfMeals == 0){
+                  doc[j].costPerMeal ='';
+                }
                 result.push({
                   userid: doc[j].userId,
                   name: user[i].firstname + " " + user[i].lastname,
