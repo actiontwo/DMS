@@ -110,3 +110,7 @@ table td, table th{
 .ui-corner-all span {
   text-indent: 0!important;
 }
+
+.ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span {
+  cursor: pointer;
+}
