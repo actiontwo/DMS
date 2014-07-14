@@ -25,6 +25,10 @@ var MealHistoryView = Backbone.View.extend({
   searchByDay: function() {
     var collection = new MealHistoryCollection();
     var viewbyday = $('.viewbyday').val();
+    if(viewbyday.length==0){
+      $('#datepicker-empty-error').fadeIn().delay(2500).fadeOut();
+      return;
+    }
     this.collection.each(function(model) {
       if (model.attributes.date == viewbyday) collection.add(model)
     });

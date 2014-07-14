@@ -181,6 +181,12 @@ module.exports = {
       else res.send('OK')
     });
   },
+  searchByDay: function(req, res){
+    var _userId = req.session.user.id;
+    Deposit.find({userId: _userId}).where({ date: { '>=': req.body.dayFrom, '<=': req.body.dayTo }}).done(function(err, deposits){
+      res.send(deposits);
+    });
+  },
 
   /**
    * Overrides for the settings in `config/controllers.js`

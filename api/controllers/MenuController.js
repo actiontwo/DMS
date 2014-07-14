@@ -171,7 +171,11 @@ module.exports = {
       }
     });
   },
-
+  searchByDay: function(req, res){
+    Menu.find().where({ date: { '>=': req.body.dayFrom, '<=': req.body.dayTo }}).done(function(err, menus){
+      res.send(menus);
+    });
+  },
   /**
    * Overrides for the settings in `config/controllers.js`
    * (specific to MenuController)

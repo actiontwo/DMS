@@ -49,6 +49,7 @@
     {{/each}}
     </tbody>
 </table>
+
 <div class="btn-group">
     <a class="btn btn-primary" id="saveUser">Save</a>
     <a class="btn btn-primary"
@@ -56,6 +57,16 @@
        role="button"
        data-toggle="modal">Send email</a>
 </div>
+<p></p>
+<div class="alert alert-success" id="save-users-success" style="display: none">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <strong>Success!</strong> All users settings have been saved.
+</div>
+<!--<div class="alert alert-success" id="send-emails-success" style="display: none">-->
+    <!--<a href="#" class="close" data-dismiss="alert">&times;</a>-->
+    <!--<strong>Success!</strong> Emails have been sent to selected users.-->
+<!--</div>-->
+
 <div class="modal fade" id="model-container-sendEmail" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

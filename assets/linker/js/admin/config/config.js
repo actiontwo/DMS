@@ -30,7 +30,7 @@ var ConfigView = Backbone.View.extend({
     this.model.save(data,{
       success: function(model, response) {
         console.log('success! ' + response);
-        alert(response.successMsg);
+        $('#save-config-success').fadeIn().delay(2000).fadeOut();
       },
       error: function(model, response) {
         console.log('error! ' + response);
