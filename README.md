@@ -42,3 +42,5 @@ Run project : sails lift
 * MD5
 * node-schedule
 * nodemailer
+
+[ ![Codeship Status for actiontwo/DMS](https://www.codeship.io/projects/356c77d0-ee23-0131-c6e7-6a40d349b728/status)](https://www.codeship.io/projects/26775)
